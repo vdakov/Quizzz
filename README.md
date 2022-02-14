@@ -16,6 +16,7 @@ Add your own name (do not add the names for others!) to the section below.
 | ![](https://gitlab.ewi.tudelft.nl/uploads/-/system/user/avatar/4921/avatar.png?width=60) | Dmytro Maksymchuk | D.Maksymchuk@student.tudelft.nl |
 | ![](https://secure.gravatar.com/avatar/c3a52ddf3021f1a714a449611cd3a299?s=50&d=identicon) | Delia Ion | D.Ion@student.tudelft.nl |
 | ![](https://secure.gravatar.com/avatar/266d477b6157ee4714cf0f8fdd533f48?s=50&d=identicon) | Kyongsu Kim | K.Kim-3@student.tudelft.nl |
+| ![](https://gitlab.ewi.tudelft.nl/uploads/-/system/user/avatar/4970/avatar.png?width=60) | Vasil Dakov | V.Dakov@student.tudelft.nl |
 <!-- Instructions (remove once assignment has been completed -->
 <!-- - Add (only!) your own name to the table above (use Markdown formatting) -->
 <!-- - Mention your *student* email address -->
