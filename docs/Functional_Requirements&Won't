@@ -1,0 +1,12 @@
+Won’t:
+As a user, I won’t be able to kick other players from the game
+As a user, I won’t be able to directly chat with other players, just emote to the current question
+As a user, I won’t be able to rejoin a game I left due to different connection problems.
+As a user, I won’t be able to change my answer after selecting one, because the user should read the question and answer properly, and not randomly select the answer to get higher points
+
+Non-functional
+As a client, I am able to update the questions in real-time from the database where the cards are stored (so they should be stored in the database) because I want everyone’s app up to date and to not lose questions when the server closes. 
+As both a client and a user, I want all games to be played on the same server because it will avoid data loss due to the hosts’ internet connection problem. 
+It is possible players might not time out at the same time because of one of the jokers, so there should be 2 separate events to account for this. One for timing out that disables your ability to answer and one for ending the round, which will send all players to the next round. Players should all receive new questions at the same time.
+There is only one waiting room at a time which proceeds to a game after a certain amount of time with all players who joined the room.
+The game/question is played/displayed synchronously
