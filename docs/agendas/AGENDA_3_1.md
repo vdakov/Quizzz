@@ -66,7 +66,59 @@ for the finished draft of the HCI assignment.)
 * GIVE FEEDBACK ON GITLAB ISSUES/ COMMENTS/ MERGE requests- do not just accepts merge requests 
 
     * Notes 2:
+#Feedback about HCI
 
+    * For the prototype and report there will be 2 feedback round from Florena (2022.02.25 Friday and 2022.03.01 next Tuesday)
+    * Find another (preferably 6 member) group and look though each others’ prototype and give a feedback (6 members can have one to one meeting with other group individually and take notes, and merge all the notes together with our group meeting)
+    * Can we modify the prototype later in following weeks (while we start coding)? (ex. changing background pictures) : should be overall similar
+    * In the case, if it is not realistic to implement, we can modify some parts
+    * HCI should be prioritized
+    * Next Friday is the official deadline of HCI
+    * Why is the feedback with other group is required? or Why is the feedback with other group is helpful?
+    *   When a person who does not participate in this task look though our prototype and give feedback of them, it allows us to have an objective view of the flow of prototype.
+
+    * When should we start the coding/Should we start now?
+
+    * We can start with watching some of the relevant videos, then we can start after getting used to the general coding style
+
+#Advise on using GitLab
+
+    * All members should get familiar with git such as creating issue, creating branches, merging
+    * Currently, out usage of gitlab is fine
+    * We might start assigning each issue to specific person (or 3 person)
+    * When we creating new issue, make sure we have reasoning (ex. because ~)
+    * The comments should be made in the gitlab, especially before approval
+    * reply back the comments
+    * working with the pipeline : if pipeline fail, make sure to fix it right away, and dont leave it too long / dont leave it until others to fix
+
+#Feedback of code of conduct
+
+    * Generally looks good
+    * doesnt meet some of the rubrics
+    * dont spend too much time on
+
+
+    * can be updated anytime
+    * We should talk more about the application
+    * mention a target for each individuals
+
+* Secret points might be this year : in advanced things might be even better
+but these shouldnt be prioritised than other more important parts
+
+
+
+* Activity regarding backend, we need understand 4 endpoints (get could post delete)
+
+(at least 2 end points should be learned until this sunday
+importat to look through the videos to get familiar
+think something that can be a get request)
+
+
+# This week deadline
+
+    * HCI
+    * 2 end points (Possibly Get / Post), we should all at least learn the basic parts of endpoints
+    * Finalising code of conduct
         
 
 
