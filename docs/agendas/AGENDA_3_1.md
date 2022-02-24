@@ -107,7 +107,7 @@ but these shouldnt be prioritised than other more important parts
 
 
 
-* Activity regarding backend, we need understand 4 endpoints (get could post delete)
+* Activity regarding backend, we need understand 4 endpoints (get put post delete)
 
 (at least 2 end points should be learned until this sunday
 importat to look through the videos to get familiar
