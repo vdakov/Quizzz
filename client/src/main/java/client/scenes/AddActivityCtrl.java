@@ -55,7 +55,7 @@ public class AddActivityCtrl {
     }
 
     private Activity getActivity() {
-        return new Activity(id.getText(), title.getText(), source.getText(), Integer.parseInt(consumption.getText()));
+        return new Activity(title.getText(), source.getText(), Integer.parseInt(consumption.getText()));
     }
 
     private void clearFields() {

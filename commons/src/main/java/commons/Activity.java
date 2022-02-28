@@ -1,12 +1,20 @@
 package commons;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Activity {
     @Id
-    private String id;
+    @SequenceGenerator(
+            name="activity_name",
+            sequenceName="activity_name",
+            allocationSize =1
+    )
+    @GeneratedValue(
+            strategy= GenerationType.SEQUENCE,
+            generator="activity_name"
+    )
+    private Long id;
     private String title, source;
     private int consumption;
 
@@ -14,14 +22,15 @@ public class Activity {
 
     }
 
-    public Activity(String id, String title, String source, int consumption) {
-        this.id = id;
+    public Activity(String title, String source, int consumption) {
         this.title = title;
         this.source = source;
         this.consumption = consumption;
     }
 
-    public String getId() {
+
+
+    public Long getId() {
         return id;
     }
 

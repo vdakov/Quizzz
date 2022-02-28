@@ -17,7 +17,7 @@ public class ActivityController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Activity> getById(@PathVariable("id") String id) {
+    public ResponseEntity<Activity> getById(@PathVariable("id") Long id) {
         repo.findAll();
         return !repo.existsById(id) ? ResponseEntity.badRequest().build() : ResponseEntity.ok(repo.getById(id));
     }
@@ -33,12 +33,13 @@ public class ActivityController {
         return activities.get((int) Math.floor(Math.random() * activities.size()));
     }
 
-    @PostMapping(path = {"", "/"})
+    @PostMapping(path = {"", "/add"})
     public void add(@RequestBody Activity a) {
         try {
             int temp = a.getConsumption() + 1;
-            if (a.getId() != null && a.getTitle() != null && a.getSource() != null) repo.save(a);
+            if (a.getTitle() != null && a.getSource() != null) repo.save(a);
         } catch (Exception e) {
+            throw new IllegalStateException("POST Request Failed");
         }
     }
 }
