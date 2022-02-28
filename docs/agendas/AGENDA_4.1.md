@@ -7,7 +7,7 @@ Agenda for OOP Project meeting 4.1 - Group 30
 * Attendees: Sydney Kho, Catalin Brita, Dmytro Maksymchuk, Delia Ion, Kyongsu Kim,
   Vasil Dakov
 * Chairman: Catalin Brita
-* Notetakers: Vasil Dakov, Kyongsu Kim
+* Note-takers: Vasil Dakov, Sydney Kho
 
 
 ## Agenda-items :
