@@ -24,8 +24,9 @@ Agenda for OOP Project meeting 4.1 - Group 30
   (Feedback: receive coding feedback from the TA and updates on the progress from the git-inspector)
 * [14:15-14:30] [Agenda-item 3] – [HCI report evaluation and feedback]
   (Feedback: more update from the TA on what we have managed to update on the HCI report)
-* [14:31-14:35] [Agenda-item 4] - [Discussion of coding goals for the week]
-  (Discussion: Did we take on enough for the week? Is the work well assigned? What should we do to be back on track?)
+* [14:31-14:35] [Agenda-item 4] - [Discussion of coding goals for the week + Check-style discussion]
+  (Discussion: Did we take on enough for the week? Is the work well assigned? What should we do to be back on track?
+   Are the checkstyle rules enough?)
 * [14:36-14:40] [Agenda-item 5] - [Upcoming deadlines + Buddy-check information]
   (Discussion: what documents do we have to do next and information regarding the buddy-check)
 * [14:41-14:44] Question Round
