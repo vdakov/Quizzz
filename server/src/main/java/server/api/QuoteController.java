@@ -51,10 +51,11 @@ public class QuoteController {
         if (id < 0 || !repo.existsById(id)) {
             return ResponseEntity.badRequest().build();
         }
+        repo.findAll(); //fixes the getById method
         return ResponseEntity.ok(repo.getById(id));
     }
 
-    @PostMapping(path = { "", "/" })
+    @PostMapping(path = {"", "/"})
     public ResponseEntity<Quote> add(@RequestBody Quote quote) {
 
         if (quote.person == null || isNullOrEmpty(quote.person.firstName) || isNullOrEmpty(quote.person.lastName)
