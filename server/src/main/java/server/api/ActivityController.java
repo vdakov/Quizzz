@@ -11,32 +11,35 @@ import java.util.List;
 @RequestMapping("api/activities")
 public class ActivityController {
 
-    ActivityRepository repo;//the repository containing the JSONs of activities
+    private ActivityRepository repo; //the repository containing the JSONs of activities
 
 
     public ActivityController(ActivityRepository repo) {
         this.repo = repo;
     }
 
+    public ActivityRepository getRepo() {
+        return repo;
+    }
 
     //sends GET HTTP response to client through the ID of the JSON if it exists
     @GetMapping("/{id}")
     public ResponseEntity<Activity> getById(@PathVariable("id") Long id) {
-        repo.findAll();
-        return !repo.existsById(id) ? ResponseEntity.badRequest().build() : ResponseEntity.ok(repo.getById(id));
+        getRepo().findAll();
+        return !getRepo().existsById(id) ? ResponseEntity.badRequest().build() : ResponseEntity.ok(getRepo().getById(id));
     }
 
     //returns all of the activities to the client in JSON format
     @GetMapping(path = {"", "/"})
     public List<Activity> getAll() {
-        return repo.findAll();
+        return getRepo().findAll();
     }
 
 
     //returns a random activity due to a GET request of the cleint
     @GetMapping("/random")
     public Activity getRandom() {
-        List<Activity> activities = repo.findAll();
+        List<Activity> activities = getRepo().findAll();
         return activities.get((int) Math.floor(Math.random() * activities.size()));
     }
 
@@ -45,7 +48,7 @@ public class ActivityController {
     public void add(@RequestBody Activity a) {
         try {
             int temp = a.getConsumption() + 1;
-            if (a.getTitle() != null && a.getSource() != null) repo.save(a);
+            if (a.getTitle() != null && a.getSource() != null) getRepo().save(a);
         } catch (Exception e) {
             throw new IllegalStateException("POST Request Failed");
         }
@@ -53,37 +56,36 @@ public class ActivityController {
 
 
     //allows the user to update all the fields of an activity except the ID, but only if the object with that ID already exists
-    @PutMapping(path="/update/{id}")
+    @PutMapping(path = "/update/{id}")
     public void update(@PathVariable ("id") Long id,
                         @RequestParam(required = false) String title,
                         @RequestParam(required = false) int consumption,
-                        @RequestParam(required=false) String source){
+                        @RequestParam(required = false) String source) {
 
 
-        Activity activity= repo.findById(id).orElseThrow(()-> new IllegalStateException(("No such activity!!!")));
+        Activity activity = getRepo().findById(id).orElseThrow(() -> new IllegalStateException(("No such activity!!!")));
 
-        if(title!= null && title.length()>0){
+        if (title != null && title.length() > 0) {
             activity.setTitle(title);
         }
 
-        if(consumption>0){
+        if (consumption > 0) {
             activity.setConsumption(consumption);
         }
 
-        if(source!=null && source.length()>0){
+        if (source != null && source.length() > 0) {
             activity.setSource(source);
         }
 
-        System.out.println(activity.getSource());
-        repo.save(activity);
+        getRepo().save(activity);
 
     }
 
     //Allows the user to delete an item from the repository if it exists through and HTTP DELETE Request
-    @DeleteMapping(path="/delete/{id}")
-    public void update(@PathVariable ("id") Long id){
-        Activity activity= repo.findById(id).orElseThrow(()-> new IllegalStateException(("No such activity!!!")));
-        repo.delete(activity);
+    @DeleteMapping(path = "/delete/{id}")
+    public void update(@PathVariable ("id") Long id) {
+        Activity activity = getRepo().findById(id).orElseThrow(() -> new IllegalStateException(("No such activity!!!")));
+        getRepo().delete(activity);
     }
 
 

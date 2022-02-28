@@ -29,9 +29,25 @@ import commons.Quote;
 
 public class QuoteControllerTest {
 
-    public int nextInt;
+    private int nextInt;
     private MyRandom random;
     private TestQuoteRepository repo;
+
+    public void setNextInt(int nextInt) {
+        this.nextInt = nextInt;
+    }
+
+    public void setRandom(MyRandom random) {
+        this.random = random;
+    }
+
+    public int getNextInt() {
+        return nextInt;
+    }
+
+    public MyRandom getRandom() {
+        return random;
+    }
 
     private QuoteController sut;
 
@@ -52,17 +68,17 @@ public class QuoteControllerTest {
     public void randomSelection() {
         sut.add(getQuote("q1"));
         sut.add(getQuote("q2"));
-        nextInt = 1;
+        setNextInt(1);
         var actual = sut.getRandom();
 
         assertTrue(random.wasCalled);
-        assertEquals("q2", actual.getBody().quote);
+        assertEquals("q2", actual.getBody().getQuote());
     }
 
     @Test
     public void databaseIsUsed() {
         sut.add(getQuote("q1"));
-        repo.calledMethods.contains("save");
+        repo.getCalledMethods().contains("save");
     }
 
     private static Quote getQuote(String q) {
@@ -72,12 +88,17 @@ public class QuoteControllerTest {
     @SuppressWarnings("serial")
     public class MyRandom extends Random {
 
-        public boolean wasCalled = false;
+        private boolean wasCalled = false;
 
         @Override
         public int nextInt(int bound) {
-            wasCalled = true;
+            setWasCalled(true);
             return nextInt;
+        }
+
+
+        public void setWasCalled(boolean wasCalled) {
+            this.wasCalled = wasCalled;
         }
     }
 }

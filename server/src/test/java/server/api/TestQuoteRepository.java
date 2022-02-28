@@ -31,8 +31,17 @@ import server.database.QuoteRepository;
 
 public class TestQuoteRepository implements QuoteRepository {
 
-    public final List<Quote> quotes = new ArrayList<>();
-    public final List<String> calledMethods = new ArrayList<>();
+    private final List<Quote> quotes = new ArrayList<>();
+    private final List<String> calledMethods = new ArrayList<>();
+
+
+    public List<Quote> getQuotes() {
+        return quotes;
+    }
+
+    public List<String> getCalledMethods() {
+        return calledMethods;
+    }
 
     private void call(String name) {
         calledMethods.add(name);
@@ -111,7 +120,7 @@ public class TestQuoteRepository implements QuoteRepository {
     }
 
     private Optional<Quote> find(Long id) {
-        return quotes.stream().filter(q -> q.id == id).findFirst();
+        return quotes.stream().filter(q -> q.getId() == id).findFirst();
     }
 
     @Override
@@ -135,7 +144,7 @@ public class TestQuoteRepository implements QuoteRepository {
     @Override
     public <S extends Quote> S save(S entity) {
         call("save");
-        entity.id = (long) quotes.size();
+        entity.setId((long) quotes.size());
         quotes.add(entity);
         return entity;
     }

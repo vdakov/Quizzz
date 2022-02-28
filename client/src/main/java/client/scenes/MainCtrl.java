@@ -36,8 +36,11 @@ public class MainCtrl {
     private AddActivityCtrl addActivityCtrl;
     private Scene addActivity;
 
-    public void initialize(Stage primaryStage, Pair<QuoteOverviewCtrl, Parent> quoteOverview,
-                           Pair<AddQuoteCtrl, Parent> add, Pair<ActivityOverviewCtrl, Parent> actOverview, Pair<AddActivityCtrl, Parent> addAct) {
+    public void initialize(Stage primaryStage,
+                           Pair<QuoteOverviewCtrl, Parent> quoteOverview,
+                           Pair<AddQuoteCtrl, Parent> add, Pair<ActivityOverviewCtrl,
+            Parent> actOverview, Pair<AddActivityCtrl, Parent> addAct) {
+
         this.primaryStage = primaryStage;
 
         this.quoteOverviewCtrl = quoteOverview.getKey();

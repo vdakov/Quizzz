@@ -6,13 +6,13 @@ import javax.persistence.*;
 public class Activity {
     @Id
     @SequenceGenerator(
-            name="activity_name",
-            sequenceName="activity_name",
-            allocationSize =1
+            name = "activity_name",
+            sequenceName = "activity_name",
+            allocationSize = 1
     )
     @GeneratedValue(
-            strategy= GenerationType.SEQUENCE,
-            generator="activity_name"
+            strategy = GenerationType.SEQUENCE,
+            generator = "activity_name"
     )
     private Long id;
     private String title, source;

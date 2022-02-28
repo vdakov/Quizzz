@@ -33,11 +33,15 @@ public class Quote {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public long id;
+    private long id;
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     @OneToOne(cascade = CascadeType.PERSIST)
-    public Person person;
-    public String quote;
+    private Person person;
+    private String quote;
 
     @SuppressWarnings("unused")
     private Quote() {
@@ -62,5 +66,17 @@ public class Quote {
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, MULTI_LINE_STYLE);
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public String getQuote() {
+        return quote;
     }
 }
