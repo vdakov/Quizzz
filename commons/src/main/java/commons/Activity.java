@@ -28,7 +28,17 @@ public class Activity {
         this.consumption = consumption;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public void setConsumption(int consumption) {
+        this.consumption = consumption;
+    }
 
     public Long getId() {
         return id;

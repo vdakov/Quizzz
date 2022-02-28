@@ -6,8 +6,23 @@
 <module name = "Checker">
     <module name="TreeWalker">
         <module name="UnusedImports" />
+        <module name="AvoidNestedBlocks"/>
+        <module name="LeftCurly"/>
+        <module name="MethodLength"/>
+        <module name="OneStatementPerLine"/>
+        <module name="ParameterNumber"/>
+        <module name="Indentation"/>
+        <module name="WhitespaceAround">
+            <property name="allowEmptyTypes" value="true">
+
+            </property>
+        </module>
+        <module name="WhitespaceAfter"/>
+        <module name="VisibilityModifier"/>
+        <module name="UnusedLocalVariable"/>
+        <module name="LineLength"/>
     </module>
 
-    <!-- TODO: decide in your team with other checkers to add! -->
+
 
 </module>
