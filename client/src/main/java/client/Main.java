@@ -47,8 +47,10 @@ public class Main extends Application {
                 FXML.load(ActivityOverviewCtrl.class, "client", "scenes", "ActivityOverview.fxml");
         var addActivity =
                 FXML.load(AddActivityCtrl.class, "client", "scenes", "AddActivity.fxml");
+        var questionScreen =
+                FXML.load(QuestionCtrl.class, "client", "scenes", "QuestionScreen.fxml");
 
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
-        mainCtrl.initialize(primaryStage, quoteOverview, addQuote, actOverview, addActivity);
+        mainCtrl.initialize(primaryStage, quoteOverview, addQuote, actOverview, addActivity, questionScreen);
     }
 }

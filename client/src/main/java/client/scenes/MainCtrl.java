@@ -15,8 +15,13 @@
  */
 package client.scenes;
 
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
@@ -36,10 +41,13 @@ public class MainCtrl {
     private AddActivityCtrl addActivityCtrl;
     private Scene addActivity;
 
+    private QuestionCtrl questionCtrl;
+    private Scene questionScreen;
+
     public void initialize(Stage primaryStage,
                            Pair<QuoteOverviewCtrl, Parent> quoteOverview,
                            Pair<AddQuoteCtrl, Parent> add, Pair<ActivityOverviewCtrl,
-            Parent> actOverview, Pair<AddActivityCtrl, Parent> addAct) {
+            Parent> actOverview, Pair<AddActivityCtrl, Parent> addAct, Pair<QuestionCtrl, Parent> questionScreen) {
 
         this.primaryStage = primaryStage;
 
@@ -54,6 +62,10 @@ public class MainCtrl {
 
         this.addActivityCtrl = addAct.getKey();
         this.addActivity = new Scene(addAct.getValue());
+
+        this.questionCtrl=questionScreen.getKey();
+        this.questionScreen=new Scene(questionScreen.getValue());
+
 
         showQuotesOverview();
         primaryStage.show();
@@ -82,4 +94,18 @@ public class MainCtrl {
         primaryStage.setScene(addActivity);
         addActivity.setOnKeyPressed(e -> addActivityCtrl.keyPressed(e));
     }
+
+    public void showQuestions() {
+
+        primaryStage.setTitle("QuestionScreen");
+        primaryStage.setScene(questionScreen);
+        Stage stage= (Stage) questionScreen.getWindow();
+        questionCtrl.initialize();
+        stage.show();
+
+    }
+
+
+
+
 }
