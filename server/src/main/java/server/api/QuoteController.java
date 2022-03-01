@@ -41,7 +41,7 @@ public class QuoteController {
         this.repo = repo;
     }
 
-    @GetMapping(path = { "", "/" })
+    @GetMapping(path = {"", "/"})
     public List<Quote> getAll() {
         return repo.findAll();
     }
@@ -58,7 +58,9 @@ public class QuoteController {
     @PostMapping(path = {"", "/"})
     public ResponseEntity<Quote> add(@RequestBody Quote quote) {
 
-        if (quote.getPerson() == null || isNullOrEmpty(quote.getPerson().getFirstName()) || isNullOrEmpty(quote.getPerson().getLastName())
+        if (quote.getPerson() == null
+                || isNullOrEmpty(quote.getPerson().getFirstName())
+                || isNullOrEmpty(quote.getPerson().getLastName())
                 || isNullOrEmpty(quote.getQuote())) {
             return ResponseEntity.badRequest().build();
         }

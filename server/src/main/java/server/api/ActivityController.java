@@ -57,10 +57,10 @@ public class ActivityController {
 
     //allows the user to update all the fields of an activity except the ID, but only if the object with that ID already exists
     @PutMapping(path = "/update/{id}")
-    public void update(@PathVariable ("id") Long id,
-                        @RequestParam(required = false) String title,
-                        @RequestParam(required = false) int consumption,
-                        @RequestParam(required = false) String source) {
+    public void update(@PathVariable("id") Long id,
+                       @RequestParam(required = false) String title,
+                       @RequestParam(required = false) int consumption,
+                       @RequestParam(required = false) String source) {
 
 
         Activity activity = getRepo().findById(id).orElseThrow(() -> new IllegalStateException(("No such activity!!!")));
@@ -83,16 +83,10 @@ public class ActivityController {
 
     //Allows the user to delete an item from the repository if it exists through and HTTP DELETE Request
     @DeleteMapping(path = "/delete/{id}")
-    public void update(@PathVariable ("id") Long id) {
+    public void update(@PathVariable("id") Long id) {
         Activity activity = getRepo().findById(id).orElseThrow(() -> new IllegalStateException(("No such activity!!!")));
         getRepo().delete(activity);
     }
-
-
-
-
-
-
 
 
 }
