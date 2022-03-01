@@ -15,13 +15,8 @@
  */
 package client.scenes;
 
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
@@ -63,8 +58,8 @@ public class MainCtrl {
         this.addActivityCtrl = addAct.getKey();
         this.addActivity = new Scene(addAct.getValue());
 
-        this.questionCtrl=questionScreen.getKey();
-        this.questionScreen=new Scene(questionScreen.getValue());
+        this.questionCtrl = questionScreen.getKey();
+        this.questionScreen = new Scene(questionScreen.getValue());
 
 
         showQuotesOverview();
@@ -99,13 +94,11 @@ public class MainCtrl {
 
         primaryStage.setTitle("QuestionScreen");
         primaryStage.setScene(questionScreen);
-        Stage stage= (Stage) questionScreen.getWindow();
+        Stage stage = (Stage) questionScreen.getWindow();
         questionCtrl.initialize();
         stage.show();
 
     }
-
-
 
 
 }

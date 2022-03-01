@@ -2,14 +2,10 @@ package client.scenes;
 
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
-import jakarta.ws.rs.WebApplicationException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyEvent;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import commons.Activity;
 
@@ -25,33 +21,33 @@ public class QuestionCtrl {
         this.mainCtrl = mainCtrl;
     }
 
-    public void initialize(){
-        this.question= new Activity("Riding your electric scooter to university (10km)",
-                "https://dx.doi.org/10.1016/j.apenergy.2013.10.043",330);
+    public void initialize() {
+        this.question = new Activity("Riding your electric scooter to university (10km)",
+                "https://dx.doi.org/10.1016/j.apenergy.2013.10.043", 330);
 
 
-        this.sampleQuestion.setText("How much does electricity(in kWH does " + question.getTitle() + " take?") ;
-        int answer=question.getConsumption();
-        long range= Math.round(Math.random()*answer);
-        long range2= Math.round(Math.random()*answer);
-        double random= Math.random()*3;
+        this.sampleQuestion.setText("How much does electricity(in kWH does " + question.getTitle() + " take?");
+        int answer = question.getConsumption();
+        long range = Math.round(Math.random() * answer);
+        long range2 = Math.round(Math.random() * answer);
+        double random = Math.random() * 3;
 
 
         //this is dumb. too bad :)
-        if(random>2){
+        if (random > 2) {
             answerCenter.setText(String.valueOf(answer));
             answerRight.setText(String.valueOf(range));
             answerLeft.setText(String.valueOf(range2));
-        }else if(random <2 && random >1){
+        } else if (random < 2 && random > 1) {
             answerCenter.setText(String.valueOf(range));
             answerRight.setText(String.valueOf(range2));
             answerLeft.setText(String.valueOf(answer));
-        }else{
+        } else {
             answerCenter.setText(String.valueOf(range));
             answerRight.setText(String.valueOf(answer));
             answerLeft.setText(String.valueOf(range2));
         }
-        this.correctAnswer=String.valueOf(answer);
+        this.correctAnswer = String.valueOf(answer);
     }
 
 
@@ -61,41 +57,41 @@ public class QuestionCtrl {
     @FXML
     private Button exitButton;
     @FXML
-    private Button answerLeft,answerRight,answerCenter;
+    private Button answerLeft, answerRight, answerCenter;
     @FXML
     private Label points;
     @FXML
     private String correctAnswer;
 
-    public void answer(ActionEvent event){
-        Button current= (Button) event.getSource();
+    public void answer(ActionEvent event) {
+        Button current = (Button) event.getSource();
 
-        answerCheck(answerCenter.getText() , this.getAnswerCenter());
-        answerCheck(answerLeft.getText(),this.getAnswerLeft());
-        answerCheck(answerRight.getText(),this.getAnswerRight());
+        answerCheck(answerCenter.getText(), this.getAnswerCenter());
+        answerCheck(answerLeft.getText(), this.getAnswerLeft());
+        answerCheck(answerRight.getText(), this.getAnswerRight());
 
-        if(current.getText().equals(correctAnswer)){
-            pointsInt+=500;
+        if (current.getText().equals(correctAnswer)) {
+            pointsInt += 500;
         }
         points.setText(String.valueOf(pointsInt));
 
 
     }
 
-    public void exit(ActionEvent event){
+    public void exit(ActionEvent event) {
         Stage current = (Stage) ((Button) event.getSource()).getScene().getWindow();
         current.close();
     }
 
-    public void mainMenu(ActionEvent event){
+    public void mainMenu(ActionEvent event) {
         mainCtrl.showQuotesOverview();
     }
 
-    public void answerCheck(String answer, Button current){
-        if(answer.equals(getCorrectAnswer())){
+    public void answerCheck(String answer, Button current) {
+        if (answer.equals(getCorrectAnswer())) {
             current.setText("CORRECT");
             current.setStyle("-fx-background-color: #00FF00; ");
-        }else {
+        } else {
             current.setText("FALSE");
             current.setStyle("-fx-background-color: #d20716; ");
         }
@@ -116,12 +112,6 @@ public class QuestionCtrl {
     public String getCorrectAnswer() {
         return correctAnswer;
     }
-
-
-
-
-
-
 
 
 }
