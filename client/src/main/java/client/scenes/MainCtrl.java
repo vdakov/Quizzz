@@ -38,8 +38,9 @@ public class MainCtrl {
 
     public void initialize(Stage primaryStage,
                            Pair<QuoteOverviewCtrl, Parent> quoteOverview,
-                           Pair<AddQuoteCtrl, Parent> add, Pair<ActivityOverviewCtrl,
-            Parent> actOverview, Pair<AddActivityCtrl, Parent> addAct) {
+                           Pair<AddQuoteCtrl, Parent> add,
+                           Pair<ActivityOverviewCtrl, Parent> actOverview,
+                           Pair<AddActivityCtrl, Parent> addAct) {
 
         this.primaryStage = primaryStage;
 
