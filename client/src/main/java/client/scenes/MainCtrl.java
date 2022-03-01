@@ -90,6 +90,7 @@ public class MainCtrl {
         addActivity.setOnKeyPressed(e -> addActivityCtrl.keyPressed(e));
     }
 
+        //Method that shows the question screen stage
     public void showQuestions() {
 
         primaryStage.setTitle("QuestionScreen");

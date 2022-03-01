@@ -15,12 +15,14 @@ public class QuestionCtrl {
     private final MainCtrl mainCtrl;
     private Activity question;
 
+    //Constructor for the Question Controller
     @Inject
     public QuestionCtrl(ServerUtils server, MainCtrl mainCtrl) {
         this.server = server;
         this.mainCtrl = mainCtrl;
     }
 
+        //Initializes the sample question screen through hardcoding
     public void initialize() {
         this.question = new Activity("Riding your electric scooter to university (10km)",
                 "https://dx.doi.org/10.1016/j.apenergy.2013.10.043", 330);
@@ -63,6 +65,8 @@ public class QuestionCtrl {
     @FXML
     private String correctAnswer;
 
+
+        //method for answering the question- activated on click of button in QuestionScreen scene
     public void answer(ActionEvent event) {
         Button current = (Button) event.getSource();
 
@@ -78,15 +82,18 @@ public class QuestionCtrl {
 
     }
 
+        //Event when exit button is pressed
     public void exit(ActionEvent event) {
         Stage current = (Stage) ((Button) event.getSource()).getScene().getWindow();
         current.close();
     }
 
+        //Event when main menu button is pressed- returns user to main menu
     public void mainMenu(ActionEvent event) {
         mainCtrl.showQuotesOverview();
     }
 
+        //Method that checks whether answer is correct
     public void answerCheck(String answer, Button current) {
         if (answer.equals(getCorrectAnswer())) {
             current.setText("CORRECT");
@@ -97,6 +104,7 @@ public class QuestionCtrl {
         }
     }
 
+        //Getters and setters
     public Button getAnswerLeft() {
         return answerLeft;
     }
