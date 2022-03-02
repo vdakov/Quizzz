@@ -78,7 +78,7 @@ public class QuestionCtrl {
         answerCheck(answerRight.getText(), this.getAnswerRight());
 
         if (current.getText().equals(correctAnswer)) {
-            pointsInt += 500;//global variable for points so it remembers it
+            pointsInt += 500; //global variable for points so it remembers it
         }
         points.setText(String.valueOf(pointsInt));
 
@@ -100,7 +100,7 @@ public class QuestionCtrl {
     public void answerCheck(String answer, Button current) {
         if (answer.equals(getCorrectAnswer())) {
             current.setText("CORRECT");
-            current.setStyle("-fx-background-color: #00FF00; ");//simple CSS for clarity
+            current.setStyle("-fx-background-color: #00FF00; "); //simple CSS for clarity
         } else {
             current.setText("FALSE");
             current.setStyle("-fx-background-color: #d20716; ");
