@@ -22,20 +22,23 @@ public class QuestionCtrl {
         this.mainCtrl = mainCtrl;
     }
 
-        //Initializes the sample question screen through hardcoding
+    //Initializes the sample question screen through hardcoding
     public void initialize() {
+        //hardcoded activity- have to eventually make it initialize through a database- Not now tho :)
         this.question = new Activity("Riding your electric scooter to university (10km)",
                 "https://dx.doi.org/10.1016/j.apenergy.2013.10.043", 330);
 
-
+        //transforms the activity into a question
         this.sampleQuestion.setText("How much does electricity(in kWH does " + question.getTitle() + " take?");
+
         int answer = question.getConsumption();
         long range = Math.round(Math.random() * answer);
         long range2 = Math.round(Math.random() * answer);
         double random = Math.random() * 3;
 
 
-        //this is dumb. too bad :)
+        //this is a very dumb way to do this, but I am too lazy to implement it another way
+        // at this point so too bad :)
         if (random > 2) {
             answerCenter.setText(String.valueOf(answer));
             answerRight.setText(String.valueOf(range));
@@ -66,7 +69,7 @@ public class QuestionCtrl {
     private String correctAnswer;
 
 
-        //method for answering the question- activated on click of button in QuestionScreen scene
+    //method for answering the question- activated on click of button in QuestionScreen scene
     public void answer(ActionEvent event) {
         Button current = (Button) event.getSource();
 
@@ -75,36 +78,36 @@ public class QuestionCtrl {
         answerCheck(answerRight.getText(), this.getAnswerRight());
 
         if (current.getText().equals(correctAnswer)) {
-            pointsInt += 500;
+            pointsInt += 500;//global variable for points so it remembers it
         }
         points.setText(String.valueOf(pointsInt));
 
 
     }
 
-        //Event when exit button is pressed
+    //Event when exit button is pressed
     public void exit(ActionEvent event) {
         Stage current = (Stage) ((Button) event.getSource()).getScene().getWindow();
         current.close();
     }
 
-        //Event when main menu button is pressed- returns user to main menu
+    //Event when main menu button is pressed- returns user to main menu
     public void mainMenu(ActionEvent event) {
         mainCtrl.showQuotesOverview();
     }
 
-        //Method that checks whether answer is correct
+    //Method that checks whether answer is correct
     public void answerCheck(String answer, Button current) {
         if (answer.equals(getCorrectAnswer())) {
             current.setText("CORRECT");
-            current.setStyle("-fx-background-color: #00FF00; ");
+            current.setStyle("-fx-background-color: #00FF00; ");//simple CSS for clarity
         } else {
             current.setText("FALSE");
             current.setStyle("-fx-background-color: #d20716; ");
         }
     }
 
-        //Getters and setters
+    //Getters and setters
     public Button getAnswerLeft() {
         return answerLeft;
     }
