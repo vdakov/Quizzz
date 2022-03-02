@@ -1,9 +1,9 @@
-package server.api;
+package server.controllers;
 
 import commons.Activity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import server.database.ActivityRepository;
+import server.repositories.ActivityRepository;
 
 import java.util.List;
 

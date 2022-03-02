@@ -1,6 +1,6 @@
 package client.scenes;
 
-import client.utils.ServerUtils;
+import client.logic.ServerUtils;
 import com.google.inject.Inject;
 import commons.Activity;
 import jakarta.ws.rs.WebApplicationException;
@@ -12,7 +12,7 @@ import javafx.stage.Modality;
 
 public class AddActivityCtrl {
     private final ServerUtils server;
-    private final MainCtrl mainCtrl;
+    private final SceneCtrl sceneCtrl;
 
     @FXML
     private TextField id;
@@ -27,15 +27,15 @@ public class AddActivityCtrl {
     private TextField consumption;
 
     @Inject
-    public AddActivityCtrl(ServerUtils server, MainCtrl mainCtrl) {
-        this.mainCtrl = mainCtrl;
+    public AddActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
+        this.sceneCtrl = sceneCtrl;
         this.server = server;
 
     }
 
     public void cancel() {
         clearFields();
-        mainCtrl.showQuotesOverview();
+        sceneCtrl.showActivitiesOverview();
     }
 
     public void ok() {
@@ -51,7 +51,7 @@ public class AddActivityCtrl {
         }
 
         clearFields();
-        mainCtrl.showQuotesOverview();
+        sceneCtrl.showActivitiesOverview();
     }
 
     private Activity getActivity() {

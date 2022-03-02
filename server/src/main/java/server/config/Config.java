@@ -13,17 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package server;
+package server.config;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
+import java.util.Random;
 
-@SpringBootApplication
-@EntityScan(basePackages = { "commons", "server" })
-public class Main {
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-    public static void main(String[] args) {
-        SpringApplication.run(Main.class, args);
+@Configuration
+public class Config {
+
+    @Bean
+    public Random getRandom() {
+        return new Random();
     }
 }

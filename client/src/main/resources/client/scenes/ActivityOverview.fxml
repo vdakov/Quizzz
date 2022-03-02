@@ -16,7 +16,6 @@
             </columns>
         </TableView>
         <Button layoutX="502.0" layoutY="360.0" mnemonicParsing="false" onAction="#addActivity" text="Add Activity" />
-        <Button layoutX="19.0" layoutY="360.0" mnemonicParsing="false" onAction="#toQuotes" prefHeight="25.0" prefWidth="80.0" text="To Quotes" />
       <Button layoutX="397.0" layoutY="360.0" mnemonicParsing="false" onAction="#refresh" prefHeight="25.0" prefWidth="80.0" text="Refresh" />
     </children>
 </AnchorPane>

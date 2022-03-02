@@ -15,7 +15,7 @@
  */
 package client.scenes;
 
-import client.utils.ServerUtils;
+import client.logic.ServerUtils;
 import com.google.inject.Inject;
 import commons.Activity;
 import javafx.beans.property.SimpleStringProperty;
@@ -32,7 +32,7 @@ import java.util.ResourceBundle;
 public class ActivityOverviewCtrl implements Initializable {
 
     private final ServerUtils server;
-    private final MainCtrl mainCtrl;
+    private final SceneCtrl sceneCtrl;
 
     private ObservableList<Activity> data;
 
@@ -48,9 +48,9 @@ public class ActivityOverviewCtrl implements Initializable {
     private TableColumn<Activity, String> colSource;
 
     @Inject
-    public ActivityOverviewCtrl(ServerUtils server, MainCtrl mainCtrl) {
+    public ActivityOverviewCtrl(ServerUtils server, SceneCtrl mainCtrl) {
         this.server = server;
-        this.mainCtrl = mainCtrl;
+        this.sceneCtrl = mainCtrl;
     }
 
     @Override
@@ -62,16 +62,12 @@ public class ActivityOverviewCtrl implements Initializable {
     }
 
     public void addActivity() {
-        mainCtrl.showAddActivity();
+        sceneCtrl.showAddActivity();
     }
 
     public void refresh() {
         var activities = server.getActivities();
         data = FXCollections.observableList(activities);
         table.setItems(data);
-    }
-
-    public void toQuotes() {
-        mainCtrl.showQuotesOverview();
     }
 }
