@@ -5,7 +5,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.ActivityOverviewCtrl">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.OverviewActionsActivityCtrl">
     <children>
         <TableView fx:id="table" layoutX="19.0" layoutY="24.0" prefHeight="310.0" prefWidth="563.0">
             <columns>
@@ -16,6 +16,6 @@
             </columns>
         </TableView>
         <Button layoutX="502.0" layoutY="360.0" mnemonicParsing="false" onAction="#addActivity" text="Add Activity" />
-      <Button layoutX="397.0" layoutY="360.0" mnemonicParsing="false" onAction="#refresh" prefHeight="25.0" prefWidth="80.0" text="Refresh" />
+        <Button layoutX="397.0" layoutY="360.0" mnemonicParsing="false" onAction="#refresh" prefHeight="25.0" prefWidth="80.0" text="Refresh" />
     </children>
 </AnchorPane>

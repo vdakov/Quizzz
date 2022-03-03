@@ -1,8 +1,8 @@
-package client.scenes;
+package client.controllers;
 
-import client.logic.ServerUtils;
+import client.communication.ServerUtils;
 import com.google.inject.Inject;
-import commons.Activity;
+import commons.Action;
 import jakarta.ws.rs.WebApplicationException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -10,7 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 
-public class AddActivityCtrl {
+public class AddActionActivityCtrl {
     private final ServerUtils server;
     private final SceneCtrl sceneCtrl;
 
@@ -27,7 +27,7 @@ public class AddActivityCtrl {
     private TextField consumption;
 
     @Inject
-    public AddActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
+    public AddActionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
         this.sceneCtrl = sceneCtrl;
         this.server = server;
 
@@ -35,7 +35,7 @@ public class AddActivityCtrl {
 
     public void cancel() {
         clearFields();
-        sceneCtrl.showActivitiesOverview();
+        sceneCtrl.showOverviewActionsScene();
     }
 
     public void ok() {
@@ -51,11 +51,11 @@ public class AddActivityCtrl {
         }
 
         clearFields();
-        sceneCtrl.showActivitiesOverview();
+        sceneCtrl.showOverviewActionsScene();
     }
 
-    private Activity getActivity() {
-        return new Activity(title.getText(), source.getText(), Integer.parseInt(consumption.getText()));
+    private Action getActivity() {
+        return new Action(title.getText(), source.getText(), Integer.parseInt(consumption.getText()));
     }
 
     private void clearFields() {

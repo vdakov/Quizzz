@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package client.logic;
+package client.communication;
 
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 
 import java.util.List;
 
-import commons.Activity;
+import commons.Action;
 import org.glassfish.jersey.client.ClientConfig;
 
 import jakarta.ws.rs.client.ClientBuilder;
@@ -30,7 +30,7 @@ public class ServerUtils {
 
     private static final String SERVER = "http://localhost:8080/";
 
-    public List<Activity> getActivities() {
+    public List<Action> getActivities() {
         return ClientBuilder.newClient(new ClientConfig()) //
                 .target(SERVER).path("api/activities") //
                 .request(APPLICATION_JSON) //
@@ -39,11 +39,11 @@ public class ServerUtils {
                 });
     }
 
-    public Activity addActivity(Activity a) {
+    public Action addActivity(Action a) {
         return ClientBuilder.newClient(new ClientConfig()) //
                 .target(SERVER).path("api/activities") //
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
-                .post(Entity.entity(a, APPLICATION_JSON), Activity.class);
+                .post(Entity.entity(a, APPLICATION_JSON), Action.class);
     }
 }

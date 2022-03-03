@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package client.scenes;
+package client.controllers;
 
-import client.logic.ServerUtils;
+import client.communication.ServerUtils;
 import com.google.inject.Inject;
-import commons.Activity;
+import commons.Action;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -29,26 +29,26 @@ import javafx.scene.control.TableView;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ActivityOverviewCtrl implements Initializable {
+public class OverviewActionsActivityCtrl implements Initializable {
 
     private final ServerUtils server;
     private final SceneCtrl sceneCtrl;
 
-    private ObservableList<Activity> data;
+    private ObservableList<Action> data;
 
     @FXML
-    private TableView<Activity> table;
+    private TableView<Action> table;
     @FXML
-    private TableColumn<Activity, String> colId;
+    private TableColumn<Action, String> colId;
     @FXML
-    private TableColumn<Activity, String> colTitle;
+    private TableColumn<Action, String> colTitle;
     @FXML
-    private TableColumn<Activity, String> colConsumption;
+    private TableColumn<Action, String> colConsumption;
     @FXML
-    private TableColumn<Activity, String> colSource;
+    private TableColumn<Action, String> colSource;
 
     @Inject
-    public ActivityOverviewCtrl(ServerUtils server, SceneCtrl mainCtrl) {
+    public OverviewActionsActivityCtrl(ServerUtils server, SceneCtrl mainCtrl) {
         this.server = server;
         this.sceneCtrl = mainCtrl;
     }
@@ -62,7 +62,7 @@ public class ActivityOverviewCtrl implements Initializable {
     }
 
     public void addActivity() {
-        sceneCtrl.showAddActivity();
+        sceneCtrl.showAddActionScene();
     }
 
     public void refresh() {

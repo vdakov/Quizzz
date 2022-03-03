@@ -3,7 +3,7 @@ package commons;
 import javax.persistence.*;
 
 @Entity
-public class Activity {
+public class Action {
     @Id
     @SequenceGenerator(
             name="activity_name",
@@ -18,11 +18,11 @@ public class Activity {
     private String title, source;
     private int consumption;
 
-    private Activity() {
+    private Action() {
 
     }
 
-    public Activity(String title, String source, int consumption) {
+    public Action(String title, String source, int consumption) {
         this.title = title;
         this.source = source;
         this.consumption = consumption;
