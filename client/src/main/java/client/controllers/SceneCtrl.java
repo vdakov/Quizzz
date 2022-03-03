@@ -20,6 +20,7 @@ public class SceneCtrl {
 
     /**
      * Initialising the app scene with the primary stage and every scene that will be used in this stage
+     *
      * @param primaryStage the main stage of the app
      * @param overviewActionsActivityCtrlParentPair the loaded FXML scene with control for displaying all actions
      * @param addActionActivityCtrlParentPair the loaded FXML scene with control for adding a new action
@@ -33,18 +34,18 @@ public class SceneCtrl {
         this.overviewActionsActivityCtrl = overviewActionsActivityCtrlParentPair.getKey();
         this.overviewActionsScene        = new Scene(overviewActionsActivityCtrlParentPair.getValue());
 
-        this.addActionActivityCtrl = addActionActivityCtrlParentPair.getKey();
-        this.addActionScene        = new Scene(addActionActivityCtrlParentPair.getValue());
+        this.addActionActivityCtrl       = addActionActivityCtrlParentPair.getKey();
+        this.addActionScene              = new Scene(addActionActivityCtrlParentPair.getValue());
 
-        this.questionActivityCtrl = questionsActivityCtrlParentPair.getKey();
-        this.questionScene        = new Scene(questionsActivityCtrlParentPair.getValue());
+        this.questionActivityCtrl        = questionsActivityCtrlParentPair.getKey();
+        this.questionScene               = new Scene(questionsActivityCtrlParentPair.getValue());
 
         showQuestionScene();
         primaryStage.show();
     }
 
     /**
-     *
+     * Displays the scene with all actions
      */
     public void showOverviewActionsScene() {
         primaryStage.setTitle("Action: Overview");
@@ -53,7 +54,7 @@ public class SceneCtrl {
     }
 
     /**
-     *
+     * Displays the scene with add action
      */
     public void showAddActionScene() {
         primaryStage.setTitle("Action: Adding Action");
@@ -62,7 +63,7 @@ public class SceneCtrl {
     }
 
     /**
-     *
+     * Displays the scene with add question
      */
     public void showQuestionScene() {
         primaryStage.setTitle("Question Screen");

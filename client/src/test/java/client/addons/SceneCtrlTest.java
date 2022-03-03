@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package client.scenes;
+package client.addons;
 
 import client.controllers.SceneCtrl;
 import org.junit.jupiter.api.BeforeEach;

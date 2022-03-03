@@ -15,8 +15,8 @@ public class ModuleConfig implements Module {
      */
     @Override
     public void configure(Binder binder) {
-        binder.bind(OverviewActionsActivityCtrl.class) .in(Scopes.SINGLETON);
-        binder.bind(QuestionActivityCtrl.class).in(Scopes.SINGLETON);
+        binder.bind(OverviewActionsActivityCtrl.class).in(Scopes.SINGLETON);
+        binder.bind(QuestionActivityCtrl.class)       .in(Scopes.SINGLETON);
         binder.bind(AddActionActivityCtrl.class)      .in(Scopes.SINGLETON);
     }
 }

@@ -30,6 +30,10 @@ public class ServerUtils {
 
     private static final String SERVER = "http://localhost:8080/";
 
+    /**
+     * Gets the activities from the server
+     * @return the list of activities from the server
+     */
     public List<Action> getActivities() {
         return ClientBuilder.newClient(new ClientConfig()) //
                 .target(SERVER).path("api/activities") //
@@ -39,6 +43,11 @@ public class ServerUtils {
                 });
     }
 
+    /**
+     * Sends a new activity to the server
+     * @param a the action that will be added
+     * @return the action that was added
+     */
     public Action addActivity(Action a) {
         return ClientBuilder.newClient(new ClientConfig()) //
                 .target(SERVER).path("api/activities") //

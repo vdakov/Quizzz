@@ -40,9 +40,9 @@ public class QuizzzClient extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws IOException {
-        var overviewActivity  = FXML_CONFIG.load(OverviewActionsActivityCtrl.class, "client", "scenes", "OverviewActionsScene.fxml");
-        var addActivity           = FXML_CONFIG.load(AddActionActivityCtrl.class, "client", "scenes", "AddActionScene.fxml");
-        var questionsActivity      = FXML_CONFIG.load(QuestionActivityCtrl.class, "client", "scenes", "QuestionScene.fxml");
+        var overviewActivity  = FXML_CONFIG.load(OverviewActionsActivityCtrl.class, "scenes", "OverviewActionsScene.fxml");
+        var addActivity           = FXML_CONFIG.load(AddActionActivityCtrl.class, "scenes", "AddActionScene.fxml");
+        var questionsActivity      = FXML_CONFIG.load(QuestionActivityCtrl.class, "scenes", "QuestionScene.fxml");
 
         var sceneCtrl = INJECTOR.getInstance(SceneCtrl.class);
         sceneCtrl.initialize(primaryStage, overviewActivity, addActivity, questionsActivity);
