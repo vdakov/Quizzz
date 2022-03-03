@@ -13,7 +13,7 @@ Vasil Dakov
 ## Agenda-items :
 * [14:45-14:46] Opening by chair
 * [14:46-14:49] Check-in
-* [14:49-14:55] Tips and Tops- first by chairman then everyone:
+* [14:49-14:55]Tips and Tops- first by chairman then everyone:
 (Comment on what everybody in the group thought was well done about the project and give recommmendations on what the team could improve)- No reflection on tips and tops from last week
 since there were none
 * [14:55-15:05] [Agenda-item 1] – [Discussion of Prototype]
