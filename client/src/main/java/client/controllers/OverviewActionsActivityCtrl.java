@@ -55,7 +55,7 @@ public class OverviewActionsActivityCtrl implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        colId.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getId()+""));
+        colId.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getId() + ""));
         colTitle.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getTitle()));
         colConsumption.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getConsumption() + ""));
         colSource.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getSource()));
