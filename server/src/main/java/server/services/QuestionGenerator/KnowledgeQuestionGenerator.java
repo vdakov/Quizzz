@@ -1,13 +1,10 @@
 package server.services.QuestionGenerator;
 
 import commons.Questions.KnowledgeQuestion;
-import commons.Questions.OpenQuestion;
 import commons.Questions.Question;
-import org.springframework.data.jpa.domain.JpaSort;
 import org.springframework.data.util.Pair;
 import server.entities.Actions.Action;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -21,7 +18,7 @@ public class KnowledgeQuestionGenerator {
     public static List<Pair<Question, String>> knowledgeQuestionGenerator(Integer numberOfNeededQuestions, List<Action> smartActions) {
         List<Pair<Question, String>> questionList = new ArrayList<>();
 
-        for(int i = 0; i < numberOfNeededQuestions; i++) {
+        for (int i = 0; i < numberOfNeededQuestions; i++) {
             questionList.add(generateKnowledgeQuestionFromAction(shiftActionsLeft(smartActions)));
         }
 
@@ -43,6 +40,7 @@ public class KnowledgeQuestionGenerator {
 
     public static String generateKnowledgeAnswer(Integer correctAnswer, Integer errorLowerBound, Integer errorUpperBound) {
         Random random = new Random();
-        return Integer.toString((int) (correctAnswer + Math.round(((random.nextBoolean()) ? 1 : -1) * (errorLowerBound + random.nextInt(errorUpperBound - errorLowerBound)) * correctAnswer * 1.0 / 100)));
+        int offset = (int)((errorLowerBound + random.nextInt(errorUpperBound - errorLowerBound)) * correctAnswer * 1.0 / 100);
+        return Integer.toString((int) (correctAnswer + Math.round(((random.nextBoolean()) ? 1 : -1) * offset)));
     }
 }

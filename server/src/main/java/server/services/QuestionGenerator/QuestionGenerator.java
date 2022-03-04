@@ -28,7 +28,7 @@ public class QuestionGenerator {
         System.out.println(questionDistribution);
 
         // add open questions
-        questionList.addAll(openQuestionsGenerator(questionDistribution.get(0),normalActions, smartActions));
+        questionList.addAll(openQuestionsGenerator(questionDistribution.get(0), normalActions, smartActions));
         // add knowledge questions
         questionList.addAll(knowledgeQuestionGenerator(questionDistribution.get(1), smartActions));
 

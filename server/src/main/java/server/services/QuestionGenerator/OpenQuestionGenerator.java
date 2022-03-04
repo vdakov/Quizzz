@@ -16,7 +16,7 @@ public class OpenQuestionGenerator {
     public static List<Pair<Question, String>> openQuestionsGenerator(Integer numberOfNeededQuestions, List<Action> normalActions, List<Action> smartActions) {
         List<Pair<Question, String>> questionList = new ArrayList<>();
 
-        for(int i = 0; i < numberOfNeededQuestions; i++) {
+        for (int i = 0; i < numberOfNeededQuestions; i++) {
             questionList.add(generateOpenQuestionFromAction(shiftActionsLeft((i % 2 == 0) ? smartActions : normalActions)));
         }
 
