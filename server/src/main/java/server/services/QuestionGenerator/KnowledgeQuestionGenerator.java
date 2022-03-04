@@ -40,7 +40,7 @@ public class KnowledgeQuestionGenerator {
 
     public static String generateKnowledgeAnswer(Integer correctAnswer, Integer errorLowerBound, Integer errorUpperBound) {
         Random random = new Random();
-        int offset = (int)((errorLowerBound + random.nextInt(errorUpperBound - errorLowerBound)) * correctAnswer * 1.0 / 100);
-        return Integer.toString((int) (correctAnswer + Math.round(((random.nextBoolean()) ? 1 : -1) * offset)));
+        int offset = (int) ((errorLowerBound + random.nextInt(errorUpperBound - errorLowerBound)) * correctAnswer * 1.0 / 100);
+        return Integer.toString((correctAnswer + Math.round(((random.nextBoolean()) ? 1 : -1) * offset)));
     }
 }
