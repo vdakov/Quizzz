@@ -57,6 +57,6 @@ public class Action {
 
     public static boolean isSmart(Action action) {
         // to be implemented
-        return true;
+        return (Integer.parseInt(action.id) % 2 == 0);
     }
 }

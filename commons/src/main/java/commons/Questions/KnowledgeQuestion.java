@@ -1,17 +1,14 @@
 package commons.Questions;
 
+import java.util.List;
+
 public class KnowledgeQuestion extends Question {
 
     private String question;
-    private String firstOption;
-    private String secondOption;
-    private String thirdOption;
+    private List<String> options;
 
-    public KnowledgeQuestion(String question, String firstOption, String secondOption, String thirdOption) {
+    public KnowledgeQuestion(String question, List<String> options) {
         this.question = question;
-        this.firstOption = firstOption;
-        this.secondOption = secondOption;
-        this.thirdOption = thirdOption;
+        this.options = options;
     }
-
 }

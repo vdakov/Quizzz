@@ -13,11 +13,12 @@ import static server.services.QuestionGenerator.QuestionGenerator.makeQuestionFr
 
 public class OpenQuestionGenerator {
 
-    public static List<Pair<Question, String>> openQuestionsGenerator(List<Action> normalActions, List<Action> smartActions) {
+    public static List<Pair<Question, String>> openQuestionsGenerator(Integer numberOfNeededQuestions, List<Action> normalActions, List<Action> smartActions) {
         List<Pair<Question, String>> questionList = new ArrayList<>();
 
-        questionList.add(generateOpenQuestionFromAction(shiftActionsLeft(smartActions)));
-        questionList.add(generateOpenQuestionFromAction(shiftActionsLeft(normalActions)));
+        for(int i = 0; i < numberOfNeededQuestions; i++) {
+            questionList.add(generateOpenQuestionFromAction(shiftActionsLeft((i % 2 == 0) ? smartActions : normalActions)));
+        }
 
         return questionList;
     }
