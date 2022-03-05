@@ -2,9 +2,12 @@ package commons.Questions;
 
 public class OpenQuestion extends Question {
 
-    private String question;
-
+    /**
+     * Instantiating the question statement for an open question
+     *
+     * @param question the String representing the question statement
+     */
     public OpenQuestion(String question) {
-        this.question = question;
+        super(question);
     }
 }
