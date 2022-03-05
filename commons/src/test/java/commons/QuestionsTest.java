@@ -68,9 +68,9 @@ class QuestionsTest {
         expected.add("Driving 1000km with a truck");
         expected.add("Watching TV for 10 years");
 
-        KnowledgeQuestion knowledgeQuestion = new KnowledgeQuestion(questionStatement, options);
+        ComparisonQuestion comparisonQuestion = new ComparisonQuestion(questionStatement, options);
 
-        assertEquals(expected, knowledgeQuestion.getOptions());
+        assertEquals(expected, comparisonQuestion.getOptions());
     }
 
     @Test

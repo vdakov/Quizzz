@@ -4,7 +4,7 @@ import java.util.List;
 
 public class ComparisonQuestion extends Question {
 
-    private List<String> options;
+    private final List<String> options;
 
     /**
      * Constructor for instantiating a question with the question statement and the

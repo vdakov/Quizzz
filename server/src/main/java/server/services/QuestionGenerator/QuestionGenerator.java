@@ -2,7 +2,6 @@ package server.services.QuestionGenerator;
 
 import commons.Questions.Question;
 import org.springframework.data.util.Pair;
-import server.entities.Actions.Action;
 import server.entities.Actions.ActionCatalog;
 
 import java.util.ArrayList;
@@ -16,29 +15,22 @@ import static server.services.QuestionGenerator.UtilMethods.generateRandomQuesti
 
 public class QuestionGenerator {
 
+    public static List<Pair<Question, String>> generateQuestions(ActionCatalog actionCatalog, Random random) {
 
-    public static List<Pair<Question, String>> generateQuestions(ActionCatalog actionCatalog) {
+        List<Pair<Question, String>> questionWithAnswerList = new ArrayList<>();
 
-        List<Pair<Question, String>> questionList = new ArrayList<>();
+        actionCatalog.shuffleNormalActions();
+        actionCatalog.shuffleSmartActions();
 
-        List<Action> normalActions = actionCatalog.getShuffledNormalActions();
-        List<Action> smartActions = actionCatalog.getShuffledSmartActions();
-
-        List<Integer> questionDistribution = generateRandomQuestionDistribution(4, 20, 2, 7, new Random());
-        System.out.println(questionDistribution);
+        List<Integer> questionDistribution = generateRandomQuestionDistribution(4, 20, 2, 7, random);
 
         // add open questions
-        questionList.addAll(openQuestionsGenerator(questionDistribution.get(0), normalActions, smartActions));
+        questionWithAnswerList.addAll(openQuestionsGenerator(questionDistribution.get(0), actionCatalog, random));
         // add knowledge questions
-        questionList.addAll(knowledgeQuestionGenerator(questionDistribution.get(1), smartActions));
+        questionWithAnswerList.addAll(knowledgeQuestionGenerator(questionDistribution.get(1), actionCatalog, random));
 
 
-
-        Collections.shuffle(questionList);
-        return questionList;
-    }
-
-    public static String makeQuestionFromStatement(String statement) {
-        return "What is the energy consumption of " + statement;
+        Collections.shuffle(questionWithAnswerList);
+        return questionWithAnswerList;
     }
 }
