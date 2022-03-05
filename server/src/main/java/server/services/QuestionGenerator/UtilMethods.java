@@ -1,7 +1,5 @@
 package server.services.QuestionGenerator;
 
-import server.entities.Actions.Action;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;

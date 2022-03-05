@@ -18,7 +18,7 @@ public class OpenQuestionGenerator {
         List<Pair<Question, String>> openQuestionsWithAnswersList = new ArrayList<>();
 
         for (int i = 0; i < numberOfNeededQuestions; i++) {
-            openQuestionsWithAnswersList.add(generateOpenQuestionFromAction((random.nextBoolean() == true) ? actionCatalog.getSmartAction(): actionCatalog.getNormalAction()));
+            openQuestionsWithAnswersList.add(generateOpenQuestionFromAction((random.nextBoolean() == true) ? actionCatalog.getSmartAction() : actionCatalog.getNormalAction()));
         }
 
         return openQuestionsWithAnswersList;
