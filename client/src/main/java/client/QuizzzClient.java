@@ -2,10 +2,7 @@ package client;
 
 import static com.google.inject.Guice.createInjector;
 
-import client.controllers.AddActionActivityCtrl;
-import client.controllers.OverviewActionsActivityCtrl;
-import client.controllers.QuestionActivityCtrl;
-import client.controllers.SceneCtrl;
+import client.controllers.*;
 
 import javafx.application.Application;
 
@@ -43,8 +40,11 @@ public class QuizzzClient extends Application {
         var overviewActivity  = FXML_CONFIG.load(OverviewActionsActivityCtrl.class, "scenes", "OverviewActionsScene.fxml");
         var addActivity           = FXML_CONFIG.load(AddActionActivityCtrl.class, "scenes", "AddActionScene.fxml");
         var questionsActivity      = FXML_CONFIG.load(QuestionActivityCtrl.class, "scenes", "QuestionScene.fxml");
+        var mainScreenActivity        = FXML_CONFIG.load(MainScreenCtrl.class, "scenes", "Main_Screen.fxml");
+
 
         var sceneCtrl = INJECTOR.getInstance(SceneCtrl.class);
-        sceneCtrl.initialize(primaryStage, overviewActivity, addActivity, questionsActivity);
+
+        sceneCtrl.initialize(primaryStage, mainScreenActivity, overviewActivity, addActivity, questionsActivity);
     }
 }

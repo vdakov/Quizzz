@@ -9,6 +9,9 @@ public class SceneCtrl {
 
     private Stage primaryStage;
 
+    private MainScreenCtrl mainScreenCtrl;
+    private Scene mainScreenScene;
+
     private OverviewActionsActivityCtrl overviewActionsActivityCtrl;
     private Scene overviewActionsScene;
 
@@ -26,10 +29,14 @@ public class SceneCtrl {
      * @param addActionActivityCtrlParentPair the loaded FXML scene with control for adding a new action
      * @param questionsActivityCtrlParentPair the loaded FXML scene with control for displaying a question
      */
-    public void initialize(Stage primaryStage, Pair<OverviewActionsActivityCtrl, Parent> overviewActionsActivityCtrlParentPair,
+    public void initialize(Stage primaryStage, Pair<MainScreenCtrl, Parent> mainScreenCtrlParentPair,
+                                               Pair<OverviewActionsActivityCtrl, Parent> overviewActionsActivityCtrlParentPair,
                                                Pair<AddActionActivityCtrl, Parent> addActionActivityCtrlParentPair,
                                                Pair<QuestionActivityCtrl, Parent> questionsActivityCtrlParentPair) {
         this.primaryStage = primaryStage;
+
+        this.mainScreenCtrl              = mainScreenCtrlParentPair.getKey();
+        this.mainScreenScene             = new Scene(mainScreenCtrlParentPair.getValue());
 
         this.overviewActionsActivityCtrl = overviewActionsActivityCtrlParentPair.getKey();
         this.overviewActionsScene        = new Scene(overviewActionsActivityCtrlParentPair.getValue());
@@ -40,8 +47,21 @@ public class SceneCtrl {
         this.questionActivityCtrl        = questionsActivityCtrlParentPair.getKey();
         this.questionScene               = new Scene(questionsActivityCtrlParentPair.getValue());
 
-        showQuestionScene();
+        showMainScreenScene();
+        //showQuestionScene();
         primaryStage.show();
+    }
+
+    /**
+     * Displays the main screen
+     */
+
+    public void showMainScreenScene()
+    {
+        primaryStage.setTitle("Main Screen");
+        primaryStage.setScene(mainScreenScene);
+        Stage stage = (Stage) mainScreenScene.getWindow();
+        stage.show();
     }
 
     /**
