@@ -1,4 +1,4 @@
-package server.controllers.Actions;
+package server.entities.Actions;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -70,7 +70,7 @@ public class ActionCatalog {
         int  firstNewUpperBound = (int) (referencePoint - (lowerBoundDifferencePercentage * 1.0 / 100) * referencePoint);
 
         Action searchResult = searchForConsumption(firstNewLowerBound, firstNewUpperBound);
-        if(searchResult != null) {
+        if (searchResult != null) {
             return searchResult;
         }
 
@@ -78,7 +78,7 @@ public class ActionCatalog {
         int  secondNewUpperBound = (int) (referencePoint + (lowerBoundDifferencePercentage * 1.0 / 100) * referencePoint);
 
         searchResult = searchForConsumption(secondNewLowerBound, secondNewUpperBound);
-        if(searchResult != null) {
+        if (searchResult != null) {
             return searchResult;
         }
 
@@ -86,20 +86,20 @@ public class ActionCatalog {
     }
 
     public Action searchForConsumption(int lowerBound, int upperBound) {
-        for(Action action : normalActions) {
-            if(lowerBound < action.getConsumption() && action.getConsumption() < upperBound) {
+        for (Action action : normalActions) {
+            if (lowerBound < action.getConsumption() && action.getConsumption() < upperBound) {
                 return action;
             }
         }
 
-        for(Action action : smartActions) {
-            if(lowerBound < action.getConsumption() && action.getConsumption() < upperBound) {
+        for (Action action : smartActions) {
+            if (lowerBound < action.getConsumption() && action.getConsumption() < upperBound) {
                 return action;
             }
         }
 
-        for(Action action : usedSmartActions) {
-            if(lowerBound < action.getConsumption() && action.getConsumption() < upperBound) {
+        for (Action action : usedSmartActions) {
+            if (lowerBound < action.getConsumption() && action.getConsumption() < upperBound) {
                 return action;
             }
         }
