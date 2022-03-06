@@ -9,6 +9,7 @@ import server.controllers.Actions.ActionCatalog;
 
 import java.util.ArrayList;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -37,15 +38,17 @@ public class ComparisonQuestionGenerator {
         options.add(secondAction.getTitle());
         options.add(thirdAction.getTitle());
 
+        Collections.shuffle(options);
+
         int sign = (random.nextBoolean()) ? 1 : -1;
 
         ComparisonQuestion comparisonQuestion = new ComparisonQuestion(makeComparisonStatement(sign), options);
 
-        return Pair.of(comparisonQuestion, Integer.toString(Math.max(sign * firstAction.getConsumption(), Math.max(sign * secondAction.getConsumption(), sign * thirdAction.getConsumption()))));
+        return Pair.of(comparisonQuestion, Integer.toString(sign * Math.max(sign * firstAction.getConsumption(), Math.max(sign * secondAction.getConsumption(), sign * thirdAction.getConsumption()))));
     }
 
     public static String makeComparisonStatement(int sign) {
-        return ((sign == 1) ? "Which of the following activities consumes the most amount of energy" : "Which of the following activities consumes the most amount of energy");
+        return ((sign == 1) ? "Which of the following activities consumes the most amount of energy?" : "Which of the following activities consumes the least amount of energy?");
     }
 
 }
