@@ -1,6 +1,7 @@
 package commons.Questions;
 
 import java.util.List;
+import java.util.Random;
 
 public class ComparisonQuestion extends Question {
 

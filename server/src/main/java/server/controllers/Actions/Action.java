@@ -1,4 +1,4 @@
-package server.entities.Actions;
+package server.controllers.Actions;
 
 public class Action {
     private final String  id;
