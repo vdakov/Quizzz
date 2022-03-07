@@ -2,6 +2,7 @@ package client.controllers;
 
 import client.communication.ServerUtils;
 import com.google.inject.Inject;
+import commons.Action;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

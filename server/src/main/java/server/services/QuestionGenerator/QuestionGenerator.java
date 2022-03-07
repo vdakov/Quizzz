@@ -20,12 +20,12 @@ public class QuestionGenerator {
     // created to manually check the result
     public static void main(String[] args) {
         ActionCatalog actionCatalog = new ActionCatalog();
-        actionCatalog.addAction(new Action("1", "Mining 1 Bitcoin", 1000, null));
-        actionCatalog.addAction(new Action("2", "Cycling between Rotterdam and Hague", 900, null));
-        actionCatalog.addAction(new Action("3", "Playing computer games for 20 days", 1100, null));
-        actionCatalog.addAction(new Action("4", "Doing 15 searches on the internet", 1500, null));
-        actionCatalog.addAction(new Action("5", "Boiling a bottle of watter", 500, null));
-        actionCatalog.addAction(new Action("6", "Walking between Delft and Hague", 1750, null));
+//        actionCatalog.addAction(new Action("1", "Mining 1 Bitcoin", 1000, null, source));
+//        actionCatalog.addAction(new Action("2", "Cycling between Rotterdam and Hague", 900, null, source));
+//        actionCatalog.addAction(new Action("3", "Playing computer games for 20 days", 1100, null, source));
+//        actionCatalog.addAction(new Action("4", "Doing 15 searches on the internet", 1500, null, source));
+//        actionCatalog.addAction(new Action("5", "Boiling a bottle of watter", 500, null, source));
+//        actionCatalog.addAction(new Action("6", "Walking between Delft and Hague", 1750, null, source));
 
         Random random = new Random();
 

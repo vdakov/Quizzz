@@ -2,7 +2,7 @@ package commons;
 
 import javax.persistence.*;
 
-@Entity
+
 public class Action {
     @Id
     @SequenceGenerator(
