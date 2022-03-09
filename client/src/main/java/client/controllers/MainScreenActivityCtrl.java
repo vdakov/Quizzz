@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
-public class MainScreenCtrl {
+public class MainScreenActivityCtrl {
 
 
       /*  private final ServerUtils server;
@@ -25,8 +25,8 @@ public class MainScreenCtrl {
         this.server = server;
         this.sceneCtrl = sceneCtrl;
     }
+*/
 
-       */
 
         private Scene scene;
         private Stage stage;
@@ -34,11 +34,12 @@ public class MainScreenCtrl {
 
         public void enterSoloGame (ActionEvent event) throws IOException {
 
-            root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("jetbrains://idea/navigate/reference?project=quizzzz&path=scenes/QuestionScene.fxml")));
+            root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("QuestionScene.fxml")));
             stage = (Stage) ( (Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
+
 
     }
 }

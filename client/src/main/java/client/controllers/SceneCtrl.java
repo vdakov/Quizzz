@@ -9,7 +9,7 @@ public class SceneCtrl {
 
     private Stage primaryStage;
 
-    private MainScreenCtrl mainScreenCtrl;
+    private MainScreenActivityCtrl mainScreenActivityCtrl;
     private Scene mainScreenScene;
 
     private OverviewActionsActivityCtrl overviewActionsActivityCtrl;
@@ -29,13 +29,13 @@ public class SceneCtrl {
      * @param addActionActivityCtrlParentPair the loaded FXML scene with control for adding a new action
      * @param questionsActivityCtrlParentPair the loaded FXML scene with control for displaying a question
      */
-    public void initialize(Stage primaryStage, Pair<MainScreenCtrl, Parent> mainScreenCtrlParentPair,
+    public void initialize(Stage primaryStage, Pair<MainScreenActivityCtrl, Parent> mainScreenCtrlParentPair,
                                                Pair<OverviewActionsActivityCtrl, Parent> overviewActionsActivityCtrlParentPair,
                                                Pair<AddActionActivityCtrl, Parent> addActionActivityCtrlParentPair,
                                                Pair<QuestionActivityCtrl, Parent> questionsActivityCtrlParentPair) {
         this.primaryStage = primaryStage;
 
-        this.mainScreenCtrl              = mainScreenCtrlParentPair.getKey();
+        this.mainScreenActivityCtrl = mainScreenCtrlParentPair.getKey();
         this.mainScreenScene             = new Scene(mainScreenCtrlParentPair.getValue());
 
         this.overviewActionsActivityCtrl = overviewActionsActivityCtrlParentPair.getKey();
@@ -47,8 +47,9 @@ public class SceneCtrl {
         this.questionActivityCtrl        = questionsActivityCtrlParentPair.getKey();
         this.questionScene               = new Scene(questionsActivityCtrlParentPair.getValue());
 
+
+        showQuestionScene();
         showMainScreenScene();
-        //showQuestionScene();
         primaryStage.show();
     }
 
