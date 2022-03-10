@@ -4,8 +4,7 @@ import commons.Questions.ComparisonQuestion;
 
 import commons.Questions.Question;
 import org.springframework.data.util.Pair;
-import server.entities.Actions.Action;
-import server.entities.Actions.ActionCatalog;
+import commons.Actions.*;
 
 import java.util.ArrayList;
 

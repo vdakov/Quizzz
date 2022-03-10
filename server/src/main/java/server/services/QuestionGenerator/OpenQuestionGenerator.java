@@ -3,8 +3,7 @@ package server.services.QuestionGenerator;
 import commons.Questions.OpenQuestion;
 import commons.Questions.Question;
 import org.springframework.data.util.Pair;
-import server.entities.Actions.Action;
-import server.entities.Actions.ActionCatalog;
+import commons.Actions.*;
 
 import java.util.ArrayList;
 import java.util.List;

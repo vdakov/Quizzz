@@ -1,4 +1,4 @@
-package server.entities.Actions;
+package commons.Actions;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,8 +12,8 @@ public class ActionCatalog {
     private List<Action> usedSmartActions;
 
     public ActionCatalog() {
-        this.normalActions    = new ArrayList<>();
-        this.smartActions     = new ArrayList<>();
+        this.normalActions = new ArrayList<>();
+        this.smartActions = new ArrayList<>();
         this.usedSmartActions = new ArrayList<>();
     }
 
@@ -66,16 +66,16 @@ public class ActionCatalog {
 
     public Action getAction(int referencePoint, int lowerBoundDifferencePercentage, int upperBoundDifferencePercentage, Random random) {
         // start searching lower
-        int  firstNewLowerBound = (int) (referencePoint - (upperBoundDifferencePercentage * 1.0 / 100) * referencePoint);
-        int  firstNewUpperBound = (int) (referencePoint - (lowerBoundDifferencePercentage * 1.0 / 100) * referencePoint);
+        int firstNewLowerBound = (int) (referencePoint - (upperBoundDifferencePercentage * 1.0 / 100) * referencePoint);
+        int firstNewUpperBound = (int) (referencePoint - (lowerBoundDifferencePercentage * 1.0 / 100) * referencePoint);
 
         Action searchResult = searchForConsumption(firstNewLowerBound, firstNewUpperBound);
         if (searchResult != null) {
             return searchResult;
         }
 
-        int  secondNewLowerBound = (int) (referencePoint + (upperBoundDifferencePercentage * 1.0 / 100) * referencePoint);
-        int  secondNewUpperBound = (int) (referencePoint + (lowerBoundDifferencePercentage * 1.0 / 100) * referencePoint);
+        int secondNewLowerBound = (int) (referencePoint + (upperBoundDifferencePercentage * 1.0 / 100) * referencePoint);
+        int secondNewUpperBound = (int) (referencePoint + (lowerBoundDifferencePercentage * 1.0 / 100) * referencePoint);
 
         searchResult = searchForConsumption(secondNewLowerBound, secondNewUpperBound);
         if (searchResult != null) {
