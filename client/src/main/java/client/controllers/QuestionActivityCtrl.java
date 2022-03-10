@@ -17,6 +17,7 @@ public class QuestionActivityCtrl {
     private final SceneCtrl sceneCtrl;
     private Action question;
     private int pointsInt;
+    private int pointsGainedInt;
     @FXML
     private Label sampleQuestion;
     @FXML
@@ -26,7 +27,11 @@ public class QuestionActivityCtrl {
     @FXML
     private Label points;
     @FXML
+    private Label pointsGained;
+    @FXML
     private String correctAnswer;
+    @FXML
+    private Label showCorrectAnswer;
 
 
     //Constructor for the Question Controller

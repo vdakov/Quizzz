@@ -6,9 +6,19 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import java.awt.Image?>
+<?import javafx.scene.image.ImageView?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="client.controllers.QuestionTransitionCtrl"
+            fx:controller="client.controllers.QuestionActivityCtrl"
             prefHeight="400.0" prefWidth="600.0">
-
+    <children>
+        <ImageView fitHeight="57.0" fitWidth="57.0" layoutX="23.0" layoutY="22.0">
+            <image>
+            </image>
+        </ImageView>
+        <Label fx:id="points" layoutX="485.0" layoutY="14.0" prefHeight="32.0" prefWidth="118.0" text="Points: Amount" />
+        <Label fx:id="addedPoints" layoutX="485.0" layoutY="14.0" prefHeight="32.0" prefWidth="118.0" text="+Amount" />
+        <Label fx:id="showCorrectAnswer" />
+    </children>
 </AnchorPane>
