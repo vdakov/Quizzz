@@ -19,7 +19,8 @@ import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 
 import java.util.List;
 
-import commons.Action;
+import commons.ActionOld;
+import commons.Actions.Action;
 import org.glassfish.jersey.client.ClientConfig;
 
 import jakarta.ws.rs.client.ClientBuilder;
@@ -32,11 +33,21 @@ public class ServerUtils {
 
     /**
      * Gets the activities from the server
+     *
      * @return the list of activities from the server
      */
     public List<Action> getActivities() {
         return ClientBuilder.newClient(new ClientConfig()) //
-                .target(SERVER).path("api/activities") //
+                .target(SERVER).path("api/activities/list") //
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .get(new GenericType<>() {
+                });
+    }
+
+    public Action getRandomAction() {
+        return ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/activities/random") //
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
                 .get(new GenericType<>() {
@@ -45,14 +56,27 @@ public class ServerUtils {
 
     /**
      * Sends a new activity to the server
+     *
      * @param a the action that will be added
      * @return the action that was added
      */
-    public Action addActivity(Action a) {
+    public ActionOld addActivity(ActionOld a) {
         return ClientBuilder.newClient(new ClientConfig()) //
                 .target(SERVER).path("api/activities") //
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
-                .post(Entity.entity(a, APPLICATION_JSON), Action.class);
+                .post(Entity.entity(a, APPLICATION_JSON), ActionOld.class);
+    }
+
+    public void deleteActivity(String id) {
+        ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/activities/delete/" + id) //
+                .request().delete(); //;
+    }
+
+    public void alert() {
+        ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/activities/alert") //
+                .request().get(); //;
     }
 }

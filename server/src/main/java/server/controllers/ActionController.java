@@ -1,9 +1,9 @@
 package server.controllers;
 
-import commons.Action;
-import org.springframework.http.ResponseEntity;
+
+
 import org.springframework.web.bind.annotation.*;
-import server.repositories.ActivityRepository;
+import commons.Actions.Action;
 
 import java.util.List;
 
@@ -11,35 +11,31 @@ import java.util.List;
 @RequestMapping("api/activities")
 public class ActionController {
 
-    private ActivityRepository repo; //the repository containing the JSONs of activities
+
+    private ActionService service; //serves the controller with all sorts of "business" methods
 
 
-    public ActionController(ActivityRepository repo) {
-        this.repo = repo;
+    public ActionController(ActionService service) {
+        this.service = service;
     }
 
-    public ActivityRepository getRepo() {
-        return repo;
+    @GetMapping("/list")
+    public Iterable<Action> list() {
+        return service.list();
     }
+
 
     //sends GET HTTP response to client through the ID of the JSON if it exists
     @GetMapping("/{id}")
-    public ResponseEntity<Action> getById(@PathVariable("id") Long id) {
-        getRepo().findAll();
-        return !getRepo().existsById(id) ? ResponseEntity.badRequest().build() : ResponseEntity.ok(getRepo().getById(id));
-    }
-
-    //returns all of the activities to the client in JSON format
-    @GetMapping(path = {"", "/"})
-    public List<Action> getAll() {
-        return getRepo().findAll();
+    public Action getById(@PathVariable("id") String id) {
+        return service.getById(id);
     }
 
 
-    //returns a random activity due to a GET request of the cleint
+    //returns a random activity due to a GET request of the client
     @GetMapping("/random")
     public Action getRandom() {
-        List<Action> activities = getRepo().findAll();
+        List<Action> activities = (List<Action>) service.list();
         return activities.get((int) Math.floor(Math.random() * activities.size()));
     }
 
@@ -47,46 +43,52 @@ public class ActionController {
     @PostMapping(path = {"", "/add"})
     public void add(@RequestBody Action a) {
         try {
-            int temp = a.getConsumption() + 1;
-            if (a.getTitle() != null && a.getSource() != null) getRepo().save(a);
+            if (a.getTitle() != null && a.getSource() != null) service.save(a);
         } catch (Exception e) {
             throw new IllegalStateException("POST Request Failed");
         }
     }
 
-
-    //allows the user to update all the fields of an activity except the ID, but only if the object with that ID already exists
-    @PutMapping(path = "/update/{id}")
-    public void update(@PathVariable("id") Long id,
-                       @RequestParam(required = false) String title,
-                       @RequestParam(required = false) int consumption,
-                       @RequestParam(required = false) String source) {
-
-
-        Action activity = getRepo().findById(id).orElseThrow(() -> new IllegalStateException(("No such activity!!!")));
-
-        if (title != null && title.length() > 0) {
-            activity.setTitle(title);
-        }
-
-        if (consumption > 0) {
-            activity.setConsumption(consumption);
-        }
-
-        if (source != null && source.length() > 0) {
-            activity.setSource(source);
-        }
-
-        getRepo().save(activity);
-
+    //test mapping to use as println cuz I am pretty bad at writing tests :(
+    @GetMapping("/alert")
+    public void alert() {
+        System.out.println("HELLO");
     }
+
 
     //Allows the user to delete an item from the repository if it exists through and HTTP DELETE Request
     @DeleteMapping(path = "/delete/{id}")
-    public void update(@PathVariable("id") Long id) {
-        Action activity = getRepo().findById(id).orElseThrow(() -> new IllegalStateException(("No such activity!!!")));
-        getRepo().delete(activity);
+    public void update(@PathVariable("id") String id) {
+        service.delete(id);
     }
+
+
+    //allows the user to update all the fields of an activity except the ID, but only if the object with that ID already exists
+//    @PutMapping(path = "/update/{id}")
+//    public void update(@PathVariable("id") String id,
+//                       @RequestParam(required = false) String image_path,
+//                       @RequestParam(required = false) String title,
+//                       @RequestParam(required = false) int consumption,
+//                       @RequestParam(required = false) String source) {
+//
+//        service.update(id, image_path, String title, consumption, source);
+//        Action activity = getRepo().findById(id).orElseThrow(() -> new IllegalStateException(("No such activity!!!")));
+//
+//        if (title != null && title.length() > 0) {
+//            activity.setTitle(title);
+//        }
+//
+//        if (consumption > 0) {
+//            activity.setConsumption(consumption);
+//        }
+//
+//        if (source != null && source.length() > 0) {
+//            activity.setSource(source);
+//        }
+//
+//        getRepo().save(activity);
+//
+//    }
 
 
 }
