@@ -72,7 +72,4 @@ public class SceneCtrl {
         questionActivityCtrl.initialize();
         stage.show();
     }
-
-
-
 }

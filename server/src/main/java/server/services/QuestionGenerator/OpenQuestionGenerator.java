@@ -2,7 +2,7 @@ package server.services.QuestionGenerator;
 
 import commons.Questions.OpenQuestion;
 import commons.Questions.Question;
-import org.springframework.data.util.Pair;
+import org.apache.commons.lang3.tuple.Pair;
 import server.entities.Actions.Action;
 import server.entities.Actions.ActionCatalog;
 
@@ -39,7 +39,7 @@ public class OpenQuestionGenerator {
      * @return a pair consisting of an open question and the answer to that question
      */
     public static Pair<Question, String> generateOpenQuestionFromAction(Action action) {
-        OpenQuestion openQuestion = new OpenQuestion(makeOpenQuestionFromActionTitle(action.getTitle()));
+        OpenQuestion openQuestion = new OpenQuestion(Pair.of(makeOpenQuestionFromActionTitle(action.getTitle()), action.getImagePath()));
         Integer correctAnswer = action.getConsumption();
 
         return Pair.of(openQuestion, Integer.toString(correctAnswer));

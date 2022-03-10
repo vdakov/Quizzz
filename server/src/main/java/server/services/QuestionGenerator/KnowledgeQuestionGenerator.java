@@ -2,7 +2,7 @@ package server.services.QuestionGenerator;
 
 import commons.Questions.KnowledgeQuestion;
 import commons.Questions.Question;
-import org.springframework.data.util.Pair;
+import org.apache.commons.lang3.tuple.Pair;
 import server.entities.Actions.Action;
 import server.entities.Actions.ActionCatalog;
 
@@ -33,7 +33,7 @@ public class KnowledgeQuestionGenerator {
         possibleAnswers.add(generateKnowledgeAnswer(correctAnswer, 50, 75, random));
         Collections.shuffle(possibleAnswers);
 
-        KnowledgeQuestion knowledgeQuestion = new KnowledgeQuestion(makeKnowledgeQuestionFromStatement(action.getTitle()), possibleAnswers);
+        KnowledgeQuestion knowledgeQuestion = new KnowledgeQuestion(Pair.of(makeKnowledgeQuestionFromStatement(action.getTitle()), action.getImagePath()), possibleAnswers);
 
         return Pair.of(knowledgeQuestion, Integer.toString(correctAnswer));
     }

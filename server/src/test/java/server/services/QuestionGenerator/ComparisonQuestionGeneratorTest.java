@@ -1,15 +1,13 @@
 package server.services.QuestionGenerator;
 
-import commons.Questions.Question;
 import org.junit.jupiter.api.Test;
-import org.springframework.data.util.Pair;
 import server.entities.Actions.Action;
 import server.entities.Actions.ActionCatalog;
 
 import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static server.services.QuestionGenerator.ComparisonQuestionGenerator.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static server.services.QuestionGenerator.ComparisonQuestionGenerator.makeComparisonStatement;
 
 class ComparisonQuestionGeneratorTest {
 
@@ -34,7 +32,7 @@ class ComparisonQuestionGeneratorTest {
     void generateComparisonQuestionFromActionTest() {
         ActionCatalog actionCatalog = createActionCatalog();
         Random random = new Random();
-        Pair<Question, String> questionAnswerPair = generateComparisonQuestionFromAction(actionCatalog, random);
+        //Pair<Question, String> questionAnswerPair = generateComparisonQuestionFromAction(actionCatalog, random);
 
         // check if the result respects the desired property
     }
