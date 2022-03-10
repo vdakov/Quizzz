@@ -64,32 +64,14 @@
             <Insets />
          </opaqueInsets>
       </TextField>
-      <ImageView fitHeight="38.0" fitWidth="44.0" GridPane.columnIndex="4" GridPane.rowIndex="6">
-         <image>
-            <Image url="@../../../../../../Desktop/747376.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="51.0" fitWidth="61.0" GridPane.columnIndex="7" GridPane.rowIndex="6">
-         <image>
-            <Image url="@../../../../../../Desktop/633781.png" />
-         </image>
-      </ImageView>
-      <ImageView blendMode="LIGHTEN" fitHeight="187.0" fitWidth="590.0" GridPane.columnIndex="4" GridPane.rowIndex="5">
-         <image>
-            <Image url="@../../../../../../Desktop/180b.jpg" />
-         </image>
-      </ImageView>
+
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff05" height="158.0" stroke="#caf0fa" strokeType="INSIDE" width="264.0" GridPane.columnIndex="6" GridPane.rowIndex="8" />
       <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="245.0" style="-fx-border-color: #c9f1fd; -fx-background-color: #5bc0de;" text="Multiplayer" textFill="WHITE" GridPane.columnIndex="7" GridPane.rowIndex="8">
          <font>
             <Font name="Chalkboard" size="18.0" />
          </font>
       </Button>
-      <ImageView fitHeight="89.0" fitWidth="113.0" GridPane.columnIndex="6" GridPane.rowIndex="4">
-         <image>
-            <Image url="@../../../../../../Desktop/energy-consumption.png" />
-         </image>
-      </ImageView>
+
       <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="     Multiplayer" textAlignment="RIGHT" wrappingWidth="196.21630859375" GridPane.columnIndex="7" GridPane.rowIndex="6">
          <font>
             <Font name="Chalkboard" size="24.0" />
