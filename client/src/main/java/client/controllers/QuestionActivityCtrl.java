@@ -98,7 +98,7 @@ public class QuestionActivityCtrl {
         answerCheck(answerRight.getText(), this.getAnswerRight());
 
         //changes the points value
-        pointsGained.setText( "+" +String.valueOf(pointsGainedInt));
+        pointsGained.setText( "+" + String.valueOf(pointsGainedInt));
 
 
         //sends the server a delete request to ensure the same activity does not appear twice
