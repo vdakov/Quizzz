@@ -86,8 +86,9 @@ public class QuestionActivityCtrl {
     public void answer(ActionEvent event) {
         Button current = (Button) event.getSource();
 
+        pointsGainedInt = 0;
         if (current.getText().equals(getCorrectAnswer())) {
-            pointsInt += 500; //global variable for points so it remembers it
+            pointsGainedInt = 500;
         }
 
         //uses the answerCheck method to highlight which the correct answer was
@@ -97,7 +98,8 @@ public class QuestionActivityCtrl {
         answerCheck(answerRight.getText(), this.getAnswerRight());
 
         //changes the points value
-        points.setText(String.valueOf(pointsInt));
+        pointsGained.setText("+"+String.valueOf(pointsGainedInt));
+
 
         //sends the server a delete request to ensure the same activity does not appear twice
         server.deleteActivity(question.getId());
@@ -107,6 +109,11 @@ public class QuestionActivityCtrl {
 
     //Event for when the "NEXT" button is pressed on the question screen
     public void next(ActionEvent event) {
+        //changes the points value
+        pointsInt += pointsGainedInt;
+        points.setText(String.valueOf("Current Points: "+pointsInt));
+        pointsGained.setText("");
+
         this.initialize();
     }
 
