@@ -1,9 +1,10 @@
 package server.services.QuestionGenerator;
 
+import commons.Exceptions.NotEnoughActivitiesException;
 import commons.Questions.OpenQuestion;
 import commons.Questions.Question;
 import org.apache.commons.lang3.tuple.Pair;
-import server.entities.Actions.Action;
+import commons.Actions.Action;
 import server.entities.Actions.ActionCatalog;
 
 import java.util.ArrayList;
@@ -22,8 +23,12 @@ public class OpenQuestionGenerator {
      * @param random                  the random instance that will be used for randomisation
      * @return a list of pairs consisting of an open question and the answer to that question
      */
-    public static List<Pair<Question, String>> openQuestionsGenerator(Integer numberOfNeededQuestions, ActionCatalog actionCatalog, Random random) {
+    public static List<Pair<Question, String>> openQuestionsGenerator(Integer numberOfNeededQuestions, ActionCatalog actionCatalog, Random random) throws NotEnoughActivitiesException {
         List<Pair<Question, String>> openQuestionsWithAnswersList = new ArrayList<>();
+
+        if (numberOfNeededQuestions * 1 > actionCatalog.getSmartActions().size() + actionCatalog.getNormalActions().size()) {
+            throw new NotEnoughActivitiesException();
+        }
 
         for (int i = 0; i < numberOfNeededQuestions; i++) {
             openQuestionsWithAnswersList.add(generateOpenQuestionFromAction((random.nextBoolean()) ? actionCatalog.getSmartAction() : actionCatalog.getNormalAction()));

@@ -1,6 +1,6 @@
 package server.controllers;
 
-import commons.Action;
+import commons.Actions.Action;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import server.repositories.ActivityRepository;
@@ -48,7 +48,7 @@ public class ActionController {
     public void add(@RequestBody Action a) {
         try {
             int temp = a.getConsumption() + 1;
-            if (a.getTitle() != null && a.getSource() != null) getRepo().save(a);
+            if (a.getTitle() != null) getRepo().save(a);
         } catch (Exception e) {
             throw new IllegalStateException("POST Request Failed");
         }
@@ -73,9 +73,9 @@ public class ActionController {
             activity.setConsumption(consumption);
         }
 
-        if (source != null && source.length() > 0) {
+        /*if (source != null && source.length() > 0) {
             activity.setSource(source);
-        }
+        }*/
 
         getRepo().save(activity);
 

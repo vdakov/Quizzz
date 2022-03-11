@@ -1,9 +1,10 @@
 package server.services.QuestionGenerator;
 
+import commons.Exceptions.NotEnoughActivitiesException;
 import commons.Questions.AlternativeQuestion;
 import commons.Questions.Question;
 import org.apache.commons.lang3.tuple.Pair;
-import server.entities.Actions.Action;
+import commons.Actions.Action;
 import server.entities.Actions.ActionCatalog;
 
 import java.util.ArrayList;
@@ -13,15 +14,12 @@ import java.util.Random;
 
 public class AlternativeQuestionGenerator {
 
-    /**
-     *
-     * @param numberOfNeededQuestions
-     * @param actionCatalog
-     * @param random
-     * @return
-     */
-    public static List<Pair<Question, String>> alternativeQuestionsGenerator(Integer numberOfNeededQuestions, ActionCatalog actionCatalog, Random random) {
+    public static List<Pair<Question, String>> alternativeQuestionsGenerator(Integer numberOfNeededQuestions, ActionCatalog actionCatalog, Random random) throws NotEnoughActivitiesException {
         List<Pair<Question, String>> alternativeQuestionWithAnswersList = new ArrayList<>();
+
+        if (numberOfNeededQuestions * 4 > actionCatalog.getSmartActions().size() + actionCatalog.getNormalActions().size()) {
+            throw new NotEnoughActivitiesException();
+        }
 
         for (int i = 0; i < numberOfNeededQuestions; i++) {
             alternativeQuestionWithAnswersList.add(generateAlternativeQuestionFromAction(actionCatalog, random));

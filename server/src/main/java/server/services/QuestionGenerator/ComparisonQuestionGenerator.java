@@ -1,9 +1,10 @@
 package server.services.QuestionGenerator;
 
+import commons.Exceptions.NotEnoughActivitiesException;
 import commons.Questions.ComparisonQuestion;
 import commons.Questions.Question;
 import org.apache.commons.lang3.tuple.Pair;
-import server.entities.Actions.Action;
+import commons.Actions.Action;
 import server.entities.Actions.ActionCatalog;
 
 import java.util.ArrayList;
@@ -14,8 +15,12 @@ import java.util.Random;
 public class ComparisonQuestionGenerator {
 
 
-    public static List<Pair<Question, String>> comparisonQuestionsGenerator(Integer numberOfNeededQuestions, ActionCatalog actionCatalog, Random random) {
+    public static List<Pair<Question, String>> comparisonQuestionsGenerator(Integer numberOfNeededQuestions, ActionCatalog actionCatalog, Random random) throws NotEnoughActivitiesException {
         List<Pair<Question, String>> comparisonQuestionWithAnswersList = new ArrayList<>();
+
+        if (numberOfNeededQuestions * 3 > actionCatalog.getSmartActions().size() + actionCatalog.getNormalActions().size()) {
+            throw new NotEnoughActivitiesException();
+        }
 
         for (int i = 0; i < numberOfNeededQuestions; i++) {
             comparisonQuestionWithAnswersList.add(generateComparisonQuestionFromAction(actionCatalog, random));

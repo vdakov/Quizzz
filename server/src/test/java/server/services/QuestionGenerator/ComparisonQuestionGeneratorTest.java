@@ -1,7 +1,7 @@
 package server.services.QuestionGenerator;
 
 import org.junit.jupiter.api.Test;
-import server.entities.Actions.Action;
+import commons.Actions.Action;
 import server.entities.Actions.ActionCatalog;
 
 import java.util.Random;

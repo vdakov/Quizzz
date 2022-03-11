@@ -3,7 +3,7 @@ package server.services.QuestionGenerator;
 import commons.Exceptions.NotEnoughActivitiesException;
 import commons.Questions.Question;
 import org.apache.commons.lang3.tuple.Pair;
-import server.entities.Actions.Action;
+import commons.Actions.Action;
 import server.entities.Actions.ActionCatalog;
 
 import java.util.ArrayList;
@@ -29,6 +29,7 @@ public class QuestionGenerator {
         actionCatalog.addAction(new Action("5", "Boiling a bottle of watter", 500, "path"));
         actionCatalog.addAction(new Action("6", "Walking between Delft and Hague", 1750, "path"));
 
+
         Random random = new Random();
 
         // to generate more questions there is the need for more activities ( rn the code breaks if there are not
@@ -37,7 +38,7 @@ public class QuestionGenerator {
             List<Pair<Question, String>> questions = generateQuestions(actionCatalog, 1, 0, 2, random);
             System.out.println(questions);
         } catch (NotEnoughActivitiesException e) {
-            System.out.println(e);
+            System.out.println("Not enough activities exception found");
         }
     }
 

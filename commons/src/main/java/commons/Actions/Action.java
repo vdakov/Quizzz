@@ -1,10 +1,10 @@
-package server.entities.Actions;
+package commons.Actions;
 
 public class Action {
-    private final String  id;
-    private final String  title;
-    private final Integer consumption;
-    private final String  imagePath;
+    private String  id;
+    private String  title;
+    private Integer consumption;
+    private String  imagePath;
 
     /**
      * Constructor to create a new action
@@ -19,6 +19,22 @@ public class Action {
         this.title       = title;
         this.consumption = consumption;
         this.imagePath   = imagePath;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setConsumption(Integer consumption) {
+        this.consumption = consumption;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     /**
