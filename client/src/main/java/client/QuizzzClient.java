@@ -17,14 +17,15 @@ import java.net.URISyntaxException;
 
 public class QuizzzClient extends Application {
 
-    private static final Injector   INJECTOR    = createInjector(new ModuleConfig());
+    private static final Injector INJECTOR = createInjector(new ModuleConfig());
     private static final FXMLConfig FXML_CONFIG = new FXMLConfig(INJECTOR);
 
     /**
      * The main method that launches the client-side app
+     *
      * @param args the arguments for running the app
      * @throws URISyntaxException is thrown when a URI without the correct format is parsed
-     * @throws IOException is thrown when an error regarding Input or Output occurs while the app runs
+     * @throws IOException        is thrown when an error regarding Input or Output occurs while the app runs
      */
     public static void main(String[] args) throws URISyntaxException, IOException {
         launch(QuizzzClient.class, args);
@@ -32,19 +33,20 @@ public class QuizzzClient extends Application {
 
     /**
      * Initializes the first stage of the app with all the needed scenes
+     *
      * @param primaryStage represents the main stage of the app
      * @throws IOException is thrown when an error regarding Input or Output occurs while the app runs
      */
     @Override
     public void start(Stage primaryStage) throws IOException {
-        var overviewActivity  = FXML_CONFIG.load(OverviewActionsActivityCtrl.class, "scenes", "OverviewActionsScene.fxml");
-        var addActivity           = FXML_CONFIG.load(AddActionActivityCtrl.class, "scenes", "AddActionScene.fxml");
-        var questionsActivity      = FXML_CONFIG.load(QuestionActivityCtrl.class, "scenes", "QuestionScene.fxml");
-        var mainScreenActivity        = FXML_CONFIG.load(MainScreenActivityCtrl.class, "scenes", "MainScreenScene.fxml");
-
+        var overviewActivity = FXML_CONFIG.load(OverviewActionsActivityCtrl.class, "scenes", "OverviewActionsScene.fxml");
+        var addActivity = FXML_CONFIG.load(AddActionActivityCtrl.class, "scenes", "AddActionScene.fxml");
+        var questionsActivity = FXML_CONFIG.load(QuestionActivityCtrl.class, "scenes", "QuestionScene.fxml");
+        var mainScreenActivity = FXML_CONFIG.load(MainScreenActivityCtrl.class, "scenes", "MainScreenScene.fxml");
+        var singleplayerLeaderboard = FXML_CONFIG.load(SingleplayerLeaderboardCtrl.class, "scenes", "SingleplayerLeaderboardScene.fxml");
 
         var sceneCtrl = INJECTOR.getInstance(SceneCtrl.class);
 
-        sceneCtrl.initialize(primaryStage, mainScreenActivity, overviewActivity, addActivity, questionsActivity);
+        sceneCtrl.initialize(primaryStage, mainScreenActivity, overviewActivity, addActivity, questionsActivity, singleplayerLeaderboard);
     }
 }

@@ -21,6 +21,9 @@ public class SceneCtrl {
     private QuestionActivityCtrl questionActivityCtrl;
     private Scene questionScene;
 
+    private SingleplayerLeaderboardCtrl singleplayerLeaderboardCtrl;
+    private Scene singleplayerLeaderboardScene;
+
     /**
      * Initialising the app scene with the primary stage and every scene that will be used in this stage
      *
@@ -30,13 +33,14 @@ public class SceneCtrl {
      * @param questionsActivityCtrlParentPair       the loaded FXML scene with control for displaying a question
      */
     public void initialize(Stage primaryStage, Pair<MainScreenActivityCtrl, Parent> mainScreenCtrlParentPair,
-                                               Pair<OverviewActionsActivityCtrl, Parent> overviewActionsActivityCtrlParentPair,
-                                               Pair<AddActionActivityCtrl, Parent> addActionActivityCtrlParentPair,
-                                               Pair<QuestionActivityCtrl, Parent> questionsActivityCtrlParentPair) {
+                           Pair<OverviewActionsActivityCtrl, Parent> overviewActionsActivityCtrlParentPair,
+                           Pair<AddActionActivityCtrl, Parent> addActionActivityCtrlParentPair,
+                           Pair<QuestionActivityCtrl, Parent> questionsActivityCtrlParentPair,
+                           Pair<SingleplayerLeaderboardCtrl, Parent> singleplayerLeaderboardCtrlParentPair) {
         this.primaryStage = primaryStage;
 
         this.mainScreenActivityCtrl = mainScreenCtrlParentPair.getKey();
-        this.mainScreenScene             = new Scene(mainScreenCtrlParentPair.getValue());
+        this.mainScreenScene = new Scene(mainScreenCtrlParentPair.getValue());
 
         this.overviewActionsActivityCtrl = overviewActionsActivityCtrlParentPair.getKey();
         this.overviewActionsScene = new Scene(overviewActionsActivityCtrlParentPair.getValue());
@@ -47,6 +51,8 @@ public class SceneCtrl {
         this.questionActivityCtrl = questionsActivityCtrlParentPair.getKey();
         this.questionScene = new Scene(questionsActivityCtrlParentPair.getValue());
 
+        this.singleplayerLeaderboardCtrl = singleplayerLeaderboardCtrlParentPair.getKey();
+        this.singleplayerLeaderboardScene = new Scene(singleplayerLeaderboardCtrlParentPair.getValue());
 
         showQuestionScene();
         showMainScreenScene();
@@ -57,8 +63,7 @@ public class SceneCtrl {
      * Displays the main screen
      */
 
-    public void showMainScreenScene()
-    {
+    public void showMainScreenScene() {
         primaryStage.setTitle("Main Screen");
         primaryStage.setScene(mainScreenScene);
         Stage stage = (Stage) mainScreenScene.getWindow();
@@ -94,5 +99,10 @@ public class SceneCtrl {
         stage.show();
     }
 
-
+    public void showSingleplayerLeaderboardScene() {
+        primaryStage.setTitle("Singleplayer Leaderboard");
+        primaryStage.setScene(singleplayerLeaderboardScene);
+        Stage stage = (Stage) mainScreenScene.getWindow();
+        stage.show();
+    }
 }
