@@ -2,8 +2,8 @@ package server.services.QuestionGenerator;
 
 import commons.Questions.OpenQuestion;
 import commons.Questions.Question;
-import org.springframework.data.util.Pair;
 import commons.Actions.*;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
