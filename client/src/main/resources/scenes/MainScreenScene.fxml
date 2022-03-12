@@ -38,7 +38,7 @@
       <RowConstraints maxHeight="600.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff05" height="219.0" stroke="#caf0fa" strokeType="INSIDE" width="298.0" GridPane.columnIndex="3" GridPane.rowIndex="8" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff05" height="219.0" stroke="#caf0fa" strokeType="INSIDE" width="291.0" GridPane.columnIndex="3" GridPane.rowIndex="8" />
       <Text fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="Quizzzz" textAlignment="RIGHT" wrappingWidth="425.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
          <font>
             <Font name="Chalkboard" size="96.0" />

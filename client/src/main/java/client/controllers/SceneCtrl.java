@@ -85,8 +85,8 @@ public class SceneCtrl {
         showQuestionWhatIsScene();
         showQuestionGuessXScene();
         showQuestionHowMuchScene();
-        showMainScreenScene();
-        showQuestionInsteadOfScene();
+       // showQuestionInsteadOfScene();
+       // showMainScreenScene();
         primaryStage.show();
     }
 
@@ -123,6 +123,7 @@ public class SceneCtrl {
         primaryStage.setTitle("Question Screen How Much");
         primaryStage.setScene(questionHowMuchScene);
         Stage stage = (Stage) questionHowMuchScene.getWindow();
+        questionSceneHowMuchActivityCtrl.initialize();
         stage.show();
     }
 
