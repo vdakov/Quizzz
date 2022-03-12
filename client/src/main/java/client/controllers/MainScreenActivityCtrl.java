@@ -1,6 +1,8 @@
 package client.controllers;
 
 
+import client.communication.ServerUtils;
+import com.google.inject.Inject;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,6 +21,16 @@ public class MainScreenActivityCtrl {
 
         @FXML
         Button enterSoloGame;
+
+        private final ServerUtils server;
+        private final SceneCtrl sceneCtrl;
+
+        //Constructor for the Main Screen Controller
+        @Inject
+        public MainScreenActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
+        this.server = server;
+        this.sceneCtrl = sceneCtrl;
+    }
 
         private Scene scene;
         private Stage stage;

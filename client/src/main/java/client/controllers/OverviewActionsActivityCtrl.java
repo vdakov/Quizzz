@@ -71,4 +71,5 @@ public class OverviewActionsActivityCtrl implements Initializable {
         data = FXCollections.observableList(activities);
         table.setItems(data);
     }
+
 }
