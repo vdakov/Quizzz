@@ -46,7 +46,7 @@
             <Font name="Chalkboard" size="18.0" />
          </font>
       </Label>
-      <Button fx:id="exitButton" mnemonicParsing="false" prefHeight="32.0" prefWidth="68.0" style="-fx-background-color: #5bc0de; -fx-border-color: #c9f1fd;" text="Home" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <Button fx:id="goToMainScreen" mnemonicParsing="false" onAction="#goToMainScreen" prefHeight="32.0" prefWidth="68.0" style="-fx-background-color: #5bc0de; -fx-border-color: #c9f1fd;" text="Home" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <font>
             <Font size="14.0" />
          </font>

@@ -84,9 +84,9 @@ public class SceneCtrl {
         showQuestionScene();
         showQuestionWhatIsScene();
         showQuestionGuessXScene();
-        showQuestionHowMuchScene();
-       // showQuestionInsteadOfScene();
-       // showMainScreenScene();
+        showQuestionInsteadOfScene();
+
+        showMainScreenScene();showQuestionHowMuchScene();
         primaryStage.show();
     }
 

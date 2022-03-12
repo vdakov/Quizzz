@@ -5,10 +5,17 @@ import com.google.inject.Inject;
 import commons.Actions.Action;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.Locale;
+import java.util.Objects;
 
 
 public class QuestionSceneHowMuchActivityCtrl {
@@ -115,6 +122,27 @@ public class QuestionSceneHowMuchActivityCtrl {
         } else {
             current.setStyle("-fx-background-color: #d20716; ");
         }
+
+        long mTime = System.currentTimeMillis();
+        long end = mTime + 1000; // 1 second
+
+        while(System.currentTimeMillis() < end) {
+                this.initialize();
+        }
+
+    }
+
+    private Scene scene;
+    private Stage stage;
+    private Parent root;
+
+    public void goToMainScreen (ActionEvent event) throws IOException {
+
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../../scenes/MainScreenScene.fxml")));
+        stage = (Stage) ( (Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     //Getters and setters

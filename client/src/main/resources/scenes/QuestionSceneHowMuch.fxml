@@ -38,7 +38,7 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c9f1fd" height="83.0" stroke="BLACK" strokeType="INSIDE" width="386.0" GridPane.columnIndex="5" GridPane.rowIndex="5" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c9f1fd" height="83.0" stroke="BLACK" strokeType="INSIDE" width="386.0" GridPane.columnIndex="5" GridPane.rowIndex="4" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c9f1fd" height="403.0" stroke="BLACK" strokeType="INSIDE" width="360.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-      <Button fx:id="goToMainScreen" mnemonicParsing="false" prefHeight="34.0" prefWidth="76.0" style="-fx-background-color: #5bc0de; -fx-border-color: #c9f1fd;" text="Home" GridPane.columnIndex="2" GridPane.rowIndex="1">
+      <Button fx:id="goToMainScreen" mnemonicParsing="false" onAction="#goToMainScreen" prefHeight="34.0" prefWidth="76.0" style="-fx-background-color: #5bc0de; -fx-border-color: #c9f1fd;" text="Home" GridPane.columnIndex="2" GridPane.rowIndex="1">
          <font>
             <Font size="14.0" />
          </font>

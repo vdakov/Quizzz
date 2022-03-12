@@ -16,17 +16,6 @@ import java.util.Objects;
 public class MainScreenActivityCtrl {
 
 
-      /*  private final ServerUtils server;
-        private final SceneCtrl sceneCtrl;
-
-    //Constructor for the Main Screen Controller
-    @Inject
-    public MainScreenCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
-        this.server = server;
-        this.sceneCtrl = sceneCtrl;
-    }
-*/
-
 
         private Scene scene;
         private Stage stage;
@@ -34,7 +23,7 @@ public class MainScreenActivityCtrl {
 
         public void enterSoloGame (ActionEvent event) throws IOException {
 
-            root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../../scenes/QuestionScene.fxml")));
+            root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../../scenes/QuestionSceneHowMuch.fxml")));
             stage = (Stage) ( (Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);
