@@ -2,18 +2,32 @@ package client.controllers;
 
 import client.communication.ServerUtils;
 import com.google.inject.Inject;
+import commons.Actions.Action;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import commons.Action;
+
+import java.util.Locale;
 
 
 public class QuestionActivityCtrl {
     private final ServerUtils server;
     private final SceneCtrl sceneCtrl;
     private Action question;
+    private int pointsInt;
+    @FXML
+    private Label sampleQuestion;
+    @FXML
+    private Button exitButton;
+    @FXML
+    private Button answerLeft, answerRight, answerCenter;
+    @FXML
+    private Label points;
+    @FXML
+    private String correctAnswer;
+
 
     //Constructor for the Question Controller
     @Inject
@@ -24,12 +38,19 @@ public class QuestionActivityCtrl {
 
     //Initializes the sample question screen through hardcoding
     public void initialize() {
+
+        //resets the colors to white each time
+        getAnswerCenter().setStyle("-fx-background-color: #ffffff; -fx-border-color: #000000;");
+        getAnswerLeft().setStyle("-fx-background-color: #ffffff; -fx-border-color: #000000");
+        getAnswerRight().setStyle("-fx-background-color: #ffffff; -fx-border-color: #000000");
+
+
         //hardcoded activity- have to eventually make it initialize through a database- Not now tho :)
-        this.question = new Action("Riding your electric scooter to university (10km)",
-                "https://dx.doi.org/10.1016/j.apenergy.2013.10.043", 330);
+        this.question = server.getRandomAction();
 
         //transforms the activity into a question
-        this.sampleQuestion.setText("How much does electricity(in kWH does " + question.getTitle() + " take?");
+        this.sampleQuestion.setText("How much does electricity(in kWH) does " +
+                question.getTitle().substring(0, 1).toLowerCase(Locale.ROOT) + question.getTitle().substring(1) + " take?");
 
         int answer = question.getConsumption();
         long range = Math.round(Math.random() * answer);
@@ -52,37 +73,36 @@ public class QuestionActivityCtrl {
             answerRight.setText(String.valueOf(answer));
             answerLeft.setText(String.valueOf(range2));
         }
-        this.correctAnswer = String.valueOf(answer);
+        this.correctAnswer = "" + answer;
     }
-
-
-    private int pointsInt;
-    @FXML
-    private Label sampleQuestion;
-    @FXML
-    private Button exitButton;
-    @FXML
-    private Button answerLeft, answerRight, answerCenter;
-    @FXML
-    private Label points;
-    @FXML
-    private String correctAnswer;
 
 
     //method for answering the question- activated on click of button in QuestionScreen scene
     public void answer(ActionEvent event) {
         Button current = (Button) event.getSource();
 
+        if (current.getText().equals(getCorrectAnswer())) {
+            pointsInt += 500; //global variable for points so it remembers it
+        }
+
+        //uses the answerCheck method to highlight which the correct answer was
+        //and to color them
         answerCheck(answerCenter.getText(), this.getAnswerCenter());
         answerCheck(answerLeft.getText(), this.getAnswerLeft());
         answerCheck(answerRight.getText(), this.getAnswerRight());
 
-        if (current.getText().equals(correctAnswer)) {
-            pointsInt += 500; //global variable for points so it remembers it
-        }
+        //changes the points value
         points.setText(String.valueOf(pointsInt));
 
+        //sends the server a delete request to ensure the same activity does not appear twice
+        server.deleteActivity(question.getId());
 
+
+    }
+
+    //Event for when the "NEXT" button is pressed on the question screen
+    public void next(ActionEvent event) {
+        this.initialize();
     }
 
     //Event when exit button is pressed

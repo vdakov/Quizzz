@@ -3,9 +3,11 @@ package server.services.QuestionGenerator;
 import commons.Exceptions.NotEnoughActivitiesException;
 import commons.Questions.OpenQuestion;
 import commons.Questions.Question;
+
 import org.apache.commons.lang3.tuple.Pair;
 import commons.Actions.Action;
-import server.entities.Actions.ActionCatalog;
+
+import commons.Actions.*;
 
 import java.util.ArrayList;
 import java.util.List;

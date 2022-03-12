@@ -2,7 +2,7 @@ package client.controllers;
 
 import client.communication.ServerUtils;
 import com.google.inject.Inject;
-import commons.Action;
+import commons.ActionOld;
 import jakarta.ws.rs.WebApplicationException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -54,8 +54,8 @@ public class AddActionActivityCtrl {
         sceneCtrl.showOverviewActionsScene();
     }
 
-    private Action getActivity() {
-        return new Action(title.getText(), source.getText(), Integer.parseInt(consumption.getText()));
+    private ActionOld getActivity() {
+        return new ActionOld(title.getText(), source.getText(), Integer.parseInt(consumption.getText()));
     }
 
     private void clearFields() {

@@ -1,0 +1,136 @@
+ [
+    {
+        "id": "30-microwave",
+        "image_path": "30/microwave.jpg",
+        "title": "Microwaving for one hour",
+        "consumption_in_wh": 800,
+        "source": "https://letsavelectricity.com/what-is-the-power-consumption-of-a-microwave-oven/"
+    },
+    {
+        "id": "30-beef",
+        "image_path": "30/beef.jpg",
+        "title": "Producing one pound of beef",
+        "consumption_in_wh": 315000,
+        "source": "https://askwonder.com/research/energy-in-btus-expended-used-produce-1-pound-beef-chicken-pork-retail-k5gwibwm3#:~:text=According%20the%20Oil%20Drum%2C%20it,product%201%20pound%20of%20beef."
+    },
+    {
+        "id": "30-boiler",
+        "image_path": "30/boiler.jpg",
+        "title": "Running a water boiler tank",
+        "consumption_in_wh": 4000,
+        "source": "https://www.directenergy.com/learning-center/how-much-energy-water-heater-use#:~:text=Typically%2C%20a%20hot%20water%20heater,month%2C%20or%20%24438%20per%20year."
+    },
+    {
+        "id": "30-chicken",
+        "image_path": "30/chicken.jpg",
+        "title": "Producing one pound of chicken",
+        "consumption_in_wh": 4400,
+        "source": "https://askwonder.com/research/energy-in-btus-expended-used-produce-1-pound-beef-chicken-pork-retail-k5gwibwm3#:~:text=According%20the%20Oil%20Drum%2C%20it,product%201%20pound%20of%20beef."
+    },
+    {
+        "id": "30-coffee",
+        "image_path": "30/coffee.jpg",
+        "title": "Making a cup of coffee",
+        "consumption_in_wh": 300,
+        "source": "https://energyusecalculator.com/electricity_coffeemaker.htm"
+    },
+    {
+        "id": "30-dishwasher",
+        "image_path": "30/dishwasher.jpg",
+        "title": "Doing an hour-long dishwasher cycle",
+        "consumption_in_wh": 1800,
+        "source": "https://www.inspirecleanenergy.com/blog/sustainable-living/cost-to-run-dishwasher"
+    },
+    {
+        "id": "30-eBike",
+        "image_path": "30/eBike.jpg",
+        "title": "Charging an e-bike for an hour",
+        "consumption_in_wh": 800,
+        "source": "https://www.cynergyebikes.com/about-ebikes-s/117.htm"
+    },
+    {
+        "id": "30-electricDryer",
+        "image_path": "30/electricDryer.jpg",
+        "title": "Drying clothes with an electric dryer for one hour ",
+        "consumption_in_wh": 2000,
+        "source": "https://www.directenergy.com/learning-center/how-much-energy-dryer-use"
+    },
+    {
+        "id": "30-electricHeater",
+        "image_path": "30/electricHeater.jpg",
+        "title": "Using an electric heater for one hour",
+        "consumption_in_wh": 1500,
+        "source": "https://www.vivintsolar.com/blog/how-much-electricity-does-a-space-heater-use"
+    },
+    {
+        "id": "30-guitar",
+        "image_path": "30/guitar.jpg",
+        "title": "Playing an electric guitar",
+        "consumption_in_wh": 40,
+        "source": "https://letsavelectricity.com/mixer-power-consumption-calculator/#:~:text=The%20rated%20power%20of%20a,electricity%20in%20the%20entire%20month."
+    },
+    {
+        "id": "30-hairDryer",
+        "image_path": "30/hairDryer.jpg",
+        "title": "Drying your hair for one hour with a hair dryer",
+        "consumption_in_wh": 1875,
+        "source": "https://ecocostsavings.com/hair-dryer-wattage/#:~:text=Hair%20dryers%20typically%20use%20between,kWh%20of%20electricity%20per%20hour."
+    },
+    {
+        "id": "30-iron",
+        "image_path": "30/iron.jpg",
+        "title": "Ironing for one hour ",
+        "consumption_in_wh": 1100,
+        "source": "https://www.thehomehacksdiy.com/how-much-power-watts-does-an-electric-iron-use/"
+    },
+    {
+        "id": "30-mixer",
+        "image_path": "30/mixer.jpg",
+        "title": "Using a kitchen mixer for an hour",
+        "consumption_in_wh": 500,
+        "source": "https://letsavelectricity.com/mixer-power-consumption-calculator/#:~:text=The%20rated%20power%20of%20a,electricity%20in%20the%20entire%20month."
+    },
+    {
+        "id": "30-netflix",
+        "image_path": "30/netflix.jpg",
+        "title": "Watching Netflix for an hour ",
+        "consumption_in_wh": 800,
+        "source": "https://www.iea.org/commentaries/the-carbon-footprint-of-streaming-video-fact-checking-the-headlines"
+    },
+    {
+        "id": "30-phoneCharging",
+        "image_path": "30/phoneCharging.jpg",
+        "title": "Charging a phone unnecessarily for 8 hours",
+        "consumption_in_wh": 18,
+        "source": "https://slate.com/technology/2012/03/is-charging-your-cell-phone-overnight-a-major-waste-of-energy.html#:~:text=Leave%20the%20average%20phone%20plugged,of%206.5%20kWh%20of%20electricity."
+    },
+    {
+        "id": "30-pork",
+        "image_path": "30/pork.jpg",
+        "title": "Producing one pound of pork",
+        "consumption_in_wh": 126000,
+        "source": "https://askwonder.com/research/energy-in-btus-expended-used-produce-1-pound-beef-chicken-pork-retail-k5gwibwm3#:~:text=According%20the%20Oil%20Drum%2C%20it,product%201%20pound%20of%20beef."
+    },
+    {
+        "id": "30-speaker",
+        "image_path": "30/speaker.jpg",
+        "title": "Running a speaker(average-sized) for one hour",
+        "consumption_in_wh": 100,
+        "source": "https://joteo.net/en-nl/electricity-usage-calculator/electricity-usage-of-a-speaker"
+    },
+    {
+        "id": "30-stove",
+        "image_path": "30/stove.jpg",
+        "title": "Using an electric stove for one hour",
+        "consumption_in_wh": 3000,
+        "source": "https://publicananker.com/how-many-watts-does-an-electric-stove-use/"
+    },
+    {
+        "id": "30-toaster",
+        "image_path": "30/toaster.jpg",
+        "title": "Using a toaster for one hour",
+        "consumption_in_wh": 6000,
+        "source": "https://energyusecalculator.com/electricity_toaster.htm#:~:text=The%20bread%20toaster%20uses%20from,minutes%20in%20total%20each%20day."
+    }
+]
+
