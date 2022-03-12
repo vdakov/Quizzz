@@ -117,18 +117,21 @@ public class QuestionSceneHowMuchActivityCtrl {
 
     //Method that checks whether answer is correct
     public void answerCheck(String answer, Button current) {
-        if (answer.equals(getCorrectAnswer())) {
-            current.setStyle("-fx-background-color: #00FF00; "); //simple CSS for clarity
-        } else {
-            current.setStyle("-fx-background-color: #d20716; ");
-        }
+
 
         long mTime = System.currentTimeMillis();
-        long end = mTime + 1000; // 1 second
+        long end = mTime + 1000;
 
-        while(System.currentTimeMillis() < end) {
-                this.initialize();
-        }
+        // This should be setting the colour and then go to a new question screen but it doesn't work right now
+        do {
+            if (answer.equals(getCorrectAnswer())) {
+                current.setStyle("-fx-background-color: #00FF00; "); //simple CSS for clarity
+            } else {
+                current.setStyle("-fx-background-color: #d20716; ");
+            }
+        } while (System.currentTimeMillis() < end);
+
+        this.initialize();
 
     }
 
@@ -166,7 +169,7 @@ public class QuestionSceneHowMuchActivityCtrl {
 
     public Label getLabelAnswerBottom() { return labelAnswerBottom; }
 
-    public void setLabelAnswerTop(Label labelAnswerTop) {this.labelAnswerTop = labelAnswerTop;}
+    public void setLabelAnswerTop(Label labelAnswerTop) { this.labelAnswerTop = labelAnswerTop; }
 
     public void setQuestion(Action question) { this.question = question; }
 

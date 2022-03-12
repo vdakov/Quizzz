@@ -37,9 +37,9 @@ public class SceneCtrl {
      * Initialising the app scene with the primary stage and every scene that will be used in this stage
      *
      * @param primaryStage                                  the main stage of the app
-     * @param overviewActionsActivityCtrlParentPair         the loaded FXML scene with control for displaying all actions
-     * @param addActionActivityCtrlParentPair               the loaded FXML scene with control for adding a new action
-     * @param questionsActivityCtrlParentPair               the loaded FXML scene with control for displaying a question
+     * //@param overviewActionsActivityCtrlParentPair         the loaded FXML scene with control for displaying all actions
+     * //@param addActionActivityCtrlParentPair               the loaded FXML scene with control for adding a new action
+     * //@param questionsActivityCtrlParentPair               the loaded FXML scene with control for displaying a question
      * @param mainScreenCtrlParentPair                      the loaded FXML scene with control for displaying the main screen
      * @param questionSceneWhatIsActivityCtrlParentPair     the loaded FXML scene with control for displaying the question screen of type "What is"
      * @param questionSceneGuessXActivityCtrlParentPair     the loaded FXML scene with control for displaying the question screen of type "Guess X"
@@ -50,10 +50,8 @@ public class SceneCtrl {
                                                Pair<QuestionSceneInsteadOfActivityCtrl, Parent> questionSceneInsteadOfActivityCtrlParentPair,
                                                Pair<QuestionSceneHowMuchActivityCtrl, Parent> questionSceneHowMuchActivityCtrlParentPair,
                                                Pair<QuestionSceneGuessXActivityCtrl, Parent> questionSceneGuessXActivityCtrlParentPair,
-                                               Pair<QuestionSceneWhatIsActivityCtrl, Parent> questionSceneWhatIsActivityCtrlParentPair,
-                                               Pair<OverviewActionsActivityCtrl, Parent> overviewActionsActivityCtrlParentPair,
-                                               Pair<AddActionActivityCtrl, Parent> addActionActivityCtrlParentPair,
-                                               Pair<QuestionActivityCtrl, Parent> questionsActivityCtrlParentPair) {
+                                               Pair<QuestionSceneWhatIsActivityCtrl, Parent> questionSceneWhatIsActivityCtrlParentPair
+                                               ) {
         this.primaryStage = primaryStage;
 
         this.mainScreenActivityCtrl             = mainScreenCtrlParentPair.getKey();
@@ -71,22 +69,18 @@ public class SceneCtrl {
         this.questionSceneWhatIsActivityCtrl    = questionSceneWhatIsActivityCtrlParentPair.getKey();
         this.questionWhatIsScene                = new Scene(questionSceneWhatIsActivityCtrlParentPair.getValue());
 
-        this.overviewActionsActivityCtrl        = overviewActionsActivityCtrlParentPair.getKey();
-        this.overviewActionsScene               = new Scene(overviewActionsActivityCtrlParentPair.getValue());
 
-        this.addActionActivityCtrl              = addActionActivityCtrlParentPair.getKey();
-        this.addActionScene                     = new Scene(addActionActivityCtrlParentPair.getValue());
-
-        this.questionActivityCtrl               = questionsActivityCtrlParentPair.getKey();
-        this.questionScene                      = new Scene(questionsActivityCtrlParentPair.getValue());
+       /* this.questionActivityCtrl               = questionsActivityCtrlParentPair.getKey();
+        this.questionScene                      = new Scene(questionsActivityCtrlParentPair.getValue());*/
 
 
-        showQuestionScene();
+        //showQuestionScene();
         showQuestionWhatIsScene();
         showQuestionGuessXScene();
         showQuestionInsteadOfScene();
-
-        showMainScreenScene();showQuestionHowMuchScene();
+        //showQuestionHowMuchScene();
+        showMainScreenScene();
+        showQuestionHowMuchScene();
         primaryStage.show();
     }
 
@@ -151,27 +145,32 @@ public class SceneCtrl {
         stage.show();
     }
 
+
     /**
      * Displays the scene with all actions
      */
+    /*
     public void showOverviewActionsScene() {
         primaryStage.setTitle("Action: Overview");
         primaryStage.setScene(overviewActionsScene);
         overviewActionsActivityCtrl.refresh();
     }
-
+    */
     /**
      * Displays the scene with add action
      */
+    /*
     public void showAddActionScene() {
         primaryStage.setTitle("Action: Adding Action");
         primaryStage.setScene(addActionScene);
         addActionScene.setOnKeyPressed(e -> addActionActivityCtrl.keyPressed(e));
     }
+    */
 
     /**
      * Displays the scene with add question
      */
+    /*
     public void showQuestionScene() {
         primaryStage.setTitle("Question Screen");
         primaryStage.setScene(questionScene);
@@ -179,6 +178,6 @@ public class SceneCtrl {
         questionActivityCtrl.initialize();
         stage.show();
     }
-
+    */
 
 }

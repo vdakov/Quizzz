@@ -44,7 +44,7 @@
             <Font name="Chalkboard" size="96.0" />
          </font>
       </Text>
-      <Button fx:id="startSoloGame" mnemonicParsing="false" onAction="#enterSoloGame" prefHeight="51.0" prefWidth="275.0" style="-fx-background-color: #444444;" text="Enter" textFill="WHITE" GridPane.columnIndex="4" GridPane.rowIndex="8">
+      <Button fx:id="enterSoloGame" mnemonicParsing="false" onAction="#enterSoloGame" prefHeight="51.0" prefWidth="275.0" style="-fx-background-color: #444444;" text="Enter" textFill="WHITE" GridPane.columnIndex="4" GridPane.rowIndex="8">
          <font>
             <Font name="Chalkboard" size="18.0" />
          </font>
