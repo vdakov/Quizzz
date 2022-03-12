@@ -49,14 +49,14 @@ public class SceneCtrl {
      * @param questionSceneHowMuchActivityCtrlParentPair    the loaded FXML scene with control for displaying the question screen of type "How Much"
      * @param questionSceneInsteadOfActivityCtrlParentPair  the loaded FXML scene with control for displaying the question screen of type "Instead of X"
      */
-    public void initialize(Stage primaryStage, Pair<MainScreenActivityCtrl, Parent> mainScreenCtrlParentPair,
+    public void initialize(Stage primaryStage )/* Pair<MainScreenActivityCtrl, Parent> mainScreenCtrlParentPair,
                                                Pair<QuestionSceneInsteadOfActivityCtrl, Parent> questionSceneInsteadOfActivityCtrlParentPair,
                                                Pair<QuestionSceneHowMuchActivityCtrl, Parent> questionSceneHowMuchActivityCtrlParentPair,
                                                Pair<QuestionSceneGuessXActivityCtrl, Parent> questionSceneGuessXActivityCtrlParentPair,
                                                Pair<QuestionSceneWhatIsActivityCtrl, Parent> questionSceneWhatIsActivityCtrlParentPair,
                                                Pair<OverviewActionsActivityCtrl, Parent> overviewActionsActivityCtrlParentPair,
                                                Pair<AddActionActivityCtrl, Parent> addActionActivityCtrlParentPair,
-                                               Pair<QuestionActivityCtrl, Parent> questionsActivityCtrlParentPair)
+                                               Pair<QuestionActivityCtrl, Parent> questionsActivityCtrlParentPair) */
 
     {
         this.primaryStage = primaryStage;
