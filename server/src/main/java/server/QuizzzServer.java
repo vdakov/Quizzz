@@ -47,15 +47,15 @@ public class QuizzzServer {
 
             try {
                 List<Action> actions = mapper.readValue(inputStream, typeReference); //does the actual mapping to the list
-                for(int i = 0; i < actions.size(); i++) {
-                    if(actions.get(i).getConsumption() > Long.MAX_VALUE || actions.get(i).getSource().length() > 255) {
+                for (int i = 0; i < actions.size(); i++) {
+                    if (actions.get(i).getConsumption() > Long.MAX_VALUE || actions.get(i).getSource().length() > 255) {
                         actions.remove(i);
                         i--;
                         continue;
                     }
                 }
 
-                actionService.save(actions); //saves the actions to the repository
+                //actionService.save(actions); //saves the actions to the repository
                 System.out.println("ACTIVITIES SAVED"); //confirmation message
             } catch (IOException e) {
                 System.out.println(e);
