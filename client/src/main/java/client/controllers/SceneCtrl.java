@@ -44,16 +44,16 @@ public class SceneCtrl {
      * @param addActionActivityCtrlParentPair               the loaded FXML scene with control for adding a new action
      * @param questionsActivityCtrlParentPair               the loaded FXML scene with control for displaying a question
      * @param mainScreenCtrlParentPair                      the loaded FXML scene with control for displaying the main screen
-     * //@param questionSceneWhatIsActivityCtrlParentPair     the loaded FXML scene with control for displaying the question screen of type "What is"
-     * // @param questionSceneGuessXActivityCtrlParentPair     the loaded FXML scene with control for displaying the question screen of type "Guess X"
+     * @param questionSceneWhatIsActivityCtrlParentPair     the loaded FXML scene with control for displaying the question screen of type "What is"
+     * @param questionSceneGuessXActivityCtrlParentPair     the loaded FXML scene with control for displaying the question screen of type "Guess X"
      * @param questionSceneHowMuchActivityCtrlParentPair    the loaded FXML scene with control for displaying the question screen of type "How Much"
      * @param questionSceneInsteadOfActivityCtrlParentPair  the loaded FXML scene with control for displaying the question screen of type "Instead of X"
      */
     public void initialize(Stage primaryStage,  Pair<MainScreenActivityCtrl, Parent> mainScreenCtrlParentPair,
                                                Pair<QuestionSceneInsteadOfActivityCtrl, Parent> questionSceneInsteadOfActivityCtrlParentPair,
                                                Pair<QuestionSceneHowMuchActivityCtrl, Parent> questionSceneHowMuchActivityCtrlParentPair,
-                                              // Pair<QuestionSceneGuessXActivityCtrl, Parent> questionSceneGuessXActivityCtrlParentPair,
-                                              // Pair<QuestionSceneWhatIsActivityCtrl, Parent> questionSceneWhatIsActivityCtrlParentPair,
+                                               Pair<QuestionSceneGuessXActivityCtrl, Parent> questionSceneGuessXActivityCtrlParentPair,
+                                               Pair<QuestionSceneWhatIsActivityCtrl, Parent> questionSceneWhatIsActivityCtrlParentPair,
                                                Pair<OverviewActionsActivityCtrl, Parent> overviewActionsActivityCtrlParentPair,
                                                Pair<AddActionActivityCtrl, Parent> addActionActivityCtrlParentPair,
                                                Pair<QuestionActivityCtrl, Parent> questionsActivityCtrlParentPair)
@@ -70,11 +70,11 @@ public class SceneCtrl {
         this.questionSceneHowMuchActivityCtrl   = questionSceneHowMuchActivityCtrlParentPair.getKey();
         this.questionHowMuchScene               = new Scene(questionSceneHowMuchActivityCtrlParentPair.getValue());
 
-      //  this.questionSceneGuessXActivityCtrl    = questionSceneGuessXActivityCtrlParentPair.getKey();
-      //  this.questionGuessXScene                = new Scene(questionSceneGuessXActivityCtrlParentPair.getValue());
+        this.questionSceneGuessXActivityCtrl    = questionSceneGuessXActivityCtrlParentPair.getKey();
+        this.questionGuessXScene                = new Scene(questionSceneGuessXActivityCtrlParentPair.getValue());
 
-        // this.questionSceneWhatIsActivityCtrl    = questionSceneWhatIsActivityCtrlParentPair.getKey();
-     //   this.questionWhatIsScene                = new Scene(questionSceneWhatIsActivityCtrlParentPair.getValue());
+        this.questionSceneWhatIsActivityCtrl    = questionSceneWhatIsActivityCtrlParentPair.getKey();
+        this.questionWhatIsScene                = new Scene(questionSceneWhatIsActivityCtrlParentPair.getValue());
 
         this.overviewActionsActivityCtrl        = overviewActionsActivityCtrlParentPair.getKey();
         this.overviewActionsScene               = new Scene(overviewActionsActivityCtrlParentPair.getValue());
