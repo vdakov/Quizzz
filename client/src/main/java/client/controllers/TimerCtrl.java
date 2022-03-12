@@ -31,7 +31,7 @@ public class TimerCtrl extends Application {
         doTime();
 
         st.setTitle("Count down Timer");
-        st.setScene(new Scene(layout, 400, 275));
+        st.setScene(new Scene(layout, 400, 50));
         st.show();
     }
 
