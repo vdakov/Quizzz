@@ -12,6 +12,9 @@ public class SceneCtrl {
     private MainScreenActivityCtrl mainScreenActivityCtrl;
     private Scene mainScreenScene;
 
+    private QuestionSceneWhatIsActivityCtrl questionSceneWhatIsActivityCtrl;
+    private Scene questionWhatIsScene;
+
     private OverviewActionsActivityCtrl overviewActionsActivityCtrl;
     private Scene overviewActionsScene;
 
@@ -24,32 +27,39 @@ public class SceneCtrl {
     /**
      * Initialising the app scene with the primary stage and every scene that will be used in this stage
      *
-     * @param primaryStage                          the main stage of the app
-     * @param overviewActionsActivityCtrlParentPair the loaded FXML scene with control for displaying all actions
-     * @param addActionActivityCtrlParentPair       the loaded FXML scene with control for adding a new action
-     * @param questionsActivityCtrlParentPair       the loaded FXML scene with control for displaying a question
+     * @param primaryStage                                  the main stage of the app
+     * @param overviewActionsActivityCtrlParentPair         the loaded FXML scene with control for displaying all actions
+     * @param addActionActivityCtrlParentPair               the loaded FXML scene with control for adding a new action
+     * @param questionsActivityCtrlParentPair               the loaded FXML scene with control for displaying a question
+     * @param mainScreenCtrlParentPair                      the loaded FXML scene with control for displaying the main screen
+     * @param questionSceneWhatIsActivityCtrlParentPair     the loaded FXML scene with control for displaying one of the question screens
      */
     public void initialize(Stage primaryStage, Pair<MainScreenActivityCtrl, Parent> mainScreenCtrlParentPair,
+                                               Pair<QuestionSceneWhatIsActivityCtrl, Parent> questionSceneWhatIsActivityCtrlParentPair,
                                                Pair<OverviewActionsActivityCtrl, Parent> overviewActionsActivityCtrlParentPair,
                                                Pair<AddActionActivityCtrl, Parent> addActionActivityCtrlParentPair,
                                                Pair<QuestionActivityCtrl, Parent> questionsActivityCtrlParentPair) {
         this.primaryStage = primaryStage;
 
-        this.mainScreenActivityCtrl = mainScreenCtrlParentPair.getKey();
-        this.mainScreenScene             = new Scene(mainScreenCtrlParentPair.getValue());
+        this.mainScreenActivityCtrl             = mainScreenCtrlParentPair.getKey();
+        this.mainScreenScene                    = new Scene(mainScreenCtrlParentPair.getValue());
 
-        this.overviewActionsActivityCtrl = overviewActionsActivityCtrlParentPair.getKey();
-        this.overviewActionsScene = new Scene(overviewActionsActivityCtrlParentPair.getValue());
+        this.questionSceneWhatIsActivityCtrl    = questionSceneWhatIsActivityCtrlParentPair.getKey();
+        this.questionWhatIsScene                = new Scene(questionSceneWhatIsActivityCtrlParentPair.getValue());
 
-        this.addActionActivityCtrl = addActionActivityCtrlParentPair.getKey();
-        this.addActionScene = new Scene(addActionActivityCtrlParentPair.getValue());
+        this.overviewActionsActivityCtrl        = overviewActionsActivityCtrlParentPair.getKey();
+        this.overviewActionsScene               = new Scene(overviewActionsActivityCtrlParentPair.getValue());
 
-        this.questionActivityCtrl = questionsActivityCtrlParentPair.getKey();
-        this.questionScene = new Scene(questionsActivityCtrlParentPair.getValue());
+        this.addActionActivityCtrl              = addActionActivityCtrlParentPair.getKey();
+        this.addActionScene                     = new Scene(addActionActivityCtrlParentPair.getValue());
+
+        this.questionActivityCtrl               = questionsActivityCtrlParentPair.getKey();
+        this.questionScene                      = new Scene(questionsActivityCtrlParentPair.getValue());
 
 
-        showQuestionScene();
-        showMainScreenScene();
+       // showQuestionScene();
+        showQuestionWhatIsScene();
+        //showMainScreenScene();
         primaryStage.show();
     }
 
@@ -62,6 +72,14 @@ public class SceneCtrl {
         primaryStage.setTitle("Main Screen");
         primaryStage.setScene(mainScreenScene);
         Stage stage = (Stage) mainScreenScene.getWindow();
+        stage.show();
+    }
+
+    public void showQuestionWhatIsScene()
+    {
+        primaryStage.setTitle("Question Screen What Is");
+        primaryStage.setScene(questionWhatIsScene);
+        Stage stage = (Stage) questionWhatIsScene.getWindow();
         stage.show();
     }
 
