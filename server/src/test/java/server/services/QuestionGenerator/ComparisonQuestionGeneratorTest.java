@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 
 import commons.Actions.ActionCatalog;
 
-
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -36,7 +35,6 @@ class ComparisonQuestionGeneratorTest {
         ActionCatalog actionCatalog = createActionCatalog();
         Random random = new Random();
         //Pair<Question, String> questionAnswerPair = generateComparisonQuestionFromAction(actionCatalog, random);
-
         // check if the result respects the desired property
     }
 

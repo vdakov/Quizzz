@@ -42,6 +42,7 @@ public class ActionController {
     @PostMapping(path = {"", "/add"})
     public void add(@RequestBody Action a) {
         try {
+
             int temp = a.getConsumption() + 1;
             if (a.getTitle() != null) service.save(a);
         } catch (Exception e) {
@@ -74,6 +75,7 @@ public class ActionController {
 
         service.save(activity);
     }
+
 
     //test mapping to use as println cuz I am pretty bad at writing tests :(
     @GetMapping("/alert")
