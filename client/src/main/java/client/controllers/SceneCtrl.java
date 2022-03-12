@@ -12,6 +12,9 @@ public class SceneCtrl {
     private MainScreenActivityCtrl mainScreenActivityCtrl;
     private Scene mainScreenScene;
 
+    private QuestionSceneInsteadOfActivityCtrl questionSceneInsteadOfActivityCtrl;
+    private Scene questionInsteadOfScene;
+
     private QuestionSceneHowMuchActivityCtrl questionSceneHowMuchActivityCtrl;
     private Scene questionHowMuchScene;
 
@@ -41,8 +44,10 @@ public class SceneCtrl {
      * @param questionSceneWhatIsActivityCtrlParentPair     the loaded FXML scene with control for displaying the question screen of type "What is"
      * @param questionSceneGuessXActivityCtrlParentPair     the loaded FXML scene with control for displaying the question screen of type "Guess X"
      * @param questionSceneHowMuchActivityCtrlParentPair    the loaded FXML scene with control for displaying the question screen of type "How Much"
+     * @param questionSceneInsteadOfActivityCtrlParentPair  the loaded FXML scene with control for displaying the question screen of type "Instead of X"
      */
     public void initialize(Stage primaryStage, Pair<MainScreenActivityCtrl, Parent> mainScreenCtrlParentPair,
+                                               Pair<QuestionSceneInsteadOfActivityCtrl, Parent> questionSceneInsteadOfActivityCtrlParentPair,
                                                Pair<QuestionSceneHowMuchActivityCtrl, Parent> questionSceneHowMuchActivityCtrlParentPair,
                                                Pair<QuestionSceneGuessXActivityCtrl, Parent> questionSceneGuessXActivityCtrlParentPair,
                                                Pair<QuestionSceneWhatIsActivityCtrl, Parent> questionSceneWhatIsActivityCtrlParentPair,
@@ -53,6 +58,9 @@ public class SceneCtrl {
 
         this.mainScreenActivityCtrl             = mainScreenCtrlParentPair.getKey();
         this.mainScreenScene                    = new Scene(mainScreenCtrlParentPair.getValue());
+
+        this.questionSceneInsteadOfActivityCtrl = questionSceneInsteadOfActivityCtrlParentPair.getKey();
+        this.questionInsteadOfScene             = new Scene(questionSceneInsteadOfActivityCtrlParentPair.getValue());
 
         this.questionSceneHowMuchActivityCtrl   = questionSceneHowMuchActivityCtrlParentPair.getKey();
         this.questionHowMuchScene               = new Scene(questionSceneHowMuchActivityCtrlParentPair.getValue());
@@ -75,10 +83,10 @@ public class SceneCtrl {
 
         showQuestionScene();
         showQuestionWhatIsScene();
-
         showQuestionGuessXScene();
         showQuestionHowMuchScene();
         showMainScreenScene();
+        showQuestionInsteadOfScene();
         primaryStage.show();
     }
 
@@ -94,7 +102,21 @@ public class SceneCtrl {
         stage.show();
     }
 
+    /**
+     * Displays the screen for the question type "Instead of X"
+     */
 
+    public void showQuestionInsteadOfScene()
+    {
+        primaryStage.setTitle("Question Screen Instead of X");
+        primaryStage.setScene(questionInsteadOfScene);
+        Stage stage = (Stage) questionInsteadOfScene.getWindow();
+        stage.show();
+    }
+
+    /**
+     * Displays the screen for the question type "How much"
+     */
 
     public void showQuestionHowMuchScene()
     {
@@ -107,6 +129,7 @@ public class SceneCtrl {
     /**
      *  Displays the screen for the question type "Guess X"
      */
+
     public void showQuestionGuessXScene()
     {
         primaryStage.setTitle("Question Screen Guess X");
