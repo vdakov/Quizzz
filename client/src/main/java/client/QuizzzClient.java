@@ -10,11 +10,9 @@ import client.logic.FXMLConfig;
 import client.logic.ModuleConfig;
 import com.google.inject.Injector;
 import javafx.stage.Stage;
-import javafx.util.Pair;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.List;
 
 
 public class QuizzzClient extends Application {

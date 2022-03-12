@@ -35,16 +35,6 @@ public class SceneCtrl {
     private QuestionActivityCtrl questionActivityCtrl;
     private Scene questionScene;
 
-    Pair<MainScreenActivityCtrl, Parent> mainScreenCtrlParentPair;
-    Pair<QuestionSceneInsteadOfActivityCtrl, Parent> questionSceneInsteadOfActivityCtrlParentPair;
-    Pair<QuestionSceneHowMuchActivityCtrl, Parent> questionSceneHowMuchActivityCtrlParentPair;
-    Pair<QuestionSceneGuessXActivityCtrl, Parent> questionSceneGuessXActivityCtrlParentPair;
-    Pair<QuestionSceneWhatIsActivityCtrl, Parent> questionSceneWhatIsActivityCtrlParentPair;
-    Pair<OverviewActionsActivityCtrl, Parent> overviewActionsActivityCtrlParentPair;
-    Pair<AddActionActivityCtrl, Parent> addActionActivityCtrlParentPair;
-    Pair<QuestionActivityCtrl, Parent> questionsActivityCtrlParentPair;
-
-
 
     /**
      * Initialising the app scene with the primary stage and every scene that will be used in this stage
@@ -100,9 +90,9 @@ public class SceneCtrl {
         showQuestionWhatIsScene();
         showQuestionGuessXScene();
         showQuestionInsteadOfScene();
-        //showQuestionHowMuchScene();
-        showMainScreenScene();
         showQuestionHowMuchScene();
+        showMainScreenScene();
+        //showQuestionHowMuchScene();
         primaryStage.show();
     }
 

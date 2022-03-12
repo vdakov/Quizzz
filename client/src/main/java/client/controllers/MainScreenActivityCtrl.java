@@ -19,11 +19,13 @@ import java.util.Objects;
 public class MainScreenActivityCtrl {
 
 
-        @FXML
-        Button enterSoloGame;
+
 
         private final ServerUtils server;
         private final SceneCtrl sceneCtrl;
+
+        @FXML
+        private Button enterSoloGame;
 
         //Constructor for the Main Screen Controller
         @Inject
