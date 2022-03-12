@@ -87,19 +87,22 @@ public class ActionCatalog {
 
     public Action searchForConsumption(int lowerBound, int upperBound) {
         for (Action action : normalActions) {
-            if (lowerBound < action.getConsumption() && action.getConsumption() < upperBound) {
+            long consumption = action.getConsumption();
+            if (lowerBound < consumption && consumption < upperBound) {
                 return action;
             }
         }
 
         for (Action action : smartActions) {
-            if (lowerBound < action.getConsumption() && action.getConsumption() < upperBound) {
+            long consumption = action.getConsumption();
+            if (lowerBound < consumption && consumption < upperBound) {
                 return action;
             }
         }
 
         for (Action action : usedSmartActions) {
-            if (lowerBound < action.getConsumption() && action.getConsumption() < upperBound) {
+            long consumption = action.getConsumption();
+            if (lowerBound < consumption && consumption < upperBound) {
                 return action;
             }
         }
