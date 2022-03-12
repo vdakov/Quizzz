@@ -43,7 +43,7 @@ public class SinglePlayerGameService {
 
     public void updateScore(String userName, String gameId, int questionNumber, String userAnswer) {
         System.out.println(userName + "   " + gameId + "   " + questionNumber + "   " + userAnswer);
-        if(userAnswer.equals(gameCatalog.getGame(gameId).getQuestionAnswer(questionNumber))) {
+        if (userAnswer.equals(gameCatalog.getGame(gameId).getQuestionAnswer(questionNumber))) {
             gameCatalog.getGame(gameId).updatePlayerScore(userName, 500);
         }
     }

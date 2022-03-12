@@ -22,7 +22,7 @@ public class ActionCatalog {
         this.smartActions = new ArrayList<>();
         this.usedSmartActions = new ArrayList<>();
 
-        for(int i = 0; i < actionList.size(); i++) {
+        for (int i = 0; i < actionList.size(); i++) {
             this.addAction(actionList.get(i));
         }
     }

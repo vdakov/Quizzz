@@ -4,8 +4,8 @@ package server.services.QuestionGenerator;
 import commons.Actions.Action;
 import commons.Actions.ActionCatalog;
 import commons.Questions.Question;
+import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.Test;
-import org.springframework.data.util.Pair;
 
 import java.util.Random;
 

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameCatalog {
-    List<Game> gameList;
+    private List<Game> gameList;
 
     public GameCatalog() {
         this.gameList = new ArrayList<>();
@@ -27,8 +27,8 @@ public class GameCatalog {
     }
 
     public Game getGame(String id) {
-        for(Game game : gameList) {
-            if(game.getGameId().equals(id)) {
+        for (Game game : gameList) {
+            if (game.getGameId().equals(id)) {
                 return game;
             }
         }

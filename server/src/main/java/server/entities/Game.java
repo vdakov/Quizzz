@@ -8,9 +8,9 @@ import java.util.List;
 
 public class Game {
 
-    public String gameId;
-    public List<Pair<Question, String>> gameQuestionsWithAnswers;
-    public List<Pair<String, Integer>> scores;
+    private String gameId;
+    private List<Pair<Question, String>> gameQuestionsWithAnswers;
+    private List<Pair<String, Integer>> scores;
 
     public Game(String gameId, List<Pair<Question, String>> gameQuestionsWithAnswers) {
         this.gameId = gameId;
@@ -47,8 +47,8 @@ public class Game {
     }
 
     public int getPlayerScore(String userName) {
-        for(Pair<String, Integer> score : scores) {
-            if(score.getKey().equals(userName)) {
+        for (Pair<String, Integer> score : scores) {
+            if (score.getKey().equals(userName)) {
                 return score.getValue();
             }
         }
@@ -57,8 +57,8 @@ public class Game {
 
     public void updatePlayerScore(String userName, int addedScore) {
         System.out.println(userName + "    " + addedScore);
-        for(int i = 0; i < scores.size(); i++) {
-            if(scores.get(i).getKey().equals(userName)) {
+        for (int i = 0; i < scores.size(); i++) {
+            if (scores.get(i).getKey().equals(userName)) {
                 scores.get(i).setValue(scores.get(i).getValue() + addedScore);
             }
         }
