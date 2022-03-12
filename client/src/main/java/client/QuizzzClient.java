@@ -42,10 +42,10 @@ public class QuizzzClient extends Application {
         var questionsActivity             = FXML_CONFIG.load(QuestionActivityCtrl.class, "scenes", "QuestionScene.fxml");
         var mainScreenActivity          = FXML_CONFIG.load(MainScreenActivityCtrl.class, "scenes", "MainScreenScene.fxml");
         var questionScreenWhatIsActivity  = FXML_CONFIG.load(QuestionSceneWhatIsActivityCtrl.class, "scenes", "QuestionSceneWhatIs.fxml");
-
+        var questionScreenGuessXActivity = FXML_CONFIG.load(QuestionSceneGuessXActivityCtrl.class, "scenes", "QuestionSceneGuessX.fxml");
 
         var sceneCtrl = INJECTOR.getInstance(SceneCtrl.class);
 
-        sceneCtrl.initialize(primaryStage, mainScreenActivity, questionScreenWhatIsActivity, overviewActivity, addActivity, questionsActivity);
+        sceneCtrl.initialize(primaryStage, mainScreenActivity, questionScreenGuessXActivity, questionScreenWhatIsActivity, overviewActivity, addActivity, questionsActivity);
     }
 }

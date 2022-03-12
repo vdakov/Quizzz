@@ -15,6 +15,9 @@ public class SceneCtrl {
     private QuestionSceneWhatIsActivityCtrl questionSceneWhatIsActivityCtrl;
     private Scene questionWhatIsScene;
 
+    private QuestionSceneGuessXActivityCtrl questionSceneGuessXActivityCtrl;
+    private Scene questionGuessXScene;
+
     private OverviewActionsActivityCtrl overviewActionsActivityCtrl;
     private Scene overviewActionsScene;
 
@@ -35,6 +38,7 @@ public class SceneCtrl {
      * @param questionSceneWhatIsActivityCtrlParentPair     the loaded FXML scene with control for displaying one of the question screens
      */
     public void initialize(Stage primaryStage, Pair<MainScreenActivityCtrl, Parent> mainScreenCtrlParentPair,
+                                               Pair<QuestionSceneGuessXActivityCtrl, Parent> questionSceneGuessXActivityCtrlParentPair,
                                                Pair<QuestionSceneWhatIsActivityCtrl, Parent> questionSceneWhatIsActivityCtrlParentPair,
                                                Pair<OverviewActionsActivityCtrl, Parent> overviewActionsActivityCtrlParentPair,
                                                Pair<AddActionActivityCtrl, Parent> addActionActivityCtrlParentPair,
@@ -43,6 +47,9 @@ public class SceneCtrl {
 
         this.mainScreenActivityCtrl             = mainScreenCtrlParentPair.getKey();
         this.mainScreenScene                    = new Scene(mainScreenCtrlParentPair.getValue());
+
+        this.questionSceneGuessXActivityCtrl    = questionSceneGuessXActivityCtrlParentPair.getKey();
+        this.questionGuessXScene                = new Scene(questionSceneGuessXActivityCtrlParentPair.getValue());
 
         this.questionSceneWhatIsActivityCtrl    = questionSceneWhatIsActivityCtrlParentPair.getKey();
         this.questionWhatIsScene                = new Scene(questionSceneWhatIsActivityCtrlParentPair.getValue());
@@ -57,9 +64,10 @@ public class SceneCtrl {
         this.questionScene                      = new Scene(questionsActivityCtrlParentPair.getValue());
 
 
-       // showQuestionScene();
+        showQuestionScene();
         showQuestionWhatIsScene();
-        //showMainScreenScene();
+        showMainScreenScene();
+        showQuestionGuessXScene();
         primaryStage.show();
     }
 
@@ -74,6 +82,21 @@ public class SceneCtrl {
         Stage stage = (Stage) mainScreenScene.getWindow();
         stage.show();
     }
+
+    /**
+     *  Displays the screen for the question type "Guess X"
+     */
+    public void showQuestionGuessXScene()
+    {
+        primaryStage.setTitle("Question Screen Guess X");
+        primaryStage.setScene(questionGuessXScene);
+        Stage stage = (Stage) questionGuessXScene.getWindow();
+        stage.show();
+    }
+
+    /**
+     * Displays the screen for the question type "What is..."
+     */
 
     public void showQuestionWhatIsScene()
     {
