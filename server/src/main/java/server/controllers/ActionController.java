@@ -1,9 +1,7 @@
 package server.controllers;
 
-
-
-import org.springframework.web.bind.annotation.*;
 import commons.Actions.Action;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 

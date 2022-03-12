@@ -1,9 +1,8 @@
 package server.services.QuestionGenerator;
 
+import commons.Actions.ActionCatalog;
 import commons.Questions.Question;
 import org.springframework.data.util.Pair;
-import commons.Actions.*;
-
 
 import java.util.ArrayList;
 import java.util.Collections;

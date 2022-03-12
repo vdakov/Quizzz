@@ -64,7 +64,7 @@ public class ActionCatalog {
         return temp;
     }
 
-    public Action getAction(int referencePoint, int lowerBoundDifferencePercentage, int upperBoundDifferencePercentage, Random random) {
+    public Action getAction(long referencePoint, int lowerBoundDifferencePercentage, int upperBoundDifferencePercentage, Random random) {
         // start searching lower
         int firstNewLowerBound = (int) (referencePoint - (upperBoundDifferencePercentage * 1.0 / 100) * referencePoint);
         int firstNewUpperBound = (int) (referencePoint - (lowerBoundDifferencePercentage * 1.0 / 100) * referencePoint);
