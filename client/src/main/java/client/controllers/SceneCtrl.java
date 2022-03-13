@@ -33,6 +33,9 @@ public class SceneCtrl {
     private Scene addActionScene;
 
 
+    private SingleplayerLeaderboardCtrl singleplayerLeaderboardCtrl;
+    private Scene singleplayerLeaderboardScene;
+
     /**
      * Initialising the app scene with the primary stage and every scene that will be used in this stage
      *
@@ -87,8 +90,7 @@ public class SceneCtrl {
      * Displays the main screen
      */
 
-    public void showMainScreenScene()
-    {
+    public void showMainScreenScene() {
         primaryStage.setTitle("Main Screen");
         primaryStage.setScene(mainScreenScene);
         Stage stage = (Stage) mainScreenScene.getWindow();
@@ -170,5 +172,10 @@ public class SceneCtrl {
     }
 
 
-
+    public void showSingleplayerLeaderboardScene() {
+        primaryStage.setTitle("Singleplayer Leaderboard");
+        primaryStage.setScene(singleplayerLeaderboardScene);
+        Stage stage = (Stage) singleplayerLeaderboardScene.getWindow();
+        stage.show();
+    }
 }
