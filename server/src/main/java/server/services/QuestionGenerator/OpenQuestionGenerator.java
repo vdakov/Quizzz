@@ -2,9 +2,10 @@ package server.services.QuestionGenerator;
 
 import commons.Actions.Action;
 import commons.Actions.ActionCatalog;
+import commons.Exceptions.NotEnoughActivitiesException;
 import commons.Questions.OpenQuestion;
 import commons.Questions.Question;
-import org.springframework.data.util.Pair;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +23,12 @@ public class OpenQuestionGenerator {
      * @param random                  the random instance that will be used for randomisation
      * @return a list of pairs consisting of an open question and the answer to that question
      */
-    public static List<Pair<Question, String>> openQuestionsGenerator(Integer numberOfNeededQuestions, ActionCatalog actionCatalog, Random random) {
+    public static List<Pair<Question, String>> openQuestionsGenerator(Integer numberOfNeededQuestions, ActionCatalog actionCatalog, Random random) throws NotEnoughActivitiesException {
         List<Pair<Question, String>> openQuestionsWithAnswersList = new ArrayList<>();
+
+        if (numberOfNeededQuestions * 1 > actionCatalog.getSmartActions().size() + actionCatalog.getNormalActions().size()) {
+            throw new NotEnoughActivitiesException();
+        }
 
         for (int i = 0; i < numberOfNeededQuestions; i++) {
             openQuestionsWithAnswersList.add(generateOpenQuestionFromAction((random.nextBoolean()) ? actionCatalog.getSmartAction() : actionCatalog.getNormalAction()));
@@ -39,7 +44,7 @@ public class OpenQuestionGenerator {
      * @return a pair consisting of an open question and the answer to that question
      */
     public static Pair<Question, String> generateOpenQuestionFromAction(Action action) {
-        OpenQuestion openQuestion = new OpenQuestion(makeOpenQuestionFromActionTitle(action.getTitle()));
+        OpenQuestion openQuestion = new OpenQuestion(Pair.of(makeOpenQuestionFromActionTitle(action.getTitle()), action.getImagePath()));
         long correctAnswer = action.getConsumption();
 
         return Pair.of(openQuestion, Long.toString(correctAnswer));

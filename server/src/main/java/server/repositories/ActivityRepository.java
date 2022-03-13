@@ -1,5 +1,6 @@
 package server.repositories;
 
+import commons.Actions.Action;
 
 import commons.Actions.Action;
 import org.springframework.data.jpa.repository.JpaRepository;

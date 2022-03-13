@@ -1,7 +1,5 @@
 package commons.Actions;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.Entity;
@@ -12,27 +10,23 @@ import javax.persistence.Id;
 @Entity
 public class Action {
     @Id
-    private final String id;
+    private String id;
 
-    private final String title;
+    private String title;
 
-    private final long consumption;
+    private long consumption;
 
-    private final String imagePath;
+    private String imagePath;
 
-    private final String source;
+    private String source;
 
     /**
      * Constructor to create a new action
-     * <p>
-     * It takes in a bunch of @JsonPropery tags as the fields in this constructor
-     * come from the JSON file activities
      *
-     * @param id          the id of the action
-     * @param title       the title of the activity
+     * @param id the id of the action
+     * @param title the title of the activity
      * @param consumption the energy it uses in wH
-     * @param imagePath   the path to the image representing the image
-     * @param source
+     * @param imagePath the path to the image representing the image
      */
     public Action(@JsonProperty("id") String id, @JsonProperty("image_path") String imagePath, @JsonProperty("title") String title, @JsonProperty("consumption_in_wh") long consumption,
                   @JsonProperty("source") String source) {
@@ -40,8 +34,7 @@ public class Action {
         this.id = id;
         this.title = title;
         this.consumption = consumption;
-        this.imagePath = imagePath;
-        this.source = source;
+        this.imagePath   = imagePath;
     }
 
     /**
@@ -58,6 +51,29 @@ public class Action {
         this.source = "";
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setConsumption(long consumption) {
+        this.consumption = consumption;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public String getSource() {
+        return source;
+    }
 
     /**
      * Returns the id of the current action
@@ -88,7 +104,6 @@ public class Action {
 
     /**
      * Returns the path to the image representing the action
-     *
      * @return the String representing the path to the image
      */
     public String getImagePath() {
@@ -101,28 +116,7 @@ public class Action {
      *
      * @return whether the activity is smart
      */
-    @JsonIgnore
     public boolean isSmart() {
         return this.getTitle().matches(".*[1-9].*");
-    }
-
-    @Override
-    public String toString() {
-        return "Action{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", consumption=" + consumption +
-                ", imagePath='" + imagePath + '\'' +
-                ", source='" + source + '\'' +
-                '}';
-    }
-
-    /**
-     * returns the source of the JSON as a String
-     *
-     * @return a string of the source
-     */
-    public String getSource() {
-        return source;
     }
 }
