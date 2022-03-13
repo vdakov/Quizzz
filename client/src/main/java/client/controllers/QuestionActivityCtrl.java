@@ -18,6 +18,8 @@ public class QuestionActivityCtrl {
     private Action question;
     private int pointsInt;
     private int pointsGainedInt;
+    private int questionsAnswered;
+
     @FXML
     private Label sampleQuestion;
     @FXML
@@ -39,6 +41,7 @@ public class QuestionActivityCtrl {
     public QuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
         this.server = server;
         this.sceneCtrl = sceneCtrl;
+        questionsAnswered = 0;
     }
 
     //Initializes the sample question screen through hardcoding
@@ -57,7 +60,7 @@ public class QuestionActivityCtrl {
         this.sampleQuestion.setText("How much does electricity(in kWH) does " +
                 question.getTitle().substring(0, 1).toLowerCase(Locale.ROOT) + question.getTitle().substring(1) + " take?");
 
-        int answer = question.getConsumption();
+        long answer = (question.getConsumption());
         long range = Math.round(Math.random() * answer);
         long range2 = Math.round(Math.random() * answer);
         double random = Math.random() * 3;
@@ -84,6 +87,7 @@ public class QuestionActivityCtrl {
 
     //method for answering the question- activated on click of button in QuestionScreen scene
     public void answer(ActionEvent event) {
+        questionsAnswered++;
         Button current = (Button) event.getSource();
 
         pointsGainedInt = 0;
@@ -104,7 +108,7 @@ public class QuestionActivityCtrl {
         //sends the server a delete request to ensure the same activity does not appear twice
         server.deleteActivity(question.getId());
 
-
+        if (questionsAnswered >= 20) gameFinished();
     }
 
     //Event for when the "NEXT" button is pressed on the question screen
@@ -132,6 +136,10 @@ public class QuestionActivityCtrl {
             current.setText("FALSE");
             current.setStyle("-fx-background-color: #d20716; ");
         }
+    }
+
+    public void gameFinished() {
+        sceneCtrl.showSingleplayerLeaderboardScene();
     }
 
     //Getters and setters

@@ -1,9 +1,7 @@
 package server.controllers;
 
-
-
-import org.springframework.web.bind.annotation.*;
 import commons.Actions.Action;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -43,11 +41,40 @@ public class ActionController {
     @PostMapping(path = {"", "/add"})
     public void add(@RequestBody Action a) {
         try {
-            if (a.getTitle() != null && a.getSource() != null) service.save(a);
+
+            long temp = a.getConsumption() + 1;
+            if (a.getTitle() != null) service.save(a);
         } catch (Exception e) {
             throw new IllegalStateException("POST Request Failed");
         }
     }
+
+
+    //allows the user to update all the fields of an activity except the ID, but only if the object with that ID already exists
+    @PutMapping(path = "/update/{id}")
+    public void update(@PathVariable("id") Long id,
+                       @RequestParam(required = false) String title,
+                       @RequestParam(required = false) int consumption,
+                       @RequestParam(required = false) String source) {
+
+
+        Action activity = service.getById(id.toString()); //.orElseThrow(() -> new IllegalStateException(("No such activity!!!")));
+
+        if (title != null && title.length() > 0) {
+            activity.setTitle(title);
+        }
+
+        if (consumption > 0) {
+            activity.setConsumption(consumption);
+        }
+
+        /*if (source != null && source.length() > 0) {
+            activity.setSource(source);
+        }*/
+
+        service.save(activity);
+    }
+
 
     //test mapping to use as println cuz I am pretty bad at writing tests :(
     @GetMapping("/alert")

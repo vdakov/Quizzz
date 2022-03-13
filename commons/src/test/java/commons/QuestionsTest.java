@@ -4,19 +4,20 @@ import commons.Questions.AlternativeQuestion;
 import commons.Questions.ComparisonQuestion;
 import commons.Questions.KnowledgeQuestion;
 import commons.Questions.OpenQuestion;
+import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class QuestionsTest {
 
     @Test
     void getOpenQuestionTest() {
-        OpenQuestion openQuestion = new OpenQuestion("How much energy does it take to mine 1 Bitcoin?");
-        assertEquals("How much energy does it take to mine 1 Bitcoin?", openQuestion.getQuestion());
+        OpenQuestion openQuestion = new OpenQuestion(Pair.of("How much energy does it take to mine 1 Bitcoin?", "path"));
+        assertEquals("How much energy does it take to mine 1 Bitcoin?", openQuestion.getQuestion().getKey());
     }
 
     @Test
@@ -32,7 +33,7 @@ class QuestionsTest {
         expected.add("1000 hWh");
         expected.add("2000 hWh");
 
-        KnowledgeQuestion knowledgeQuestion = new KnowledgeQuestion(questionStatement, options);
+        KnowledgeQuestion knowledgeQuestion = new KnowledgeQuestion(Pair.of(questionStatement, "path"), options);
 
         assertEquals(expected, knowledgeQuestion.getOptions());
     }
@@ -50,7 +51,7 @@ class QuestionsTest {
                 "   Choice 1: 1000 hWh\n" +
                 "   Choice 2: 2000 hWh";
 
-        KnowledgeQuestion knowledgeQuestion = new KnowledgeQuestion(questionStatement, options);
+        KnowledgeQuestion knowledgeQuestion = new KnowledgeQuestion(Pair.of(questionStatement, "path"), options);
 
         assertEquals(expected, knowledgeQuestion.toString());
     }
@@ -58,17 +59,17 @@ class QuestionsTest {
     @Test
     void getComparisonQuestionOptionsTest() {
         String questionStatement = "Which of the following activities take more energy?";
-        List<String> options = new ArrayList<>();
-        options.add("Mining 1 Bitcoin");
-        options.add("Driving 1000km with a truck");
-        options.add("Watching TV for 10 years");
+        List<Pair<String, String>> options = new ArrayList<>();
+        options.add(Pair.of("Mining 1 Bitcoin", "path"));
+        options.add(Pair.of("Driving 1000km with a truck", "path"));
+        options.add(Pair.of("Watching TV for 10 years", "path"));
 
-        List<String> expected = new ArrayList<>();
-        expected.add("Mining 1 Bitcoin");
-        expected.add("Driving 1000km with a truck");
-        expected.add("Watching TV for 10 years");
+        List<Pair<String, String>> expected = new ArrayList<>();
+        expected.add(Pair.of("Mining 1 Bitcoin", "path"));
+        expected.add(Pair.of("Driving 1000km with a truck", "path"));
+        expected.add(Pair.of("Watching TV for 10 years", "path"));
 
-        ComparisonQuestion comparisonQuestion = new ComparisonQuestion(questionStatement, options);
+        ComparisonQuestion comparisonQuestion = new ComparisonQuestion(Pair.of(questionStatement, "path"), options);
 
         assertEquals(expected, comparisonQuestion.getOptions());
     }
@@ -76,17 +77,17 @@ class QuestionsTest {
     @Test
     void toStringComparisonQuestionTest() {
         String questionStatement = "Which of the following activities take more energy?";
-        List<String> options = new ArrayList<>();
-        options.add("Mining 1 Bitcoin");
-        options.add("Driving 1000km with a truck");
-        options.add("Watching TV for 10 years");
+        List<Pair<String, String>> options = new ArrayList<>();
+        options.add(Pair.of("Mining 1 Bitcoin", "path"));
+        options.add(Pair.of("Driving 1000km with a truck", "path"));
+        options.add(Pair.of("Watching TV for 10 years", "path"));
 
         String expected = "Comparison question statement: Which of the following activities take more energy?\n" +
                 "   Choice 0: Mining 1 Bitcoin\n" +
                 "   Choice 1: Driving 1000km with a truck\n" +
                 "   Choice 2: Watching TV for 10 years";
 
-        ComparisonQuestion comparisonQuestion = new ComparisonQuestion(questionStatement, options);
+        ComparisonQuestion comparisonQuestion = new ComparisonQuestion(Pair.of(questionStatement, "path"), options);
 
         assertEquals(expected, comparisonQuestion.toString());
     }
@@ -94,17 +95,17 @@ class QuestionsTest {
     @Test
     void getAlternativeQuestionOptionsTest() {
         String questionStatement = "Which of the following has the closest consumption to using a computer for 20 years";
-        List<String> options = new ArrayList<>();
-        options.add("Mining 1 Bitcoin");
-        options.add("Driving 1000km with a truck");
-        options.add("Watching TV for 10 years");
+        List<Pair<String, String>> options = new ArrayList<>();
+        options.add(Pair.of("Mining 1 Bitcoin", "path"));
+        options.add(Pair.of("Driving 1000km with a truck", "path"));
+        options.add(Pair.of("Watching TV for 10 years", "path"));
 
-        List<String> expected = new ArrayList<>();
-        expected.add("Mining 1 Bitcoin");
-        expected.add("Driving 1000km with a truck");
-        expected.add("Watching TV for 10 years");
+        List<Pair<String, String>> expected = new ArrayList<>();
+        expected.add(Pair.of("Mining 1 Bitcoin", "path"));
+        expected.add(Pair.of("Driving 1000km with a truck", "path"));
+        expected.add(Pair.of("Watching TV for 10 years", "path"));
 
-        AlternativeQuestion alternativeQuestion = new AlternativeQuestion(questionStatement, options);
+        AlternativeQuestion alternativeQuestion = new AlternativeQuestion(Pair.of(questionStatement, "path"), options);
 
         assertEquals(expected, alternativeQuestion.getOptions());
     }
@@ -112,17 +113,17 @@ class QuestionsTest {
     @Test
     void toStringAlternativeQuestionTest() {
         String questionStatement = "Which of the following has the closest consumption to using a computer for 20 years";
-        List<String> options = new ArrayList<>();
-        options.add("Mining 1 Bitcoin");
-        options.add("Driving 1000km with a truck");
-        options.add("Watching TV for 10 years");
+        List<Pair<String, String>> options = new ArrayList<>();
+        options.add(Pair.of("Mining 1 Bitcoin", "path"));
+        options.add(Pair.of("Driving 1000km with a truck", "path"));
+        options.add(Pair.of("Watching TV for 10 years", "path"));
 
         String expected = "Alternative question statement: Which of the following has the closest consumption to using a computer for 20 years\n" +
                 "   Choice 0: Mining 1 Bitcoin\n" +
                 "   Choice 1: Driving 1000km with a truck\n" +
                 "   Choice 2: Watching TV for 10 years";
 
-        AlternativeQuestion alternativeQuestion = new AlternativeQuestion(questionStatement, options);
+        AlternativeQuestion alternativeQuestion = new AlternativeQuestion(Pair.of(questionStatement, "path"), options);
 
         assertEquals(expected, alternativeQuestion.toString());
     }

@@ -1,8 +1,8 @@
 package server.controllers;
 
 
+import commons.Actions.Action;
 import org.springframework.stereotype.Service;
-import commons.Actions.*;
 import server.repositories.ActivityRepository;
 
 import java.util.List;

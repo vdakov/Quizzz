@@ -1,5 +1,7 @@
 package commons.Questions;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 public class OpenQuestion extends Question {
 
     /**
@@ -7,7 +9,7 @@ public class OpenQuestion extends Question {
      *
      * @param question the String representing the question statement
      */
-    public OpenQuestion(String question) {
+    public OpenQuestion(Pair<String, String> question) {
         super(question);
     }
 }
