@@ -54,8 +54,7 @@ public class SceneCtrl {
         this.singleplayerLeaderboardCtrl = singleplayerLeaderboardCtrlParentPair.getKey();
         this.singleplayerLeaderboardScene = new Scene(singleplayerLeaderboardCtrlParentPair.getValue());
 
-        showQuestionScene();
-        showMainScreenScene();
+        showSingleplayerLeaderboardScene();
         primaryStage.show();
     }
 
@@ -102,7 +101,7 @@ public class SceneCtrl {
     public void showSingleplayerLeaderboardScene() {
         primaryStage.setTitle("Singleplayer Leaderboard");
         primaryStage.setScene(singleplayerLeaderboardScene);
-        Stage stage = (Stage) mainScreenScene.getWindow();
+        Stage stage = (Stage) singleplayerLeaderboardScene.getWindow();
         stage.show();
     }
 }
