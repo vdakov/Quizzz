@@ -75,7 +75,7 @@ public class QuestionSceneGuessXActivityCtrl {
             pointsInt += 500; //global variable for points so it remembers it
         }
         else
-            if (parseInt(writeAnswer.getText()) > parseInt(getCorrectAnswer())*0.95 &&  parseInt(writeAnswer.getText()) < parseInt(getCorrectAnswer())*1.05) {
+            if (parseInt(writeAnswer.getText()) > parseInt(getCorrectAnswer()) * 0.95 &&  parseInt(writeAnswer.getText()) < parseInt(getCorrectAnswer()) * 1.05) {
                 pointsInt += 250;
             }
 
@@ -100,7 +100,7 @@ public class QuestionSceneGuessXActivityCtrl {
     public void answerCheck(String answer, Button current) throws InterruptedException {
 
         if (Objects.equals(writeAnswer.getText(), getCorrectAnswer()) ||
-                parseInt(writeAnswer.getText()) > parseInt(getCorrectAnswer())*0.95 &&  parseInt(writeAnswer.getText()) < parseInt(getCorrectAnswer())*1.05) {
+                parseInt(writeAnswer.getText()) > parseInt(getCorrectAnswer()) * 0.95 &&  parseInt(writeAnswer.getText()) < parseInt(getCorrectAnswer()) * 1.05) {
             current.setStyle("-fx-background-color: #00FF00; ");  //simple CSS for clarity
         } else {
             current.setStyle("-fx-background-color: #d20716;");

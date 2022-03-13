@@ -20,8 +20,8 @@ public class SceneCtrl {
     private QuestionSceneHowMuchActivityCtrl questionSceneHowMuchActivityCtrl;
     private Scene questionHowMuchScene;
 
-    private QuestionSceneWhatIsActivityCtrl questionSceneWhatIsActivityCtrl;
-    private Scene questionWhatIsScene;
+   // private QuestionSceneWhatIsActivityCtrl questionSceneWhatIsActivityCtrl;
+  //  private Scene questionWhatIsScene;
 
     private QuestionSceneGuessXActivityCtrl questionSceneGuessXActivityCtrl;
     private Scene questionGuessXScene;
@@ -32,9 +32,6 @@ public class SceneCtrl {
     private AddActionActivityCtrl addActionActivityCtrl;
     private Scene addActionScene;
 
-    private QuestionActivityCtrl questionActivityCtrl;
-    private Scene questionScene;
-
 
     /**
      * Initialising the app scene with the primary stage and every scene that will be used in this stage
@@ -42,9 +39,8 @@ public class SceneCtrl {
      * @param primaryStage                                  the main stage of the app
      * @param overviewActionsActivityCtrlParentPair         the loaded FXML scene with control for displaying all actions
      * @param addActionActivityCtrlParentPair               the loaded FXML scene with control for adding a new action
-     * @param questionsActivityCtrlParentPair               the loaded FXML scene with control for displaying a question
      * @param mainScreenCtrlParentPair                      the loaded FXML scene with control for displaying the main screen
-     * @param questionSceneWhatIsActivityCtrlParentPair     the loaded FXML scene with control for displaying the question screen of type "What is"
+    // * @param questionSceneWhatIsActivityCtrlParentPair     the loaded FXML scene with control for displaying the question screen of type "What is"
      * @param questionSceneGuessXActivityCtrlParentPair     the loaded FXML scene with control for displaying the question screen of type "Guess X"
      * @param questionSceneHowMuchActivityCtrlParentPair    the loaded FXML scene with control for displaying the question screen of type "How Much"
      * @param questionSceneInsteadOfActivityCtrlParentPair  the loaded FXML scene with control for displaying the question screen of type "Instead of X"
@@ -53,10 +49,9 @@ public class SceneCtrl {
                                                Pair<QuestionSceneInsteadOfActivityCtrl, Parent> questionSceneInsteadOfActivityCtrlParentPair,
                                                Pair<QuestionSceneHowMuchActivityCtrl, Parent> questionSceneHowMuchActivityCtrlParentPair,
                                                Pair<QuestionSceneGuessXActivityCtrl, Parent> questionSceneGuessXActivityCtrlParentPair,
-                                               Pair<QuestionSceneWhatIsActivityCtrl, Parent> questionSceneWhatIsActivityCtrlParentPair,
+                                             //  Pair<QuestionSceneWhatIsActivityCtrl, Parent> questionSceneWhatIsActivityCtrlParentPair,
                                                Pair<OverviewActionsActivityCtrl, Parent> overviewActionsActivityCtrlParentPair,
-                                               Pair<AddActionActivityCtrl, Parent> addActionActivityCtrlParentPair,
-                                               Pair<QuestionActivityCtrl, Parent> questionsActivityCtrlParentPair)
+                                               Pair<AddActionActivityCtrl, Parent> addActionActivityCtrlParentPair )
 
     {
         this.primaryStage = primaryStage;
@@ -73,8 +68,8 @@ public class SceneCtrl {
         this.questionSceneGuessXActivityCtrl    = questionSceneGuessXActivityCtrlParentPair.getKey();
         this.questionGuessXScene                = new Scene(questionSceneGuessXActivityCtrlParentPair.getValue());
 
-        this.questionSceneWhatIsActivityCtrl    = questionSceneWhatIsActivityCtrlParentPair.getKey();
-        this.questionWhatIsScene                = new Scene(questionSceneWhatIsActivityCtrlParentPair.getValue());
+      //  this.questionSceneWhatIsActivityCtrl    = questionSceneWhatIsActivityCtrlParentPair.getKey();
+      //  this.questionWhatIsScene                = new Scene(questionSceneWhatIsActivityCtrlParentPair.getValue());
 
         this.overviewActionsActivityCtrl        = overviewActionsActivityCtrlParentPair.getKey();
         this.overviewActionsScene               = new Scene(overviewActionsActivityCtrlParentPair.getValue());
@@ -82,12 +77,9 @@ public class SceneCtrl {
         this.addActionActivityCtrl              = addActionActivityCtrlParentPair.getKey();
         this.addActionScene                     = new Scene(addActionActivityCtrlParentPair.getValue());
 
-        this.questionActivityCtrl               = questionsActivityCtrlParentPair.getKey();
-        this.questionScene                      = new Scene(questionsActivityCtrlParentPair.getValue());
 
-         showOverviewActionsScene();
-        //showQuestionScene();
-        //showMainScreenScene();
+        showOverviewActionsScene();
+        showMainScreenScene();
         primaryStage.show();
     }
 
@@ -106,6 +98,7 @@ public class SceneCtrl {
     /**
      * Displays the screen for the question type "Instead of X"
      */
+
 
     public void showQuestionInsteadOfScene()
     {
@@ -146,6 +139,7 @@ public class SceneCtrl {
      * Displays the screen for the question type "What is..."
      */
 
+    /*
     public void showQuestionWhatIsScene()
     {
         primaryStage.setTitle("Question Screen What Is");
@@ -153,7 +147,7 @@ public class SceneCtrl {
         Stage stage = (Stage) questionWhatIsScene.getWindow();
         stage.show();
     }
-
+*/
 
     /**
      * Displays the scene with all actions
@@ -175,18 +169,6 @@ public class SceneCtrl {
         addActionScene.setOnKeyPressed(e -> addActionActivityCtrl.keyPressed(e));
     }
 
-
-    /**
-     * Displays the scene with add question
-     */
-
-    public void showQuestionScene() {
-        primaryStage.setTitle("Question Screen");
-        primaryStage.setScene(questionScene);
-        Stage stage = (Stage) questionScene.getWindow();
-        questionActivityCtrl.initialize();
-        stage.show();
-    }
 
 
 }
