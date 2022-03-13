@@ -85,14 +85,9 @@ public class SceneCtrl {
         this.questionActivityCtrl               = questionsActivityCtrlParentPair.getKey();
         this.questionScene                      = new Scene(questionsActivityCtrlParentPair.getValue());
 
-
+         showOverviewActionsScene();
         //showQuestionScene();
-        showQuestionWhatIsScene();
-        //showQuestionGuessXScene();
-        showQuestionInsteadOfScene();
-        showQuestionHowMuchScene();
-        showMainScreenScene();
-        showQuestionGuessXScene();
+        //showMainScreenScene();
         primaryStage.show();
     }
 

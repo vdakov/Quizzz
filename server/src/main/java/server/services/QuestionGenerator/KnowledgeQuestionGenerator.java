@@ -1,9 +1,10 @@
 package server.services.QuestionGenerator;
 
+import commons.Actions.Action;
+import commons.Actions.ActionCatalog;
 import commons.Questions.KnowledgeQuestion;
 import commons.Questions.Question;
 import org.springframework.data.util.Pair;
-import commons.Actions.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,21 +26,21 @@ public class KnowledgeQuestionGenerator {
     }
 
     public static Pair<Question, String> generateKnowledgeQuestionFromAction(Action action, Random random) {
-        Integer correctAnswer = action.getConsumption();
+        long correctAnswer = action.getConsumption();
         List<String> possibleAnswers = new ArrayList<>();
-        possibleAnswers.add(Integer.toString(correctAnswer));
+        possibleAnswers.add(Long.toString(correctAnswer));
         possibleAnswers.add(generateKnowledgeAnswer(correctAnswer, 10, 25, random));
         possibleAnswers.add(generateKnowledgeAnswer(correctAnswer, 50, 75, random));
         Collections.shuffle(possibleAnswers);
 
         KnowledgeQuestion knowledgeQuestion = new KnowledgeQuestion(makeKnowledgeQuestionFromStatement(action.getTitle()), possibleAnswers);
 
-        return Pair.of(knowledgeQuestion, Integer.toString(correctAnswer));
+        return Pair.of(knowledgeQuestion, Long.toString(correctAnswer));
     }
 
-    public static String generateKnowledgeAnswer(Integer correctAnswer, Integer errorLowerBound, Integer errorUpperBound, Random random) {
-        int offset = (int) ((errorLowerBound + random.nextInt(errorUpperBound - errorLowerBound)) * correctAnswer * 1.0 / 100);
-        return Integer.toString((correctAnswer + Math.round(((random.nextBoolean()) ? 1 : -1) * offset)));
+    public static String generateKnowledgeAnswer(long correctAnswer, Integer errorLowerBound, Integer errorUpperBound, Random random) {
+        long offset = (long) ((errorLowerBound + random.nextInt(errorUpperBound - errorLowerBound)) * correctAnswer * 1.0 / 100);
+        return Long.toString((correctAnswer + Math.round(((random.nextBoolean()) ? 1 : -1) * offset)));
     }
 
     public static String makeKnowledgeQuestionFromStatement(String statement) {

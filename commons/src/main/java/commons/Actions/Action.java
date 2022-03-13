@@ -2,12 +2,8 @@ package commons.Actions;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-
-
-//CHECK IF LOMBOK IS ALLOWED
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -20,7 +16,7 @@ public class Action {
 
     private final String title;
 
-    private final Integer consumption;
+    private final long consumption;
 
     private final String imagePath;
 
@@ -38,7 +34,7 @@ public class Action {
      * @param imagePath   the path to the image representing the image
      * @param source
      */
-    public Action(@JsonProperty("id") String id, @JsonProperty("image_path") String imagePath, @JsonProperty("title") String title, @JsonProperty("consumption_in_wh") Integer consumption,
+    public Action(@JsonProperty("id") String id, @JsonProperty("image_path") String imagePath, @JsonProperty("title") String title, @JsonProperty("consumption_in_wh") long consumption,
                   @JsonProperty("source") String source) {
 
         this.id = id;
@@ -47,8 +43,6 @@ public class Action {
         this.imagePath = imagePath;
         this.source = source;
     }
-
-
 
     /**
      * EMPTY CONSTRUCTOR BECAUSE FOR SOME GOD DAMNED REASON
@@ -88,7 +82,7 @@ public class Action {
      *
      * @return the consumption of the current action
      */
-    public Integer getConsumption() {
+    public long getConsumption() {
         return consumption;
     }
 
