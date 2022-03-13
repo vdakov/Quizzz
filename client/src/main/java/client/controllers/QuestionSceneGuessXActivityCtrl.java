@@ -62,7 +62,7 @@ public class QuestionSceneGuessXActivityCtrl {
         this.sampleQuestion.setText("How much does electricity(in kWH) does " +
                 question.getTitle().substring(0, 1).toLowerCase(Locale.ROOT) + question.getTitle().substring(1) + " take?");
 
-        int answer = question.getConsumption();
+        long answer = question.getConsumption();
         this.correctAnswer = "" + answer;
     }
 
@@ -75,7 +75,7 @@ public class QuestionSceneGuessXActivityCtrl {
             pointsInt += 500; //global variable for points so it remembers it
         }
         else
-            if (parseInt(writeAnswer.getText()) > parseInt(getCorrectAnswer()) - 10 &&  parseInt(writeAnswer.getText()) < parseInt(getCorrectAnswer()) + 10) {
+            if (parseInt(writeAnswer.getText()) > parseInt(getCorrectAnswer())*0.95 &&  parseInt(writeAnswer.getText()) < parseInt(getCorrectAnswer())*1.05) {
                 pointsInt += 250;
             }
 
@@ -99,7 +99,8 @@ public class QuestionSceneGuessXActivityCtrl {
     //
     public void answerCheck(String answer, Button current) throws InterruptedException {
 
-        if (writeAnswer.getText() == getCorrectAnswer()) {
+        if (Objects.equals(writeAnswer.getText(), getCorrectAnswer()) ||
+                parseInt(writeAnswer.getText()) > parseInt(getCorrectAnswer())*0.95 &&  parseInt(writeAnswer.getText()) < parseInt(getCorrectAnswer())*1.05) {
             current.setStyle("-fx-background-color: #00FF00; ");  //simple CSS for clarity
         } else {
             current.setStyle("-fx-background-color: #d20716;");

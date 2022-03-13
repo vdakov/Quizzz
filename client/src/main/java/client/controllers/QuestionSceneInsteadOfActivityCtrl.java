@@ -65,7 +65,7 @@ public class QuestionSceneInsteadOfActivityCtrl {
         this.sampleQuestion.setText("How much does electricity(in kWH) does " +
                 question.getTitle().substring(0, 1).toLowerCase(Locale.ROOT) + question.getTitle().substring(1) + " take?");
 
-        int answer = question.getConsumption();
+        long answer =  question.getConsumption();
         long range = Math.round(Math.random() * answer);
         long range2 = Math.round(Math.random() * answer);
         double random = Math.random() * 3;
