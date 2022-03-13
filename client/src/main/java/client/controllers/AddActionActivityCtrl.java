@@ -11,6 +11,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 
 public class AddActionActivityCtrl {
+
     private final ServerUtils server;
     private final SceneCtrl sceneCtrl;
 
@@ -77,4 +78,5 @@ public class AddActionActivityCtrl {
                 break;
         }
     }
+
 }

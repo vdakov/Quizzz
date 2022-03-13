@@ -10,7 +10,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
-public class MainScreenActivityCtrl {
+public class QuestionSceneWhatIsActivityCtrl {
+
 
 
 
@@ -18,9 +19,9 @@ public class MainScreenActivityCtrl {
     private Stage stage;
     private Parent root;
 
-    public void enterSoloGame (ActionEvent event) throws IOException {
+    public void goToMainScreen (ActionEvent event) throws IOException {
 
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../../scenes/QuestionSceneHowMuch.fxml")));
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../../scenes/MainScreenScene.fxml")));
         stage = (Stage) ( (Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);

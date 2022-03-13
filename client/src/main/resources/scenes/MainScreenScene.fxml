@@ -8,39 +8,39 @@
 <?import javafx.scene.text.*?>
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="839.0" prefWidth="1092.0" style="-fx-background-color: #499ee8 #499ee8;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.MainScreenActivityCtrl">
   <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="258.0" minWidth="10.0" prefWidth="89.0" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="258.0" minWidth="10.0" prefWidth="76.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="10.0" prefWidth="89.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="76.0" minWidth="10.0" prefWidth="76.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="10.0" prefWidth="50.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="23.0" minWidth="9.0" prefWidth="23.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="267.0" minWidth="10.0" prefWidth="267.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="215.0" minWidth="9.0" prefWidth="215.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="16.0" minWidth="10.0" prefWidth="16.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="292.0" minWidth="10.0" prefWidth="292.0" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="258.0" minWidth="10.0" prefWidth="119.0" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="258.0" minWidth="10.0" prefWidth="53.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="119.0" minWidth="10.0" prefWidth="119.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="10.0" prefWidth="53.0" />
   </columnConstraints>
   <rowConstraints>
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="600.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="72.0" minHeight="10.0" prefHeight="72.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="306.0" minHeight="10.0" prefHeight="306.0" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="70.0" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="65.0" minHeight="0.0" prefHeight="65.0" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="55.0" minHeight="5.0" prefHeight="55.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="64.0" minHeight="10.0" prefHeight="64.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="90.0" minHeight="0.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="30.0" minHeight="0.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="600.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff05" height="219.0" stroke="#caf0fa" strokeType="INSIDE" width="298.0" GridPane.columnIndex="3" GridPane.rowIndex="8" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff05" height="219.0" stroke="#caf0fa" strokeType="INSIDE" width="291.0" GridPane.columnIndex="3" GridPane.rowIndex="8" />
       <Text fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="Quizzzz" textAlignment="RIGHT" wrappingWidth="425.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
          <font>
             <Font name="Chalkboard" size="96.0" />
          </font>
       </Text>
-      <Button fx:id="startSoloGameButton" mnemonicParsing="false" onAction="#enterSoloGame" prefHeight="51.0" prefWidth="275.0" style="-fx-background-color: #444444;" text="Enter" textFill="WHITE" GridPane.columnIndex="4" GridPane.rowIndex="8">
+      <Button fx:id="enterSoloGame" mnemonicParsing="false" onAction="#enterSoloGame" prefHeight="51.0" prefWidth="275.0" style="-fx-background-color: #444444;" text="Enter" textFill="WHITE" GridPane.columnIndex="4" GridPane.rowIndex="8">
          <font>
             <Font name="Chalkboard" size="18.0" />
          </font>
