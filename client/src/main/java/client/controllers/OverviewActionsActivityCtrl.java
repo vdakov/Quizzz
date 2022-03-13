@@ -17,7 +17,6 @@ package client.controllers;
 
 import client.communication.ServerUtils;
 import com.google.inject.Inject;
-import commons.ActionOld;
 import commons.Actions.Action;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -40,13 +39,13 @@ public class OverviewActionsActivityCtrl implements Initializable {
     @FXML
     private TableView<Action> table;
     @FXML
-    private TableColumn<ActionOld, String> colId;
+    private TableColumn<Action, String> colId;
     @FXML
-    private TableColumn<ActionOld, String> colTitle;
+    private TableColumn<Action, String> colTitle;
     @FXML
-    private TableColumn<ActionOld, String> colConsumption;
+    private TableColumn<Action, String> colConsumption;
     @FXML
-    private TableColumn<ActionOld, String> colSource;
+    private TableColumn<Action, String> colSource;
 
     @Inject
     public OverviewActionsActivityCtrl(ServerUtils server, SceneCtrl mainCtrl) {
