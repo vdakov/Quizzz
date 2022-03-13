@@ -1,7 +1,5 @@
 package commons.Actions;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.Entity;
@@ -12,15 +10,15 @@ import javax.persistence.Id;
 @Entity
 public class Action {
     @Id
-    private final String id;
+    private String id;
 
-    private final String title;
+    private String title;
 
-    private final long consumption;
+    private long consumption;
 
-    private final String imagePath;
+    private String imagePath;
 
-    private final String source;
+    private String source;
 
     /**
      * Constructor to create a new action
@@ -53,8 +51,28 @@ public class Action {
         this.source = "";
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setConsumption(long consumption) {
+        this.consumption = consumption;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
+    }
+
+    public String getSource() {
+        return source;
     }
 
     /**

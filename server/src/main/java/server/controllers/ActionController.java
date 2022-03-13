@@ -42,7 +42,7 @@ public class ActionController {
     public void add(@RequestBody Action a) {
         try {
 
-            int temp = a.getConsumption() + 1;
+            long temp = a.getConsumption() + 1;
             if (a.getTitle() != null) service.save(a);
         } catch (Exception e) {
             throw new IllegalStateException("POST Request Failed");

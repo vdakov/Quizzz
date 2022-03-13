@@ -2,9 +2,10 @@ package server.services.QuestionGenerator;
 
 import commons.Actions.Action;
 import commons.Actions.ActionCatalog;
+import commons.Exceptions.NotEnoughActivitiesException;
 import commons.Questions.KnowledgeQuestion;
 import commons.Questions.Question;
-import org.springframework.data.util.Pair;
+import org.apache.commons.lang3.tuple.Pair;
 
 
 
