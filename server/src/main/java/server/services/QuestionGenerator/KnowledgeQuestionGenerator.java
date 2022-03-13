@@ -2,6 +2,7 @@ package server.services.QuestionGenerator;
 
 import commons.Actions.Action;
 import commons.Actions.ActionCatalog;
+import commons.Exceptions.NotEnoughActivitiesException;
 import commons.Questions.KnowledgeQuestion;
 import commons.Questions.Question;
 import commons.Actions.*;
@@ -15,8 +16,12 @@ import java.util.Random;
 
 public class KnowledgeQuestionGenerator {
 
-    public static List<Pair<Question, String>> knowledgeQuestionsGenerator(Integer numberOfNeededQuestions, ActionCatalog actionCatalog, Random random) {
+    public static List<Pair<Question, String>> knowledgeQuestionsGenerator(Integer numberOfNeededQuestions, ActionCatalog actionCatalog, Random random) throws NotEnoughActivitiesException {
         List<Pair<Question, String>> knowledgeQuestionWithAnswersList = new ArrayList<>();
+
+        if (numberOfNeededQuestions * 1 > actionCatalog.getSmartActions().size() + actionCatalog.getNormalActions().size()) {
+            throw new NotEnoughActivitiesException();
+        }
 
         for (int i = 0; i < numberOfNeededQuestions; i++) {
             knowledgeQuestionWithAnswersList.add(generateKnowledgeQuestionFromAction((random.nextBoolean()) ? actionCatalog.getSmartAction() : actionCatalog.getNormalAction(), random));
@@ -34,7 +39,7 @@ public class KnowledgeQuestionGenerator {
         possibleAnswers.add(generateKnowledgeAnswer(correctAnswer, 50, 75, random));
         Collections.shuffle(possibleAnswers);
 
-        KnowledgeQuestion knowledgeQuestion = new KnowledgeQuestion(makeKnowledgeQuestionFromStatement(action.getTitle()), possibleAnswers);
+        KnowledgeQuestion knowledgeQuestion = new KnowledgeQuestion(Pair.of(makeKnowledgeQuestionFromStatement(action.getTitle()), action.getImagePath()), possibleAnswers);
 
         return Pair.of(knowledgeQuestion, Long.toString(correctAnswer));
     }

@@ -1,15 +1,17 @@
 package commons.Questions;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 public abstract class Question {
 
-    private final String question;
+    private final Pair<String, String> question;
 
     /**
      * Constructor for instantiating a question with the question statement
      *
      * @param question the String representing the question statement
      */
-    public Question(String question) {
+    public Question(Pair<String, String> question) {
         this.question = question;
     }
 
@@ -18,7 +20,7 @@ public abstract class Question {
      *
      * @return the question statement
      */
-    public String getQuestion() {
+    public Pair<String, String> getQuestion() {
         return this.question;
     }
 
@@ -28,6 +30,6 @@ public abstract class Question {
      * @return the question statement in a human-friendly way
      */
     public String toString() {
-        return this.question;
+        return this.question.getKey();
     }
 }

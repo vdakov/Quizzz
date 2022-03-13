@@ -64,8 +64,7 @@ public class SceneCtrl {
     public void showMainScreenScene() {
         primaryStage.setTitle("Main Screen");
         primaryStage.setScene(mainScreenScene);
-        Stage stage = (Stage) mainScreenScene.getWindow();
-        stage.show();
+        primaryStage.show();
     }
 
     /**
