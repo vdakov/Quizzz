@@ -40,8 +40,9 @@ public class SinglePlayerGameService {
         return id;
     }
 
-    public Question getNeededQuestion(String gameId, int number) {
-        return gameCatalog.getGame(gameId).getQuestion(number);
+    public Pair<String, Question> getNeededQuestion(String gameId, int number) {
+        Question question = gameCatalog.getGame(gameId).getQuestion(number);
+        return Pair.of(Util.getQuestionType(question), question);
     }
 
     public int getPlayerScore(String userName, String gameId) {

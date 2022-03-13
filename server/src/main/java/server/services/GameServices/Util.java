@@ -1,5 +1,7 @@
 package server.services.GameServices;
 
+import commons.Questions.Question;
+
 public class Util {
         static String getAlphaNumericString(int n) {
             String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -17,5 +19,9 @@ public class Util {
             }
 
             return sb.toString();
+        }
+
+        static String getQuestionType(Question question) {
+            return question.getClass().toString().substring(24);
         }
 }
