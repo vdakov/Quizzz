@@ -1,5 +1,6 @@
 package commons.Actions;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.Entity;
@@ -23,10 +24,10 @@ public class Action {
     /**
      * Constructor to create a new action
      *
-     * @param id the id of the action
-     * @param title the title of the activity
+     * @param id          the id of the action
+     * @param title       the title of the activity
      * @param consumption the energy it uses in wH
-     * @param imagePath the path to the image representing the image
+     * @param imagePath   the path to the image representing the image
      */
     public Action(@JsonProperty("id") String id, @JsonProperty("image_path") String imagePath, @JsonProperty("title") String title, @JsonProperty("consumption_in_wh") long consumption,
                   @JsonProperty("source") String source) {
@@ -34,7 +35,8 @@ public class Action {
         this.id = id;
         this.title = title;
         this.consumption = consumption;
-        this.imagePath   = imagePath;
+        this.imagePath = imagePath;
+        this.source = source;
     }
 
     /**
@@ -104,6 +106,7 @@ public class Action {
 
     /**
      * Returns the path to the image representing the action
+     *
      * @return the String representing the path to the image
      */
     public String getImagePath() {
@@ -116,6 +119,7 @@ public class Action {
      *
      * @return whether the activity is smart
      */
+    @JsonIgnore
     public boolean isSmart() {
         return this.getTitle().matches(".*[1-9].*");
     }
