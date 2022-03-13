@@ -24,6 +24,12 @@ Add your own name (do not add the names for others!) to the section below.
 
 ## How to run it
 
+The activity pictures cannot be stored in gitlab, so before running the project the
+following directory should be downloaded and put into repository-template/server/src/main/resources
+and be named activity-bank-pictures:
+https://drive.google.com/drive/folders/1aqCGSVd5VkHiph4eaiZdTSQdbJUr78My?usp=sharing
+
+
 ## How to contribute to it
 
 ## Copyright / License (opt.)

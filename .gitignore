@@ -9,6 +9,9 @@ build/
 
 **/*.swp
 
+### Activity bank imports ###
+/server/src/main/resources/activity-bank-pictures/
+
 ### STS ###
 .apt_generated
 .classpath
