@@ -92,7 +92,7 @@ public class QuestionSceneHowMuchActivityCtrl {
 
 
     //method for answering the question- activated on click of button in QuestionScreen scene
-    public void answer(ActionEvent event) {
+    public void answer(ActionEvent event) throws InterruptedException {
         Button current = (Button) event.getSource();
 
         if (current.getText().equals(getCorrectAnswer())) {
@@ -116,20 +116,14 @@ public class QuestionSceneHowMuchActivityCtrl {
 
 
     //Method that checks whether answer is correct
-    public void answerCheck(String answer, Button current) {
+    //
+    public void answerCheck(String answer, Button current) throws InterruptedException {
 
-
-        long mTime = System.currentTimeMillis();
-        long end = mTime + 1000;
-
-        // This should be setting the colour and then go to a new question screen but it doesn't work right now
-        do {
-            if (answer.equals(getCorrectAnswer())) {
-                current.setStyle("-fx-background-color: #00FF00; "); //simple CSS for clarity
-            } else {
-                current.setStyle("-fx-background-color: #d20716; ");
-            }
-        } while (System.currentTimeMillis() < end);
+        if (answer.equals(getCorrectAnswer())) {
+            current.setStyle("-fx-background-color: #00FF00; ");  //simple CSS for clarity
+        } else {
+            current.setStyle("-fx-background-color: #d20716;");
+        }
 
         this.initialize();
 

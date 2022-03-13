@@ -88,11 +88,11 @@ public class SceneCtrl {
 
         //showQuestionScene();
         showQuestionWhatIsScene();
-        showQuestionGuessXScene();
+        //showQuestionGuessXScene();
         showQuestionInsteadOfScene();
         showQuestionHowMuchScene();
         showMainScreenScene();
-        //showQuestionHowMuchScene();
+        showQuestionGuessXScene();
         primaryStage.show();
     }
 
@@ -117,6 +117,7 @@ public class SceneCtrl {
         primaryStage.setTitle("Question Screen Instead of X");
         primaryStage.setScene(questionInsteadOfScene);
         Stage stage = (Stage) questionInsteadOfScene.getWindow();
+        questionSceneInsteadOfActivityCtrl.initialize();
         stage.show();
     }
 
@@ -142,6 +143,7 @@ public class SceneCtrl {
         primaryStage.setTitle("Question Screen Guess X");
         primaryStage.setScene(questionGuessXScene);
         Stage stage = (Stage) questionGuessXScene.getWindow();
+        questionSceneGuessXActivityCtrl.initialize();
         stage.show();
     }
 

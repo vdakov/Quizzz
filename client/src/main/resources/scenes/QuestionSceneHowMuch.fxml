@@ -46,7 +46,7 @@
       <ImageView fitHeight="210.0" fitWidth="340.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="4" />
       <Label fx:id="sampleQuestion" alignment="TOP_LEFT" prefHeight="122.0" prefWidth="338.0" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="6">
          <font>
-            <Font name="Chalkboard" size="18.0" />
+            <Font name="Chalkboard" size="20.0" />
          </font>
       </Label>
       <Label fx:id="points" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="33.0" prefWidth="341.0" text="Points: Amount  " textAlignment="RIGHT" GridPane.columnIndex="7" GridPane.rowIndex="1">
@@ -59,7 +59,7 @@
             <Font name="Chalkboard" size="24.0" />
          </font>
       </Label>
-      <Label fx:id="labelAnswerTop" alignment="CENTER_RIGHT" prefHeight="64.0" prefWidth="272.0" text="0" wrapText="true" GridPane.columnIndex="7" GridPane.rowIndex="4">
+      <Label fx:id="labelAnswerTop" alignment="CENTER_RIGHT" prefHeight="64.0" prefWidth="272.0" wrapText="true" GridPane.columnIndex="7" GridPane.rowIndex="4">
          <font>
             <Font name="Chalkboard" size="26.0" />
          </font>
@@ -79,12 +79,12 @@
             <Font name="Chalkboard" size="24.0" />
          </font>
       </Button>
-      <Label fx:id="labelAnswerCenter" alignment="CENTER_RIGHT" prefHeight="64.0" prefWidth="272.0" text="0" wrapText="true" GridPane.columnIndex="7" GridPane.rowIndex="5">
+      <Label fx:id="labelAnswerCenter" alignment="CENTER_RIGHT" prefHeight="64.0" prefWidth="272.0" wrapText="true" GridPane.columnIndex="7" GridPane.rowIndex="5">
          <font>
             <Font name="Chalkboard" size="26.0" />
          </font>
       </Label>
-      <Label fx:id="labelAnswerBottom" alignment="CENTER_RIGHT" prefHeight="64.0" prefWidth="272.0" text="0" wrapText="true" GridPane.columnIndex="7" GridPane.rowIndex="6">
+      <Label fx:id="labelAnswerBottom" alignment="CENTER_RIGHT" prefHeight="64.0" prefWidth="272.0" wrapText="true" GridPane.columnIndex="7" GridPane.rowIndex="6">
          <font>
             <Font name="Chalkboard" size="26.0" />
          </font>
