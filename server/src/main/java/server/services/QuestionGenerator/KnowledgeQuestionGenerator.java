@@ -5,7 +5,6 @@ import commons.Actions.ActionCatalog;
 import commons.Exceptions.NotEnoughActivitiesException;
 import commons.Questions.KnowledgeQuestion;
 import commons.Questions.Question;
-import commons.Actions.*;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;

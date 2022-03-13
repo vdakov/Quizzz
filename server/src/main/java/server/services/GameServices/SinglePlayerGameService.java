@@ -1,6 +1,7 @@
 package server.services.GameServices;
 
 import commons.Actions.ActionCatalog;
+import commons.Exceptions.NotEnoughActivitiesException;
 import commons.Questions.Question;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,13 @@ public class SinglePlayerGameService {
     public String createNewGame(String userName) {
         String id = Util.getAlphaNumericString(10);
         ActionCatalog actionCatalog = new ActionCatalog(activityRepository.findAll());
-        List<Pair<Question, String>> questionList = QuestionGenerator.generateQuestions(actionCatalog, 20, 2, 7, new Random());
+
+        List<Pair<Question, String>> questionList = null;
+        try {
+            questionList = QuestionGenerator.generateQuestions(actionCatalog, 20, 2, 7, new Random());
+        } catch (NotEnoughActivitiesException e) {
+            System.out.println("Not enough activities");
+        }
         Game newGame = new Game(id, questionList);
         newGame.addUser(userName);
         gameCatalog.addGame(newGame);

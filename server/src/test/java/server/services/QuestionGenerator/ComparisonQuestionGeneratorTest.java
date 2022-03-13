@@ -3,9 +3,6 @@ package server.services.QuestionGenerator;
 import org.junit.jupiter.api.Test;
 
 import commons.Actions.ActionCatalog;
-import commons.Questions.Question;
-import org.apache.commons.lang3.tuple.Pair;
-import org.junit.jupiter.api.Test;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
