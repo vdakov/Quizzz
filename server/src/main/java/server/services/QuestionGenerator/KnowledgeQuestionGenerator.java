@@ -7,8 +7,6 @@ import commons.Questions.KnowledgeQuestion;
 import commons.Questions.Question;
 import org.apache.commons.lang3.tuple.Pair;
 
-
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

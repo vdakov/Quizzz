@@ -3,7 +3,6 @@ package server.services.QuestionGenerator;
 import org.junit.jupiter.api.Test;
 
 import commons.Actions.ActionCatalog;
-
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

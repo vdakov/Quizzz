@@ -17,6 +17,16 @@ public class ActionCatalog {
         this.usedSmartActions = new ArrayList<>();
     }
 
+    public ActionCatalog(List<Action> actionList) {
+        this.normalActions = new ArrayList<>();
+        this.smartActions = new ArrayList<>();
+        this.usedSmartActions = new ArrayList<>();
+
+        for (int i = 0; i < actionList.size(); i++) {
+            this.addAction(actionList.get(i));
+        }
+    }
+
     public List<Action> getNormalActions() {
         return this.normalActions;
     }

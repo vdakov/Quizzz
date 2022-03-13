@@ -6,6 +6,7 @@ import commons.Exceptions.NotEnoughActivitiesException;
 import commons.Questions.ComparisonQuestion;
 import commons.Questions.Question;
 import org.apache.commons.lang3.tuple.Pair;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
