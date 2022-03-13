@@ -1,9 +1,10 @@
 package server.services.QuestionGenerator;
 
+import commons.Actions.Action;
+import commons.Actions.ActionCatalog;
 import commons.Questions.OpenQuestion;
 import commons.Questions.Question;
 import org.springframework.data.util.Pair;
-import commons.Actions.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,9 +40,9 @@ public class OpenQuestionGenerator {
      */
     public static Pair<Question, String> generateOpenQuestionFromAction(Action action) {
         OpenQuestion openQuestion = new OpenQuestion(makeOpenQuestionFromActionTitle(action.getTitle()));
-        Integer correctAnswer = action.getConsumption();
+        long correctAnswer = action.getConsumption();
 
-        return Pair.of(openQuestion, Integer.toString(correctAnswer));
+        return Pair.of(openQuestion, Long.toString(correctAnswer));
     }
 
     /**

@@ -51,10 +51,9 @@ public class SceneCtrl {
         this.questionActivityCtrl = questionsActivityCtrlParentPair.getKey();
         this.questionScene = new Scene(questionsActivityCtrlParentPair.getValue());
 
-        this.singleplayerLeaderboardCtrl = singleplayerLeaderboardCtrlParentPair.getKey();
-        this.singleplayerLeaderboardScene = new Scene(singleplayerLeaderboardCtrlParentPair.getValue());
-
-        showSingleplayerLeaderboardScene();
+         showOverviewActionsScene();
+        //showQuestionScene();
+        //showMainScreenScene();
         primaryStage.show();
     }
 

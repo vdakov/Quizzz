@@ -1,13 +1,12 @@
 package server.services.QuestionGenerator;
 
+import commons.Actions.Action;
+import commons.Actions.ActionCatalog;
 import commons.Questions.ComparisonQuestion;
-
 import commons.Questions.Question;
 import org.springframework.data.util.Pair;
-import commons.Actions.*;
 
 import java.util.ArrayList;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -43,7 +42,7 @@ public class ComparisonQuestionGenerator {
 
         ComparisonQuestion comparisonQuestion = new ComparisonQuestion(makeComparisonStatement(sign), options);
 
-        return Pair.of(comparisonQuestion, Integer.toString(sign * Math.max(sign * firstAction.getConsumption(), Math.max(sign * secondAction.getConsumption(), sign * thirdAction.getConsumption()))));
+        return Pair.of(comparisonQuestion, Long.toString(sign * Math.max(sign * firstAction.getConsumption(), Math.max(sign * secondAction.getConsumption(), sign * thirdAction.getConsumption()))));
     }
 
     public static String makeComparisonStatement(int sign) {
