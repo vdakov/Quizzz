@@ -42,4 +42,6 @@ out/
 
 ### VS Code ###
 .vscode/
-/server/src/main/resources/activity-bank-pictures/
+
+/server/src/main/resources/activity-bank-pictures
+quizzzz.mv.lock.db
