@@ -1,13 +1,10 @@
 package server.services.QuestionGenerator;
 
-import commons.Exceptions.NotEnoughActivitiesException;
+import commons.Actions.Action;
+import commons.Actions.ActionCatalog;
 import commons.Questions.OpenQuestion;
 import commons.Questions.Question;
-
-import org.apache.commons.lang3.tuple.Pair;
-import commons.Actions.Action;
-
-import commons.Actions.*;
+import org.springframework.data.util.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,10 +43,10 @@ public class OpenQuestionGenerator {
      * @return a pair consisting of an open question and the answer to that question
      */
     public static Pair<Question, String> generateOpenQuestionFromAction(Action action) {
-        OpenQuestion openQuestion = new OpenQuestion(Pair.of(makeOpenQuestionFromActionTitle(action.getTitle()), action.getImagePath()));
-        Integer correctAnswer = action.getConsumption();
+        OpenQuestion openQuestion = new OpenQuestion(makeOpenQuestionFromActionTitle(action.getTitle()));
+        long correctAnswer = action.getConsumption();
 
-        return Pair.of(openQuestion, Integer.toString(correctAnswer));
+        return Pair.of(openQuestion, Long.toString(correctAnswer));
     }
 
     /**

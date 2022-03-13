@@ -1,10 +1,26 @@
 package commons.Actions;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+
+//tag to mark this object as a database object
+@Entity
 public class Action {
-    private String  id;
-    private String  title;
-    private Integer consumption;
-    private String  imagePath;
+    @Id
+    private final String id;
+
+    private final String title;
+
+    private final long consumption;
+
+    private final String imagePath;
+
+    private final String source;
 
     /**
      * Constructor to create a new action
@@ -14,23 +30,27 @@ public class Action {
      * @param consumption the energy it uses in wH
      * @param imagePath the path to the image representing the image
      */
-    public Action(String id, String title, Integer consumption, String imagePath) {
-        this.id          = id;
-        this.title       = title;
+    public Action(@JsonProperty("id") String id, @JsonProperty("image_path") String imagePath, @JsonProperty("title") String title, @JsonProperty("consumption_in_wh") long consumption,
+                  @JsonProperty("source") String source) {
+
+        this.id = id;
+        this.title = title;
         this.consumption = consumption;
         this.imagePath   = imagePath;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setConsumption(Integer consumption) {
-        this.consumption = consumption;
+    /**
+     * EMPTY CONSTRUCTOR BECAUSE FOR SOME GOD DAMNED REASON
+     * H2 REQUIRES ME TO HAVE A CONSTRUCTOR WITH NO ARGUMENTS
+     * EVEN THOUGH LITERALLY EVERY TIME I TRY TO MAKE A DATABASE I USE THE JSON
+     * FILES BUT OTHERWISE AN EXCEPTION IS THROWN EACH TIME SO I WII LUST ROLL WITH IT
+     */
+    public Action() {
+        this.id = "";
+        this.title = "";
+        this.consumption = 0;
+        this.imagePath = "";
+        this.source = "";
     }
 
     public void setImagePath(String imagePath) {
@@ -60,7 +80,7 @@ public class Action {
      *
      * @return the consumption of the current action
      */
-    public Integer getConsumption() {
+    public long getConsumption() {
         return consumption;
     }
 

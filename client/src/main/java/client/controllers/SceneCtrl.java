@@ -47,9 +47,9 @@ public class SceneCtrl {
         this.questionActivityCtrl = questionsActivityCtrlParentPair.getKey();
         this.questionScene = new Scene(questionsActivityCtrlParentPair.getValue());
 
-
-        showQuestionScene();
-        showMainScreenScene();
+         showOverviewActionsScene();
+        //showQuestionScene();
+        //showMainScreenScene();
         primaryStage.show();
     }
 

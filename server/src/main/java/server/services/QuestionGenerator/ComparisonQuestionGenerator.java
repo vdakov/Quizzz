@@ -1,12 +1,10 @@
 package server.services.QuestionGenerator;
 
-import commons.Exceptions.NotEnoughActivitiesException;
+import commons.Actions.Action;
+import commons.Actions.ActionCatalog;
 import commons.Questions.ComparisonQuestion;
 import commons.Questions.Question;
-import org.apache.commons.lang3.tuple.Pair;
-import commons.Actions.Action;
-
-import commons.Actions.*;
+import org.springframework.data.util.Pair;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -48,7 +46,7 @@ public class ComparisonQuestionGenerator {
 
         ComparisonQuestion comparisonQuestion = new ComparisonQuestion(Pair.of(makeComparisonStatement(sign), null), options);
 
-        return Pair.of(comparisonQuestion, Integer.toString(sign * Math.max(sign * firstAction.getConsumption(), Math.max(sign * secondAction.getConsumption(), sign * thirdAction.getConsumption()))));
+        return Pair.of(comparisonQuestion, Long.toString(sign * Math.max(sign * firstAction.getConsumption(), Math.max(sign * secondAction.getConsumption(), sign * thirdAction.getConsumption()))));
     }
 
     public static String makeComparisonStatement(int sign) {
