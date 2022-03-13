@@ -75,7 +75,7 @@ public class QuestionSceneGuessXActivityCtrl {
             pointsInt += 500; //global variable for points so it remembers it
         }
         else
-            if(parseInt(writeAnswer.getText()) > parseInt(getCorrectAnswer()) - 10 &&  parseInt(writeAnswer.getText()) < parseInt(getCorrectAnswer()) + 10) {
+            if (parseInt(writeAnswer.getText()) > parseInt(getCorrectAnswer()) - 10 &&  parseInt(writeAnswer.getText()) < parseInt(getCorrectAnswer()) + 10) {
                 pointsInt += 250;
             }
 
