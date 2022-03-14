@@ -29,6 +29,6 @@ public class SingleplayerLeaderboardCtrl {
     }
 
     public void exit() {
-        sceneCtrl.showMainScreenScene();
+        //sceneCtrl.showMainScreenScene();
     }
 }

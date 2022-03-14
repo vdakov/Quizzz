@@ -126,7 +126,7 @@ public class QuestionActivityCtrl {
     }
 
     public void gameFinished() {
-        sceneCtrl.showSingleplayerLeaderboardScene();
+        //sceneCtrl.showSingleplayerLeaderboardScene();
     }
 
     //Getters and setters
