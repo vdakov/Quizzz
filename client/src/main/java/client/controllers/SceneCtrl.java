@@ -1,5 +1,9 @@
 package client.controllers;
 
+import client.controllers.QuestionControllers.AlternativeQuestionActivityCtrl;
+import client.controllers.QuestionControllers.ComparisonQuestionActivityCtrl;
+import client.controllers.QuestionControllers.KnowledgeQuestionActivityCtrl;
+import client.controllers.QuestionControllers.OpenQuestionActivityCtrl;
 import commons.Questions.AlternativeQuestion;
 import commons.Questions.ComparisonQuestion;
 import commons.Questions.KnowledgeQuestion;
@@ -19,16 +23,16 @@ public class SceneCtrl {
     private AddActionActivityCtrl addActionActivityCtrl;
     private Scene addActionScene;
 
-    private QuestionSceneInsteadOfActivityCtrl questionSceneInsteadOfActivityCtrl;
+    private AlternativeQuestionActivityCtrl alternativeQuestionActivityCtrl;
     private Scene questionInsteadOfScene;
 
-    private QuestionSceneHowMuchActivityCtrl questionSceneHowMuchActivityCtrl;
+    private KnowledgeQuestionActivityCtrl knowledgeQuestionActivityCtrl;
     private Scene questionHowMuchScene;
 
-    private QuestionSceneWhatIsActivityCtrl questionSceneWhatIsActivityCtrl;
+    private ComparisonQuestionActivityCtrl comparisonQuestionActivityCtrl;
     private Scene questionWhatIsScene;
 
-    private QuestionSceneGuessXActivityCtrl questionSceneGuessXActivityCtrl;
+    private OpenQuestionActivityCtrl openQuestionActivityCtrl;
     private Scene questionGuessXScene;
 
 
@@ -47,44 +51,45 @@ public class SceneCtrl {
         primaryStage.show();
     }
 
-    public void initializeQuestionScenes(Pair<QuestionSceneInsteadOfActivityCtrl, Parent> questionSceneInsteadOfActivityCtrlParentPair,
-                                         Pair<QuestionSceneHowMuchActivityCtrl, Parent> questionSceneHowMuchActivityCtrlParentPair,
-                                         Pair<QuestionSceneGuessXActivityCtrl, Parent> questionSceneGuessXActivityCtrlParentPair,
-                                         Pair<QuestionSceneWhatIsActivityCtrl, Parent> questionSceneWhatIsActivityCtrlParentPair) {
-        this.questionSceneInsteadOfActivityCtrl = questionSceneInsteadOfActivityCtrlParentPair.getKey();
+    public void initializeQuestionScenes(Pair<AlternativeQuestionActivityCtrl, Parent> questionSceneInsteadOfActivityCtrlParentPair,
+                                         Pair<KnowledgeQuestionActivityCtrl, Parent> questionSceneHowMuchActivityCtrlParentPair,
+                                         Pair<OpenQuestionActivityCtrl, Parent> questionSceneGuessXActivityCtrlParentPair,
+                                         Pair<ComparisonQuestionActivityCtrl, Parent> questionSceneWhatIsActivityCtrlParentPair) {
+        this.alternativeQuestionActivityCtrl = questionSceneInsteadOfActivityCtrlParentPair.getKey();
         this.questionInsteadOfScene             = new Scene(questionSceneInsteadOfActivityCtrlParentPair.getValue());
 
-        this.questionSceneHowMuchActivityCtrl   = questionSceneHowMuchActivityCtrlParentPair.getKey();
+        this.knowledgeQuestionActivityCtrl = questionSceneHowMuchActivityCtrlParentPair.getKey();
         this.questionHowMuchScene               = new Scene(questionSceneHowMuchActivityCtrlParentPair.getValue());
 
-        this.questionSceneGuessXActivityCtrl    = questionSceneGuessXActivityCtrlParentPair.getKey();
+        this.openQuestionActivityCtrl = questionSceneGuessXActivityCtrlParentPair.getKey();
         this.questionGuessXScene                = new Scene(questionSceneGuessXActivityCtrlParentPair.getValue());
 
-        this.questionSceneWhatIsActivityCtrl    = questionSceneWhatIsActivityCtrlParentPair.getKey();
+        this.comparisonQuestionActivityCtrl = questionSceneWhatIsActivityCtrlParentPair.getKey();
         this.questionWhatIsScene                = new Scene(questionSceneWhatIsActivityCtrlParentPair.getValue());
 
     }
 
-    public void showQuestionInsteadOfScene(AlternativeQuestion alternativeQuestion, int questionNo) {
+    public void showQuestionInsteadOfScene(AlternativeQuestion alternativeQuestion, int questionNo, String userName, String roomId) {
         primaryStage.setTitle("Question type 1");
-        questionSceneInsteadOfActivityCtrl.setQuestion(alternativeQuestion, questionNo);
+        alternativeQuestionActivityCtrl.setQuestion(alternativeQuestion, questionNo, userName, roomId);
         primaryStage.setScene(questionInsteadOfScene);
     }
 
-    public void showQuestionHowMuchScene(KnowledgeQuestion knowledgeQuestion, int questionNo) {
+    public void showQuestionHowMuchScene(KnowledgeQuestion knowledgeQuestion, int questionNo, String userName, String roomId) {
         primaryStage.setTitle("Question type 2");
-        questionSceneHowMuchActivityCtrl.setQuestion(knowledgeQuestion, questionNo);
+        knowledgeQuestionActivityCtrl.setQuestion(knowledgeQuestion, questionNo, userName, roomId);
         primaryStage.setScene(questionHowMuchScene);
     }
 
-    public void showQuestionGuessXScene(OpenQuestion openQuestion, int questionNo) {
+    public void showQuestionGuessXScene(OpenQuestion openQuestion, int questionNo, String userName, String roomId) {
         primaryStage.setTitle("Question type 3");
-        questionSceneGuessXActivityCtrl.setQuestion(openQuestion, questionNo);
+        openQuestionActivityCtrl.setQuestion(openQuestion, questionNo, userName, roomId);
         primaryStage.setScene(questionGuessXScene);
     }
 
-    public void showQuestionWhatIsScene(ComparisonQuestion comparisonQuestion, int questionNo) {
+    public void showQuestionWhatIsScene(ComparisonQuestion comparisonQuestion, int questionNo, String userName, String roomId) {
         primaryStage.setTitle("Question type 4");
+        comparisonQuestionActivityCtrl.setQuestion(comparisonQuestion, questionNo, userName, roomId);
         primaryStage.setScene(questionWhatIsScene);
     }
 

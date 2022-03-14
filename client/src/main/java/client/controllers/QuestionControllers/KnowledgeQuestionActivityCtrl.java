@@ -1,6 +1,8 @@
-package client.controllers;
+package client.controllers.QuestionControllers;
 
 import client.communication.ServerUtils;
+import client.controllers.SceneCtrl;
+import client.logic.QuestionParsers;
 import com.google.inject.Inject;
 import commons.Questions.KnowledgeQuestion;
 import javafx.event.ActionEvent;
@@ -9,13 +11,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 import java.io.IOException;
+import java.util.Scanner;
 
 
-public class QuestionSceneHowMuchActivityCtrl {
+public class KnowledgeQuestionActivityCtrl {
 
     private final ServerUtils server;
     private final SceneCtrl sceneCtrl;
     private int questionNumber;
+    private String userName;
+    private String roomId;
     private KnowledgeQuestion knowledgeQuestion;
     private int pointsInt;
     @FXML
@@ -38,15 +43,17 @@ public class QuestionSceneHowMuchActivityCtrl {
 
     //Constructor for the Question Controller
     @Inject
-    public QuestionSceneHowMuchActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
+    public KnowledgeQuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
         this.server = server;
         this.sceneCtrl = sceneCtrl;
         this.knowledgeQuestion = null;
     }
 
-    public void setQuestion(KnowledgeQuestion knowledgeQuestion, int questionNumber) {
+    public void setQuestion(KnowledgeQuestion knowledgeQuestion, int questionNumber, String userName, String roomId) {
         this.knowledgeQuestion = knowledgeQuestion;
         this.questionNumber = questionNumber;
+        this.userName = userName;
+        this.roomId = roomId;
 
         this.sampleQuestion.setText((knowledgeQuestion == null) ? "" : knowledgeQuestion.getQuestion().getKey());
 
@@ -78,6 +85,36 @@ public class QuestionSceneHowMuchActivityCtrl {
         this.correctAnswer = "" + ((knowledgeQuestion == null) ? "" : knowledgeQuestion.getOptions().get(1));
     }
 
+    public void goToNextQuestion() {
+        String response = server.getQuestion(this.userName, this.roomId, this.questionNumber + 1);
+        Scanner scanner = new Scanner(response).useDelimiter(": ");
+        System.out.println("Knowledge question am intrat");
+        String next = scanner.next();
+        System.out.println(next);
+        switch (next) {
+            case "OpenQuestion": {
+                sceneCtrl.showMainScreen();
+                sceneCtrl.showQuestionGuessXScene(QuestionParsers.openQuestionParser(scanner.next()), 0, userName, roomId);
+                break;
+            }
+            case "KnowledgeQuestion": {
+                sceneCtrl.showMainScreen();
+                sceneCtrl.showQuestionHowMuchScene(QuestionParsers.knowledgeQuestionParser(scanner.next()), 0, userName, roomId);
+                break;
+            }
+            case "ComparisonQuestion": {
+                sceneCtrl.showMainScreen();
+                sceneCtrl.showQuestionWhatIsScene(QuestionParsers.comparisonQuestionParser(scanner.next()), 0, userName, roomId);
+                break;
+            }
+            case "AlternativeQuestion": {
+                sceneCtrl.showMainScreen();
+                sceneCtrl.showQuestionInsteadOfScene(QuestionParsers.alternativeQuestionParser(scanner.next()), 0, userName, roomId);
+                break;
+            }
+        }
+    }
+
 
     //method for answering the question- activated on click of button in QuestionScreen scene
     public void answer(ActionEvent event) throws InterruptedException {
@@ -95,6 +132,9 @@ public class QuestionSceneHowMuchActivityCtrl {
 
         //changes the points value
         points.setText(String.valueOf(pointsInt));
+
+        goToNextQuestion();
+
     }
 
 

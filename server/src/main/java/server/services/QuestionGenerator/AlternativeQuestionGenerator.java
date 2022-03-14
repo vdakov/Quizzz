@@ -52,6 +52,6 @@ public class AlternativeQuestionGenerator {
         char[] c = statement.toCharArray();
         c[0] += 32;
         String finalStatement = new String(c);
-        return "Instead of " + finalStatement + ", what activity could you do to consume the same amount of energy?";
+        return "Instead of " + finalStatement + ",what activity could you do to consume the same amount of energy?";
     }
 }

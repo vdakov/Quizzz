@@ -27,19 +27,19 @@ public class MainScreenActivityCtrl {
         Scanner scanner = new Scanner(response).useDelimiter(": ");
         switch (scanner.next()) {
             case "OpenQuestion": {
-                sceneCtrl.showQuestionGuessXScene(QuestionParsers.openQuestionParser(scanner.next()), 0);
+                sceneCtrl.showQuestionGuessXScene(QuestionParsers.openQuestionParser(scanner.next()), 0, userName, serverId);
                 break;
             }
             case "KnowledgeQuestion": {
-                sceneCtrl.showQuestionHowMuchScene(QuestionParsers.knowledgeQuestionParser(scanner.next()), 0);
+                sceneCtrl.showQuestionHowMuchScene(QuestionParsers.knowledgeQuestionParser(scanner.next()), 0, userName, serverId);
                 break;
             }
             case "ComparisonQuestion": {
-                sceneCtrl.showQuestionWhatIsScene(QuestionParsers.comparisonQuestionParser(scanner.next()), 0);
+                sceneCtrl.showQuestionWhatIsScene(QuestionParsers.comparisonQuestionParser(scanner.next()), 0, userName, serverId);
                 break;
             }
             case "AlternativeQuestion": {
-                sceneCtrl.showQuestionInsteadOfScene(QuestionParsers.alternativeQuestionParser(scanner.next()), 0);
+                sceneCtrl.showQuestionInsteadOfScene(QuestionParsers.alternativeQuestionParser(scanner.next()), 0, userName, serverId);
                 break;
             }
         }

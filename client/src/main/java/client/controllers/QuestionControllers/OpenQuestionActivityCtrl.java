@@ -1,33 +1,31 @@
-package client.controllers;
+package client.controllers.QuestionControllers;
 
 import client.communication.ServerUtils;
+import client.controllers.SceneCtrl;
+import client.logic.QuestionParsers;
 import com.google.inject.Inject;
-import commons.Actions.Action;
 import commons.Questions.OpenQuestion;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Scanner;
 
 import static javax.xml.bind.DatatypeConverter.parseInt;
 
-public class QuestionSceneGuessXActivityCtrl {
+public class OpenQuestionActivityCtrl {
 
 
     private final ServerUtils server;
     private final SceneCtrl sceneCtrl;
     private OpenQuestion openQuestion;
     private int questionNumber;
-    private Action question;
+    private String userName;
+    private String serverId;
     private int pointsInt;
     @FXML
     private Label sampleQuestion;
@@ -45,14 +43,16 @@ public class QuestionSceneGuessXActivityCtrl {
 
     //Constructor for the Question Controller
     @Inject
-    public QuestionSceneGuessXActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
+    public OpenQuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
         this.server = server;
         this.sceneCtrl = sceneCtrl;
     }
 
-    public void setQuestion(OpenQuestion openQuestion, int questionNumber) {
+    public void setQuestion(OpenQuestion openQuestion, int questionNumber, String userName, String serverId) {
         this.openQuestion = openQuestion;
         this.questionNumber = questionNumber;
+        this.userName = userName;
+        this.serverId = serverId;
 
         this.sampleQuestion.setText((openQuestion == null) ? "" : openQuestion.getQuestion().getKey());
 
@@ -63,6 +63,36 @@ public class QuestionSceneGuessXActivityCtrl {
     public void initialize() {
         getAnswer().setStyle("-fx-background-color: #ffd783; -fx-border-color:  #ffd783");
 
+    }
+
+    public void goToNextQuestion() {
+        String response = server.getQuestion(this.userName, this.serverId, this.questionNumber + 1);
+        Scanner scanner = new Scanner(response).useDelimiter(": ");
+        System.out.println("Open question am intrat");
+        String next = scanner.next();
+        System.out.println(next + questionNumber);
+        switch (next) {
+            case "OpenQuestion": {
+                sceneCtrl.showMainScreen();
+                sceneCtrl.showQuestionGuessXScene(QuestionParsers.openQuestionParser(scanner.next()), 0, userName, serverId);
+                break;
+            }
+            case "KnowledgeQuestion": {
+                sceneCtrl.showMainScreen();
+                sceneCtrl.showQuestionHowMuchScene(QuestionParsers.knowledgeQuestionParser(scanner.next()), 0, userName, serverId);
+                break;
+            }
+            case "ComparisonQuestion": {
+                sceneCtrl.showMainScreen();
+                sceneCtrl.showQuestionWhatIsScene(QuestionParsers.comparisonQuestionParser(scanner.next()), 0, userName, serverId);
+                break;
+            }
+            case "AlternativeQuestion": {
+                sceneCtrl.showMainScreen();
+                sceneCtrl.showQuestionInsteadOfScene(QuestionParsers.alternativeQuestionParser(scanner.next()), 0, userName, serverId);
+                break;
+            }
+        }
     }
 
 
@@ -86,6 +116,8 @@ public class QuestionSceneGuessXActivityCtrl {
 
         //changes the points value
         points.setText(String.valueOf(pointsInt));
+
+        goToNextQuestion();
     }
 
 
@@ -103,18 +135,7 @@ public class QuestionSceneGuessXActivityCtrl {
 
     }
 
-
-    private Scene scene;
-    private Stage stage;
-    private Parent root;
-
     public void goToMainScreen (ActionEvent event) throws IOException {
-
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../../scenes/MainScreenScene.fxml")));
-        stage = (Stage) ( (Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
     }
 
 
@@ -126,8 +147,5 @@ public class QuestionSceneGuessXActivityCtrl {
     public TextField getWriteAnswer() { return writeAnswer; }
 
     public void setWriteAnswer(TextField writeAnswer) { this.writeAnswer = writeAnswer; }
-
-    public void setQuestion(Action question) { this.question = question; }
-
 
 }

@@ -42,6 +42,7 @@ public class QuestionParsers {
     }
 
     public static AlternativeQuestion alternativeQuestionParser(String json) {
+        System.out.println(json);
         Scanner scanner = new Scanner(json).useDelimiter(", ");
         Pair<String, String> question = Pair.of(scanner.next(), scanner.next());
         List<Pair<String, String>> options = new ArrayList<>();

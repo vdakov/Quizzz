@@ -1,6 +1,8 @@
-package client.controllers;
+package client.controllers.QuestionControllers;
 
 import client.communication.ServerUtils;
+import client.controllers.SceneCtrl;
+import client.logic.QuestionParsers;
 import com.google.inject.Inject;
 import commons.Questions.AlternativeQuestion;
 import javafx.event.ActionEvent;
@@ -15,12 +17,15 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Scanner;
 
-public class QuestionSceneInsteadOfActivityCtrl {
+public class AlternativeQuestionActivityCtrl {
 
 
     private final ServerUtils server;
     private final SceneCtrl sceneCtrl;
+    private String userName;
+    private String serverId;
     private int questionNumber;
     private AlternativeQuestion alternativeQuestion;
     private int pointsInt;
@@ -44,14 +49,16 @@ public class QuestionSceneInsteadOfActivityCtrl {
 
     //Constructor for the Question Controller
     @Inject
-    public QuestionSceneInsteadOfActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
+    public AlternativeQuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
         this.server = server;
         this.sceneCtrl = sceneCtrl;
     }
 
-    public void setQuestion(AlternativeQuestion alternativeQuestion, int questionNumber) {
+    public void setQuestion(AlternativeQuestion alternativeQuestion, int questionNumber, String userName, String serverId) {
         this.alternativeQuestion = alternativeQuestion;
         this.questionNumber = questionNumber;
+        this.userName = userName;
+        this.serverId = serverId;
 
         this.sampleQuestion.setText((alternativeQuestion == null) ? "" : alternativeQuestion.getQuestion().getKey());
 
@@ -60,6 +67,36 @@ public class QuestionSceneInsteadOfActivityCtrl {
         labelAnswerCenter.setText((alternativeQuestion == null) ? "" : alternativeQuestion.getOptions().get(2).getKey());
 
         this.correctAnswer = "" + ((alternativeQuestion == null) ? "" : alternativeQuestion.getOptions().get(1).getKey());
+    }
+
+    public void goToNextQuestion() {
+        String response = server.getQuestion(this.userName, this.serverId, this.questionNumber + 1);
+        Scanner scanner = new Scanner(response).useDelimiter(": ");
+        System.out.println("Alternative question am intrat");
+        String next = scanner.next();
+        System.out.println(next);
+        switch (next) {
+            case "OpenQuestion": {
+                sceneCtrl.showMainScreen();
+                sceneCtrl.showQuestionGuessXScene(QuestionParsers.openQuestionParser(scanner.next()), 0, userName, serverId);
+                break;
+            }
+            case "KnowledgeQuestion": {
+                sceneCtrl.showMainScreen();
+                sceneCtrl.showQuestionHowMuchScene(QuestionParsers.knowledgeQuestionParser(scanner.next()), 0, userName, serverId);
+                break;
+            }
+            case "ComparisonQuestion": {
+                sceneCtrl.showMainScreen();
+                sceneCtrl.showQuestionWhatIsScene(QuestionParsers.comparisonQuestionParser(scanner.next()), 0, userName, serverId);
+                break;
+            }
+            case "AlternativeQuestion": {
+                sceneCtrl.showMainScreen();
+                sceneCtrl.showQuestionInsteadOfScene(QuestionParsers.alternativeQuestionParser(scanner.next()), 0, userName, serverId);
+                break;
+            }
+        }
     }
 
     //Initializes the sample question screen through hardcoding
@@ -88,6 +125,8 @@ public class QuestionSceneInsteadOfActivityCtrl {
 
         //changes the points value
         points.setText(String.valueOf(pointsInt));
+
+        goToNextQuestion();
 
         //sends the server a delete request to ensure the same activity does not appear twice
 
