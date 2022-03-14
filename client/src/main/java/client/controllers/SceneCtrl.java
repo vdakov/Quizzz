@@ -1,5 +1,9 @@
 package client.controllers;
 
+import commons.Questions.AlternativeQuestion;
+import commons.Questions.ComparisonQuestion;
+import commons.Questions.KnowledgeQuestion;
+import commons.Questions.OpenQuestion;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -61,23 +65,25 @@ public class SceneCtrl {
 
     }
 
-    public void showQuestionInsteadOfScene() {
+    public void showQuestionInsteadOfScene(AlternativeQuestion alternativeQuestion, int questionNo) {
         primaryStage.setTitle("Question type 1");
+        questionSceneInsteadOfActivityCtrl.setQuestion(alternativeQuestion, questionNo);
         primaryStage.setScene(questionInsteadOfScene);
     }
 
-    public void showQuestionHowMuchScene(String serverId, int questionNumber) {
+    public void showQuestionHowMuchScene(KnowledgeQuestion knowledgeQuestion, int questionNo) {
         primaryStage.setTitle("Question type 2");
-        questionSceneHowMuchActivityCtrl.setQuestion(serverId, questionNumber);
+        questionSceneHowMuchActivityCtrl.setQuestion(knowledgeQuestion, questionNo);
         primaryStage.setScene(questionHowMuchScene);
     }
 
-    public void showQuestionGuessXScene() {
+    public void showQuestionGuessXScene(OpenQuestion openQuestion, int questionNo) {
         primaryStage.setTitle("Question type 3");
+        questionSceneGuessXActivityCtrl.setQuestion(openQuestion, questionNo);
         primaryStage.setScene(questionGuessXScene);
     }
 
-    public void showQuestionWhatIsScene() {
+    public void showQuestionWhatIsScene(ComparisonQuestion comparisonQuestion, int questionNo) {
         primaryStage.setTitle("Question type 4");
         primaryStage.setScene(questionWhatIsScene);
     }

@@ -1,6 +1,9 @@
 package client.logic;
 
+import commons.Questions.AlternativeQuestion;
+import commons.Questions.ComparisonQuestion;
 import commons.Questions.KnowledgeQuestion;
+import commons.Questions.OpenQuestion;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
@@ -9,19 +12,43 @@ import java.util.Scanner;
 
 public class QuestionParsers {
 
-    public static KnowledgeQuestion knowledgeQuestionParser(String json) {
-        System.out.println(json);
-        Scanner scanner = new Scanner(json);
-        Scanner questionScanner = new Scanner(scanner.nextLine()).useDelimiter("Question :").useDelimiter(", ");
-        Pair<String, String> question = Pair.of(questionScanner.next(), questionScanner.next());
-        scanner.nextLine();
-        List<String> options = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            options.add(scanner.nextLine());
-        }
+    public static OpenQuestion openQuestionParser(String json) {
+        Scanner scanner = new Scanner(json).useDelimiter(", ");
+        Pair<String, String> question = Pair.of(scanner.next(), scanner.next());
 
+        return new OpenQuestion(question);
+    }
+
+    public static KnowledgeQuestion knowledgeQuestionParser(String json) {
+        Scanner scanner = new Scanner(json).useDelimiter(", ");
+        Pair<String, String> question = Pair.of(scanner.next(), scanner.next());
+        List<String> options = new ArrayList<>();
+        while (scanner.hasNext()) {
+            options.add(scanner.next());
+        }
 
         return new KnowledgeQuestion(question, options);
     }
+
+    public static ComparisonQuestion comparisonQuestionParser(String json) {
+        Scanner scanner = new Scanner(json).useDelimiter(", ");
+        Pair<String, String> question = Pair.of(scanner.next(), scanner.next());
+        List<Pair<String, String>> options = new ArrayList<>();
+        while (scanner.hasNext()) {
+            options.add(Pair.of(scanner.next(), scanner.next()));
+        }
+
+        return new ComparisonQuestion(question, options);
+    }
+
+    public static AlternativeQuestion alternativeQuestionParser(String json) {
+        Scanner scanner = new Scanner(json).useDelimiter(", ");
+        Pair<String, String> question = Pair.of(scanner.next(), scanner.next());
+        List<Pair<String, String>> options = new ArrayList<>();
+        while (scanner.hasNext()) {
+            options.add(Pair.of(scanner.next(), scanner.next()));
+        }
+
+        return new AlternativeQuestion(question, options);
+    }
 }
-//{"question":{"Which one of the following is the energy consumption of power usage of ICE train per 1 km?":"58/train.png"},"options":["20000","32200","22800"]}

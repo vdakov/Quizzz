@@ -3,6 +3,7 @@ package client.controllers;
 import client.communication.ServerUtils;
 import com.google.inject.Inject;
 import commons.Actions.Action;
+import commons.Questions.OpenQuestion;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +16,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Locale;
 import java.util.Objects;
 
 import static javax.xml.bind.DatatypeConverter.parseInt;
@@ -25,6 +25,8 @@ public class QuestionSceneGuessXActivityCtrl {
 
     private final ServerUtils server;
     private final SceneCtrl sceneCtrl;
+    private OpenQuestion openQuestion;
+    private int questionNumber;
     private Action question;
     private int pointsInt;
     @FXML
@@ -48,22 +50,19 @@ public class QuestionSceneGuessXActivityCtrl {
         this.sceneCtrl = sceneCtrl;
     }
 
+    public void setQuestion(OpenQuestion openQuestion, int questionNumber) {
+        this.openQuestion = openQuestion;
+        this.questionNumber = questionNumber;
+
+        this.sampleQuestion.setText((openQuestion == null) ? "" : openQuestion.getQuestion().getKey());
+
+        this.correctAnswer = "100";
+    }
+
     //Initializes the sample question screen through hardcoding
     public void initialize() {
-
-        //resets the colors
         getAnswer().setStyle("-fx-background-color: #ffd783; -fx-border-color:  #ffd783");
 
-
-        //hardcoded activity- have to eventually make it initialize through a database- Not now tho :)
-        this.question = server.getRandomAction();
-
-        //transforms the activity into a question
-        this.sampleQuestion.setText("How much does electricity(in kWH) does " +
-                question.getTitle().substring(0, 1).toLowerCase(Locale.ROOT) + question.getTitle().substring(1) + " take?");
-
-        long answer = question.getConsumption();
-        this.correctAnswer = "" + answer;
     }
 
 
@@ -87,11 +86,6 @@ public class QuestionSceneGuessXActivityCtrl {
 
         //changes the points value
         points.setText(String.valueOf(pointsInt));
-
-        //sends the server a delete request to ensure the same activity does not appear twice
-        server.deleteActivity(question.getId());
-
-
     }
 
 

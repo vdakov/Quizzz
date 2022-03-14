@@ -1,9 +1,11 @@
 package client.controllers;
 
 import client.communication.ServerUtils;
+import client.logic.QuestionParsers;
 
 import javax.inject.Inject;
 import java.io.IOException;
+import java.util.Scanner;
 
 public class MainScreenActivityCtrl {
 
@@ -21,14 +23,26 @@ public class MainScreenActivityCtrl {
         String serverId = server.createNewSinglePlayerRoom(userName);
         System.out.println(serverId);
 
-        for (int i = 0; i < 20; i++) {
-            if (server.getQuestionType("cata", serverId, i).equals("KnowledgeQuestion")) {
-                System.out.println("DA");
-                sceneCtrl.showQuestionHowMuchScene(serverId, i);
+        String response = server.getQuestion(userName, serverId, 0);
+        Scanner scanner = new Scanner(response).useDelimiter(": ");
+        switch (scanner.next()) {
+            case "OpenQuestion": {
+                sceneCtrl.showQuestionGuessXScene(QuestionParsers.openQuestionParser(scanner.next()), 0);
+                break;
+            }
+            case "KnowledgeQuestion": {
+                sceneCtrl.showQuestionHowMuchScene(QuestionParsers.knowledgeQuestionParser(scanner.next()), 0);
+                break;
+            }
+            case "ComparisonQuestion": {
+                sceneCtrl.showQuestionWhatIsScene(QuestionParsers.comparisonQuestionParser(scanner.next()), 0);
+                break;
+            }
+            case "AlternativeQuestion": {
+                sceneCtrl.showQuestionInsteadOfScene(QuestionParsers.alternativeQuestionParser(scanner.next()), 0);
                 break;
             }
         }
-
 
     }
 }

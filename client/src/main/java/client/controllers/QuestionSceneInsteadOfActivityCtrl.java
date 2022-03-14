@@ -2,7 +2,7 @@ package client.controllers;
 
 import client.communication.ServerUtils;
 import com.google.inject.Inject;
-import commons.Actions.Action;
+import commons.Questions.AlternativeQuestion;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,7 +14,6 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Locale;
 import java.util.Objects;
 
 public class QuestionSceneInsteadOfActivityCtrl {
@@ -22,7 +21,8 @@ public class QuestionSceneInsteadOfActivityCtrl {
 
     private final ServerUtils server;
     private final SceneCtrl sceneCtrl;
-    private Action question;
+    private int questionNumber;
+    private AlternativeQuestion alternativeQuestion;
     private int pointsInt;
     @FXML
     private Label sampleQuestion;
@@ -49,6 +49,19 @@ public class QuestionSceneInsteadOfActivityCtrl {
         this.sceneCtrl = sceneCtrl;
     }
 
+    public void setQuestion(AlternativeQuestion alternativeQuestion, int questionNumber) {
+        this.alternativeQuestion = alternativeQuestion;
+        this.questionNumber = questionNumber;
+
+        this.sampleQuestion.setText((alternativeQuestion == null) ? "" : alternativeQuestion.getQuestion().getKey());
+
+        labelAnswerBottom.setText((alternativeQuestion == null) ? "" : alternativeQuestion.getOptions().get(0).getKey());
+        labelAnswerTop.setText((alternativeQuestion == null) ? "" : alternativeQuestion.getOptions().get(1).getKey());
+        labelAnswerCenter.setText((alternativeQuestion == null) ? "" : alternativeQuestion.getOptions().get(2).getKey());
+
+        this.correctAnswer = "" + ((alternativeQuestion == null) ? "" : alternativeQuestion.getOptions().get(1).getKey());
+    }
+
     //Initializes the sample question screen through hardcoding
     public void initialize() {
 
@@ -56,38 +69,6 @@ public class QuestionSceneInsteadOfActivityCtrl {
         getAnswerTop().setStyle("-fx-background-color: #b38df7;; -fx-border-color:  #b38df7;");
         getAnswerCenter().setStyle("-fx-background-color: #ffd783; -fx-border-color:  #ffd783");
         getAnswerBottom().setStyle("-fx-background-color: #ffa382; -fx-border-color:  #ffa382");
-
-
-        //hardcoded activity- have to eventually make it initialize through a database- Not now tho :)
-        this.question = server.getRandomAction();
-
-        //transforms the activity into a question
-        this.sampleQuestion.setText("How much does electricity(in kWH) does " +
-                question.getTitle().substring(0, 1).toLowerCase(Locale.ROOT) + question.getTitle().substring(1) + " take?");
-
-        long answer =  question.getConsumption();
-        long range = Math.round(Math.random() * answer);
-        long range2 = Math.round(Math.random() * answer);
-        double random = Math.random() * 3;
-
-
-        //this is a very dumb way to do this, but I am too lazy to implement it another way
-        // at this point so too bad :)
-        if (random > 2) {
-            labelAnswerCenter.setText(String.valueOf(answer));
-            labelAnswerBottom.setText(String.valueOf(range));
-            labelAnswerTop.setText(String.valueOf(range2));
-        } else if (random < 2 && random > 1) {
-            labelAnswerCenter.setText(String.valueOf(range));
-            labelAnswerBottom.setText(String.valueOf(range2));
-            labelAnswerTop.setText(String.valueOf(answer));
-        } else {
-            labelAnswerCenter.setText(String.valueOf(range));
-            labelAnswerBottom.setText(String.valueOf(answer));
-            labelAnswerTop.setText(String.valueOf(range2));
-        }
-
-        this.correctAnswer = "" + answer;
     }
 
 
@@ -109,8 +90,6 @@ public class QuestionSceneInsteadOfActivityCtrl {
         points.setText(String.valueOf(pointsInt));
 
         //sends the server a delete request to ensure the same activity does not appear twice
-        server.deleteActivity(question.getId());
-
 
     }
 
@@ -171,8 +150,6 @@ public class QuestionSceneInsteadOfActivityCtrl {
     public Label getLabelAnswerBottom() { return labelAnswerBottom; }
 
     public void setLabelAnswerTop(Label labelAnswerTop) { this.labelAnswerTop = labelAnswerTop; }
-
-    public void setQuestion(Action question) { this.question = question; }
 
     public void setLabelAnswerCenter(Label labelAnswerCenter) { this.labelAnswerCenter = labelAnswerCenter; }
 

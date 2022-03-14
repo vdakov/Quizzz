@@ -15,6 +15,7 @@ public class QuestionSceneHowMuchActivityCtrl {
 
     private final ServerUtils server;
     private final SceneCtrl sceneCtrl;
+    private int questionNumber;
     private KnowledgeQuestion knowledgeQuestion;
     private int pointsInt;
     @FXML
@@ -43,9 +44,9 @@ public class QuestionSceneHowMuchActivityCtrl {
         this.knowledgeQuestion = null;
     }
 
-    public void setQuestion(String serverId, int currentQuestion) {
-        this.knowledgeQuestion = server.getKnowledgeQuestion("cata", serverId, currentQuestion);
-        System.out.println(knowledgeQuestion.toString());
+    public void setQuestion(KnowledgeQuestion knowledgeQuestion, int questionNumber) {
+        this.knowledgeQuestion = knowledgeQuestion;
+        this.questionNumber = questionNumber;
 
         this.sampleQuestion.setText((knowledgeQuestion == null) ? "" : knowledgeQuestion.getQuestion().getKey());
 

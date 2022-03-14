@@ -15,9 +15,7 @@
  */
 package client.communication;
 
-import client.logic.QuestionParsers;
 import commons.Actions.Action;
-import commons.Questions.KnowledgeQuestion;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.GenericType;
@@ -40,20 +38,11 @@ public class ServerUtils {
                 });
     }
 
-    public String getQuestionType(String userName, String serverId, int number) {
+    public String getQuestion(String userName, String serverId, int number) {
         return ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER).path("api/singlePlayer/" + userName + "/" + serverId + "/" + number + "/getQuestionType")
-                .request(APPLICATION_JSON)
-                .accept(APPLICATION_JSON).get(new GenericType<>() {
-
-                });
-    }
-
-    public KnowledgeQuestion getKnowledgeQuestion(String userName, String serverId, int number) {
-        return QuestionParsers.knowledgeQuestionParser(ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("api/singlePlayer/" + userName + "/" + serverId + "/" + number + "/getQuestion")
                 .request(APPLICATION_JSON)
-                .accept(APPLICATION_JSON).get(String.class));
+                .accept(APPLICATION_JSON).get(String.class);
     }
 
     /**
