@@ -40,12 +40,9 @@ public class SinglePlayerGameService {
         return id;
     }
 
-    public String getNeededQuestionType(String gameId, int number) {
-        return Util.getQuestionType(gameCatalog.getGame(gameId).getQuestion(number));
-    }
-
     public String getNeededQuestion(String gameId, int number) {
-        return gameCatalog.getGame(gameId).getQuestion(number).toJsonString();
+        Question question = gameCatalog.getGame(gameId).getQuestion(number);
+        return (Util.getQuestionType(question) + ": " + question.toJsonString());
     }
 
     public int getPlayerScore(String userName, String gameId) {
@@ -58,6 +55,5 @@ public class SinglePlayerGameService {
             gameCatalog.getGame(gameId).updatePlayerScore(userName, 500);
         }
     }
-
 }
 

@@ -48,11 +48,9 @@ public class KnowledgeQuestion extends Question {
     public String toJsonString() {
         StringBuilder sb = new StringBuilder();
         sb.append(super.toJsonString());
-        sb.append("Options \n");
-        for(String option : options) {
-            sb.append(option).append("\n");
+        for (String option : options) {
+            sb.append(", ").append(option);
         }
-        sb.setLength(sb.length() - 1);
         return sb.toString();
     }
 

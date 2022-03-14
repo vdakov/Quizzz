@@ -42,4 +42,13 @@ public class AlternativeQuestion extends Question {
         sb.setLength(sb.length() - 1);
         return sb.toString();
     }
+
+    public String toJsonString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(super.toJsonString());
+        for (Pair<String, String> option : options) {
+            sb.append(", ").append(option.getKey()).append(", ").append(option.getValue());
+        }
+        return sb.toString();
+    }
 }
