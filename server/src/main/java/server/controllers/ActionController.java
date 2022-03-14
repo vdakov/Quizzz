@@ -2,6 +2,7 @@ package server.controllers;
 
 import commons.Actions.Action;
 import org.springframework.web.bind.annotation.*;
+import server.services.ActionService;
 
 import java.util.List;
 
