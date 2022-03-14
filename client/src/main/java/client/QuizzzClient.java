@@ -38,10 +38,17 @@ public class QuizzzClient extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws IOException {
-        var mainScene = FXML_CONFIG.load(MainScreenActivityCtrl.class, "scenes", "MainScreenScene.fxml");
+        var mainScene     = FXML_CONFIG.load(MainScreenActivityCtrl.class, "scenes", "MainScreenScene.fxml");
         var addActionScene = FXML_CONFIG.load(AddActionActivityCtrl.class, "scenes", "AddActionScene.fxml");
+
+        var questionScreenWhatIsActivity      = FXML_CONFIG.load(QuestionSceneWhatIsActivityCtrl.class, "scenes", "QuestionSceneWhatIs.fxml");
+        var questionScreenGuessXActivity      = FXML_CONFIG.load(QuestionSceneGuessXActivityCtrl.class, "scenes", "QuestionSceneGuessX.fxml");
+        var questionScreenHowMuchActivity   = FXML_CONFIG.load(QuestionSceneHowMuchActivityCtrl.class, "scenes", "QuestionSceneHowMuch.fxml");
+        var questionScreenInsteadOfActivity = FXML_CONFIG.load(QuestionSceneInsteadOfActivityCtrl.class, "scenes", "QuestionSceneInsteadOf.fxml");
+
 
         var sceneCtrl = INJECTOR.getInstance(SceneCtrl.class);
         sceneCtrl.initializeMainScenes(primaryStage, mainScene, addActionScene);
+        sceneCtrl.initializeQuestionScenes(questionScreenInsteadOfActivity, questionScreenHowMuchActivity, questionScreenGuessXActivity, questionScreenWhatIsActivity);
     }
 }

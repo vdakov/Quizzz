@@ -1,16 +1,9 @@
 package client.controllers;
 
 import client.communication.ServerUtils;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.util.Objects;
 
 public class MainScreenActivityCtrl {
 
@@ -24,6 +17,9 @@ public class MainScreenActivityCtrl {
     }
 
     public void enterSoloGame () throws IOException {
-        sceneCtrl.showAddActionScene();
+        String userName = "cata";
+        String serverId = server.createNewSinglePlayerRoom(userName);
+        System.out.println(serverId);
+        sceneCtrl.showQuestionHowMuchScene(serverId, 0);
     }
 }

@@ -16,9 +16,11 @@
 package client.communication;
 
 import commons.Actions.Action;
+import commons.Questions.KnowledgeQuestion;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.GenericType;
+import org.apache.commons.lang3.tuple.Pair;
 import org.glassfish.jersey.client.ClientConfig;
 
 import java.util.List;
@@ -28,6 +30,24 @@ import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 public class ServerUtils {
 
     private static final String SERVER = "http://localhost:8080/";
+
+    public String createNewSinglePlayerRoom(String userName) {
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER).path("api/singlePlayer/" + userName + "/createNewGame")
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON).get(new GenericType<>() {
+
+                });
+    }
+
+    public Pair<String, KnowledgeQuestion> getKnowledgeQuestion(String userName, String serverId, int number) {
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER).path("api/singlePlayer/" + userName + "/" + serverId + "/" + number)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON).get(new GenericType<>() {
+                    // here this request does not work
+                });
+    }
 
     /**
      * Gets the activities from the server

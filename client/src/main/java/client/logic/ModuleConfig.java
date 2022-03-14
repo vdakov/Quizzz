@@ -16,5 +16,10 @@ public class ModuleConfig implements Module {
         binder.bind(SceneCtrl.class).in(Scopes.SINGLETON);
         binder.bind(MainScreenActivityCtrl.class).in(Scopes.SINGLETON);
         binder.bind(AddActionActivityCtrl.class).in(Scopes.SINGLETON);
+
+        binder.bind(QuestionSceneGuessXActivityCtrl.class).in(Scopes.SINGLETON);
+        binder.bind(QuestionSceneHowMuchActivityCtrl.class).in(Scopes.SINGLETON);
+        binder.bind(QuestionSceneInsteadOfActivityCtrl.class).in(Scopes.SINGLETON);
+        binder.bind(QuestionSceneWhatIsActivityCtrl.class).in(Scopes.SINGLETON);
     }
 }
