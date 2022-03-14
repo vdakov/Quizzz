@@ -4,6 +4,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
 
+
 public class ComparisonQuestion extends Question {
 
     private final List<Pair<String, String>> options;

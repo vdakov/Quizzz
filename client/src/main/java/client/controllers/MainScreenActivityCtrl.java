@@ -20,6 +20,15 @@ public class MainScreenActivityCtrl {
         String userName = "cata";
         String serverId = server.createNewSinglePlayerRoom(userName);
         System.out.println(serverId);
-        sceneCtrl.showQuestionHowMuchScene(serverId, 0);
+
+        for (int i = 0; i < 20; i++) {
+            if (server.getQuestionType("cata", serverId, i).equals("KnowledgeQuestion")) {
+                System.out.println("DA");
+                sceneCtrl.showQuestionHowMuchScene(serverId, i);
+                break;
+            }
+        }
+
+
     }
 }

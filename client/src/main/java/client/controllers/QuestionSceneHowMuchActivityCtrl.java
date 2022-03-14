@@ -44,7 +44,16 @@ public class QuestionSceneHowMuchActivityCtrl {
     }
 
     public void setQuestion(String serverId, int currentQuestion) {
-        this.knowledgeQuestion = server.getKnowledgeQuestion("cata", serverId, currentQuestion).getValue();
+        this.knowledgeQuestion = server.getKnowledgeQuestion("cata", serverId, currentQuestion);
+        System.out.println(knowledgeQuestion.toString());
+
+        this.sampleQuestion.setText((knowledgeQuestion == null) ? "" : knowledgeQuestion.getQuestion().getKey());
+
+        labelAnswerBottom.setText((knowledgeQuestion == null) ? "" : knowledgeQuestion.getOptions().get(0));
+        labelAnswerTop.setText((knowledgeQuestion == null) ? "" : knowledgeQuestion.getOptions().get(1));
+        labelAnswerCenter.setText((knowledgeQuestion == null) ? "" : knowledgeQuestion.getOptions().get(2));
+
+        this.correctAnswer = "" + ((knowledgeQuestion == null) ? "" : knowledgeQuestion.getOptions().get(1));
     }
 
     //Initializes the sample question screen through hardcoding

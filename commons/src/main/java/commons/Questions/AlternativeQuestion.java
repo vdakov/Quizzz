@@ -1,7 +1,6 @@
 package commons.Questions;
 
 import org.apache.commons.lang3.tuple.Pair;
-
 import java.util.List;
 
 public class AlternativeQuestion extends Question {

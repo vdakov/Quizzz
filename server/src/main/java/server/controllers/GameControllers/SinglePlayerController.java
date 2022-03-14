@@ -20,8 +20,13 @@ public class SinglePlayerController {
         return singlePlayerGameService.createNewGame(userName);
     }
 
-    @GetMapping("/{gameId}/{questionNumber}")
-    public Pair<String, Question> getDesiredQuestion(@PathVariable("gameId") String gameId, @PathVariable("questionNumber") int questionNumber) {
+    @GetMapping("/{gameId}/{questionNumber}/getQuestionType")
+    public String getDesiredQuestionType(@PathVariable("gameId") String gameId, @PathVariable("questionNumber") int questionNumber) {
+        return singlePlayerGameService.getNeededQuestionType(gameId, questionNumber);
+    }
+
+    @GetMapping("/{gameId}/{questionNumber}/getQuestion")
+    public String getDesiredQuestion(@PathVariable("gameId") String gameId, @PathVariable("questionNumber") int questionNumber) {
         return singlePlayerGameService.getNeededQuestion(gameId, questionNumber);
     }
 

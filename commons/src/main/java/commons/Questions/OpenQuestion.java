@@ -2,6 +2,7 @@ package commons.Questions;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+
 public class OpenQuestion extends Question {
 
     /**

@@ -15,12 +15,12 @@
  */
 package client.communication;
 
+import client.logic.QuestionParsers;
 import commons.Actions.Action;
 import commons.Questions.KnowledgeQuestion;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.GenericType;
-import org.apache.commons.lang3.tuple.Pair;
 import org.glassfish.jersey.client.ClientConfig;
 
 import java.util.List;
@@ -40,13 +40,20 @@ public class ServerUtils {
                 });
     }
 
-    public Pair<String, KnowledgeQuestion> getKnowledgeQuestion(String userName, String serverId, int number) {
+    public String getQuestionType(String userName, String serverId, int number) {
         return ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER).path("api/singlePlayer/" + userName + "/" + serverId + "/" + number)
+                .target(SERVER).path("api/singlePlayer/" + userName + "/" + serverId + "/" + number + "/getQuestionType")
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON).get(new GenericType<>() {
-                    // here this request does not work
+
                 });
+    }
+
+    public KnowledgeQuestion getKnowledgeQuestion(String userName, String serverId, int number) {
+        return QuestionParsers.knowledgeQuestionParser(ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER).path("api/singlePlayer/" + userName + "/" + serverId + "/" + number + "/getQuestion")
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON).get(String.class));
     }
 
     /**
@@ -59,8 +66,7 @@ public class ServerUtils {
                 .target(SERVER).path("api/activities/list") //
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
-                .get(new GenericType<>() {
-                });
+                .get(new GenericType<>() {});
     }
 
     public Action getRandomAction() {
