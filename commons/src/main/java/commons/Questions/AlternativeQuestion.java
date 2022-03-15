@@ -47,7 +47,7 @@ public class AlternativeQuestion extends Question {
         StringBuilder sb = new StringBuilder();
         sb.append(super.toJsonString());
         for (Pair<String, String> option : options) {
-            sb.append(", ").append(option.getKey()).append(", ").append(option.getValue());
+            sb.append("; ").append(option.getKey()).append("; ").append(option.getValue());
         }
         return sb.toString();
     }

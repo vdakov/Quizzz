@@ -35,6 +35,6 @@ public abstract class Question {
     }
 
     public String toJsonString() {
-        return (question.getKey() + ", " + question.getValue());
+        return (question.getKey() + "; " + question.getValue());
     }
 }

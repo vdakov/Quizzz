@@ -13,14 +13,14 @@ import java.util.Scanner;
 public class QuestionParsers {
 
     public static OpenQuestion openQuestionParser(String json) {
-        Scanner scanner = new Scanner(json).useDelimiter(", ");
+        Scanner scanner = new Scanner(json).useDelimiter("; ");
         Pair<String, String> question = Pair.of(scanner.next(), scanner.next());
 
         return new OpenQuestion(question);
     }
 
     public static KnowledgeQuestion knowledgeQuestionParser(String json) {
-        Scanner scanner = new Scanner(json).useDelimiter(", ");
+        Scanner scanner = new Scanner(json).useDelimiter("; ");
         Pair<String, String> question = Pair.of(scanner.next(), scanner.next());
         List<String> options = new ArrayList<>();
         while (scanner.hasNext()) {
@@ -31,7 +31,7 @@ public class QuestionParsers {
     }
 
     public static ComparisonQuestion comparisonQuestionParser(String json) {
-        Scanner scanner = new Scanner(json).useDelimiter(", ");
+        Scanner scanner = new Scanner(json).useDelimiter("; ");
         Pair<String, String> question = Pair.of(scanner.next(), scanner.next());
         List<Pair<String, String>> options = new ArrayList<>();
         while (scanner.hasNext()) {
@@ -43,7 +43,7 @@ public class QuestionParsers {
 
     public static AlternativeQuestion alternativeQuestionParser(String json) {
         System.out.println(json);
-        Scanner scanner = new Scanner(json).useDelimiter(", ");
+        Scanner scanner = new Scanner(json).useDelimiter("; ");
         Pair<String, String> question = Pair.of(scanner.next(), scanner.next());
         List<Pair<String, String>> options = new ArrayList<>();
         while (scanner.hasNext()) {
