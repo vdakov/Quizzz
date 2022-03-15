@@ -33,12 +33,37 @@ Agenda for OOP Project meeting 4.1 - Group 30
 * [14:45-14:46] Closure (schedule next meeting)
 
 
-## Notes from meeting
+# Tips and Tops
 
-    * Notes 1:
+* Got a lot of stuff done, a bit behind with coding, but overall on track
+* We can still improve on the division of tasks
+* Manage deadlines better
 
-    * Notes 2: 
+# Contributions and improvements from this week
+* Implemented endpoints
+* HCI Report Draft
+* Finished the project prototypes
+* Familiarized ourselves with Spring and JavaFX
+* inform next week even about small changes in other people's code
+* set up repository for activities
 
-# TO-DO
-    
-# Tips-and-tops Meeting 4.1
+# IMPORTANT
+* Each person should have at least one merge request per week !!!!!!!
+* More endpoints, more code contributions
+* Integrate endpoints with features, do not just work on endpoints for the sake of it
+* Try to comment merge request more
+* Talk about your demographics in the HCI
+* Talk about the survey from in the HCI
+* Use APA-notation at HCI references
+* Start doing testing for each of the things you submit (JUnit testing required only)
+  * 1-2 tests per each method we implement
+* START CODING !!!
+* Assign sprints
+
+
+# Deadlines
+* Teamwork 4A
+* 4B- BuddyCheck\
+* HCI Final Draft
+* Prepare a Short Demo For next meeting
+* Submit 20 activities to the activity bank
