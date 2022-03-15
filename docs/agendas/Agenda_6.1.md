@@ -17,10 +17,66 @@
 - [14:36-14:40] [Agenda-item 5] - [Upcoming deadlines] (Discussion: Is there anything besides the project that needs to be done?)
 - [14:41-14:44] Question Round
 - [14:45-14:46] Closure (schedule next meeting)
-# **Tips and Tops**
 
 # **Contributions and improvements from this week**
-# **IMPORTANT**
-# **Deadlines**
+
+### Kyongsu
+* Transitions
+* Controller
+* Points showing up on the screen
+* Transitioning in between scenes still does not work too well
+* Timer - separate branch working independently, but it still has to be connected to quiz
+* Currently making a scene which shows the questions/ activities- in progress
+
+### Delia
+
+* Question scenes
+* Finished the MR from last week
+* Periods of time when a merge request has to be approved can be too long- both personal and from others
+
+### Dima
+
+* Catching up to code
+* Ready to work
+
+### Sydney
+
+* Fixed question transitions 
+* Catched up on Gitlab functionality and questions
+
+### Catalin
+
+* PREPARE ISSUES FOR FUTURE ISSUE IMPLEMENTATION
+* Coordinate the implementation together with other people
+
+### Vasko
+* Implemented the database
+* Imported activities
+* Worked on the waiting room
+* Changed the code of conduct
+
+# **Feedback from TA**
+
+* Setup MR template
+* There should be equal distribution of tasks
+* No use of how much time an implementation of an issue took in comparison to a time estimate
+* Add more comments to code
+* **DO - MORE - TESTING !!!!!!!!!!!!!!!!!!!!!!!!**
+* Divide the merge requests more equally
+* Review code more
+* People who are behind on code contribution should try to work more if they have the time
+
+# **Tip and toes**
+
+* Communication could be improved
+* Set up a separate channel for merge requests and important messages
+* Think about future issues and features when working on an issue\
+* Spread the work more eaqually through out the week, so that a day before spring submussion is not that stressful 
+* -----
+* Great attitude towards the project 
+* Everyone willing to contribute
+
+
+
 
 
