@@ -32,7 +32,7 @@ public class QuestionSceneGuessXActivityCtrl {
     @FXML
     private Button goToMainScreen;
     @FXML
-    private Button answer;
+    private Button answerBtn;
     @FXML
     private Label points;
     @FXML
@@ -64,8 +64,8 @@ public class QuestionSceneGuessXActivityCtrl {
         this.sampleQuestion.setText("How much does electricity(in kWH) does " +
                 question.getTitle().substring(0, 1).toLowerCase(Locale.ROOT) + question.getTitle().substring(1) + " take?");
 
-        long answer = question.getConsumption();
-        this.correctAnswer = "" + answer;
+        long answerBtn = question.getConsumption();
+        this.correctAnswer = "" + answerBtn;
     }
 
 
@@ -127,7 +127,7 @@ public class QuestionSceneGuessXActivityCtrl {
 
 
 
-    public Button getAnswer() { return answer; }
+    public Button getAnswer() { return answerBtn; }
 
     public String getCorrectAnswer() { return correctAnswer; }
 

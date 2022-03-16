@@ -37,6 +37,8 @@ public class TransitionSceneShortAnswerCtrl {
     @FXML
     private TextField writeAnswer;
     @FXML
+    private Label correctAnswerLabel;
+    @FXML
     private String correctAnswer;
     @FXML
     private Label addedPoints;
