@@ -35,6 +35,9 @@ public class SceneCtrl {
     private OpenQuestionActivityCtrl openQuestionActivityCtrl;
     private Scene questionGuessXScene;
 
+    private TimerCtrl timerCtrl;   // testing timer
+    private Scene timerScene;
+
 
     public void initializeMainScenes(Stage primaryStage, Pair<MainScreenActivityCtrl, Parent> mainScreenActivityCtrlParentPair,
                                                          Pair<AddActionActivityCtrl, Parent> addActionActivityCtrlParentPair) {
@@ -47,7 +50,8 @@ public class SceneCtrl {
         this.addActionScene                     = new Scene(addActionActivityCtrlParentPair.getValue());
 
 
-        showMainScreen();
+        //showMainScreen();
+        showTimerScreen();
         primaryStage.show();
     }
 
@@ -66,6 +70,13 @@ public class SceneCtrl {
 
         this.comparisonQuestionActivityCtrl = questionSceneWhatIsActivityCtrlParentPair.getKey();
         this.questionWhatIsScene                = new Scene(questionSceneWhatIsActivityCtrlParentPair.getValue());
+
+    }
+
+    public void initializeTimerScene(Pair<TimerCtrl, Parent> TimerCtrlParentPair) {
+        //this.primaryStage = primaryStage;
+        this.timerCtrl = TimerCtrlParentPair.getKey();
+        this.timerScene             = new Scene(TimerCtrlParentPair.getValue());
 
     }
 
@@ -96,6 +107,10 @@ public class SceneCtrl {
     public void showMainScreen() {
         primaryStage.setTitle("Main Screen");
         primaryStage.setScene(mainScreenScene);
+    }
+    public void showTimerScreen() {
+        primaryStage.setTitle("Timer Screen");
+        primaryStage.setScene(timerScene);
     }
 
     public void showAddActionScene() {

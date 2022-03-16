@@ -1,12 +1,18 @@
 package client.controllers;
 
+import client.communication.ServerUtils;
+import javafx.animation.KeyValue;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.*;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -14,51 +20,67 @@ import javafx.util.Duration;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
-public class TimerCtrl extends Application {
+import javax.inject.Inject;
+import java.util.Locale;
+
+public class TimerCtrl{
 
     private final Integer startTime = 10;
-    private Integer seconds = startTime;
-    private Label label;
+    private final ServerUtils server;
+    private final SceneCtrl sceneCtrl;
 
-    @Override
-    public void start(Stage st) throws Exception{
-        label = new Label();
-        label.setTextFill(Color.BLACK);
-        label.setFont(Font.font(20));
+    private IntegerProperty timeSeconds =
+            new SimpleIntegerProperty(startTime);
 
-        HBox layout = new HBox(5);
-        layout.getChildren().add(label);
-        doTime();
+    @FXML
+    private Label timeLabel;
+    @FXML
+    private Button button;
+    private Timeline timeline;
 
-        st.setTitle("Count down Timer");
-        st.setScene(new Scene(layout, 400, 50));
-        st.show();
+    @Inject
+    public TimerCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
+        this.sceneCtrl = sceneCtrl;
+        this.server = server;
     }
 
-    private void doTime(){
-        Timeline time = new Timeline();
-        time.setCycleCount(Timeline.INDEFINITE);
-        if(time!=null){
-            time.stop();
+    public void initialize() {
+        timeLabel.textProperty().bind(timeSeconds.asString());
+    }
+
+    public void handleButton(ActionEvent event) {
+        if (timeline != null) {
+            timeline.stop();
         }
-        KeyFrame frame = new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>(){
-            @Override
-            public void handle(ActionEvent event) {
-                seconds--;
-                label.setText("Countdown: "+seconds.toString());
-                if(seconds<=0){
-                    time.stop();
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setHeaderText("Count down reset to 0");
-                    alert.show();
-                }
-            }
-        });
-        time.getKeyFrames().add(frame);
-        time.playFromStart();
+        timeSeconds.set(startTime);
+        timeline = new Timeline();
+        timeline.getKeyFrames().add(
+                new KeyFrame(Duration.seconds(startTime+1),
+                        new KeyValue(timeSeconds, 0)));
+        timeline.playFromStart();
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+//    private void doTime(){
+//        Timeline time = new Timeline();
+//        time.setCycleCount(Timeline.INDEFINITE);
+//        if(time!=null){
+//            time.stop();
+//        }
+//        KeyFrame frame = new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>(){
+//            @Override
+//            public void handle(ActionEvent event) {
+//                seconds--;
+//                label.setText("Countdown: "+seconds.toString());
+//                if(seconds<=0){
+//                    time.stop();
+//                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//                    alert.setHeaderText("Count down reset to 0");
+//                    alert.show();
+//                }
+//            }
+//        });
+//        time.getKeyFrames().add(frame);
+//        time.playFromStart();
+//    }
+
 }
