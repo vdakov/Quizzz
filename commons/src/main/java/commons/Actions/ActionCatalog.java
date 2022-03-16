@@ -17,6 +17,16 @@ public class ActionCatalog {
         this.usedSmartActions = new ArrayList<>();
     }
 
+    public ActionCatalog(List<Action> actionList) {
+        this.normalActions = new ArrayList<>();
+        this.smartActions = new ArrayList<>();
+        this.usedSmartActions = new ArrayList<>();
+
+        for (int i = 0; i < actionList.size(); i++) {
+            this.addAction(actionList.get(i));
+        }
+    }
+
     public List<Action> getNormalActions() {
         return this.normalActions;
     }
@@ -64,7 +74,7 @@ public class ActionCatalog {
         return temp;
     }
 
-    public Action getAction(int referencePoint, int lowerBoundDifferencePercentage, int upperBoundDifferencePercentage, Random random) {
+    public Action getAction(long referencePoint, int lowerBoundDifferencePercentage, int upperBoundDifferencePercentage, Random random) {
         // start searching lower
         int firstNewLowerBound = (int) (referencePoint - (upperBoundDifferencePercentage * 1.0 / 100) * referencePoint);
         int firstNewUpperBound = (int) (referencePoint - (lowerBoundDifferencePercentage * 1.0 / 100) * referencePoint);
@@ -87,19 +97,22 @@ public class ActionCatalog {
 
     public Action searchForConsumption(int lowerBound, int upperBound) {
         for (Action action : normalActions) {
-            if (lowerBound < action.getConsumption() && action.getConsumption() < upperBound) {
+            long consumption = action.getConsumption();
+            if (lowerBound < consumption && consumption < upperBound) {
                 return action;
             }
         }
 
         for (Action action : smartActions) {
-            if (lowerBound < action.getConsumption() && action.getConsumption() < upperBound) {
+            long consumption = action.getConsumption();
+            if (lowerBound < consumption && consumption < upperBound) {
                 return action;
             }
         }
 
         for (Action action : usedSmartActions) {
-            if (lowerBound < action.getConsumption() && action.getConsumption() < upperBound) {
+            long consumption = action.getConsumption();
+            if (lowerBound < consumption && consumption < upperBound) {
                 return action;
             }
         }

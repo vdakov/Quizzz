@@ -1,6 +1,9 @@
 package commons.Questions;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import java.util.List;
+
 
 public class KnowledgeQuestion extends Question {
 
@@ -13,7 +16,7 @@ public class KnowledgeQuestion extends Question {
      * @param question the String representing the question statement
      * @param options  the List of possible answers for the question
      */
-    public KnowledgeQuestion(String question, List<String> options) {
+    public KnowledgeQuestion(Pair<String, String> question, List<String> options) {
         super(question);
         this.options = options;
     }
@@ -39,6 +42,15 @@ public class KnowledgeQuestion extends Question {
             sb.append("   Choice ").append(i).append(": ").append(options.get(i)).append("\n");
         }
         sb.setLength(sb.length() - 1);
+        return sb.toString();
+    }
+
+    public String toJsonString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(super.toJsonString());
+        for (String option : options) {
+            sb.append("; ").append(option);
+        }
         return sb.toString();
     }
 

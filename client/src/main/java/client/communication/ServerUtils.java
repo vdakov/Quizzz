@@ -15,21 +15,35 @@
  */
 package client.communication;
 
-import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
-
-import java.util.List;
-
-import commons.ActionOld;
 import commons.Actions.Action;
-import org.glassfish.jersey.client.ClientConfig;
-
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.GenericType;
+import org.glassfish.jersey.client.ClientConfig;
+
+import java.util.List;
+
+import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 
 public class ServerUtils {
 
     private static final String SERVER = "http://localhost:8080/";
+
+    public String createNewSinglePlayerRoom(String userName) {
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER).path("api/singlePlayer/" + userName + "/createNewGame")
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON).get(new GenericType<>() {
+
+                });
+    }
+
+    public String getQuestion(String userName, String serverId, int number) {
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER).path("api/singlePlayer/" + userName + "/" + serverId + "/" + number + "/getQuestion")
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON).get(String.class);
+    }
 
     /**
      * Gets the activities from the server
@@ -41,8 +55,7 @@ public class ServerUtils {
                 .target(SERVER).path("api/activities/list") //
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
-                .get(new GenericType<>() {
-                });
+                .get(new GenericType<>() {});
     }
 
     public Action getRandomAction() {
@@ -60,12 +73,12 @@ public class ServerUtils {
      * @param a the action that will be added
      * @return the action that was added
      */
-    public ActionOld addActivity(ActionOld a) {
+    public Action addActivity(Action a) {
         return ClientBuilder.newClient(new ClientConfig()) //
                 .target(SERVER).path("api/activities") //
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
-                .post(Entity.entity(a, APPLICATION_JSON), ActionOld.class);
+                .post(Entity.entity(a, APPLICATION_JSON), Action.class);
     }
 
     public void deleteActivity(String id) {

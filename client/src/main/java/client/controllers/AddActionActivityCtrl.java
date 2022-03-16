@@ -2,7 +2,7 @@ package client.controllers;
 
 import client.communication.ServerUtils;
 import com.google.inject.Inject;
-import commons.ActionOld;
+import commons.Actions.Action;
 import jakarta.ws.rs.WebApplicationException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -11,6 +11,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 
 public class AddActionActivityCtrl {
+
     private final ServerUtils server;
     private final SceneCtrl sceneCtrl;
 
@@ -35,7 +36,7 @@ public class AddActionActivityCtrl {
 
     public void cancel() {
         clearFields();
-        sceneCtrl.showOverviewActionsScene();
+        sceneCtrl.showMainScreen();
     }
 
     public void ok() {
@@ -51,11 +52,11 @@ public class AddActionActivityCtrl {
         }
 
         clearFields();
-        sceneCtrl.showOverviewActionsScene();
+        //sceneCtrl.showOverviewActionsScene();
     }
 
-    private ActionOld getActivity() {
-        return new ActionOld(title.getText(), source.getText(), Integer.parseInt(consumption.getText()));
+    private Action getActivity() {
+        return new Action(null, null, title.getText(), Integer.parseInt(consumption.getText()), source.getText());
     }
 
     private void clearFields() {
@@ -77,4 +78,5 @@ public class AddActionActivityCtrl {
                 break;
         }
     }
+
 }
