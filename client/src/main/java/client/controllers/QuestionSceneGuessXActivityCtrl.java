@@ -39,6 +39,8 @@ public class QuestionSceneGuessXActivityCtrl {
     private TextField writeAnswer;
     @FXML
     private String correctAnswer;
+    @FXML
+    private Label addedPoints;
 
 
     //Constructor for the Question Controller

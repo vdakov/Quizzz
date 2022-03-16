@@ -26,6 +26,9 @@ public class SceneCtrl {
     private QuestionSceneGuessXActivityCtrl questionSceneGuessXActivityCtrl;
     private Scene questionGuessXScene;
 
+//    private TransitionSceneShortAnswerCtrl transitionSceneShortAnswerCtrl;
+    private Scene transitionShortAnswerScene;
+
     private OverviewActionsActivityCtrl overviewActionsActivityCtrl;
     private Scene overviewActionsScene;
 
@@ -52,6 +55,7 @@ public class SceneCtrl {
                                                Pair<QuestionSceneInsteadOfActivityCtrl, Parent> questionSceneInsteadOfActivityCtrlParentPair,
                                                Pair<QuestionSceneHowMuchActivityCtrl, Parent> questionSceneHowMuchActivityCtrlParentPair,
                                                Pair<QuestionSceneGuessXActivityCtrl, Parent> questionSceneGuessXActivityCtrlParentPair,
+//                                                Pair<TransitionSceneShortAnswerCtrl, Parent> transitionScreenShortAnswerActivityCtrlParentPair,
                                              //  Pair<QuestionSceneWhatIsActivityCtrl, Parent> questionSceneWhatIsActivityCtrlParentPair,
                                                Pair<OverviewActionsActivityCtrl, Parent> overviewActionsActivityCtrlParentPair,
                                                Pair<AddActionActivityCtrl, Parent> addActionActivityCtrlParentPair )
@@ -80,13 +84,16 @@ public class SceneCtrl {
         this.addActionActivityCtrl              = addActionActivityCtrlParentPair.getKey();
         this.addActionScene                     = new Scene(addActionActivityCtrlParentPair.getValue());
 
+//        this.transitionSceneShortAnswerCtrl     = transitionScreenShortAnswerActivityCtrlParentPair.getKey();
+        this.transitionShortAnswerScene         = new Scene(questionSceneGuessXActivityCtrlParentPair.getValue());
 
-        showOverviewActionsScene();
+//        showOverviewActionsScene();
 //        showMainScreenScene();
 
-//        showQuestionGuessXScene();
+        showQuestionGuessXScene();
 //        showQuestionHowMuchScene();
-        showQuestionInsteadOfScene();
+//        showQuestionInsteadOfScene();
+//        showTransitionShortAnswer();
         primaryStage.show();
 
     }
@@ -137,6 +144,19 @@ public class SceneCtrl {
         primaryStage.setTitle("Question Screen Guess X");
         primaryStage.setScene(questionGuessXScene);
         Stage stage = (Stage) questionGuessXScene.getWindow();
+        questionSceneGuessXActivityCtrl.initialize();
+        stage.show();
+    }
+
+    /**
+     *  Displays the transition screen for the question type "Guess X"
+     */
+
+    public void showTransitionShortAnswer()
+    {
+        primaryStage.setTitle("Transition Screen Guess X");
+        primaryStage.setScene(transitionShortAnswerScene);
+        Stage stage = (Stage) transitionShortAnswerScene.getWindow();
         questionSceneGuessXActivityCtrl.initialize();
         stage.show();
     }

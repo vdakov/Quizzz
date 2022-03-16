@@ -45,7 +45,7 @@ public class QuizzzClient extends Application {
         var questionScreenGuessXActivity = FXML_CONFIG.load(QuestionSceneGuessXActivityCtrl.class, "scenes", "QuestionSceneGuessX.fxml");
         var questionScreenHowMuchActivity = FXML_CONFIG.load(QuestionSceneHowMuchActivityCtrl.class, "scenes", "QuestionSceneHowMuch.fxml");
         var questionScreenInsteadOfActivity = FXML_CONFIG.load(QuestionSceneInsteadOfActivityCtrl.class, "scenes", "QuestionSceneInsteadOf.fxml");
-
+//        var transitionScreenShortAnswerActivity = FXML_CONFIG.load(TransitionSceneShortAnswerCtrl.class, "scenes", "TransitionSceneShortAnswer.fxml");
         var sceneCtrl = INJECTOR.getInstance(SceneCtrl.class);
 
         sceneCtrl.initialize(primaryStage, mainScreenActivity, questionScreenInsteadOfActivity, questionScreenHowMuchActivity, questionScreenGuessXActivity,
