@@ -5,11 +5,17 @@ import client.controllers.SceneCtrl;
 import client.logic.QuestionParsers;
 import com.google.inject.Inject;
 import commons.Questions.OpenQuestion;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -27,6 +33,10 @@ public class OpenQuestionActivityCtrl {
     private String userName;
     private String serverId;
     private int pointsInt;
+    private final Integer startTime = 30;
+    private IntegerProperty timeSeconds =
+            new SimpleIntegerProperty(startTime);
+    private Timeline timeline;
     @FXML
     private Label sampleQuestion;
     @FXML
@@ -39,6 +49,8 @@ public class OpenQuestionActivityCtrl {
     private TextField writeAnswer;
     @FXML
     private String correctAnswer;
+    @FXML
+    private Label timeLabel;
 
 
     //Constructor for the Question Controller
@@ -63,6 +75,23 @@ public class OpenQuestionActivityCtrl {
     public void initialize() {
         getAnswer().setStyle("-fx-background-color: #ffd783; -fx-border-color:  #ffd783");
 
+    }
+
+    public void startTimer(){
+        timeLabel.textProperty().bind(timeSeconds.asString());
+        timeSeconds.set(startTime);
+        timeline = new Timeline();
+        timeline.getKeyFrames().add(
+                new KeyFrame(Duration.seconds(startTime+1),
+                        new KeyValue(timeSeconds, 0)));
+        timeline.playFromStart();
+    }
+    public void handleTimerButton(ActionEvent event) {
+        if (timeline != null) {
+            timeline.stop();
+        }
+        timeline.stop();
+        System.out.println("Time took to answer - " + timeSeconds);
     }
 
     public void goToNextQuestion() {
@@ -99,6 +128,14 @@ public class OpenQuestionActivityCtrl {
     //method for answering the question- activated on click of button in QuestionScreen scene
     public void answer(ActionEvent event) throws InterruptedException {
         Button current = (Button) event.getSource();
+
+        // stop the timer
+        if (timeline != null) {
+            timeline.stop();
+        }
+        timeline.stop();
+        System.out.println("Time took to answer - " + timeSeconds);
+        //
 
         if (writeAnswer.getText().equals(getCorrectAnswer())) {
             pointsInt += 500; //global variable for points so it remembers it

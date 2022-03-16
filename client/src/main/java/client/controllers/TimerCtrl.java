@@ -46,18 +46,20 @@ public class TimerCtrl{
 
     public void initialize() {
         timeLabel.textProperty().bind(timeSeconds.asString());
-    }
-
-    public void handleButton(ActionEvent event) {
-        if (timeline != null) {
-            timeline.stop();
-        }
         timeSeconds.set(startTime);
         timeline = new Timeline();
         timeline.getKeyFrames().add(
                 new KeyFrame(Duration.seconds(startTime+1),
                         new KeyValue(timeSeconds, 0)));
         timeline.playFromStart();
+    }
+
+    public void handleButton(ActionEvent event) {
+        if (timeline != null) {
+            timeline.stop();
+        }
+        timeline.stop();
+        System.out.println("Time took to answer - " + timeSeconds);
     }
 
 //    private void doTime(){

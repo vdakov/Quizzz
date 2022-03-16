@@ -50,8 +50,8 @@ public class SceneCtrl {
         this.addActionScene                     = new Scene(addActionActivityCtrlParentPair.getValue());
 
 
-        //showMainScreen();
-        showTimerScreen();
+        showMainScreen();
+        //showTimerScreen();
         primaryStage.show();
     }
 
@@ -73,34 +73,39 @@ public class SceneCtrl {
 
     }
 
-    public void initializeTimerScene(Pair<TimerCtrl, Parent> TimerCtrlParentPair) {
-        //this.primaryStage = primaryStage;
-        this.timerCtrl = TimerCtrlParentPair.getKey();
-        this.timerScene             = new Scene(TimerCtrlParentPair.getValue());
-
-    }
+//    public void initializeTimerScene(Pair<TimerCtrl, Parent> TimerCtrlParentPair) {
+//        //this.primaryStage = primaryStage;
+//        this.timerCtrl = TimerCtrlParentPair.getKey();
+//        this.timerScene             = new Scene(TimerCtrlParentPair.getValue());
+//
+//    }
 
     public void showQuestionInsteadOfScene(AlternativeQuestion alternativeQuestion, int questionNo, String userName, String roomId) {
         primaryStage.setTitle("Question type 1");
         alternativeQuestionActivityCtrl.setQuestion(alternativeQuestion, questionNo, userName, roomId);
+        alternativeQuestionActivityCtrl.startTimer();
         primaryStage.setScene(questionInsteadOfScene);
+
     }
 
     public void showQuestionHowMuchScene(KnowledgeQuestion knowledgeQuestion, int questionNo, String userName, String roomId) {
         primaryStage.setTitle("Question type 2");
         knowledgeQuestionActivityCtrl.setQuestion(knowledgeQuestion, questionNo, userName, roomId);
+        knowledgeQuestionActivityCtrl.startTimer();
         primaryStage.setScene(questionHowMuchScene);
     }
 
     public void showQuestionGuessXScene(OpenQuestion openQuestion, int questionNo, String userName, String roomId) {
         primaryStage.setTitle("Question type 3");
         openQuestionActivityCtrl.setQuestion(openQuestion, questionNo, userName, roomId);
+        openQuestionActivityCtrl.startTimer();
         primaryStage.setScene(questionGuessXScene);
     }
 
     public void showQuestionWhatIsScene(ComparisonQuestion comparisonQuestion, int questionNo, String userName, String roomId) {
         primaryStage.setTitle("Question type 4");
         comparisonQuestionActivityCtrl.setQuestion(comparisonQuestion, questionNo, userName, roomId);
+        comparisonQuestionActivityCtrl.startTimer();
         primaryStage.setScene(questionWhatIsScene);
     }
 

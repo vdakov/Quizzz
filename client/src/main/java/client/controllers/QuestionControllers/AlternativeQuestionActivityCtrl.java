@@ -5,6 +5,11 @@ import client.controllers.SceneCtrl;
 import client.logic.QuestionParsers;
 import com.google.inject.Inject;
 import commons.Questions.AlternativeQuestion;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +19,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -29,6 +35,12 @@ public class AlternativeQuestionActivityCtrl {
     private int questionNumber;
     private AlternativeQuestion alternativeQuestion;
     private int pointsInt;
+    private String correctAnswer;
+    private final Integer startTime = 30;
+    private IntegerProperty timeSeconds =
+            new SimpleIntegerProperty(startTime);
+    private Timeline timeline;
+
     @FXML
     private Label sampleQuestion;
     @FXML
@@ -44,7 +56,7 @@ public class AlternativeQuestionActivityCtrl {
     @FXML
     private Label labelAnswerBottom;
     @FXML
-    private String correctAnswer;
+    private Label timeLabel;
 
 
     //Constructor for the Question Controller
@@ -96,6 +108,9 @@ public class AlternativeQuestionActivityCtrl {
                 sceneCtrl.showQuestionInsteadOfScene(QuestionParsers.alternativeQuestionParser(scanner.next()), this.questionNumber + 1, userName, serverId);
                 break;
             }
+            default:
+                //start timer when next question is shown
+                //startTimer();
         }
     }
 
@@ -106,12 +121,41 @@ public class AlternativeQuestionActivityCtrl {
         getAnswerTop().setStyle("-fx-background-color: #b38df7;; -fx-border-color:  #b38df7;");
         getAnswerCenter().setStyle("-fx-background-color: #ffd783; -fx-border-color:  #ffd783");
         getAnswerBottom().setStyle("-fx-background-color: #ffa382; -fx-border-color:  #ffa382");
+
+        // start the timer on screen init
+        //startTimer();
+
+    }
+
+    public void startTimer(){
+        timeLabel.textProperty().bind(timeSeconds.asString());
+        timeSeconds.set(startTime);
+        timeline = new Timeline();
+        timeline.getKeyFrames().add(
+                new KeyFrame(Duration.seconds(startTime+1),
+                        new KeyValue(timeSeconds, 0)));
+        timeline.playFromStart();
+    }
+    public void handleTimerButton(ActionEvent event) {
+        if (timeline != null) {
+            timeline.stop();
+        }
+        timeline.stop();
+        System.out.println("Time took to answer - " + timeSeconds);
     }
 
 
     //method for answering the question- activated on click of button in QuestionScreen scene
     public void answer(ActionEvent event) {
         Button current = (Button) event.getSource();
+
+        // stop the timer
+        if (timeline != null) {
+            timeline.stop();
+        }
+        timeline.stop();
+        System.out.println("Time took to answer - " + timeSeconds);
+        //
 
         if (current.getText().equals(getCorrectAnswer())) {
             pointsInt += 500; //global variable for points so it remembers it

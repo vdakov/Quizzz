@@ -5,10 +5,16 @@ import client.controllers.SceneCtrl;
 import client.logic.QuestionParsers;
 import com.google.inject.Inject;
 import commons.Questions.KnowledgeQuestion;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -23,6 +29,10 @@ public class KnowledgeQuestionActivityCtrl {
     private String roomId;
     private KnowledgeQuestion knowledgeQuestion;
     private int pointsInt;
+    private final Integer startTime = 30;
+    private IntegerProperty timeSeconds =
+            new SimpleIntegerProperty(startTime);
+    private Timeline timeline;
     @FXML
     private Label sampleQuestion;
     @FXML
@@ -39,6 +49,8 @@ public class KnowledgeQuestionActivityCtrl {
     private Label labelAnswerBottom;
     @FXML
     private String correctAnswer;
+    @FXML
+    private Label timeLabel;
 
 
     //Constructor for the Question Controller
@@ -85,6 +97,23 @@ public class KnowledgeQuestionActivityCtrl {
         this.correctAnswer = "" + ((knowledgeQuestion == null) ? "" : knowledgeQuestion.getOptions().get(1));
     }
 
+    public void startTimer(){
+        timeLabel.textProperty().bind(timeSeconds.asString());
+        timeSeconds.set(startTime);
+        timeline = new Timeline();
+        timeline.getKeyFrames().add(
+                new KeyFrame(Duration.seconds(startTime+1),
+                        new KeyValue(timeSeconds, 0)));
+        timeline.playFromStart();
+    }
+    public void handleTimerButton(ActionEvent event) {
+        if (timeline != null) {
+            timeline.stop();
+        }
+        timeline.stop();
+        System.out.println("Time took to answer - " + timeSeconds);
+    }
+
     public void goToNextQuestion() {
         String response = server.getQuestion(this.userName, this.roomId, this.questionNumber + 1);
         Scanner scanner = new Scanner(response).useDelimiter(": ");
@@ -119,6 +148,14 @@ public class KnowledgeQuestionActivityCtrl {
     //method for answering the question- activated on click of button in QuestionScreen scene
     public void answer(ActionEvent event) throws InterruptedException {
         Button current = (Button) event.getSource();
+
+        // stop the timer
+        if (timeline != null) {
+            timeline.stop();
+        }
+        timeline.stop();
+        System.out.println("Time took to answer - " + timeSeconds);
+        //
 
         if (current.getText().equals(getCorrectAnswer())) {
             pointsInt += 500; //global variable for points so it remembers it

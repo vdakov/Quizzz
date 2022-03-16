@@ -53,17 +53,22 @@
          </font>
       </Button>
       <Label fx:id="sampleQuestion" prefHeight="98.0" prefWidth="269.0" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-      <Button fx:id="answerLeft" mnemonicParsing="false" prefHeight="65.0" prefWidth="270.0" onAction="#answer" style="-fx-background-color: #b38df7;" text="1" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="8">
+      <Button fx:id="answerLeft" mnemonicParsing="false" onAction="#answer" prefHeight="65.0" prefWidth="270.0" style="-fx-background-color: #b38df7;" text="1" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="8">
          <font>
             <Font name="Chalkboard" size="24.0" />
          </font></Button>
-      <Button fx:id="answerCenter" mnemonicParsing="false" prefHeight="65.0" prefWidth="270.0" onAction="#answer" style="-fx-background-color: #ffd783;" text="2" GridPane.columnIndex="3" GridPane.rowIndex="8">
+      <Button fx:id="answerCenter" mnemonicParsing="false" onAction="#answer" prefHeight="65.0" prefWidth="270.0" style="-fx-background-color: #ffd783;" text="2" GridPane.columnIndex="3" GridPane.rowIndex="8">
          <font>
             <Font name="Chalkboard" size="24.0" />
          </font></Button>
-      <Button fx:id="answerRight" mnemonicParsing="false" prefHeight="65.0" prefWidth="270.0" onAction="#answer" style="-fx-background-color: #ffa382;" text="3" GridPane.columnIndex="5" GridPane.rowIndex="8">
+      <Button fx:id="answerRight" mnemonicParsing="false" onAction="#answer" prefHeight="65.0" prefWidth="270.0" style="-fx-background-color: #ffa382;" text="3" GridPane.columnIndex="5" GridPane.rowIndex="8">
          <font>
             <Font name="Chalkboard" size="24.0" />
          </font></Button>
+      <Label fx:id="timeLabel" prefHeight="103.0" prefWidth="389.0" text="10" GridPane.columnIndex="3" GridPane.rowIndex="2">
+         <font>
+            <Font size="74.0" />
+         </font>
+      </Label>
    </children>
 </GridPane>

@@ -45,7 +45,7 @@ public class QuizzzClient extends Application {
         var mainScene     = FXML_CONFIG.load(MainScreenActivityCtrl.class, "scenes", "MainScreenScene.fxml");
         var addActionScene = FXML_CONFIG.load(AddActionActivityCtrl.class, "scenes", "AddActionScene.fxml");
 
-        var timerScene = FXML_CONFIG.load(TimerCtrl.class, "scenes", "TimerTestScene.fxml"); // temp to test timer
+        //var timerScene = FXML_CONFIG.load(TimerCtrl.class, "scenes", "TimerTestScene.fxml"); // temp to test timer
 
         var questionScreenWhatIsActivity      = FXML_CONFIG.load(ComparisonQuestionActivityCtrl.class, "scenes", "QuestionSceneWhatIs.fxml");
         var questionScreenGuessXActivity      = FXML_CONFIG.load(OpenQuestionActivityCtrl.class, "scenes", "QuestionSceneGuessX.fxml");
@@ -54,7 +54,7 @@ public class QuizzzClient extends Application {
 
 
         var sceneCtrl = INJECTOR.getInstance(SceneCtrl.class);
-        sceneCtrl.initializeTimerScene(timerScene); // temp to test timer
+        //sceneCtrl.initializeTimerScene(timerScene); // temp to test timer
         sceneCtrl.initializeMainScenes(primaryStage, mainScene, addActionScene);
 
         sceneCtrl.initializeQuestionScenes(questionScreenInsteadOfActivity, questionScreenHowMuchActivity, questionScreenGuessXActivity, questionScreenWhatIsActivity);

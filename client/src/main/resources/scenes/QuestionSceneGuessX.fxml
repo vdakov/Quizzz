@@ -58,5 +58,10 @@
          </font>
       </Label>
       <TextField fx:id="writeAnswer" prefHeight="45.0" prefWidth="202.0" GridPane.columnIndex="6" GridPane.rowIndex="4" />
+      <Label fx:id="timeLabel" prefHeight="346.0" prefWidth="565.0" text="10" GridPane.columnIndex="6" GridPane.rowIndex="6">
+         <font>
+            <Font size="96.0" />
+         </font>
+      </Label>
    </children>
 </GridPane>
