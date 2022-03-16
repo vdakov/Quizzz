@@ -1,28 +1,27 @@
-package client.controllers;
+package client.controllers.QuestionControllers;
 
 import client.communication.ServerUtils;
+import client.controllers.SceneCtrl;
+import client.logic.QuestionParsers;
 import com.google.inject.Inject;
-import commons.Actions.Action;
+import commons.Questions.KnowledgeQuestion;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Locale;
-import java.util.Objects;
+import java.util.Scanner;
 
 
-public class QuestionSceneHowMuchActivityCtrl {
+public class KnowledgeQuestionActivityCtrl {
 
     private final ServerUtils server;
     private final SceneCtrl sceneCtrl;
-    private Action question;
+    private int questionNumber;
+    private String userName;
+    private String roomId;
+    private KnowledgeQuestion knowledgeQuestion;
     private int pointsInt;
     @FXML
     private Label sampleQuestion;
@@ -44,9 +43,25 @@ public class QuestionSceneHowMuchActivityCtrl {
 
     //Constructor for the Question Controller
     @Inject
-    public QuestionSceneHowMuchActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
+    public KnowledgeQuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
         this.server = server;
         this.sceneCtrl = sceneCtrl;
+        this.knowledgeQuestion = null;
+    }
+
+    public void setQuestion(KnowledgeQuestion knowledgeQuestion, int questionNumber, String userName, String roomId) {
+        this.knowledgeQuestion = knowledgeQuestion;
+        this.questionNumber = questionNumber;
+        this.userName = userName;
+        this.roomId = roomId;
+
+        this.sampleQuestion.setText((knowledgeQuestion == null) ? "" : knowledgeQuestion.getQuestion().getKey());
+
+        labelAnswerBottom.setText((knowledgeQuestion == null) ? "" : knowledgeQuestion.getOptions().get(0));
+        labelAnswerTop.setText((knowledgeQuestion == null) ? "" : knowledgeQuestion.getOptions().get(1));
+        labelAnswerCenter.setText((knowledgeQuestion == null) ? "" : knowledgeQuestion.getOptions().get(2));
+
+        this.correctAnswer = "" + ((knowledgeQuestion == null) ? "" : knowledgeQuestion.getOptions().get(1));
     }
 
     //Initializes the sample question screen through hardcoding
@@ -59,35 +74,45 @@ public class QuestionSceneHowMuchActivityCtrl {
 
 
         //hardcoded activity- have to eventually make it initialize through a database- Not now tho :)
-       this.question = server.getRandomAction();
 
         //transforms the activity into a question
-        this.sampleQuestion.setText("How much does electricity(in kWH) does " +
-               question.getTitle().substring(0, 1).toLowerCase(Locale.ROOT) + question.getTitle().substring(1) + " take?");
+        this.sampleQuestion.setText((knowledgeQuestion == null) ? "" : knowledgeQuestion.getQuestion().getKey());
 
-        long answer = question.getConsumption();
-        long range = Math.round(Math.random() * answer);
-        long range2 = Math.round(Math.random() * answer);
-        double random = Math.random() * 3;
+        labelAnswerBottom.setText((knowledgeQuestion == null) ? "" : knowledgeQuestion.getOptions().get(0));
+        labelAnswerTop.setText((knowledgeQuestion == null) ? "" : knowledgeQuestion.getOptions().get(1));
+        labelAnswerCenter.setText((knowledgeQuestion == null) ? "" : knowledgeQuestion.getOptions().get(2));
 
+        this.correctAnswer = "" + ((knowledgeQuestion == null) ? "" : knowledgeQuestion.getOptions().get(1));
+    }
 
-        //this is a very dumb way to do this, but I am too lazy to implement it another way
-        // at this point so too bad :)
-        if (random > 2) {
-            labelAnswerCenter.setText(String.valueOf(answer));
-            labelAnswerBottom.setText(String.valueOf(range));
-            labelAnswerTop.setText(String.valueOf(range2));
-        } else if (random < 2 && random > 1) {
-            labelAnswerCenter.setText(String.valueOf(range));
-            labelAnswerBottom.setText(String.valueOf(range2));
-            labelAnswerTop.setText(String.valueOf(answer));
-        } else {
-            labelAnswerCenter.setText(String.valueOf(range));
-            labelAnswerBottom.setText(String.valueOf(answer));
-            labelAnswerTop.setText(String.valueOf(range2));
+    public void goToNextQuestion() {
+        String response = server.getQuestion(this.userName, this.roomId, this.questionNumber + 1);
+        Scanner scanner = new Scanner(response).useDelimiter(": ");
+        System.out.println("Knowledge question am intrat");
+        String next = scanner.next();
+        System.out.println(next);
+        switch (next) {
+            case "OpenQuestion": {
+                sceneCtrl.showMainScreen();
+                sceneCtrl.showQuestionGuessXScene(QuestionParsers.openQuestionParser(scanner.next()), this.questionNumber + 1, userName, roomId);
+                break;
+            }
+            case "KnowledgeQuestion": {
+                sceneCtrl.showMainScreen();
+                sceneCtrl.showQuestionHowMuchScene(QuestionParsers.knowledgeQuestionParser(scanner.next()), this.questionNumber + 1, userName, roomId);
+                break;
+            }
+            case "ComparisonQuestion": {
+                sceneCtrl.showMainScreen();
+                sceneCtrl.showQuestionWhatIsScene(QuestionParsers.comparisonQuestionParser(scanner.next()), this.questionNumber + 1, userName, roomId);
+                break;
+            }
+            case "AlternativeQuestion": {
+                sceneCtrl.showMainScreen();
+                sceneCtrl.showQuestionInsteadOfScene(QuestionParsers.alternativeQuestionParser(scanner.next()), this.questionNumber + 1, userName, roomId);
+                break;
+            }
         }
-
-        this.correctAnswer = "" + answer;
     }
 
 
@@ -108,9 +133,7 @@ public class QuestionSceneHowMuchActivityCtrl {
         //changes the points value
         points.setText(String.valueOf(pointsInt));
 
-        //sends the server a delete request to ensure the same activity does not appear twice
-        server.deleteActivity(question.getId());
-
+        goToNextQuestion();
 
     }
 
@@ -127,17 +150,8 @@ public class QuestionSceneHowMuchActivityCtrl {
 
     }
 
-    private Scene scene;
-    private Stage stage;
-    private Parent root;
-
     public void goToMainScreen (ActionEvent event) throws IOException {
-
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../../scenes/MainScreenScene.fxml")));
-        stage = (Stage) ( (Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        sceneCtrl.showMainScreen();
     }
 
     //Getters and setters
@@ -162,8 +176,6 @@ public class QuestionSceneHowMuchActivityCtrl {
     public Label getLabelAnswerBottom() { return labelAnswerBottom; }
 
     public void setLabelAnswerTop(Label labelAnswerTop) { this.labelAnswerTop = labelAnswerTop; }
-
-    public void setQuestion(Action question) { this.question = question; }
 
     public void setLabelAnswerCenter(Label labelAnswerCenter) { this.labelAnswerCenter = labelAnswerCenter; }
 

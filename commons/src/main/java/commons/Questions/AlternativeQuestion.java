@@ -1,7 +1,6 @@
 package commons.Questions;
 
 import org.apache.commons.lang3.tuple.Pair;
-
 import java.util.List;
 
 public class AlternativeQuestion extends Question {
@@ -41,6 +40,15 @@ public class AlternativeQuestion extends Question {
             sb.append("   Choice ").append(i).append(": ").append(options.get(i).getKey()).append("\n");
         }
         sb.setLength(sb.length() - 1);
+        return sb.toString();
+    }
+
+    public String toJsonString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(super.toJsonString());
+        for (Pair<String, String> option : options) {
+            sb.append("; ").append(option.getKey()).append("; ").append(option.getValue());
+        }
         return sb.toString();
     }
 }

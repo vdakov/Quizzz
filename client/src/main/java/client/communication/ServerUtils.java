@@ -29,6 +29,22 @@ public class ServerUtils {
 
     private static final String SERVER = "http://localhost:8080/";
 
+    public String createNewSinglePlayerRoom(String userName) {
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER).path("api/singlePlayer/" + userName + "/createNewGame")
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON).get(new GenericType<>() {
+
+                });
+    }
+
+    public String getQuestion(String userName, String serverId, int number) {
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER).path("api/singlePlayer/" + userName + "/" + serverId + "/" + number + "/getQuestion")
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON).get(String.class);
+    }
+
     /**
      * Gets the activities from the server
      *
@@ -39,8 +55,7 @@ public class ServerUtils {
                 .target(SERVER).path("api/activities/list") //
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
-                .get(new GenericType<>() {
-                });
+                .get(new GenericType<>() {});
     }
 
     public Action getRandomAction() {

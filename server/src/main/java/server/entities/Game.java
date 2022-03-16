@@ -56,10 +56,11 @@ public class Game {
     }
 
     public void updatePlayerScore(String userName, int addedScore) {
-        System.out.println(userName + "    " + addedScore);
         for (int i = 0; i < scores.size(); i++) {
             if (scores.get(i).getKey().equals(userName)) {
-                scores.get(i).setValue(scores.get(i).getValue() + addedScore);
+                int newValue = scores.get(i).getValue() + addedScore;
+                scores.remove(i);
+                scores.add(Pair.of(userName, newValue));
             }
         }
     }

@@ -1,31 +1,31 @@
-package client.controllers;
+package client.controllers.QuestionControllers;
 
 import client.communication.ServerUtils;
+import client.controllers.SceneCtrl;
+import client.logic.QuestionParsers;
 import com.google.inject.Inject;
-import commons.Actions.Action;
+import commons.Questions.OpenQuestion;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Locale;
 import java.util.Objects;
+import java.util.Scanner;
 
 import static javax.xml.bind.DatatypeConverter.parseInt;
 
-public class QuestionSceneGuessXActivityCtrl {
+public class OpenQuestionActivityCtrl {
 
 
     private final ServerUtils server;
     private final SceneCtrl sceneCtrl;
-    private Action question;
+    private OpenQuestion openQuestion;
+    private int questionNumber;
+    private String userName;
+    private String serverId;
     private int pointsInt;
     @FXML
     private Label sampleQuestion;
@@ -43,27 +43,56 @@ public class QuestionSceneGuessXActivityCtrl {
 
     //Constructor for the Question Controller
     @Inject
-    public QuestionSceneGuessXActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
+    public OpenQuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
         this.server = server;
         this.sceneCtrl = sceneCtrl;
     }
 
+    public void setQuestion(OpenQuestion openQuestion, int questionNumber, String userName, String serverId) {
+        this.openQuestion = openQuestion;
+        this.questionNumber = questionNumber;
+        this.userName = userName;
+        this.serverId = serverId;
+
+        this.sampleQuestion.setText((openQuestion == null) ? "" : openQuestion.getQuestion().getKey());
+
+        this.correctAnswer = "100";
+    }
+
     //Initializes the sample question screen through hardcoding
     public void initialize() {
-
-        //resets the colors
         getAnswer().setStyle("-fx-background-color: #ffd783; -fx-border-color:  #ffd783");
 
+    }
 
-        //hardcoded activity- have to eventually make it initialize through a database- Not now tho :)
-        this.question = server.getRandomAction();
-
-        //transforms the activity into a question
-        this.sampleQuestion.setText("How much does electricity(in kWH) does " +
-                question.getTitle().substring(0, 1).toLowerCase(Locale.ROOT) + question.getTitle().substring(1) + " take?");
-
-        long answer = question.getConsumption();
-        this.correctAnswer = "" + answer;
+    public void goToNextQuestion() {
+        String response = server.getQuestion(this.userName, this.serverId, this.questionNumber + 1);
+        Scanner scanner = new Scanner(response).useDelimiter(": ");
+        System.out.println("Open question am intrat");
+        String next = scanner.next();
+        System.out.println(next + questionNumber);
+        switch (next) {
+            case "OpenQuestion": {
+                sceneCtrl.showMainScreen();
+                sceneCtrl.showQuestionGuessXScene(QuestionParsers.openQuestionParser(scanner.next()), this.questionNumber + 1, userName, serverId);
+                break;
+            }
+            case "KnowledgeQuestion": {
+                sceneCtrl.showMainScreen();
+                sceneCtrl.showQuestionHowMuchScene(QuestionParsers.knowledgeQuestionParser(scanner.next()), this.questionNumber + 1, userName, serverId);
+                break;
+            }
+            case "ComparisonQuestion": {
+                sceneCtrl.showMainScreen();
+                sceneCtrl.showQuestionWhatIsScene(QuestionParsers.comparisonQuestionParser(scanner.next()), this.questionNumber + 1, userName, serverId);
+                break;
+            }
+            case "AlternativeQuestion": {
+                sceneCtrl.showMainScreen();
+                sceneCtrl.showQuestionInsteadOfScene(QuestionParsers.alternativeQuestionParser(scanner.next()), this.questionNumber + 1, userName, serverId);
+                break;
+            }
+        }
     }
 
 
@@ -88,10 +117,7 @@ public class QuestionSceneGuessXActivityCtrl {
         //changes the points value
         points.setText(String.valueOf(pointsInt));
 
-        //sends the server a delete request to ensure the same activity does not appear twice
-        server.deleteActivity(question.getId());
-
-
+        goToNextQuestion();
     }
 
 
@@ -109,18 +135,7 @@ public class QuestionSceneGuessXActivityCtrl {
 
     }
 
-
-    private Scene scene;
-    private Stage stage;
-    private Parent root;
-
     public void goToMainScreen (ActionEvent event) throws IOException {
-
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../../scenes/MainScreenScene.fxml")));
-        stage = (Stage) ( (Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
     }
 
 
@@ -132,8 +147,5 @@ public class QuestionSceneGuessXActivityCtrl {
     public TextField getWriteAnswer() { return writeAnswer; }
 
     public void setWriteAnswer(TextField writeAnswer) { this.writeAnswer = writeAnswer; }
-
-    public void setQuestion(Action question) { this.question = question; }
-
 
 }
