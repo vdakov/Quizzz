@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class MainScreenActivityCtrl {
+public class MainScreenActivityCtrl extends Controller {
 
     private final ServerUtils server;
     private final SceneCtrl sceneCtrl;
@@ -18,7 +18,7 @@ public class MainScreenActivityCtrl {
         this.server = server;
     }
 
-    public void enterSoloGame () throws IOException {
+    public void enterSoloGame() throws IOException {
         String userName = "cata";
         String serverId = server.createNewSinglePlayerRoom(userName);
         System.out.println(serverId);

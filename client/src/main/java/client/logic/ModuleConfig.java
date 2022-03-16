@@ -1,10 +1,10 @@
 package client.logic;
 
 import client.controllers.*;
-import client.controllers.QuestionControllers.AlternativeQuestionActivityCtrl;
-import client.controllers.QuestionControllers.ComparisonQuestionActivityCtrl;
-import client.controllers.QuestionControllers.KnowledgeQuestionActivityCtrl;
-import client.controllers.QuestionControllers.OpenQuestionActivityCtrl;
+import client.controllers.QuestionControllers.QuestionAlternativeCtrl;
+import client.controllers.QuestionControllers.QuestionComparisonCtrl;
+import client.controllers.QuestionControllers.QuestionKnowledgeCtrl;
+import client.controllers.QuestionControllers.QuestionOpenCtrl;
 import com.google.inject.Binder;
 import com.google.inject.Module;
 import com.google.inject.Scopes;
@@ -21,9 +21,9 @@ public class ModuleConfig implements Module {
         binder.bind(MainScreenActivityCtrl.class).in(Scopes.SINGLETON);
         binder.bind(AddActionActivityCtrl.class).in(Scopes.SINGLETON);
 
-        binder.bind(OpenQuestionActivityCtrl.class).in(Scopes.SINGLETON);
-        binder.bind(KnowledgeQuestionActivityCtrl.class).in(Scopes.SINGLETON);
-        binder.bind(AlternativeQuestionActivityCtrl.class).in(Scopes.SINGLETON);
-        binder.bind(ComparisonQuestionActivityCtrl.class).in(Scopes.SINGLETON);
+        binder.bind(QuestionOpenCtrl.class).in(Scopes.SINGLETON);
+        binder.bind(QuestionKnowledgeCtrl.class).in(Scopes.SINGLETON);
+        binder.bind(QuestionAlternativeCtrl.class).in(Scopes.SINGLETON);
+        binder.bind(QuestionComparisonCtrl.class).in(Scopes.SINGLETON);
     }
 }

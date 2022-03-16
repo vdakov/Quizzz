@@ -1,18 +1,22 @@
 package client;
 
 import client.controllers.*;
-import client.controllers.QuestionControllers.AlternativeQuestionActivityCtrl;
-import client.controllers.QuestionControllers.ComparisonQuestionActivityCtrl;
-import client.controllers.QuestionControllers.KnowledgeQuestionActivityCtrl;
-import client.controllers.QuestionControllers.OpenQuestionActivityCtrl;
+import client.controllers.QuestionControllers.QuestionAlternativeCtrl;
+import client.controllers.QuestionControllers.QuestionComparisonCtrl;
+import client.controllers.QuestionControllers.QuestionKnowledgeCtrl;
+import client.controllers.QuestionControllers.QuestionOpenCtrl;
 import client.logic.FXMLConfig;
 import client.logic.ModuleConfig;
 import com.google.inject.Injector;
 import javafx.application.Application;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.HashMap;
 
 import static com.google.inject.Guice.createInjector;
 
@@ -40,19 +44,31 @@ public class QuizzzClient extends Application {
      * @param primaryStage represents the main stage of the app
      * @throws IOException is thrown when an error regarding Input or Output occurs while the app runs
      */
+
+    private final Pair<String, Class>[] scenePairs = new Pair[]{
+            new Pair("MainScreenScene.fxml", MainScreenActivityCtrl.class),
+            new Pair("AddActionScene.fxml", AddActionActivityCtrl.class),
+            new Pair("QuestionComparisonScene.fxml", QuestionComparisonCtrl.class),
+            new Pair("QuestionOpenScene.fxml", QuestionOpenCtrl.class),
+            new Pair("QuestionKnowledgeScene.fxml", QuestionKnowledgeCtrl.class),
+            new Pair("QuestionAlternativeScene.fxml", QuestionAlternativeCtrl.class)
+    };
+
     @Override
-    public void start(Stage primaryStage) throws IOException {
-        var mainScene     = FXML_CONFIG.load(MainScreenActivityCtrl.class, "scenes", "MainScreenScene.fxml");
-        var addActionScene = FXML_CONFIG.load(AddActionActivityCtrl.class, "scenes", "AddActionScene.fxml");
+    public void start(Stage primaryStage) { //makes a hashmap to easily look up any scene using its filename (without the .fxml extension)
+        HashMap<String, Pair<Controller, Scene>> scenesList = new HashMap<>();
 
-        var questionScreenWhatIsActivity      = FXML_CONFIG.load(ComparisonQuestionActivityCtrl.class, "scenes", "QuestionSceneWhatIs.fxml");
-        var questionScreenGuessXActivity      = FXML_CONFIG.load(OpenQuestionActivityCtrl.class, "scenes", "QuestionSceneGuessX.fxml");
-        var questionScreenHowMuchActivity   = FXML_CONFIG.load(KnowledgeQuestionActivityCtrl.class, "scenes", "QuestionSceneHowMuch.fxml");
-        var questionScreenInsteadOfActivity = FXML_CONFIG.load(AlternativeQuestionActivityCtrl.class, "scenes", "QuestionSceneInsteadOf.fxml");
+        for (int i = 0; i < scenePairs.length; i++) {
+            var scenePair = scenePairs[i];
 
+            Pair<Controller, Parent> controllerParentPair = FXML_CONFIG.load(scenePair.getValue(), "scenes", scenePair.getKey());
+            Pair<Controller, Scene> value = new Pair<>(controllerParentPair.getKey(), new Scene(controllerParentPair.getValue())); //Pair consisting of Controller and corresponding Scene
+            String key = scenePair.getKey().replace("Scene.fxml", ""); //name of the scene
+
+            scenesList.put(key, value);
+        }
 
         var sceneCtrl = INJECTOR.getInstance(SceneCtrl.class);
-        sceneCtrl.initializeMainScenes(primaryStage, mainScene, addActionScene);
-        sceneCtrl.initializeQuestionScenes(questionScreenInsteadOfActivity, questionScreenHowMuchActivity, questionScreenGuessXActivity, questionScreenWhatIsActivity);
+        sceneCtrl.initialize(primaryStage, scenesList);
     }
 }

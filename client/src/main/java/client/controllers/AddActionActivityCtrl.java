@@ -10,7 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 
-public class AddActionActivityCtrl {
+public class AddActionActivityCtrl extends Controller {
 
     private final ServerUtils server;
     private final SceneCtrl sceneCtrl;
