@@ -59,7 +59,18 @@
        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c9f1fd" height="38.0" stroke="BLACK" strokeType="INSIDE" width="777.0" GridPane.columnIndex="2" GridPane.rowIndex="12" />
        <Button fx:id="moveNext" alignment="CENTER_RIGHT" mnemonicParsing="false" text="Next" GridPane.columnIndex="8" GridPane.rowIndex="12" />
 
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e4f2ff" height="341.0" stroke="BLACK" strokeType="INSIDE" style="-fx-fill: #c9f1fd;" width="274.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c9f1fd" height="38.0" stroke="BLACK" strokeType="INSIDE" width="142.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+       <Label fx:id="questionNumber" alignment="CENTER" prefHeight="21.0" prefWidth="106.0" text="Question 1" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+
+       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c9f1fd" height="451.0" stroke="BLACK" strokeType="INSIDE" width="405.0" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+       <ImageView fx:id="imageSrc" fitHeight="182.0" fitWidth="368.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+       <Label fx:id="sampleQuestion" alignment="TOP_LEFT" prefHeight="159.0" prefWidth="375.0" text="Question contents" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="9">
+           <font>
+               <Font name="Chalkboard" size="16.0" />
+           </font>
+       </Label>
+
+       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e4f2ff" height="341.0" stroke="BLACK" strokeType="INSIDE" style="-fx-fill: #c9f1fd;" width="274.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="341.0" stroke="BLACK" strokeType="INSIDE" style="-fx-fill: #c9f1fd;" width="274.0" GridPane.columnIndex="5" GridPane.rowIndex="5" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="341.0" stroke="BLACK" strokeType="INSIDE" style="-fx-fill: #c9f1fd;" width="274.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
       <Label prefHeight="98.0" prefWidth="269.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="6" />
@@ -68,7 +79,6 @@
       <ImageView fitHeight="195.0" fitWidth="273.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="4" />
       <ImageView fitHeight="195.0" fitWidth="273.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="4" />
 
-      <Label fx:id="sampleQuestion" prefHeight="98.0" prefWidth="269.0" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="6" />
       <Button fx:id="answerLeft" mnemonicParsing="false" prefHeight="65.0" prefWidth="270.0" onAction="#answer" style="-fx-background-color: #b38df7;" text="1" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="8">
          <font>
             <Font name="Chalkboard" size="24.0" />

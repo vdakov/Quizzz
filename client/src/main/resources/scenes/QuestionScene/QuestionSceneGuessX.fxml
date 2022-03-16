@@ -60,19 +60,23 @@
        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c9f1fd" height="38.0" stroke="BLACK" strokeType="INSIDE" width="777.0" GridPane.columnIndex="2" GridPane.rowIndex="12" />
        <Button fx:id="moveNext" alignment="CENTER_RIGHT" mnemonicParsing="false" text="Next" GridPane.columnIndex="8" GridPane.rowIndex="12" />
 
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c9f1fd" height="423.0" stroke="BLACK" strokeType="INSIDE" width="360.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c9f1fd" height="38.0" stroke="BLACK" strokeType="INSIDE" width="142.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+       <Label fx:id="questionNumber" alignment="CENTER" prefHeight="21.0" prefWidth="106.0" text="Question 1" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+
+       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c9f1fd" height="451.0" stroke="BLACK" strokeType="INSIDE" width="405.0" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+       <ImageView fx:id="imageSrc" fitHeight="182.0" fitWidth="368.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+       <Label fx:id="sampleQuestion" alignment="TOP_LEFT" prefHeight="159.0" prefWidth="375.0" text="Question contents" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="9">
+           <font>
+               <Font name="Chalkboard" size="16.0" />
+           </font>
+       </Label>
+
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c9f1fd" height="84.0" stroke="BLACK" strokeType="INSIDE" width="360.0" GridPane.columnIndex="4" GridPane.rowIndex="4" />
       <Button fx:id="answer" mnemonicParsing="false" onAction="#answer" prefHeight="53.0" prefWidth="132.0" style="-fx-background-color: #ffd783;" text="Your guess" GridPane.columnIndex="5" GridPane.rowIndex="4">
          <font>
             <Font name="Chalkboard" size="18.0" />
          </font>
       </Button>
-      <ImageView fitHeight="225.0" fitWidth="349.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-      <Label fx:id="sampleQuestion" alignment="TOP_LEFT" prefHeight="125.0" prefWidth="346.0" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="6">
-         <font>
-            <Font name="Chalkboard" size="16.0" />
-         </font>
-      </Label>
       <TextField fx:id="writeAnswer" prefHeight="45.0" prefWidth="202.0" GridPane.columnIndex="6" GridPane.rowIndex="4" />
    </children>
 </GridPane>
