@@ -1,6 +1,5 @@
 package server.controllers.GameControllers;
 
-import commons.Questions.Question;
 import org.springframework.web.bind.annotation.*;
 import server.services.GameServices.SinglePlayerGameService;
 
@@ -19,8 +18,8 @@ public class SinglePlayerController {
         return singlePlayerGameService.createNewGame(userName);
     }
 
-    @GetMapping("/{gameId}/{questionNumber}")
-    public Question getDesiredQuestion(@PathVariable("gameId") String gameId, @PathVariable("questionNumber") int questionNumber) {
+    @GetMapping("/{gameId}/{questionNumber}/getQuestion")
+    public String getDesiredQuestion(@PathVariable("gameId") String gameId, @PathVariable("questionNumber") int questionNumber) {
         return singlePlayerGameService.getNeededQuestion(gameId, questionNumber);
     }
 

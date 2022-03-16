@@ -1,6 +1,10 @@
 package client;
 
 import client.controllers.*;
+import client.controllers.QuestionControllers.AlternativeQuestionActivityCtrl;
+import client.controllers.QuestionControllers.ComparisonQuestionActivityCtrl;
+import client.controllers.QuestionControllers.KnowledgeQuestionActivityCtrl;
+import client.controllers.QuestionControllers.OpenQuestionActivityCtrl;
 import client.logic.FXMLConfig;
 import client.logic.ModuleConfig;
 import com.google.inject.Injector;
@@ -38,17 +42,17 @@ public class QuizzzClient extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws IOException {
-        var overviewActivity        = FXML_CONFIG.load(OverviewActionsActivityCtrl.class, "scenes", "OverviewActionsScene.fxml");
-        var addActivity                  = FXML_CONFIG.load(AddActionActivityCtrl.class, "scenes", "AddActionScene.fxml");
-        var mainScreenActivity          = FXML_CONFIG.load(MainScreenActivityCtrl.class, "scenes", "MainScreenScene.fxml");
-       // var questionScreenWhatIsActivity  = FXML_CONFIG.load(QuestionSceneWhatIsActivityCtrl.class, "scenes", "QuestionSceneWhatIs.fxml");
-        var questionScreenGuessXActivity = FXML_CONFIG.load(QuestionSceneGuessXActivityCtrl.class, "scenes", "QuestionSceneGuessX.fxml");
-        var questionScreenHowMuchActivity = FXML_CONFIG.load(QuestionSceneHowMuchActivityCtrl.class, "scenes", "QuestionSceneHowMuch.fxml");
-        var questionScreenInsteadOfActivity = FXML_CONFIG.load(QuestionSceneInsteadOfActivityCtrl.class, "scenes", "QuestionSceneInsteadOf.fxml");
-//        var transitionScreenShortAnswerActivity = FXML_CONFIG.load(TransitionSceneShortAnswerCtrl.class, "scenes", "TransitionSceneShortAnswer.fxml");
-        var sceneCtrl = INJECTOR.getInstance(SceneCtrl.class);
+        var mainScene     = FXML_CONFIG.load(MainScreenActivityCtrl.class, "scenes", "MainScreenScene.fxml");
+        var addActionScene = FXML_CONFIG.load(AddActionActivityCtrl.class, "scenes", "AddActionScene.fxml");
 
-        sceneCtrl.initialize(primaryStage, mainScreenActivity, questionScreenInsteadOfActivity, questionScreenHowMuchActivity, questionScreenGuessXActivity,
-                overviewActivity, addActivity);
+        var questionScreenWhatIsActivity      = FXML_CONFIG.load(ComparisonQuestionActivityCtrl.class, "scenes", "QuestionSceneWhatIs.fxml");
+        var questionScreenGuessXActivity      = FXML_CONFIG.load(OpenQuestionActivityCtrl.class, "scenes", "QuestionSceneGuessX.fxml");
+        var questionScreenHowMuchActivity   = FXML_CONFIG.load(KnowledgeQuestionActivityCtrl.class, "scenes", "QuestionSceneHowMuch.fxml");
+        var questionScreenInsteadOfActivity = FXML_CONFIG.load(AlternativeQuestionActivityCtrl.class, "scenes", "QuestionSceneInsteadOf.fxml");
+
+
+        var sceneCtrl = INJECTOR.getInstance(SceneCtrl.class);
+        sceneCtrl.initializeMainScenes(primaryStage, mainScene, addActionScene);
+        sceneCtrl.initializeQuestionScenes(questionScreenInsteadOfActivity, questionScreenHowMuchActivity, questionScreenGuessXActivity, questionScreenWhatIsActivity);
     }
 }

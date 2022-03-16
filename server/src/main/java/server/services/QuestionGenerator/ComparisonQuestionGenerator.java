@@ -24,7 +24,6 @@ public class ComparisonQuestionGenerator {
 
         for (int i = 0; i < numberOfNeededQuestions; i++) {
             comparisonQuestionWithAnswersList.add(generateComparisonQuestionFromAction(actionCatalog, random));
-
         }
 
         return comparisonQuestionWithAnswersList;

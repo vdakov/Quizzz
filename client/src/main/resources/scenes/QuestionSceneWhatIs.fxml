@@ -9,7 +9,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="838.0" prefWidth="1092.0" style="-fx-background-color: #499ee8;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.QuestionSceneWhatIsActivityCtrl">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="838.0" prefWidth="1092.0" style="-fx-background-color: #499ee8;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.QuestionControllers.ComparisonQuestionActivityCtrl">
   <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="300.0" minWidth="10.0" prefWidth="98.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="274.0" minWidth="10.0" prefWidth="274.0" />
@@ -46,21 +46,22 @@
             <Font name="Chalkboard" size="18.0" />
          </font>
       </Label>
+
       <Button fx:id="goToMainScreen" mnemonicParsing="false" onAction="#goToMainScreen" prefHeight="32.0" prefWidth="68.0" style="-fx-background-color: #5bc0de; -fx-border-color: #c9f1fd;" text="Home" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Label prefHeight="98.0" prefWidth="269.0" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-      <Button fx:id="answerLeft" mnemonicParsing="false" prefHeight="65.0" prefWidth="270.0" style="-fx-background-color: #b38df7;" text="1" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="8">
+      <Label fx:id="sampleQuestion" prefHeight="98.0" prefWidth="269.0" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+      <Button fx:id="answerLeft" mnemonicParsing="false" prefHeight="65.0" prefWidth="270.0" onAction="#answer" style="-fx-background-color: #b38df7;" text="1" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="8">
          <font>
             <Font name="Chalkboard" size="24.0" />
          </font></Button>
-      <Button fx:id="answerCenter" mnemonicParsing="false" prefHeight="65.0" prefWidth="270.0" style="-fx-background-color: #ffd783;" text="2" GridPane.columnIndex="3" GridPane.rowIndex="8">
+      <Button fx:id="answerCenter" mnemonicParsing="false" prefHeight="65.0" prefWidth="270.0" onAction="#answer" style="-fx-background-color: #ffd783;" text="2" GridPane.columnIndex="3" GridPane.rowIndex="8">
          <font>
             <Font name="Chalkboard" size="24.0" />
          </font></Button>
-      <Button fx:id="answerRight" mnemonicParsing="false" prefHeight="65.0" prefWidth="270.0" style="-fx-background-color: #ffa382;" text="3" GridPane.columnIndex="5" GridPane.rowIndex="8">
+      <Button fx:id="answerRight" mnemonicParsing="false" prefHeight="65.0" prefWidth="270.0" onAction="#answer" style="-fx-background-color: #ffa382;" text="3" GridPane.columnIndex="5" GridPane.rowIndex="8">
          <font>
             <Font name="Chalkboard" size="24.0" />
          </font></Button>

@@ -4,6 +4,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 public abstract class Question {
 
+
     private final Pair<String, String> question;
 
     /**
@@ -31,5 +32,9 @@ public abstract class Question {
      */
     public String toString() {
         return this.question.getKey();
+    }
+
+    public String toJsonString() {
+        return (question.getKey() + "; " + question.getValue());
     }
 }

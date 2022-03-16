@@ -4,6 +4,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
 
+
 public class KnowledgeQuestion extends Question {
 
     private final List<String> options;
@@ -41,6 +42,15 @@ public class KnowledgeQuestion extends Question {
             sb.append("   Choice ").append(i).append(": ").append(options.get(i)).append("\n");
         }
         sb.setLength(sb.length() - 1);
+        return sb.toString();
+    }
+
+    public String toJsonString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(super.toJsonString());
+        for (String option : options) {
+            sb.append("; ").append(option);
+        }
         return sb.toString();
     }
 

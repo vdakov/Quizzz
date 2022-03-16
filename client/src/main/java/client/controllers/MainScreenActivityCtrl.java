@@ -1,29 +1,48 @@
 package client.controllers;
 
-import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import client.communication.ServerUtils;
+import client.logic.QuestionParsers;
 
+import javax.inject.Inject;
 import java.io.IOException;
-import java.util.Objects;
+import java.util.Scanner;
 
 public class MainScreenActivityCtrl {
 
+    private final ServerUtils server;
+    private final SceneCtrl sceneCtrl;
 
+    @Inject
+    public MainScreenActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
+        this.sceneCtrl = sceneCtrl;
+        this.server = server;
+    }
 
-    private Scene scene;
-    private Stage stage;
-    private Parent root;
+    public void enterSoloGame () throws IOException {
+        String userName = "cata";
+        String serverId = server.createNewSinglePlayerRoom(userName);
+        System.out.println(serverId);
 
-    public void enterSoloGame (ActionEvent event) throws IOException {
+        String response = server.getQuestion(userName, serverId, 0);
+        Scanner scanner = new Scanner(response).useDelimiter(": ");
+        switch (scanner.next()) {
+            case "OpenQuestion": {
+                sceneCtrl.showQuestionGuessXScene(QuestionParsers.openQuestionParser(scanner.next()), 0, userName, serverId);
+                break;
+            }
+            case "KnowledgeQuestion": {
+                sceneCtrl.showQuestionHowMuchScene(QuestionParsers.knowledgeQuestionParser(scanner.next()), 0, userName, serverId);
+                break;
+            }
+            case "ComparisonQuestion": {
+                sceneCtrl.showQuestionWhatIsScene(QuestionParsers.comparisonQuestionParser(scanner.next()), 0, userName, serverId);
+                break;
+            }
+            case "AlternativeQuestion": {
+                sceneCtrl.showQuestionInsteadOfScene(QuestionParsers.alternativeQuestionParser(scanner.next()), 0, userName, serverId);
+                break;
+            }
+        }
 
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../../scenes/QuestionSceneHowMuch.fxml")));
-        stage = (Stage) ( (Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
     }
 }

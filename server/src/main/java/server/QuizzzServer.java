@@ -50,10 +50,9 @@ public class QuizzzServer {
                 List<Action> actions = mapper.readValue(inputStream, typeReference); //does the actual mapping to the list
                 // it won't save certain activities that do not match the current database, but this should be optimised
                 for (int i = 0; i < actions.size(); i++) {
-                    if (actions.get(i).getConsumption() > Integer.MAX_VALUE || actions.get(i).getSource().length() > 255) {
+                    if (actions.get(i).getConsumption() > Integer.MAX_VALUE || actions.get(i).getSource() == null || actions.get(i).getSource().length() > 255) {
                         actions.remove(i);
                         i--;
-                        continue;
                     }
                 }
 
