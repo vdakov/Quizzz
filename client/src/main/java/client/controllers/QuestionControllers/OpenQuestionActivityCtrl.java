@@ -104,7 +104,7 @@ public class OpenQuestionActivityCtrl {
         // after the time ends the amount of won points is calculated and then shown to the player
     }
 
-    private void goToMainScreen () throws IOException {
+    public void goToMainScreen () throws IOException {
         sceneCtrl.showMainScreen();
     }
 

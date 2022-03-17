@@ -116,7 +116,7 @@ public class KnowledgeQuestionActivityCtrl {
         // after the time ends the amount of won points is calculated and then shown to the player
     }
 
-    private void goToMainScreen () throws IOException {
+    public void goToMainScreen () throws IOException {
         sceneCtrl.showMainScreen();
 
     }
@@ -126,15 +126,15 @@ public class KnowledgeQuestionActivityCtrl {
     }
 
     private Label getQuestionFirstOption() {
-        return labelAnswerTop;
+        return firstOptionText;
     }
 
     private Label getQuestionSecondOption() {
-        return labelAnswerCenter;
+        return secondOptionText;
     }
 
     private Label getQuestionThirdOption() {
-        return labelAnswerBottom;
+        return thirdOptionText;
     }
 
     //Getters and setters

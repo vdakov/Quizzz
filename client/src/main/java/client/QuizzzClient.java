@@ -45,10 +45,10 @@ public class QuizzzClient extends Application {
         var mainScene     = FXML_CONFIG.load(MainScreenActivityCtrl.class, "scenes", "MainScreenScene.fxml");
         var addActionScene = FXML_CONFIG.load(AddActionActivityCtrl.class, "scenes", "AddActionScene.fxml");
 
-        var questionScreenWhatIsActivity      = FXML_CONFIG.load(ComparisonQuestionActivityCtrl.class, "scenes/QuestionScene", "QuestionSceneWhatIs.fxml");
-        var questionScreenGuessXActivity      = FXML_CONFIG.load(OpenQuestionActivityCtrl.class, "scenes/QuestionScene", "QuestionSceneGuessX.fxml");
-        var questionScreenHowMuchActivity   = FXML_CONFIG.load(KnowledgeQuestionActivityCtrl.class, "scenes/QuestionScene", "QuestionSceneHowMuch.fxml");
-        var questionScreenInsteadOfActivity = FXML_CONFIG.load(AlternativeQuestionActivityCtrl.class, "scenes/QuestionScene", "QuestionSceneInsteadOf.fxml");
+        var questionScreenWhatIsActivity      = FXML_CONFIG.load(ComparisonQuestionActivityCtrl.class, "scenes/QuestionScene", "ComparisonQuestionScene.fxml");
+        var questionScreenGuessXActivity      = FXML_CONFIG.load(OpenQuestionActivityCtrl.class, "scenes/QuestionScene", "OpenQuestionScene.fxml");
+        var questionScreenHowMuchActivity   = FXML_CONFIG.load(KnowledgeQuestionActivityCtrl.class, "scenes/QuestionScene", "KnowledgeQuestionScene.fxml");
+        var questionScreenInsteadOfActivity = FXML_CONFIG.load(AlternativeQuestionActivityCtrl.class, "scenes/QuestionScene", "AlternativeQuestionScene.fxml");
 
 
         var sceneCtrl = INJECTOR.getInstance(SceneCtrl.class);

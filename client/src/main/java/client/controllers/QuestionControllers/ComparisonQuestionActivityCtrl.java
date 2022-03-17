@@ -111,7 +111,7 @@ public class ComparisonQuestionActivityCtrl {
         // after the time ends the amount of won points is calculated and then shown to the player
     }
 
-    private void goToMainScreen () throws IOException {
+    public void goToMainScreen () throws IOException {
         sceneCtrl.showMainScreen();
     }
 
@@ -120,15 +120,15 @@ public class ComparisonQuestionActivityCtrl {
     }
 
     private Label getQuestionFirstOption() {
-        return null;
+        return firstOptionText;
     }
 
     private Label getQuestionSecondOption() {
-        return null;
+        return secondOptionText;
     }
 
     private Label getQuestionThirdOption() {
-        return null;
+        return thirdOptionText;
     }
 
 
