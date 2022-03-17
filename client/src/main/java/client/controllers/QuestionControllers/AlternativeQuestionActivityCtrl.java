@@ -8,6 +8,7 @@ import commons.Questions.AlternativeQuestion;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
@@ -18,6 +19,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -36,9 +38,9 @@ public class AlternativeQuestionActivityCtrl {
     private AlternativeQuestion alternativeQuestion;
     private int pointsInt;
     private String correctAnswer;
-    private final Integer startTime = 30;
+    private final double startTime = 10;
     private IntegerProperty timeSeconds =
-            new SimpleIntegerProperty(startTime);
+            new SimpleIntegerProperty((int)startTime);
     private Timeline timeline;
 
     @FXML
@@ -57,6 +59,9 @@ public class AlternativeQuestionActivityCtrl {
     private Label labelAnswerBottom;
     @FXML
     private Label timeLabel;
+    @FXML
+    private ProgressBar progressBarTime;
+
 
 
     //Constructor for the Question Controller
@@ -128,8 +133,11 @@ public class AlternativeQuestionActivityCtrl {
     }
 
     public void startTimer(){
+        double timeProgress = 1;
+        progressBarTime.progressProperty().bind(Bindings.divide(timeSeconds, startTime));
+
         timeLabel.textProperty().bind(timeSeconds.asString());
-        timeSeconds.set(startTime);
+        timeSeconds.set((int)startTime);
         timeline = new Timeline();
         timeline.getKeyFrames().add(
                 new KeyFrame(Duration.seconds(startTime+1),
@@ -154,11 +162,12 @@ public class AlternativeQuestionActivityCtrl {
             timeline.stop();
         }
         timeline.stop();
-        System.out.println("Time took to answer - " + timeSeconds);
+        System.out.println("Time took to answer - " + (timeSeconds.getValue() - startTime) );
         //
 
         if (current.getText().equals(getCorrectAnswer())) {
-            pointsInt += 500; //global variable for points so it remembers it
+            // multiply the score by percentage time remaining
+            pointsInt += 500.0 * ((float)timeSeconds.getValue()/startTime); //global variable for points so it remembers it
         }
 
         //uses the answerCheck method to highlight which the correct answer was

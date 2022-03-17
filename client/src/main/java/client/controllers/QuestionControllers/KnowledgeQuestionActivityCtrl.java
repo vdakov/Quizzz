@@ -8,12 +8,14 @@ import commons.Questions.KnowledgeQuestion;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -29,9 +31,9 @@ public class KnowledgeQuestionActivityCtrl {
     private String roomId;
     private KnowledgeQuestion knowledgeQuestion;
     private int pointsInt;
-    private final Integer startTime = 30;
+    private final double startTime = 10;
     private IntegerProperty timeSeconds =
-            new SimpleIntegerProperty(startTime);
+            new SimpleIntegerProperty((int)startTime);
     private Timeline timeline;
     @FXML
     private Label sampleQuestion;
@@ -51,6 +53,8 @@ public class KnowledgeQuestionActivityCtrl {
     private String correctAnswer;
     @FXML
     private Label timeLabel;
+    @FXML
+    private ProgressBar progressBarTime;
 
 
     //Constructor for the Question Controller
@@ -98,8 +102,9 @@ public class KnowledgeQuestionActivityCtrl {
     }
 
     public void startTimer(){
+        progressBarTime.progressProperty().bind(Bindings.divide(timeSeconds, startTime));
         timeLabel.textProperty().bind(timeSeconds.asString());
-        timeSeconds.set(startTime);
+        timeSeconds.set((int)startTime);
         timeline = new Timeline();
         timeline.getKeyFrames().add(
                 new KeyFrame(Duration.seconds(startTime+1),
@@ -154,7 +159,7 @@ public class KnowledgeQuestionActivityCtrl {
             timeline.stop();
         }
         timeline.stop();
-        System.out.println("Time took to answer - " + timeSeconds);
+        System.out.println("Time took to answer - " + (timeSeconds.getValue() - startTime) );
         //
 
         if (current.getText().equals(getCorrectAnswer())) {
