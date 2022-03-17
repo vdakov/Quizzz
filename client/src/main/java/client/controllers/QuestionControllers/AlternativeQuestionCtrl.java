@@ -115,7 +115,8 @@ public class AlternativeQuestionCtrl {
         //changes the points value
         points.setText(String.valueOf(pointsInt));
 
-        goToNextQuestion();
+        if (questionNumber < 20) goToNextQuestion();
+        else sceneCtrl.showSingleplayerLeaderboard();
     }
 
 
