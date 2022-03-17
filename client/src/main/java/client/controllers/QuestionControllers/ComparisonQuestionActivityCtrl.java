@@ -2,27 +2,45 @@ package client.controllers.QuestionControllers;
 
 import client.communication.ServerUtils;
 import client.controllers.SceneCtrl;
-import client.data.GameConfiguration;
-import client.logic.QuestionParsers;
 import com.google.inject.Inject;
 import commons.Questions.ComparisonQuestion;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 
 import java.io.IOException;
-import java.util.Scanner;
 
 public class ComparisonQuestionActivityCtrl {
 
+    // constructor needed variables
     private final ServerUtils server;
-    private final SceneCtrl sceneCtrl;
-    private int questionNumber;
-    private ComparisonQuestion comparisonQuestion;
-    private String userName;
-    private String serverId;
-    private int pointsInt;
+    private final SceneCtrl   sceneCtrl;
+
+    // final needed labels for questions
+    @FXML
+    private Label labelGoBack;
+
+    @FXML
+    private Label questionStatement;
+
+    @FXML
+    private Label firstOptionText;
+    @FXML
+    private ImageView firstOptionImage;
+
+    @FXML
+    private Label secondOptionText;
+    @FXML
+    private ImageView secondOptionImage;
+
+    @FXML
+    private Label thirdOptionText;
+    @FXML
+    private ImageView thirdOptionImage;
+
+
+
     @FXML
     private Label sampleQuestion;
     @FXML
@@ -32,101 +50,80 @@ public class ComparisonQuestionActivityCtrl {
     @FXML
     private Label points;
 
-    //Constructor for the Question Controller
+    /**
+     * Creates the scene with the needed dependencies
+     * @param server    initialised the communication with the server
+     * @param sceneCtrl the scene controller
+     */
     @Inject
     public ComparisonQuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
         this.server = server;
         this.sceneCtrl = sceneCtrl;
     }
 
-    public void setQuestion(ComparisonQuestion comparisonQuestion) {
-        this.comparisonQuestion = comparisonQuestion;
-
-        this.sampleQuestion.setText((comparisonQuestion == null) ? "" : comparisonQuestion.getQuestion().getKey());
-    }
-
-    //Initializes the sample question screen through hardcoding
+    /**
+     * Initialises all the colors for the current scene
+     */
     public void initialize() {
 
-        //resets the colors to white each time
     }
 
-
-    //method for answering the question- activated on click of button in QuestionScreen scene
-    public void answer(ActionEvent event) {
-        Button current = (Button) event.getSource();
-        System.out.println("Comparison question am intrat");
-
-        if (current.getText().equals("10")) {
-            pointsInt += 500; //global variable for points so it remembers it
+    /**
+     * Sets the text for the needed question given as parameter
+     * @param comparisonQuestion the question that is set
+     */
+    public void displayQuestion(ComparisonQuestion comparisonQuestion) {
+        if (comparisonQuestion == null) {
+            return;
         }
 
-        //uses the answerCheck method to highlight which the correct answer was
-        //and to color them
-        answerCheck(answerCenter.getText(), this.getAnswerCenter());
-        answerCheck(answerLeft.getText(), this.getAnswerTop());
-        answerCheck(answerRight.getText(), this.getAnswerBottom());
+        getQuestionStatement().setText(comparisonQuestion.getQuestion().getKey());
 
-        //changes the points value
-        points.setText(String.valueOf(pointsInt));
 
-        goToNextQuestion();
-        //sends the server a delete request to ensure the same activity does not appear twice
+        getQuestionFirstOption() .setText(comparisonQuestion.getOptions().get(0).getKey());
+        getQuestionSecondOption().setText(comparisonQuestion.getOptions().get(1).getKey());
+        getQuestionThirdOption() .setText(comparisonQuestion.getOptions().get(2).getKey());
 
+        initialize();
     }
 
-
-    //Method that checks whether answer is correct
-    public void answerCheck(String answer, Button current) {
-
-
-        long mTime = System.currentTimeMillis();
-        long end = mTime + 1000;
-
-        // This should be setting the colour and then go to a new question screen but it doesn't work right now
-        do {
-            if (answer.equals("10")) {
-                current.setStyle("-fx-background-color: #00FF00; "); //simple CSS for clarity
-            } else {
-                current.setStyle("-fx-background-color: #d20716; ");
-            }
-        } while (System.currentTimeMillis() < end);
-
-        this.initialize();
-
+    /**
+     * Displays the next question to the user after the transition is finished
+     */
+    public void displayNextQuestion() {
+        sceneCtrl.showNextQuestion();
     }
 
-    public void goToNextQuestion() {
-        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
-        gameConfiguration.setCurrentQuestionNumber(gameConfiguration.getCurrentQuestionNumber() + 1);
-        String response = server.getQuestion();
-        Scanner scanner = new Scanner(response).useDelimiter(": ");
-        switch (scanner.next()) {
-            case "OpenQuestion": {
-                sceneCtrl.showMainScreen();
-                sceneCtrl.showQuestionGuessXScene(QuestionParsers.openQuestionParser(scanner.next()));
-                break;
-            }
-            case "KnowledgeQuestion": {
-                sceneCtrl.showMainScreen();
-                sceneCtrl.showQuestionHowMuchScene(QuestionParsers.knowledgeQuestionParser(scanner.next()));
-                break;
-            }
-            case "ComparisonQuestion": {
-                sceneCtrl.showMainScreen();
-                sceneCtrl.showQuestionWhatIsScene(QuestionParsers.comparisonQuestionParser(scanner.next()));
-                break;
-            }
-            case "AlternativeQuestion": {
-                sceneCtrl.showMainScreen();
-                sceneCtrl.showQuestionInsteadOfScene(QuestionParsers.alternativeQuestionParser(scanner.next()));
-                break;
-            }
-        }
+    public void answerQuestion() {
+        // answers the question and blocks the possibility to answer anymore
     }
 
-    public void goToMainScreen (ActionEvent event) throws IOException {
+    public void answerUpdate() {
+        // after the time ends the right answer is requested and then shown
+    }
 
+    public void pointsUpdate() {
+        // after the time ends the amount of won points is calculated and then shown to the player
+    }
+
+    private void goToMainScreen () throws IOException {
+        sceneCtrl.showMainScreen();
+    }
+
+    private Label getQuestionStatement() {
+        return sampleQuestion;
+    }
+
+    private Label getQuestionFirstOption() {
+        return null;
+    }
+
+    private Label getQuestionSecondOption() {
+        return null;
+    }
+
+    private Label getQuestionThirdOption() {
+        return null;
     }
 
 
