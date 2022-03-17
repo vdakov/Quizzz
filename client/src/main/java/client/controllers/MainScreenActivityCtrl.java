@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class MainScreenActivityCtrl extends Controller {
+public class MainScreenActivityCtrl {
 
     private final ServerUtils server;
     private final SceneCtrl sceneCtrl;
@@ -27,19 +27,19 @@ public class MainScreenActivityCtrl extends Controller {
         Scanner scanner = new Scanner(response).useDelimiter(": ");
         switch (scanner.next()) {
             case "OpenQuestion": {
-                sceneCtrl.showQuestionGuessXScene(QuestionParsers.openQuestionParser(scanner.next()), 0, userName, serverId);
+                sceneCtrl.showOpenQuestionScene(QuestionParsers.openQuestionParser(scanner.next()), 0, userName, serverId);
                 break;
             }
             case "KnowledgeQuestion": {
-                sceneCtrl.showQuestionHowMuchScene(QuestionParsers.knowledgeQuestionParser(scanner.next()), 0, userName, serverId);
+                sceneCtrl.showKnowledgeQuestionScene(QuestionParsers.knowledgeQuestionParser(scanner.next()), 0, userName, serverId);
                 break;
             }
             case "ComparisonQuestion": {
-                sceneCtrl.showQuestionWhatIsScene(QuestionParsers.comparisonQuestionParser(scanner.next()), 0, userName, serverId);
+                sceneCtrl.showComparisonQuestionScene(QuestionParsers.comparisonQuestionParser(scanner.next()), 0, userName, serverId);
                 break;
             }
             case "AlternativeQuestion": {
-                sceneCtrl.showQuestionInsteadOfScene(QuestionParsers.alternativeQuestionParser(scanner.next()), 0, userName, serverId);
+                sceneCtrl.showAlternativeQuestionScene(QuestionParsers.alternativeQuestionParser(scanner.next()), 0, userName, serverId);
                 break;
             }
         }

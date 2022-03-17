@@ -1,9 +1,9 @@
 package client.controllers;
 
-import client.controllers.QuestionControllers.QuestionAlternativeCtrl;
-import client.controllers.QuestionControllers.QuestionComparisonCtrl;
-import client.controllers.QuestionControllers.QuestionKnowledgeCtrl;
-import client.controllers.QuestionControllers.QuestionOpenCtrl;
+import client.controllers.QuestionControllers.AlternativeQuestionCtrl;
+import client.controllers.QuestionControllers.ComparisonQuestionCtrl;
+import client.controllers.QuestionControllers.KnowledgeQuestionCtrl;
+import client.controllers.QuestionControllers.OpenQuestionCtrl;
 import commons.Questions.AlternativeQuestion;
 import commons.Questions.ComparisonQuestion;
 import commons.Questions.KnowledgeQuestion;
@@ -15,58 +15,54 @@ import javafx.util.Pair;
 import java.util.HashMap;
 
 public class SceneCtrl {
-
     private Stage primaryStage;
+    private HashMap<String, Pair<Object, Scene>> scenes;
 
-    private HashMap<String, Pair<Controller, Scene>> scenes;
-
-
-    public void initialize(Stage primaryStage, HashMap<String, Pair<Controller, Scene>> scenes) {
+    public void initialize(Stage primaryStage, HashMap<String, Pair<Object, Scene>> scenes) {
         this.primaryStage = primaryStage;
-
         this.scenes = scenes;
 
-        primaryStage.setScene(scenes.get("MainScreen").getValue());
+        showMainScreenScene();
         primaryStage.show();
     }
 
-    public void showQuestionInsteadOfScene(AlternativeQuestion alternativeQuestion, int questionNo, String userName, String roomId) {
-        var pair = scenes.get("QuestionAlternative");
-        QuestionAlternativeCtrl ctrl = (QuestionAlternativeCtrl) pair.getKey();
+    public void showAlternativeQuestionScene(AlternativeQuestion alternativeQuestion, int questionNo, String userName, String roomId) {
+        var pair = scenes.get("AlternativeQuestion");
+        AlternativeQuestionCtrl ctrl = (AlternativeQuestionCtrl) pair.getKey();
 
         primaryStage.setTitle("Question type 1");
         ctrl.setQuestion(alternativeQuestion, questionNo, userName, roomId);
         primaryStage.setScene(pair.getValue());
     }
 
-    public void showQuestionHowMuchScene(KnowledgeQuestion knowledgeQuestion, int questionNo, String userName, String roomId) {
-        var pair = scenes.get("QuestionKnowledge");
-        QuestionKnowledgeCtrl ctrl = (QuestionKnowledgeCtrl) pair.getKey();
+    public void showKnowledgeQuestionScene(KnowledgeQuestion knowledgeQuestion, int questionNo, String userName, String roomId) {
+        var pair = scenes.get("KnowledgeQuestion");
+        KnowledgeQuestionCtrl ctrl = (KnowledgeQuestionCtrl) pair.getKey();
 
         primaryStage.setTitle("Question type 2");
         ctrl.setQuestion(knowledgeQuestion, questionNo, userName, roomId);
         primaryStage.setScene(pair.getValue());
     }
 
-    public void showQuestionGuessXScene(OpenQuestion openQuestion, int questionNo, String userName, String roomId) {
-        var pair = scenes.get("QuestionOpen");
-        QuestionOpenCtrl ctrl = (QuestionOpenCtrl) pair.getKey();
+    public void showOpenQuestionScene(OpenQuestion openQuestion, int questionNo, String userName, String roomId) {
+        var pair = scenes.get("OpenQuestion");
+        OpenQuestionCtrl ctrl = (OpenQuestionCtrl) pair.getKey();
 
         primaryStage.setTitle("Question type 3");
         ctrl.setQuestion(openQuestion, questionNo, userName, roomId);
         primaryStage.setScene(pair.getValue());
     }
 
-    public void showQuestionWhatIsScene(ComparisonQuestion comparisonQuestion, int questionNo, String userName, String roomId) {
-        var pair = scenes.get("QuestionComparison");
-        QuestionComparisonCtrl ctrl = (QuestionComparisonCtrl) pair.getKey();
+    public void showComparisonQuestionScene(ComparisonQuestion comparisonQuestion, int questionNo, String userName, String roomId) {
+        var pair = scenes.get("ComparisonQuestion");
+        ComparisonQuestionCtrl ctrl = (ComparisonQuestionCtrl) pair.getKey();
 
         primaryStage.setTitle("Question type 4");
         ctrl.setQuestion(comparisonQuestion, questionNo, userName, roomId);
         primaryStage.setScene(pair.getValue());
     }
 
-    public void showMainScreen() {
+    public void showMainScreenScene() {
         var pair = scenes.get("MainScreen");
 
         primaryStage.setTitle("Main Screen");

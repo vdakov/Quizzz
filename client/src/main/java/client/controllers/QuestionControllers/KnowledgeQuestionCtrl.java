@@ -1,7 +1,6 @@
 package client.controllers.QuestionControllers;
 
 import client.communication.ServerUtils;
-import client.controllers.Controller;
 import client.controllers.SceneCtrl;
 import client.logic.QuestionParsers;
 import com.google.inject.Inject;
@@ -15,7 +14,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 
-public class QuestionKnowledgeCtrl extends Controller {
+public class KnowledgeQuestionCtrl {
 
     private final ServerUtils server;
     private final SceneCtrl sceneCtrl;
@@ -26,8 +25,6 @@ public class QuestionKnowledgeCtrl extends Controller {
     private int pointsInt;
     @FXML
     private Label sampleQuestion;
-    @FXML
-    private Button goToMainScreen;
     @FXML
     private Button answerTop, answerBottom, answerCenter;
     @FXML
@@ -44,7 +41,7 @@ public class QuestionKnowledgeCtrl extends Controller {
 
     //Constructor for the Question Controller
     @Inject
-    public QuestionKnowledgeCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
+    public KnowledgeQuestionCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
         this.server = server;
         this.sceneCtrl = sceneCtrl;
         this.knowledgeQuestion = null;
@@ -94,23 +91,23 @@ public class QuestionKnowledgeCtrl extends Controller {
         System.out.println(next);
         switch (next) {
             case "OpenQuestion": {
-                sceneCtrl.showMainScreen();
-                sceneCtrl.showQuestionGuessXScene(QuestionParsers.openQuestionParser(scanner.next()), this.questionNumber + 1, userName, roomId);
+                sceneCtrl.showMainScreenScene();
+                sceneCtrl.showOpenQuestionScene(QuestionParsers.openQuestionParser(scanner.next()), this.questionNumber + 1, userName, roomId);
                 break;
             }
             case "KnowledgeQuestion": {
-                sceneCtrl.showMainScreen();
-                sceneCtrl.showQuestionHowMuchScene(QuestionParsers.knowledgeQuestionParser(scanner.next()), this.questionNumber + 1, userName, roomId);
+                sceneCtrl.showMainScreenScene();
+                sceneCtrl.showKnowledgeQuestionScene(QuestionParsers.knowledgeQuestionParser(scanner.next()), this.questionNumber + 1, userName, roomId);
                 break;
             }
             case "ComparisonQuestion": {
-                sceneCtrl.showMainScreen();
-                sceneCtrl.showQuestionWhatIsScene(QuestionParsers.comparisonQuestionParser(scanner.next()), this.questionNumber + 1, userName, roomId);
+                sceneCtrl.showMainScreenScene();
+                sceneCtrl.showComparisonQuestionScene(QuestionParsers.comparisonQuestionParser(scanner.next()), this.questionNumber + 1, userName, roomId);
                 break;
             }
             case "AlternativeQuestion": {
-                sceneCtrl.showMainScreen();
-                sceneCtrl.showQuestionInsteadOfScene(QuestionParsers.alternativeQuestionParser(scanner.next()), this.questionNumber + 1, userName, roomId);
+                sceneCtrl.showMainScreenScene();
+                sceneCtrl.showAlternativeQuestionScene(QuestionParsers.alternativeQuestionParser(scanner.next()), this.questionNumber + 1, userName, roomId);
                 break;
             }
         }
@@ -135,14 +132,12 @@ public class QuestionKnowledgeCtrl extends Controller {
         points.setText(String.valueOf(pointsInt));
 
         goToNextQuestion();
-
     }
 
 
     //Method that checks whether answer is correct
     //
     public void answerCheck(String answer, Button current) throws InterruptedException {
-
         if (answer.equals(getCorrectAnswer())) {
             current.setStyle("-fx-background-color: #00FF00; ");  //simple CSS for clarity
         } else {
@@ -152,7 +147,7 @@ public class QuestionKnowledgeCtrl extends Controller {
     }
 
     public void goToMainScreen(ActionEvent event) throws IOException {
-        sceneCtrl.showMainScreen();
+        sceneCtrl.showMainScreenScene();
     }
 
     //Getters and setters

@@ -13,7 +13,7 @@ import javafx.scene.control.Label;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class ComparisonQuestionActivityCtrl {
+public class ComparisonQuestionCtrl {
 
     private final ServerUtils server;
     private final SceneCtrl sceneCtrl;
@@ -25,15 +25,13 @@ public class ComparisonQuestionActivityCtrl {
     @FXML
     private Label sampleQuestion;
     @FXML
-    private Button goToMainScreen;
-    @FXML
     private Button answerLeft, answerCenter, answerRight;
     @FXML
     private Label points;
 
     //Constructor for the Question Controller
     @Inject
-    public ComparisonQuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
+    public ComparisonQuestionCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
         this.server = server;
         this.sceneCtrl = sceneCtrl;
     }
@@ -73,15 +71,11 @@ public class ComparisonQuestionActivityCtrl {
         points.setText(String.valueOf(pointsInt));
 
         goToNextQuestion();
-        //sends the server a delete request to ensure the same activity does not appear twice
-
     }
 
 
     //Method that checks whether answer is correct
     public void answerCheck(String answer, Button current) {
-
-
         long mTime = System.currentTimeMillis();
         long end = mTime + 1000;
 
@@ -105,35 +99,37 @@ public class ComparisonQuestionActivityCtrl {
         System.out.println(next + " aici");
         switch (next) {
             case "OpenQuestion": {
-                sceneCtrl.showMainScreen();
-                sceneCtrl.showQuestionGuessXScene(QuestionParsers.openQuestionParser(scanner.next()), this.questionNumber + 1, userName, serverId);
+                sceneCtrl.showMainScreenScene();
+                sceneCtrl.showOpenQuestionScene(QuestionParsers.openQuestionParser(scanner.next()), this.questionNumber + 1, userName, serverId);
                 break;
             }
             case "KnowledgeQuestion": {
-                sceneCtrl.showMainScreen();
-                sceneCtrl.showQuestionHowMuchScene(QuestionParsers.knowledgeQuestionParser(scanner.next()), this.questionNumber + 1, userName, serverId);
+                sceneCtrl.showMainScreenScene();
+                sceneCtrl.showKnowledgeQuestionScene(QuestionParsers.knowledgeQuestionParser(scanner.next()), this.questionNumber + 1, userName, serverId);
                 break;
             }
             case "ComparisonQuestion": {
-                sceneCtrl.showMainScreen();
-                sceneCtrl.showQuestionWhatIsScene(QuestionParsers.comparisonQuestionParser(scanner.next()), this.questionNumber + 1, userName, serverId);
+                sceneCtrl.showMainScreenScene();
+                sceneCtrl.showComparisonQuestionScene(QuestionParsers.comparisonQuestionParser(scanner.next()), this.questionNumber + 1, userName, serverId);
                 break;
             }
             case "AlternativeQuestion": {
-                sceneCtrl.showMainScreen();
-                sceneCtrl.showQuestionInsteadOfScene(QuestionParsers.alternativeQuestionParser(scanner.next()), this.questionNumber + 1, userName, serverId);
+                sceneCtrl.showMainScreenScene();
+                sceneCtrl.showAlternativeQuestionScene(QuestionParsers.alternativeQuestionParser(scanner.next()), this.questionNumber + 1, userName, serverId);
                 break;
             }
         }
     }
 
-    public void goToMainScreen (ActionEvent event) throws IOException {
-
+    public void goToMainScreen(ActionEvent event) throws IOException {
+        sceneCtrl.showMainScreenScene();
     }
 
 
     //Getters and setters
-    public Button getAnswerTop() { return answerLeft; }
+    public Button getAnswerTop() {
+        return answerLeft;
+    }
 
     public Button getAnswerBottom() {
         return answerRight;
