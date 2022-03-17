@@ -73,9 +73,6 @@ public class KnowledgeQuestionActivityCtrl {
      */
     public void initialize() {
 
-        getAnswerTop().setStyle("-fx-background-color: #b38df7;; -fx-border-color:  #b38df7;");
-        getAnswerCenter().setStyle("-fx-background-color: #ffd783; -fx-border-color:  #ffd783");
-        getAnswerBottom().setStyle("-fx-background-color: #ffa382; -fx-border-color:  #ffa382");
     }
 
     /**
