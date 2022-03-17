@@ -2,33 +2,39 @@ package client.controllers.QuestionControllers;
 
 import client.communication.ServerUtils;
 import client.controllers.SceneCtrl;
-import client.data.GameConfiguration;
-import client.logic.QuestionParsers;
 import com.google.inject.Inject;
 import commons.Questions.OpenQuestion;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 
 import java.io.IOException;
-import java.util.Objects;
-import java.util.Scanner;
-
-import static javax.xml.bind.DatatypeConverter.parseInt;
 
 public class OpenQuestionActivityCtrl {
 
-
+    // constructor needed variables
     private final ServerUtils server;
-    private final SceneCtrl sceneCtrl;
-    private OpenQuestion openQuestion;
-    private int questionNumber;
-    private String userName;
-    private String serverId;
-    private int pointsInt;
-    private int addedPointsInt;
+    private final SceneCtrl   sceneCtrl;
+
+    // final needed labels for questions
+    @FXML
+    private Label labelGoBack;
+
+    @FXML
+    private Label questionStatement;
+    @FXML
+    private ImageView questionStatementImage;
+
+    @FXML
+    private Label submitAnswer;
+    @FXML
+    private TextField userAnswer;
+
+
+
+    // current labels
     @FXML
     private Label sampleQuestion;
     @FXML
@@ -49,110 +55,62 @@ public class OpenQuestionActivityCtrl {
     private Label correctAnswerLabel;
 
 
-    //Constructor for the Question Controller
+    /**
+     * Creates the scene with the needed dependencies
+     * @param server    initialised the communication with the server
+     * @param sceneCtrl the scene controller
+     */
     @Inject
     public OpenQuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
         this.server = server;
         this.sceneCtrl = sceneCtrl;
     }
 
-    public void setQuestion(OpenQuestion openQuestion) {
-        this.openQuestion = openQuestion;
-
-        this.sampleQuestion.setText((openQuestion == null) ? "" : openQuestion.getQuestion().getKey());
-
-        this.correctAnswer = "100";
-    }
-
-    //Initializes the sample question screen through hardcoding
+    /**
+     * Initialises all the colors for the current scene
+     */
     public void initialize() {
 
-        points.setText(String.valueOf(pointsInt));
-
         getAnswer().setStyle("-fx-background-color: #ffd783; -fx-border-color:  #ffd783");
-
     }
 
-    public void goToNextQuestion() {
-        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
-        gameConfiguration.setCurrentQuestionNumber(gameConfiguration.getCurrentQuestionNumber() + 1);
-        String response = server.getQuestion();
-        Scanner scanner = new Scanner(response).useDelimiter(": ");
-        switch (scanner.next()) {
-            case "OpenQuestion": {
-                sceneCtrl.showMainScreen();
-                sceneCtrl.showQuestionGuessXScene(QuestionParsers.openQuestionParser(scanner.next()));
-                break;
-            }
-            case "KnowledgeQuestion": {
-                sceneCtrl.showMainScreen();
-                sceneCtrl.showQuestionHowMuchScene(QuestionParsers.knowledgeQuestionParser(scanner.next()));
-                break;
-            }
-            case "ComparisonQuestion": {
-                sceneCtrl.showMainScreen();
-                sceneCtrl.showQuestionWhatIsScene(QuestionParsers.comparisonQuestionParser(scanner.next()));
-                break;
-            }
-            case "AlternativeQuestion": {
-                sceneCtrl.showMainScreen();
-                sceneCtrl.showQuestionInsteadOfScene(QuestionParsers.alternativeQuestionParser(scanner.next()));
-                break;
-            }
+    /**
+     * Sets the text for the needed question given as parameter
+     * @param openQuestion the question that is set
+     */
+    public void displayQuestion(OpenQuestion openQuestion) {
+        if (openQuestion == null) {
+            return;
         }
+        getQuestionStatement().setText(openQuestion.getQuestion().getKey());
     }
 
-
-    //method for answering the question- activated on click of button in QuestionScreen scene
-    public void answer(ActionEvent event) throws InterruptedException {
-        Button current = (Button) event.getSource();
-
-        addedPointsInt=0;
-        if (writeAnswer.getText().equals(getCorrectAnswer())) {
-            addedPointsInt = 500; //global variable for points so it remembers it
-        }
-        else
-            if (parseInt(writeAnswer.getText()) > parseInt(getCorrectAnswer()) * 0.95 &&  parseInt(writeAnswer.getText()) < parseInt(getCorrectAnswer()) * 1.05) {
-                addedPointsInt = 250;
-            }
-
-
-        //uses the answerCheck method to highlight which the correct answer was
-        //and to color them
-        answerCheck(writeAnswer.getText(), this.getAnswer());
-
-        //show correct answer
-        correctAnswerLabel.setText(correctAnswer);
-
-        //changes the points value
-        addedPoints.setText("+"+String.valueOf(addedPointsInt));
-
-//        goToNextQuestion();
+    /**
+     * Displays the next question to the user after the transition is finished
+     */
+    public void displayNextQuestion() {
+        sceneCtrl.showNextQuestion();
     }
 
-    public void goNext(ActionEvent event) throws IOException {
-        goToNextQuestion();
+    public void answerQuestion() {
+        // answers the question and blocks the possibility to answer anymore
     }
 
-
-    //Method that checks whether answer is correct
-    //
-    public void answerCheck(String answer, Button current) throws InterruptedException {
-
-        if (Objects.equals(writeAnswer.getText(), getCorrectAnswer()) ||
-                parseInt(writeAnswer.getText()) > parseInt(getCorrectAnswer()) * 0.95 &&  parseInt(writeAnswer.getText()) < parseInt(getCorrectAnswer()) * 1.05) {
-            current.setStyle("-fx-background-color: #00FF00; ");  //simple CSS for clarity
-        } else {
-            current.setStyle("-fx-background-color: #d20716;");
-        }
-
-
+    public void answerUpdate() {
+        // after the time ends the right answer is requested and then shown
     }
 
-    public void goToMainScreen (ActionEvent event) throws IOException {
+    public void pointsUpdate() {
+        // after the time ends the amount of won points is calculated and then shown to the player
     }
 
+    private void goToMainScreen () throws IOException {
+        sceneCtrl.showMainScreen();
+    }
 
+    private Label getQuestionStatement() {
+        return sampleQuestion;
+    }
 
     public Button getAnswer() { return answer; }
 

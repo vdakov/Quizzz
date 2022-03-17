@@ -1,9 +1,12 @@
 package client.controllers;
 
+import client.communication.ServerUtils;
 import client.controllers.QuestionControllers.AlternativeQuestionActivityCtrl;
 import client.controllers.QuestionControllers.ComparisonQuestionActivityCtrl;
 import client.controllers.QuestionControllers.KnowledgeQuestionActivityCtrl;
 import client.controllers.QuestionControllers.OpenQuestionActivityCtrl;
+import client.data.GameConfiguration;
+import client.logic.QuestionParsers;
 import commons.Questions.AlternativeQuestion;
 import commons.Questions.ComparisonQuestion;
 import commons.Questions.KnowledgeQuestion;
@@ -13,9 +16,15 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
+import javax.inject.Inject;
+import java.util.Scanner;
+
 public class SceneCtrl {
 
     private Stage primaryStage;
+
+    private ServerUtils serverUtils;
+    private GameConfiguration gameConfiguration;
 
     private MainScreenActivityCtrl mainScreenActivityCtrl;
     private Scene mainScreenScene;
@@ -35,6 +44,11 @@ public class SceneCtrl {
     private OpenQuestionActivityCtrl openQuestionActivityCtrl;
     private Scene questionGuessXScene;
 
+    @Inject
+    public void initialiseServer(ServerUtils serverUtils) {
+        this.serverUtils = serverUtils;
+        this.gameConfiguration = GameConfiguration.getConfiguration();
+    }
 
     public void initializeMainScenes(Stage primaryStage, Pair<MainScreenActivityCtrl, Parent> mainScreenActivityCtrlParentPair,
                                                          Pair<AddActionActivityCtrl, Parent> addActionActivityCtrlParentPair) {
@@ -45,7 +59,6 @@ public class SceneCtrl {
 
         this.addActionActivityCtrl              = addActionActivityCtrlParentPair.getKey();
         this.addActionScene                     = new Scene(addActionActivityCtrlParentPair.getValue());
-
 
         showMainScreen();
         primaryStage.show();
@@ -69,27 +82,50 @@ public class SceneCtrl {
 
     }
 
+    public void showNextQuestion() {
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+        gameConfiguration.setCurrentQuestionNumber(gameConfiguration.getCurrentQuestionNumber() + 1);
+        String response = serverUtils.getQuestion();
+        Scanner scanner = new Scanner(response).useDelimiter(": ");
+        String questionType = scanner.next();
+        primaryStage.setTitle("Question #" + gameConfiguration.getCurrentQuestionNumber() + ": " + questionType);
+        switch (questionType) {
+            case "OpenQuestion": {
+                this.showQuestionGuessXScene(QuestionParsers.openQuestionParser(scanner.next()));
+                break;
+            }
+            case "KnowledgeQuestion": {
+                this.showQuestionHowMuchScene(QuestionParsers.knowledgeQuestionParser(scanner.next()));
+                break;
+            }
+            case "ComparisonQuestion": {
+                this.showQuestionWhatIsScene(QuestionParsers.comparisonQuestionParser(scanner.next()));
+                break;
+            }
+            case "AlternativeQuestion": {
+                this.showQuestionInsteadOfScene(QuestionParsers.alternativeQuestionParser(scanner.next()));
+                break;
+            }
+        }
+    }
+
     public void showQuestionInsteadOfScene(AlternativeQuestion alternativeQuestion) {
-        primaryStage.setTitle("Question type 1");
-        alternativeQuestionActivityCtrl.setQuestion(alternativeQuestion);
+        alternativeQuestionActivityCtrl.displayQuestion(alternativeQuestion);
         primaryStage.setScene(questionInsteadOfScene);
     }
 
     public void showQuestionHowMuchScene(KnowledgeQuestion knowledgeQuestion) {
-        primaryStage.setTitle("Question type 2");
-        knowledgeQuestionActivityCtrl.setQuestion(knowledgeQuestion);
+        knowledgeQuestionActivityCtrl.displayQuestion(knowledgeQuestion);
         primaryStage.setScene(questionHowMuchScene);
     }
 
     public void showQuestionGuessXScene(OpenQuestion openQuestion) {
-        primaryStage.setTitle("Question type 3");
-        openQuestionActivityCtrl.setQuestion(openQuestion);
+        openQuestionActivityCtrl.displayQuestion(openQuestion);
         primaryStage.setScene(questionGuessXScene);
     }
 
     public void showQuestionWhatIsScene(ComparisonQuestion comparisonQuestion) {
-        primaryStage.setTitle("Question type 4");
-        comparisonQuestionActivityCtrl.setQuestion(comparisonQuestion);
+        comparisonQuestionActivityCtrl.displayQuestion(comparisonQuestion);
         primaryStage.setScene(questionWhatIsScene);
     }
 

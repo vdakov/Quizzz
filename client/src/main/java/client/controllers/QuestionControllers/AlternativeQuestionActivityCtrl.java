@@ -2,24 +2,14 @@ package client.controllers.QuestionControllers;
 
 import client.communication.ServerUtils;
 import client.controllers.SceneCtrl;
-import client.data.GameConfiguration;
-import client.logic.QuestionParsers;
 import com.google.inject.Inject;
 import commons.Questions.AlternativeQuestion;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Objects;
-import java.util.Scanner;
 
 public class AlternativeQuestionActivityCtrl {
 
@@ -27,13 +17,7 @@ public class AlternativeQuestionActivityCtrl {
     private final ServerUtils server;
     private final SceneCtrl   sceneCtrl;
 
-
-//    private String userName;
-//    private String serverId;
-//    private int questionNumber;
-//    private AlternativeQuestion alternativeQuestion;
-//    private int pointsInt;
-
+    // final needed labels for questions
     @FXML
     private Label labelGoBack;
 
@@ -57,7 +41,7 @@ public class AlternativeQuestionActivityCtrl {
     @FXML
     private ImageView thirdOptionImage;
 
-
+    // current labels
     @FXML
     private Label sampleQuestion;
     @FXML
@@ -76,117 +60,82 @@ public class AlternativeQuestionActivityCtrl {
     private String correctAnswer;
 
 
-    //Constructor for the Question Controller
+    /**
+     * Creates the scene with the needed dependencies
+     * @param server    initialised the communication with the server
+     * @param sceneCtrl the scene controller
+     */
     @Inject
     public AlternativeQuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
         this.server = server;
         this.sceneCtrl = sceneCtrl;
     }
 
-    public void setQuestion(AlternativeQuestion alternativeQuestion) {
-        this.sampleQuestion.setText((alternativeQuestion == null) ? "" : alternativeQuestion.getQuestion().getKey());
-
-        labelAnswerBottom.setText((alternativeQuestion == null) ? "" : alternativeQuestion.getOptions().get(0).getKey());
-        labelAnswerTop.setText((alternativeQuestion == null) ? "" : alternativeQuestion.getOptions().get(1).getKey());
-        labelAnswerCenter.setText((alternativeQuestion == null) ? "" : alternativeQuestion.getOptions().get(2).getKey());
-
-        this.correctAnswer = "" + ((alternativeQuestion == null) ? "" : alternativeQuestion.getOptions().get(1).getKey());
-    }
-
-    public void goToNextQuestion() {
-        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
-        gameConfiguration.setCurrentQuestionNumber(gameConfiguration.getCurrentQuestionNumber() + 1);
-        String response = server.getQuestion();
-        Scanner scanner = new Scanner(response).useDelimiter(": ");
-        switch (scanner.next()) {
-            case "OpenQuestion": {
-                sceneCtrl.showMainScreen();
-                sceneCtrl.showQuestionGuessXScene(QuestionParsers.openQuestionParser(scanner.next()));
-                break;
-            }
-            case "KnowledgeQuestion": {
-                sceneCtrl.showMainScreen();
-                sceneCtrl.showQuestionHowMuchScene(QuestionParsers.knowledgeQuestionParser(scanner.next()));
-                break;
-            }
-            case "ComparisonQuestion": {
-                sceneCtrl.showMainScreen();
-                sceneCtrl.showQuestionWhatIsScene(QuestionParsers.comparisonQuestionParser(scanner.next()));
-                break;
-            }
-            case "AlternativeQuestion": {
-                sceneCtrl.showMainScreen();
-                sceneCtrl.showQuestionInsteadOfScene(QuestionParsers.alternativeQuestionParser(scanner.next()));
-                break;
-            }
-        }
-    }
-
-    //Initializes the sample question screen through hardcoding
+    /**
+     * Initialises all the colors for the current scene
+     */
     public void initialize() {
-
-        //resets the colors to white each time
-        getAnswerTop().setStyle("-fx-background-color: #b38df7;; -fx-border-color:  #b38df7;");
+        getAnswerTop()   .setStyle("-fx-background-color: #b38df7;; -fx-border-color:  #b38df7;");
         getAnswerCenter().setStyle("-fx-background-color: #ffd783; -fx-border-color:  #ffd783");
         getAnswerBottom().setStyle("-fx-background-color: #ffa382; -fx-border-color:  #ffa382");
     }
 
+    /**
+     * Sets the text for the needed question given as parameter
+     * @param alternativeQuestion the question that is set
+     */
+    public void displayQuestion(AlternativeQuestion alternativeQuestion) {
+        if (alternativeQuestion == null) {
+            return;
+        }
 
-    //method for answering the question- activated on click of button in QuestionScreen scene
-    public void answer(ActionEvent event) {
-        Button current = (Button) event.getSource();
+        getQuestionStatement().setText(alternativeQuestion.getQuestion().getKey());
 
-        /*if (current.getText().equals(getCorrectAnswer())) {
-            pointsInt += 500; //global variable for points so it remembers it
-        }*/
 
-        //uses the answerCheck method to highlight which the correct answer was
-        //and to color them
-        answerCheck(labelAnswerCenter.getText(), this.getAnswerCenter());
-        answerCheck(labelAnswerTop.getText(), this.getAnswerTop());
-        answerCheck(labelAnswerBottom.getText(), this.getAnswerBottom());
+        getQuestionFirstOption() .setText(alternativeQuestion.getOptions().get(0).getKey());
+        getQuestionSecondOption().setText(alternativeQuestion.getOptions().get(1).getKey());
+        getQuestionThirdOption() .setText(alternativeQuestion.getOptions().get(2).getKey());
 
-        //changes the points value
-        //points.setText(String.valueOf(pointsInt));
-
-        goToNextQuestion();
-
-        //sends the server a delete request to ensure the same activity does not appear twice
-
+        initialize();
     }
 
-
-    //Method that checks whether answer is correct
-    public void answerCheck(String answer, Button current) {
-
-
-        long mTime = System.currentTimeMillis();
-        long end = mTime + 1000;
-
-        // This should be setting the colour and then go to a new question screen but it doesn't work right now
-        do {
-            if (answer.equals(getCorrectAnswer())) {
-                current.setStyle("-fx-background-color: #00FF00; "); //simple CSS for clarity
-            } else {
-                current.setStyle("-fx-background-color: #d20716; ");
-            }
-        } while (System.currentTimeMillis() < end);
-
-        this.initialize();
-
+    /**
+     * Displays the next question to the user after the transition is finished
+     */
+    public void displayNextQuestion() {
+        sceneCtrl.showNextQuestion();
     }
 
-    private Scene scene;
-    private Stage stage;
-    private Parent root;
+    public void answerQuestion() {
+        // answers the question and blocks the possibility to answer anymore
+    }
 
-    public void goToMainScreen (ActionEvent event) throws IOException {
+    public void answerUpdate() {
+        // after the time ends the right answer is requested and then shown
+    }
 
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../../scenes/MainScreenScene.fxml")));
-        stage = (Stage) ( (Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+    public void pointsUpdate() {
+        // after the time ends the amount of won points is calculated and then shown to the player
+    }
+
+    private void goToMainScreen () throws IOException {
+        sceneCtrl.showMainScreen();
+    }
+
+    private Label getQuestionStatement() {
+        return sampleQuestion;
+    }
+
+    private Label getQuestionFirstOption() {
+        return labelAnswerTop;
+    }
+
+    private Label getQuestionSecondOption() {
+        return labelAnswerCenter;
+    }
+
+    private Label getQuestionThirdOption() {
+        return labelAnswerBottom;
     }
 
 
@@ -200,20 +149,4 @@ public class AlternativeQuestionActivityCtrl {
     public Button getAnswerCenter() {
         return answerCenter;
     }
-
-    public String getCorrectAnswer() {
-        return correctAnswer;
-    }
-
-    public Label getLabelAnswerTop() { return labelAnswerTop; }
-
-    public Label getLabelAnswerCenter() { return labelAnswerCenter; }
-
-    public Label getLabelAnswerBottom() { return labelAnswerBottom; }
-
-    public void setLabelAnswerTop(Label labelAnswerTop) { this.labelAnswerTop = labelAnswerTop; }
-
-    public void setLabelAnswerCenter(Label labelAnswerCenter) { this.labelAnswerCenter = labelAnswerCenter; }
-
-    public void setLabelAnswerBottom(Label labelAnswerBottom) { this.labelAnswerBottom = labelAnswerBottom; }
 }
