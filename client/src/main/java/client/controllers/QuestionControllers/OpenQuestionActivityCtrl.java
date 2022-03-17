@@ -27,6 +27,7 @@ public class OpenQuestionActivityCtrl {
     private String userName;
     private String serverId;
     private int pointsInt;
+    private int addedPointsInt;
     @FXML
     private Label sampleQuestion;
     @FXML
@@ -35,6 +36,10 @@ public class OpenQuestionActivityCtrl {
     private Button answer;
     @FXML
     private Label points;
+    @FXML
+    private Label addedpoints;
+    @FXML
+    private Label questionNumberLabel;
     @FXML
     private TextField writeAnswer;
     @FXML

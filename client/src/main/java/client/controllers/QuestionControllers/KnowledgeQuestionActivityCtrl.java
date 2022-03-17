@@ -23,6 +23,7 @@ public class KnowledgeQuestionActivityCtrl {
     private String roomId;
     private KnowledgeQuestion knowledgeQuestion;
     private int pointsInt;
+    private int addedPointsInt;
     @FXML
     private Label sampleQuestion;
     @FXML
@@ -31,6 +32,10 @@ public class KnowledgeQuestionActivityCtrl {
     private Button answerTop, answerBottom, answerCenter;
     @FXML
     private Label points;
+    @FXML
+    private Label addedpoints;
+    @FXML
+    private Label questionNumberLabel;
     @FXML
     private Label labelAnswerCenter;
     @FXML

@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="838.0" prefWidth="1092.0" style="-fx-background-color: #499ee8;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.QuestionControllers.AlternativeQuestionActivityCtrl">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="838.0" prefWidth="1092.0" style="-fx-background-color: #499ee8;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.QuestionControllers.AlternativeQuestionActivityCtrl">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="10.0" prefWidth="50.0" />
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="114.0" minWidth="7.0" prefWidth="104.0" />
@@ -46,12 +46,12 @@
                 <Font size="14.0" />
             </font>
         </Button>
-        <Label alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="77.0" text="Points:" textAlignment="RIGHT" GridPane.columnIndex="8" GridPane.rowIndex="1">
+        <Label alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="77.0" text="Points:" textAlignment="RIGHT" GridPane.columnIndex="9" GridPane.rowIndex="1">
             <font>
                 <Font name="Chalkboard" size="18.0" />
             </font>
         </Label>
-        <Label fx:id="points" alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="98.0" text="0 " textAlignment="RIGHT" GridPane.columnIndex="8" GridPane.rowIndex="2">
+        <Label fx:id="points" alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="98.0" text="0 " textAlignment="RIGHT" GridPane.columnIndex="9" GridPane.rowIndex="2">
             <font>
                 <Font name="Chalkboard" size="18.0" />
             </font>
@@ -59,10 +59,10 @@
 
         <Button fx:id="emoji" mnemonicParsing="false" prefHeight="63.0" prefWidth="65.0" text="Emoji" GridPane.columnIndex="1" GridPane.rowIndex="12" />
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c9f1fd" height="38.0" stroke="BLACK" strokeType="INSIDE" width="777.0" GridPane.columnIndex="2" GridPane.rowIndex="12" />
-        <Button fx:id="moveNext" alignment="CENTER_RIGHT" mnemonicParsing="false" text="Next" GridPane.columnIndex="8" GridPane.rowIndex="12" />
+        <Button fx:id="moveNext" alignment="CENTER_RIGHT" mnemonicParsing="false" text="Next" GridPane.columnIndex="9" GridPane.rowIndex="12" />
 
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c9f1fd" height="38.0" stroke="BLACK" strokeType="INSIDE" width="142.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-        <Label fx:id="questionNumber" alignment="CENTER" prefHeight="21.0" prefWidth="106.0" text="Question 1" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+        <Label fx:id="questionNumberLabel" alignment="CENTER" prefHeight="21.0" prefWidth="106.0" text="Question 1" GridPane.columnIndex="3" GridPane.rowIndex="4" />
 
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c9f1fd" height="451.0" stroke="BLACK" strokeType="INSIDE" width="405.0" GridPane.columnIndex="2" GridPane.rowIndex="8" />
         <ImageView fx:id="imageSrc" fitHeight="182.0" fitWidth="368.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="6" />
@@ -112,5 +112,8 @@
             <Font name="Chalkboard" size="40.0" />
          </font>
       </Text>
+
+        <Label fx:id="addedPoints" alignment="CENTER_RIGHT" prefHeight="33.0" prefWidth="182.0" textAlignment="RIGHT" textFill="#92d36e" GridPane.columnIndex="9" GridPane.rowIndex="3" />
+
     </children>
 </GridPane>

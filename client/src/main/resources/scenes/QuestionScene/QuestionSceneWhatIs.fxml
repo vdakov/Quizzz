@@ -61,7 +61,7 @@
        <Button fx:id="moveNext" alignment="CENTER_RIGHT" mnemonicParsing="false" text="Next" GridPane.columnIndex="8" GridPane.rowIndex="13" />
 
        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c9f1fd" height="38.0" stroke="BLACK" strokeType="INSIDE" width="142.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-       <Label fx:id="questionNumber" alignment="CENTER" prefHeight="21.0" prefWidth="140.0" text="Question 1" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+       <Label fx:id="questionNumberLabel" alignment="CENTER" prefHeight="21.0" prefWidth="140.0" text="Question 1" GridPane.columnIndex="2" GridPane.rowIndex="4" />
        <ImageView fx:id="imageSrc" fitHeight="182.0" fitWidth="368.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="6" />
 
        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e4f2ff" height="341.0" stroke="BLACK" strokeType="INSIDE" style="-fx-fill: #c9f1fd;" width="210.0" GridPane.columnIndex="2" GridPane.rowIndex="7" />
@@ -88,6 +88,8 @@
          <font>
             <Font name="Chalkboard" size="24.0" />
          </font></Button>
+
+       <Label fx:id="addedPoints" alignment="CENTER_RIGHT" prefHeight="33.0" prefWidth="182.0" textAlignment="RIGHT" textFill="#92d36e" GridPane.columnIndex="9" GridPane.rowIndex="3" />
 
    </children>
 </GridPane>

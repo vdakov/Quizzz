@@ -29,6 +29,7 @@ public class AlternativeQuestionActivityCtrl {
     private int questionNumber;
     private AlternativeQuestion alternativeQuestion;
     private int pointsInt;
+    private int addedPointsInt;
     @FXML
     private Label sampleQuestion;
     @FXML
@@ -38,6 +39,10 @@ public class AlternativeQuestionActivityCtrl {
     @FXML
     private Label points;
     @FXML
+    private Label addedpoints;
+    @FXML
+    private Label questionNumberLabel;
+    @FXML
     private Label labelAnswerCenter;
     @FXML
     private Label labelAnswerTop;
@@ -45,6 +50,8 @@ public class AlternativeQuestionActivityCtrl {
     private Label labelAnswerBottom;
     @FXML
     private String correctAnswer;
+    @FXML
+    private Button moveNext;
 
 
     //Constructor for the Question Controller
@@ -101,6 +108,9 @@ public class AlternativeQuestionActivityCtrl {
 
     //Initializes the sample question screen through hardcoding
     public void initialize() {
+        //changes the points value
+        points.setText(String.valueOf(pointsInt));
+
 
         //resets the colors to white each time
         getAnswerTop().setStyle("-fx-background-color: #b38df7;; -fx-border-color:  #b38df7;");
@@ -110,11 +120,12 @@ public class AlternativeQuestionActivityCtrl {
 
 
     //method for answering the question- activated on click of button in QuestionScreen scene
-    public void answer(ActionEvent event) {
+    public void answer(ActionEvent event) throws IOException {
         Button current = (Button) event.getSource();
 
+        addedPointsInt=0;
         if (current.getText().equals(getCorrectAnswer())) {
-            pointsInt += 500; //global variable for points so it remembers it
+            addedPointsInt = 500; //global variable for points so it remembers it
         }
 
         //uses the answerCheck method to highlight which the correct answer was
@@ -124,7 +135,7 @@ public class AlternativeQuestionActivityCtrl {
         answerCheck(labelAnswerBottom.getText(), this.getAnswerBottom());
 
         //changes the points value
-        points.setText(String.valueOf(pointsInt));
+        addedpoints.setText("+"+String.valueOf(addedPointsInt));
 
         goToNextQuestion();
 
@@ -158,12 +169,7 @@ public class AlternativeQuestionActivityCtrl {
     private Parent root;
 
     public void goToMainScreen (ActionEvent event) throws IOException {
-
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../../scenes/MainScreenScene.fxml")));
-        stage = (Stage) ( (Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        sceneCtrl.showMainScreen();
     }
 
 

@@ -22,6 +22,7 @@ public class ComparisonQuestionActivityCtrl {
     private String userName;
     private String serverId;
     private int pointsInt;
+    private int addedPointsInt;
     @FXML
     private Label sampleQuestion;
     @FXML
@@ -30,7 +31,10 @@ public class ComparisonQuestionActivityCtrl {
     private Button answerLeft, answerCenter, answerRight;
     @FXML
     private Label points;
-
+    @FXML
+    private Label addedpoints;
+    @FXML
+    private Label questionNumberLabel;
     //Constructor for the Question Controller
     @Inject
     public ComparisonQuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
