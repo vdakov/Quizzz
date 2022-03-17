@@ -138,10 +138,13 @@ public class KnowledgeQuestionActivityCtrl {
         //changes the points value
         points.setText(String.valueOf(pointsInt));
 
-        goToNextQuestion();
+//        goToNextQuestion();
 
     }
 
+    public void goNext(ActionEvent event) throws IOException {
+        goToNextQuestion();
+    }
 
     //Method that checks whether answer is correct
     //

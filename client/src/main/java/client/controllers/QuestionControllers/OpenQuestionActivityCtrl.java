@@ -122,6 +122,9 @@ public class OpenQuestionActivityCtrl {
         //changes the points value
         points.setText(String.valueOf(pointsInt));
 
+//        goToNextQuestion();
+    }
+    public void goNext(ActionEvent event) throws IOException {
         goToNextQuestion();
     }
 

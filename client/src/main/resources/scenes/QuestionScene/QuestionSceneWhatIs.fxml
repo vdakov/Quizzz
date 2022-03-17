@@ -58,7 +58,7 @@
 
        <Button fx:id="emoji" mnemonicParsing="false" prefHeight="63.0" prefWidth="65.0" text="Emoji" GridPane.columnIndex="1" GridPane.rowIndex="13" />
        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c9f1fd" height="38.0" stroke="BLACK" strokeType="INSIDE" width="777.0" GridPane.columnIndex="2" GridPane.rowIndex="13" />
-       <Button fx:id="moveNext" alignment="CENTER_RIGHT" mnemonicParsing="false" text="Next" GridPane.columnIndex="8" GridPane.rowIndex="13" />
+       <Button fx:id="moveNext" onAction="#goNext" alignment="CENTER_RIGHT" mnemonicParsing="false" text="Next" GridPane.columnIndex="8" GridPane.rowIndex="13" />
 
        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c9f1fd" height="38.0" stroke="BLACK" strokeType="INSIDE" width="142.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
        <Label fx:id="questionNumberLabel" alignment="CENTER" prefHeight="21.0" prefWidth="140.0" text="Question 1" GridPane.columnIndex="2" GridPane.rowIndex="4" />

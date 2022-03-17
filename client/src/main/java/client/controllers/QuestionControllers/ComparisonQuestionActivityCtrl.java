@@ -76,11 +76,13 @@ public class ComparisonQuestionActivityCtrl {
         //changes the points value
         points.setText(String.valueOf(pointsInt));
 
-        goToNextQuestion();
+//        goToNextQuestion();
         //sends the server a delete request to ensure the same activity does not appear twice
 
     }
-
+    public void goNext(ActionEvent event) throws IOException {
+        goToNextQuestion();
+    }
 
     //Method that checks whether answer is correct
     public void answerCheck(String answer, Button current) {

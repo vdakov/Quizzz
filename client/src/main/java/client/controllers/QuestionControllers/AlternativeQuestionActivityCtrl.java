@@ -111,7 +111,6 @@ public class AlternativeQuestionActivityCtrl {
         //changes the points value
         points.setText(String.valueOf(pointsInt));
 
-
         //resets the colors to white each time
         getAnswerTop().setStyle("-fx-background-color: #b38df7;; -fx-border-color:  #b38df7;");
         getAnswerCenter().setStyle("-fx-background-color: #ffd783; -fx-border-color:  #ffd783");
@@ -135,9 +134,8 @@ public class AlternativeQuestionActivityCtrl {
         answerCheck(labelAnswerBottom.getText(), this.getAnswerBottom());
 
         //changes the points value
-        addedpoints.setText("+"+String.valueOf(addedPointsInt));
+        addedpoints.setText(String.valueOf(addedPointsInt));
 
-        goToNextQuestion();
 
         //sends the server a delete request to ensure the same activity does not appear twice
 
@@ -170,6 +168,11 @@ public class AlternativeQuestionActivityCtrl {
 
     public void goToMainScreen (ActionEvent event) throws IOException {
         sceneCtrl.showMainScreen();
+    }
+
+    public void goNext(ActionEvent event) throws IOException {
+        System.out.println("hello");
+//        goToNextQuestion();
     }
 
 
