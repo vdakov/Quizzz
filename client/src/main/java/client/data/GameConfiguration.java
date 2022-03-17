@@ -1,7 +1,5 @@
 package client.data;
 
-import commons.Questions.Question;
-
 // uses the singleton design pattern to store the data globally
 public class GameConfiguration {
 
@@ -10,28 +8,18 @@ public class GameConfiguration {
     private String userName;
     private String roomId;
     private int currentQuestionNumber;
-    private Question currentQuestion;
 
     public GameConfiguration() {
         this.userName              = null;
         this.roomId                = null;
-        this.currentQuestionNumber = 0;
-        this.currentQuestion = null;
-    }
+        this.currentQuestionNumber = -1;
+    }git a
 
     public static GameConfiguration getConfiguration() {
         if (gameConfiguration == null) {
             gameConfiguration = new GameConfiguration();
         }
         return gameConfiguration;
-    }
-
-    public Question getCurrentQuestion() {
-        return currentQuestion;
-    }
-
-    public void setCurrentQuestion(Question currentQuestion) {
-        this.currentQuestion = currentQuestion;
     }
 
     public String getUserName() {

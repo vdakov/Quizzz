@@ -2,6 +2,7 @@ package client.controllers.QuestionControllers;
 
 import client.communication.ServerUtils;
 import client.controllers.SceneCtrl;
+import client.data.GameConfiguration;
 import client.logic.QuestionParsers;
 import com.google.inject.Inject;
 import commons.Questions.KnowledgeQuestion;
@@ -49,11 +50,8 @@ public class KnowledgeQuestionActivityCtrl {
         this.knowledgeQuestion = null;
     }
 
-    public void setQuestion(KnowledgeQuestion knowledgeQuestion, int questionNumber, String userName, String roomId) {
+    public void setQuestion(KnowledgeQuestion knowledgeQuestion) {
         this.knowledgeQuestion = knowledgeQuestion;
-        this.questionNumber = questionNumber;
-        this.userName = userName;
-        this.roomId = roomId;
 
         this.sampleQuestion.setText((knowledgeQuestion == null) ? "" : knowledgeQuestion.getQuestion().getKey());
 
@@ -86,30 +84,29 @@ public class KnowledgeQuestionActivityCtrl {
     }
 
     public void goToNextQuestion() {
-        String response = server.getQuestion(this.userName, this.roomId, this.questionNumber + 1);
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+        gameConfiguration.setCurrentQuestionNumber(gameConfiguration.getCurrentQuestionNumber() + 1);
+        String response = server.getQuestion();
         Scanner scanner = new Scanner(response).useDelimiter(": ");
-        System.out.println("Knowledge question am intrat");
-        String next = scanner.next();
-        System.out.println(next);
-        switch (next) {
+        switch (scanner.next()) {
             case "OpenQuestion": {
                 sceneCtrl.showMainScreen();
-                sceneCtrl.showQuestionGuessXScene(QuestionParsers.openQuestionParser(scanner.next()), this.questionNumber + 1, userName, roomId);
+                sceneCtrl.showQuestionGuessXScene(QuestionParsers.openQuestionParser(scanner.next()));
                 break;
             }
             case "KnowledgeQuestion": {
                 sceneCtrl.showMainScreen();
-                sceneCtrl.showQuestionHowMuchScene(QuestionParsers.knowledgeQuestionParser(scanner.next()), this.questionNumber + 1, userName, roomId);
+                sceneCtrl.showQuestionHowMuchScene(QuestionParsers.knowledgeQuestionParser(scanner.next()));
                 break;
             }
             case "ComparisonQuestion": {
                 sceneCtrl.showMainScreen();
-                sceneCtrl.showQuestionWhatIsScene(QuestionParsers.comparisonQuestionParser(scanner.next()), this.questionNumber + 1, userName, roomId);
+                sceneCtrl.showQuestionWhatIsScene(QuestionParsers.comparisonQuestionParser(scanner.next()));
                 break;
             }
             case "AlternativeQuestion": {
                 sceneCtrl.showMainScreen();
-                sceneCtrl.showQuestionInsteadOfScene(QuestionParsers.alternativeQuestionParser(scanner.next()), this.questionNumber + 1, userName, roomId);
+                sceneCtrl.showQuestionInsteadOfScene(QuestionParsers.alternativeQuestionParser(scanner.next()));
                 break;
             }
         }

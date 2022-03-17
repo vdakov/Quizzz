@@ -69,27 +69,27 @@ public class SceneCtrl {
 
     }
 
-    public void showQuestionInsteadOfScene(AlternativeQuestion alternativeQuestion, int questionNo, String userName, String roomId) {
+    public void showQuestionInsteadOfScene(AlternativeQuestion alternativeQuestion) {
         primaryStage.setTitle("Question type 1");
-        alternativeQuestionActivityCtrl.setQuestion(alternativeQuestion, questionNo, userName, roomId);
+        alternativeQuestionActivityCtrl.setQuestion(alternativeQuestion);
         primaryStage.setScene(questionInsteadOfScene);
     }
 
-    public void showQuestionHowMuchScene(KnowledgeQuestion knowledgeQuestion, int questionNo, String userName, String roomId) {
+    public void showQuestionHowMuchScene(KnowledgeQuestion knowledgeQuestion) {
         primaryStage.setTitle("Question type 2");
-        knowledgeQuestionActivityCtrl.setQuestion(knowledgeQuestion, questionNo, userName, roomId);
+        knowledgeQuestionActivityCtrl.setQuestion(knowledgeQuestion);
         primaryStage.setScene(questionHowMuchScene);
     }
 
-    public void showQuestionGuessXScene(OpenQuestion openQuestion, int questionNo, String userName, String roomId) {
+    public void showQuestionGuessXScene(OpenQuestion openQuestion) {
         primaryStage.setTitle("Question type 3");
-        openQuestionActivityCtrl.setQuestion(openQuestion, questionNo, userName, roomId);
+        openQuestionActivityCtrl.setQuestion(openQuestion);
         primaryStage.setScene(questionGuessXScene);
     }
 
-    public void showQuestionWhatIsScene(ComparisonQuestion comparisonQuestion, int questionNo, String userName, String roomId) {
+    public void showQuestionWhatIsScene(ComparisonQuestion comparisonQuestion) {
         primaryStage.setTitle("Question type 4");
-        comparisonQuestionActivityCtrl.setQuestion(comparisonQuestion, questionNo, userName, roomId);
+        comparisonQuestionActivityCtrl.setQuestion(comparisonQuestion);
         primaryStage.setScene(questionWhatIsScene);
     }
 

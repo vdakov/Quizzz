@@ -2,6 +2,7 @@ package client.controllers.QuestionControllers;
 
 import client.communication.ServerUtils;
 import client.controllers.SceneCtrl;
+import client.data.GameConfiguration;
 import client.logic.QuestionParsers;
 import com.google.inject.Inject;
 import commons.Questions.AlternativeQuestion;
@@ -13,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -21,14 +23,41 @@ import java.util.Scanner;
 
 public class AlternativeQuestionActivityCtrl {
 
-
+    // constructor needed variables
     private final ServerUtils server;
-    private final SceneCtrl sceneCtrl;
-    private String userName;
-    private String serverId;
-    private int questionNumber;
-    private AlternativeQuestion alternativeQuestion;
-    private int pointsInt;
+    private final SceneCtrl   sceneCtrl;
+
+
+//    private String userName;
+//    private String serverId;
+//    private int questionNumber;
+//    private AlternativeQuestion alternativeQuestion;
+//    private int pointsInt;
+
+    @FXML
+    private Label labelGoBack;
+
+    @FXML
+    private Label questionStatement;
+    @FXML
+    private ImageView questionStatementImage;
+
+    @FXML
+    private Label firstOptionText;
+    @FXML
+    private ImageView firstOptionImage;
+
+    @FXML
+    private Label secondOptionText;
+    @FXML
+    private ImageView secondOptionImage;
+
+    @FXML
+    private Label thirdOptionText;
+    @FXML
+    private ImageView thirdOptionImage;
+
+
     @FXML
     private Label sampleQuestion;
     @FXML
@@ -54,12 +83,7 @@ public class AlternativeQuestionActivityCtrl {
         this.sceneCtrl = sceneCtrl;
     }
 
-    public void setQuestion(AlternativeQuestion alternativeQuestion, int questionNumber, String userName, String serverId) {
-        this.alternativeQuestion = alternativeQuestion;
-        this.questionNumber = questionNumber;
-        this.userName = userName;
-        this.serverId = serverId;
-
+    public void setQuestion(AlternativeQuestion alternativeQuestion) {
         this.sampleQuestion.setText((alternativeQuestion == null) ? "" : alternativeQuestion.getQuestion().getKey());
 
         labelAnswerBottom.setText((alternativeQuestion == null) ? "" : alternativeQuestion.getOptions().get(0).getKey());
@@ -70,30 +94,29 @@ public class AlternativeQuestionActivityCtrl {
     }
 
     public void goToNextQuestion() {
-        String response = server.getQuestion(this.userName, this.serverId, this.questionNumber + 1);
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+        gameConfiguration.setCurrentQuestionNumber(gameConfiguration.getCurrentQuestionNumber() + 1);
+        String response = server.getQuestion();
         Scanner scanner = new Scanner(response).useDelimiter(": ");
-        System.out.println("Alternative question am intrat");
-        String next = scanner.next();
-        System.out.println(next);
-        switch (next) {
+        switch (scanner.next()) {
             case "OpenQuestion": {
                 sceneCtrl.showMainScreen();
-                sceneCtrl.showQuestionGuessXScene(QuestionParsers.openQuestionParser(scanner.next()), this.questionNumber + 1, userName, serverId);
+                sceneCtrl.showQuestionGuessXScene(QuestionParsers.openQuestionParser(scanner.next()));
                 break;
             }
             case "KnowledgeQuestion": {
                 sceneCtrl.showMainScreen();
-                sceneCtrl.showQuestionHowMuchScene(QuestionParsers.knowledgeQuestionParser(scanner.next()), this.questionNumber + 1, userName, serverId);
+                sceneCtrl.showQuestionHowMuchScene(QuestionParsers.knowledgeQuestionParser(scanner.next()));
                 break;
             }
             case "ComparisonQuestion": {
                 sceneCtrl.showMainScreen();
-                sceneCtrl.showQuestionWhatIsScene(QuestionParsers.comparisonQuestionParser(scanner.next()), this.questionNumber + 1, userName, serverId);
+                sceneCtrl.showQuestionWhatIsScene(QuestionParsers.comparisonQuestionParser(scanner.next()));
                 break;
             }
             case "AlternativeQuestion": {
                 sceneCtrl.showMainScreen();
-                sceneCtrl.showQuestionInsteadOfScene(QuestionParsers.alternativeQuestionParser(scanner.next()), this.questionNumber + 1, userName, serverId);
+                sceneCtrl.showQuestionInsteadOfScene(QuestionParsers.alternativeQuestionParser(scanner.next()));
                 break;
             }
         }
@@ -113,9 +136,9 @@ public class AlternativeQuestionActivityCtrl {
     public void answer(ActionEvent event) {
         Button current = (Button) event.getSource();
 
-        if (current.getText().equals(getCorrectAnswer())) {
+        /*if (current.getText().equals(getCorrectAnswer())) {
             pointsInt += 500; //global variable for points so it remembers it
-        }
+        }*/
 
         //uses the answerCheck method to highlight which the correct answer was
         //and to color them
@@ -124,7 +147,7 @@ public class AlternativeQuestionActivityCtrl {
         answerCheck(labelAnswerBottom.getText(), this.getAnswerBottom());
 
         //changes the points value
-        points.setText(String.valueOf(pointsInt));
+        //points.setText(String.valueOf(pointsInt));
 
         goToNextQuestion();
 
