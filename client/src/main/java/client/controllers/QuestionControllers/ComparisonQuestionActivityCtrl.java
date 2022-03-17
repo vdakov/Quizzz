@@ -80,6 +80,7 @@ public class ComparisonQuestionActivityCtrl {
 
     }
     public void goNext(ActionEvent event) throws IOException {
+        pointsInt += addedPointsInt;
         goToNextQuestion();
     }
 

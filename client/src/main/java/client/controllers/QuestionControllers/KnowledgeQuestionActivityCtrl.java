@@ -126,7 +126,7 @@ public class KnowledgeQuestionActivityCtrl {
 
         addedPointsInt=0;
         System.out.println(current.getText());
-        if (current.getText().equals(getCorrectAnswer())) {
+        if (labelAnswerCenter.getText().equals(getCorrectAnswer())) {
             addedPointsInt = 500; //global variable for points so it remembers it
         }
 
