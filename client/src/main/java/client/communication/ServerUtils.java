@@ -15,6 +15,7 @@
  */
 package client.communication;
 
+import client.data.GameConfiguration;
 import commons.Actions.Action;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
@@ -38,9 +39,10 @@ public class ServerUtils {
                 });
     }
 
-    public String getQuestion(String userName, String serverId, int number) {
+    public String getQuestion() {
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         return ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER).path("api/singlePlayer/" + userName + "/" + serverId + "/" + number + "/getQuestion")
+                .target(SERVER).path("api/singlePlayer/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getRoomId() + "/" + gameConfiguration.getCurrentQuestionNumber() + "/getQuestion")
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON).get(String.class);
     }

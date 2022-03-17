@@ -1,6 +1,7 @@
 package client.controllers;
 
 import client.communication.ServerUtils;
+import client.data.GameConfiguration;
 import client.logic.QuestionParsers;
 
 import javax.inject.Inject;
@@ -19,30 +20,36 @@ public class MainScreenActivityCtrl {
     }
 
     public void enterSoloGame () throws IOException {
-        String userName = "cata";
-        String serverId = server.createNewSinglePlayerRoom(userName);
-        System.out.println(serverId);
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
 
-        String response = server.getQuestion(userName, serverId, 0);
+        String userName = "cata";
+        String roomId = server.createNewSinglePlayerRoom(userName);
+        gameConfiguration.setRoomId(roomId);
+        gameConfiguration.setUserName(userName);
+        gameConfiguration.setCurrentQuestionNumber(gameConfiguration.getCurrentQuestionNumber() + 1);
+        String response = server.getQuestion();
         Scanner scanner = new Scanner(response).useDelimiter(": ");
         switch (scanner.next()) {
             case "OpenQuestion": {
-                sceneCtrl.showQuestionGuessXScene(QuestionParsers.openQuestionParser(scanner.next()), 0, userName, serverId);
+                sceneCtrl.showMainScreen();
+                sceneCtrl.showQuestionGuessXScene(QuestionParsers.openQuestionParser(scanner.next()));
                 break;
             }
             case "KnowledgeQuestion": {
-                sceneCtrl.showQuestionHowMuchScene(QuestionParsers.knowledgeQuestionParser(scanner.next()), 0, userName, serverId);
+                sceneCtrl.showMainScreen();
+                sceneCtrl.showQuestionHowMuchScene(QuestionParsers.knowledgeQuestionParser(scanner.next()));
                 break;
             }
             case "ComparisonQuestion": {
-                sceneCtrl.showQuestionWhatIsScene(QuestionParsers.comparisonQuestionParser(scanner.next()), 0, userName, serverId);
+                sceneCtrl.showMainScreen();
+                sceneCtrl.showQuestionWhatIsScene(QuestionParsers.comparisonQuestionParser(scanner.next()));
                 break;
             }
             case "AlternativeQuestion": {
-                sceneCtrl.showQuestionInsteadOfScene(QuestionParsers.alternativeQuestionParser(scanner.next()), 0, userName, serverId);
+                sceneCtrl.showMainScreen();
+                sceneCtrl.showQuestionInsteadOfScene(QuestionParsers.alternativeQuestionParser(scanner.next()));
                 break;
             }
         }
-
     }
 }
