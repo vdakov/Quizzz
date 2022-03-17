@@ -110,7 +110,6 @@ public class AlternativeQuestionActivityCtrl {
     public void initialize(){
         //changes the points value
         points.setText(String.valueOf(pointsInt));
-        addedPoints.setText("+");
 
         //resets the colors to white each time
         getAnswerTop().setStyle("-fx-background-color: #b38df7;; -fx-border-color:  #b38df7;");
@@ -123,6 +122,8 @@ public class AlternativeQuestionActivityCtrl {
     public void answer(ActionEvent event) throws IOException {
         Button current = (Button) event.getSource();
 
+        System.out.println(current.getText());
+        System.out.println(getCorrectAnswer());
         addedPointsInt=0;
         if (current.getText().equals(getCorrectAnswer())) {
             addedPointsInt = 500; //global variable for points so it remembers it
@@ -172,8 +173,7 @@ public class AlternativeQuestionActivityCtrl {
     }
 
     public void goNext(ActionEvent event) throws IOException {
-        System.out.println("hello");
-//        goToNextQuestion();
+        goToNextQuestion();
     }
 
 

@@ -33,7 +33,7 @@ public class KnowledgeQuestionActivityCtrl {
     @FXML
     private Label points;
     @FXML
-    private Label addedpoints;
+    private Label addedPoints;
     @FXML
     private Label questionNumberLabel;
     @FXML
@@ -71,6 +71,8 @@ public class KnowledgeQuestionActivityCtrl {
 
     //Initializes the sample question screen through hardcoding
     public void initialize() {
+
+        points.setText(String.valueOf(pointsInt));
 
         //resets the colors to white each time
         getAnswerTop().setStyle("-fx-background-color: #b38df7;; -fx-border-color:  #b38df7;");
@@ -125,8 +127,10 @@ public class KnowledgeQuestionActivityCtrl {
     public void answer(ActionEvent event) throws InterruptedException {
         Button current = (Button) event.getSource();
 
+        addedPointsInt=0;
+        System.out.println(current.getText());
         if (current.getText().equals(getCorrectAnswer())) {
-            pointsInt += 500; //global variable for points so it remembers it
+            addedPointsInt = 500; //global variable for points so it remembers it
         }
 
         //uses the answerCheck method to highlight which the correct answer was
@@ -136,7 +140,7 @@ public class KnowledgeQuestionActivityCtrl {
         answerCheck(labelAnswerBottom.getText(), this.getAnswerBottom());
 
         //changes the points value
-        points.setText(String.valueOf(pointsInt));
+        addedPoints.setText("+"+String.valueOf(addedPointsInt));
 
 //        goToNextQuestion();
 

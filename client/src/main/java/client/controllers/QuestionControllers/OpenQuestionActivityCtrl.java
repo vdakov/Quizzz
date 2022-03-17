@@ -37,13 +37,15 @@ public class OpenQuestionActivityCtrl {
     @FXML
     private Label points;
     @FXML
-    private Label addedpoints;
+    private Label addedPoints;
     @FXML
     private Label questionNumberLabel;
     @FXML
     private TextField writeAnswer;
     @FXML
     private String correctAnswer;
+    @FXML
+    private Label correctAnswerLabel;
 
 
     //Constructor for the Question Controller
@@ -66,6 +68,9 @@ public class OpenQuestionActivityCtrl {
 
     //Initializes the sample question screen through hardcoding
     public void initialize() {
+
+        points.setText(String.valueOf(pointsInt));
+
         getAnswer().setStyle("-fx-background-color: #ffd783; -fx-border-color:  #ffd783");
 
     }
@@ -105,12 +110,13 @@ public class OpenQuestionActivityCtrl {
     public void answer(ActionEvent event) throws InterruptedException {
         Button current = (Button) event.getSource();
 
+        addedPointsInt=0;
         if (writeAnswer.getText().equals(getCorrectAnswer())) {
-            pointsInt += 500; //global variable for points so it remembers it
+            addedPointsInt = 500; //global variable for points so it remembers it
         }
         else
             if (parseInt(writeAnswer.getText()) > parseInt(getCorrectAnswer()) * 0.95 &&  parseInt(writeAnswer.getText()) < parseInt(getCorrectAnswer()) * 1.05) {
-                pointsInt += 250;
+                addedPointsInt = 250;
             }
 
 
@@ -118,12 +124,15 @@ public class OpenQuestionActivityCtrl {
         //and to color them
         answerCheck(writeAnswer.getText(), this.getAnswer());
 
+        //show correct answer
+        correctAnswerLabel.setText(correctAnswer);
 
         //changes the points value
-        points.setText(String.valueOf(pointsInt));
+        addedPoints.setText("+"+String.valueOf(addedPointsInt));
 
 //        goToNextQuestion();
     }
+
     public void goNext(ActionEvent event) throws IOException {
         goToNextQuestion();
     }

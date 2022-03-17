@@ -32,7 +32,7 @@ public class ComparisonQuestionActivityCtrl {
     @FXML
     private Label points;
     @FXML
-    private Label addedpoints;
+    private Label addedPoints;
     @FXML
     private Label questionNumberLabel;
     //Constructor for the Question Controller
@@ -53,7 +53,7 @@ public class ComparisonQuestionActivityCtrl {
 
     //Initializes the sample question screen through hardcoding
     public void initialize() {
-
+        points.setText(String.valueOf(pointsInt));
         //resets the colors to white each time
     }
 
@@ -63,8 +63,9 @@ public class ComparisonQuestionActivityCtrl {
         Button current = (Button) event.getSource();
         System.out.println("Comparison question am intrat");
 
+        addedPointsInt=0;
         if (current.getText().equals("10")) {
-            pointsInt += 500; //global variable for points so it remembers it
+            addedPointsInt = 500; //global variable for points so it remembers it
         }
 
         //uses the answerCheck method to highlight which the correct answer was
@@ -74,7 +75,7 @@ public class ComparisonQuestionActivityCtrl {
         answerCheck(answerRight.getText(), this.getAnswerBottom());
 
         //changes the points value
-        points.setText(String.valueOf(pointsInt));
+        addedPoints.setText("+"+String.valueOf(addedPointsInt));
 
 //        goToNextQuestion();
         //sends the server a delete request to ensure the same activity does not appear twice
