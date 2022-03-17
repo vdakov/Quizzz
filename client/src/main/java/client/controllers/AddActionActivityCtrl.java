@@ -36,7 +36,7 @@ public class AddActionActivityCtrl {
 
     public void cancel() {
         clearFields();
-        sceneCtrl.showMainScreen();
+        sceneCtrl.showMainScreenScene();
     }
 
     public void ok() {

@@ -18,7 +18,7 @@ public class MainScreenActivityCtrl {
         this.server = server;
     }
 
-    public void enterSoloGame () throws IOException {
+    public void enterSoloGame() throws IOException {
         String userName = "cata";
         String serverId = server.createNewSinglePlayerRoom(userName);
         System.out.println(serverId);
@@ -27,19 +27,19 @@ public class MainScreenActivityCtrl {
         Scanner scanner = new Scanner(response).useDelimiter(": ");
         switch (scanner.next()) {
             case "OpenQuestion": {
-                sceneCtrl.showQuestionGuessXScene(QuestionParsers.openQuestionParser(scanner.next()), 0, userName, serverId);
+                sceneCtrl.showOpenQuestionScene(QuestionParsers.openQuestionParser(scanner.next()), 0, userName, serverId);
                 break;
             }
             case "KnowledgeQuestion": {
-                sceneCtrl.showQuestionHowMuchScene(QuestionParsers.knowledgeQuestionParser(scanner.next()), 0, userName, serverId);
+                sceneCtrl.showKnowledgeQuestionScene(QuestionParsers.knowledgeQuestionParser(scanner.next()), 0, userName, serverId);
                 break;
             }
             case "ComparisonQuestion": {
-                sceneCtrl.showQuestionWhatIsScene(QuestionParsers.comparisonQuestionParser(scanner.next()), 0, userName, serverId);
+                sceneCtrl.showComparisonQuestionScene(QuestionParsers.comparisonQuestionParser(scanner.next()), 0, userName, serverId);
                 break;
             }
             case "AlternativeQuestion": {
-                sceneCtrl.showQuestionInsteadOfScene(QuestionParsers.alternativeQuestionParser(scanner.next()), 0, userName, serverId);
+                sceneCtrl.showAlternativeQuestionScene(QuestionParsers.alternativeQuestionParser(scanner.next()), 0, userName, serverId);
                 break;
             }
         }

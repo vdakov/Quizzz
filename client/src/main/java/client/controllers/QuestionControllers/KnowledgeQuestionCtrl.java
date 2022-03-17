@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 
-public class KnowledgeQuestionActivityCtrl {
+public class KnowledgeQuestionCtrl {
 
     private final ServerUtils server;
     private final SceneCtrl sceneCtrl;
@@ -25,8 +25,6 @@ public class KnowledgeQuestionActivityCtrl {
     private int pointsInt;
     @FXML
     private Label sampleQuestion;
-    @FXML
-    private Button goToMainScreen;
     @FXML
     private Button answerTop, answerBottom, answerCenter;
     @FXML
@@ -43,7 +41,7 @@ public class KnowledgeQuestionActivityCtrl {
 
     //Constructor for the Question Controller
     @Inject
-    public KnowledgeQuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
+    public KnowledgeQuestionCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
         this.server = server;
         this.sceneCtrl = sceneCtrl;
         this.knowledgeQuestion = null;
@@ -93,23 +91,23 @@ public class KnowledgeQuestionActivityCtrl {
         System.out.println(next);
         switch (next) {
             case "OpenQuestion": {
-                sceneCtrl.showMainScreen();
-                sceneCtrl.showQuestionGuessXScene(QuestionParsers.openQuestionParser(scanner.next()), this.questionNumber + 1, userName, roomId);
+                sceneCtrl.showMainScreenScene();
+                sceneCtrl.showOpenQuestionScene(QuestionParsers.openQuestionParser(scanner.next()), this.questionNumber + 1, userName, roomId);
                 break;
             }
             case "KnowledgeQuestion": {
-                sceneCtrl.showMainScreen();
-                sceneCtrl.showQuestionHowMuchScene(QuestionParsers.knowledgeQuestionParser(scanner.next()), this.questionNumber + 1, userName, roomId);
+                sceneCtrl.showMainScreenScene();
+                sceneCtrl.showKnowledgeQuestionScene(QuestionParsers.knowledgeQuestionParser(scanner.next()), this.questionNumber + 1, userName, roomId);
                 break;
             }
             case "ComparisonQuestion": {
-                sceneCtrl.showMainScreen();
-                sceneCtrl.showQuestionWhatIsScene(QuestionParsers.comparisonQuestionParser(scanner.next()), this.questionNumber + 1, userName, roomId);
+                sceneCtrl.showMainScreenScene();
+                sceneCtrl.showComparisonQuestionScene(QuestionParsers.comparisonQuestionParser(scanner.next()), this.questionNumber + 1, userName, roomId);
                 break;
             }
             case "AlternativeQuestion": {
-                sceneCtrl.showMainScreen();
-                sceneCtrl.showQuestionInsteadOfScene(QuestionParsers.alternativeQuestionParser(scanner.next()), this.questionNumber + 1, userName, roomId);
+                sceneCtrl.showMainScreenScene();
+                sceneCtrl.showAlternativeQuestionScene(QuestionParsers.alternativeQuestionParser(scanner.next()), this.questionNumber + 1, userName, roomId);
                 break;
             }
         }
@@ -134,14 +132,12 @@ public class KnowledgeQuestionActivityCtrl {
         points.setText(String.valueOf(pointsInt));
 
         goToNextQuestion();
-
     }
 
 
     //Method that checks whether answer is correct
     //
     public void answerCheck(String answer, Button current) throws InterruptedException {
-
         if (answer.equals(getCorrectAnswer())) {
             current.setStyle("-fx-background-color: #00FF00; ");  //simple CSS for clarity
         } else {
@@ -150,12 +146,14 @@ public class KnowledgeQuestionActivityCtrl {
 
     }
 
-    public void goToMainScreen (ActionEvent event) throws IOException {
-        sceneCtrl.showMainScreen();
+    public void goToMainScreen(ActionEvent event) throws IOException {
+        sceneCtrl.showMainScreenScene();
     }
 
     //Getters and setters
-    public Button getAnswerTop() { return answerTop; }
+    public Button getAnswerTop() {
+        return answerTop;
+    }
 
     public Button getAnswerBottom() {
         return answerBottom;
@@ -169,16 +167,28 @@ public class KnowledgeQuestionActivityCtrl {
         return correctAnswer;
     }
 
-    public Label getLabelAnswerTop() { return labelAnswerTop; }
+    public Label getLabelAnswerTop() {
+        return labelAnswerTop;
+    }
 
-    public Label getLabelAnswerCenter() { return labelAnswerCenter; }
+    public Label getLabelAnswerCenter() {
+        return labelAnswerCenter;
+    }
 
-    public Label getLabelAnswerBottom() { return labelAnswerBottom; }
+    public Label getLabelAnswerBottom() {
+        return labelAnswerBottom;
+    }
 
-    public void setLabelAnswerTop(Label labelAnswerTop) { this.labelAnswerTop = labelAnswerTop; }
+    public void setLabelAnswerTop(Label labelAnswerTop) {
+        this.labelAnswerTop = labelAnswerTop;
+    }
 
-    public void setLabelAnswerCenter(Label labelAnswerCenter) { this.labelAnswerCenter = labelAnswerCenter; }
+    public void setLabelAnswerCenter(Label labelAnswerCenter) {
+        this.labelAnswerCenter = labelAnswerCenter;
+    }
 
-    public void setLabelAnswerBottom(Label labelAnswerBottom) { this.labelAnswerBottom = labelAnswerBottom; }
+    public void setLabelAnswerBottom(Label labelAnswerBottom) {
+        this.labelAnswerBottom = labelAnswerBottom;
+    }
 }
 

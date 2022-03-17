@@ -7,21 +7,13 @@ import com.google.inject.Inject;
 import commons.Questions.AlternativeQuestion;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Objects;
 import java.util.Scanner;
 
-public class AlternativeQuestionActivityCtrl {
-
-
+public class AlternativeQuestionCtrl {
     private final ServerUtils server;
     private final SceneCtrl sceneCtrl;
     private String userName;
@@ -31,8 +23,6 @@ public class AlternativeQuestionActivityCtrl {
     private int pointsInt;
     @FXML
     private Label sampleQuestion;
-    @FXML
-    private Button goToMainScreen;
     @FXML
     private Button answerTop, answerBottom, answerCenter;
     @FXML
@@ -49,7 +39,7 @@ public class AlternativeQuestionActivityCtrl {
 
     //Constructor for the Question Controller
     @Inject
-    public AlternativeQuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
+    public AlternativeQuestionCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
         this.server = server;
         this.sceneCtrl = sceneCtrl;
     }
@@ -77,23 +67,23 @@ public class AlternativeQuestionActivityCtrl {
         System.out.println(next);
         switch (next) {
             case "OpenQuestion": {
-                sceneCtrl.showMainScreen();
-                sceneCtrl.showQuestionGuessXScene(QuestionParsers.openQuestionParser(scanner.next()), this.questionNumber + 1, userName, serverId);
+                sceneCtrl.showMainScreenScene();
+                sceneCtrl.showOpenQuestionScene(QuestionParsers.openQuestionParser(scanner.next()), this.questionNumber + 1, userName, serverId);
                 break;
             }
             case "KnowledgeQuestion": {
-                sceneCtrl.showMainScreen();
-                sceneCtrl.showQuestionHowMuchScene(QuestionParsers.knowledgeQuestionParser(scanner.next()), this.questionNumber + 1, userName, serverId);
+                sceneCtrl.showMainScreenScene();
+                sceneCtrl.showKnowledgeQuestionScene(QuestionParsers.knowledgeQuestionParser(scanner.next()), this.questionNumber + 1, userName, serverId);
                 break;
             }
             case "ComparisonQuestion": {
-                sceneCtrl.showMainScreen();
-                sceneCtrl.showQuestionWhatIsScene(QuestionParsers.comparisonQuestionParser(scanner.next()), this.questionNumber + 1, userName, serverId);
+                sceneCtrl.showMainScreenScene();
+                sceneCtrl.showComparisonQuestionScene(QuestionParsers.comparisonQuestionParser(scanner.next()), this.questionNumber + 1, userName, serverId);
                 break;
             }
             case "AlternativeQuestion": {
-                sceneCtrl.showMainScreen();
-                sceneCtrl.showQuestionInsteadOfScene(QuestionParsers.alternativeQuestionParser(scanner.next()), this.questionNumber + 1, userName, serverId);
+                sceneCtrl.showMainScreenScene();
+                sceneCtrl.showAlternativeQuestionScene(QuestionParsers.alternativeQuestionParser(scanner.next()), this.questionNumber + 1, userName, serverId);
                 break;
             }
         }
@@ -101,7 +91,6 @@ public class AlternativeQuestionActivityCtrl {
 
     //Initializes the sample question screen through hardcoding
     public void initialize() {
-
         //resets the colors to white each time
         getAnswerTop().setStyle("-fx-background-color: #b38df7;; -fx-border-color:  #b38df7;");
         getAnswerCenter().setStyle("-fx-background-color: #ffd783; -fx-border-color:  #ffd783");
@@ -127,16 +116,11 @@ public class AlternativeQuestionActivityCtrl {
         points.setText(String.valueOf(pointsInt));
 
         goToNextQuestion();
-
-        //sends the server a delete request to ensure the same activity does not appear twice
-
     }
 
 
     //Method that checks whether answer is correct
     public void answerCheck(String answer, Button current) {
-
-
         long mTime = System.currentTimeMillis();
         long end = mTime + 1000;
 
@@ -153,22 +137,15 @@ public class AlternativeQuestionActivityCtrl {
 
     }
 
-    private Scene scene;
-    private Stage stage;
-    private Parent root;
-
-    public void goToMainScreen (ActionEvent event) throws IOException {
-
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../../scenes/MainScreenScene.fxml")));
-        stage = (Stage) ( (Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+    public void goToMainScreen(ActionEvent event) throws IOException {
+        sceneCtrl.showMainScreenScene();
     }
 
 
     //Getters and setters
-    public Button getAnswerTop() { return answerTop; }
+    public Button getAnswerTop() {
+        return answerTop;
+    }
 
     public Button getAnswerBottom() {
         return answerBottom;
@@ -182,15 +159,27 @@ public class AlternativeQuestionActivityCtrl {
         return correctAnswer;
     }
 
-    public Label getLabelAnswerTop() { return labelAnswerTop; }
+    public Label getLabelAnswerTop() {
+        return labelAnswerTop;
+    }
 
-    public Label getLabelAnswerCenter() { return labelAnswerCenter; }
+    public Label getLabelAnswerCenter() {
+        return labelAnswerCenter;
+    }
 
-    public Label getLabelAnswerBottom() { return labelAnswerBottom; }
+    public Label getLabelAnswerBottom() {
+        return labelAnswerBottom;
+    }
 
-    public void setLabelAnswerTop(Label labelAnswerTop) { this.labelAnswerTop = labelAnswerTop; }
+    public void setLabelAnswerTop(Label labelAnswerTop) {
+        this.labelAnswerTop = labelAnswerTop;
+    }
 
-    public void setLabelAnswerCenter(Label labelAnswerCenter) { this.labelAnswerCenter = labelAnswerCenter; }
+    public void setLabelAnswerCenter(Label labelAnswerCenter) {
+        this.labelAnswerCenter = labelAnswerCenter;
+    }
 
-    public void setLabelAnswerBottom(Label labelAnswerBottom) { this.labelAnswerBottom = labelAnswerBottom; }
+    public void setLabelAnswerBottom(Label labelAnswerBottom) {
+        this.labelAnswerBottom = labelAnswerBottom;
+    }
 }

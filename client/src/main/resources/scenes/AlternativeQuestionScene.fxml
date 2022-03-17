@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="838.0" prefWidth="1092.0" style="-fx-background-color: #499ee8;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.QuestionControllers.AlternativeQuestionActivityCtrl">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="838.0" prefWidth="1092.0" style="-fx-background-color: #499ee8;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.QuestionControllers.AlternativeQuestionCtrl">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="10.0" prefWidth="100.0" />
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
@@ -39,7 +39,7 @@
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c9f1fd" height="83.0" stroke="BLACK" strokeType="INSIDE" width="386.0" GridPane.columnIndex="5" GridPane.rowIndex="5" />
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c9f1fd" height="83.0" stroke="BLACK" strokeType="INSIDE" width="386.0" GridPane.columnIndex="5" GridPane.rowIndex="4" />
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c9f1fd" height="403.0" stroke="BLACK" strokeType="INSIDE" width="360.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-        <Button fx:id="goToMainScreen" mnemonicParsing="false" onAction="#goToMainScreen" prefHeight="34.0" prefWidth="76.0" style="-fx-background-color: #5bc0de; -fx-border-color: #c9f1fd;" text="Home" GridPane.columnIndex="2" GridPane.rowIndex="1">
+        <Button mnemonicParsing="false" onAction="#goToMainScreen" prefHeight="34.0" prefWidth="76.0" style="-fx-background-color: #5bc0de; -fx-border-color: #c9f1fd;" text="Home" GridPane.columnIndex="2" GridPane.rowIndex="1">
             <font>
                 <Font size="14.0" />
             </font>
@@ -85,10 +85,10 @@
                 <Font name="Chalkboard" size="24.0" />
             </font>
         </Label>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Instead of .... you could do .... instead" textAlignment="CENTER" wrappingWidth="859.21630859375" GridPane.columnIndex="2" GridPane.rowIndex="2">
-         <font>
-            <Font name="Chalkboard" size="40.0" />
-         </font>
-      </Text>
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Instead of .... you could do .... instead" textAlignment="CENTER" wrappingWidth="859.21630859375" GridPane.columnIndex="2" GridPane.rowIndex="2">
+            <font>
+                <Font name="Chalkboard" size="40.0" />
+            </font>
+        </Text>
     </children>
 </GridPane>

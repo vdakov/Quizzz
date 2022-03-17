@@ -17,7 +17,7 @@ import java.util.Scanner;
 
 import static javax.xml.bind.DatatypeConverter.parseInt;
 
-public class OpenQuestionActivityCtrl {
+public class OpenQuestionCtrl {
 
 
     private final ServerUtils server;
@@ -30,8 +30,6 @@ public class OpenQuestionActivityCtrl {
     @FXML
     private Label sampleQuestion;
     @FXML
-    private Button goToMainScreen;
-    @FXML
     private Button answer;
     @FXML
     private Label points;
@@ -43,7 +41,7 @@ public class OpenQuestionActivityCtrl {
 
     //Constructor for the Question Controller
     @Inject
-    public OpenQuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
+    public OpenQuestionCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
         this.server = server;
         this.sceneCtrl = sceneCtrl;
     }
@@ -62,7 +60,6 @@ public class OpenQuestionActivityCtrl {
     //Initializes the sample question screen through hardcoding
     public void initialize() {
         getAnswer().setStyle("-fx-background-color: #ffd783; -fx-border-color:  #ffd783");
-
     }
 
     public void goToNextQuestion() {
@@ -73,23 +70,23 @@ public class OpenQuestionActivityCtrl {
         System.out.println(next + questionNumber);
         switch (next) {
             case "OpenQuestion": {
-                sceneCtrl.showMainScreen();
-                sceneCtrl.showQuestionGuessXScene(QuestionParsers.openQuestionParser(scanner.next()), this.questionNumber + 1, userName, serverId);
+                sceneCtrl.showMainScreenScene();
+                sceneCtrl.showOpenQuestionScene(QuestionParsers.openQuestionParser(scanner.next()), this.questionNumber + 1, userName, serverId);
                 break;
             }
             case "KnowledgeQuestion": {
-                sceneCtrl.showMainScreen();
-                sceneCtrl.showQuestionHowMuchScene(QuestionParsers.knowledgeQuestionParser(scanner.next()), this.questionNumber + 1, userName, serverId);
+                sceneCtrl.showMainScreenScene();
+                sceneCtrl.showKnowledgeQuestionScene(QuestionParsers.knowledgeQuestionParser(scanner.next()), this.questionNumber + 1, userName, serverId);
                 break;
             }
             case "ComparisonQuestion": {
-                sceneCtrl.showMainScreen();
-                sceneCtrl.showQuestionWhatIsScene(QuestionParsers.comparisonQuestionParser(scanner.next()), this.questionNumber + 1, userName, serverId);
+                sceneCtrl.showMainScreenScene();
+                sceneCtrl.showComparisonQuestionScene(QuestionParsers.comparisonQuestionParser(scanner.next()), this.questionNumber + 1, userName, serverId);
                 break;
             }
             case "AlternativeQuestion": {
-                sceneCtrl.showMainScreen();
-                sceneCtrl.showQuestionInsteadOfScene(QuestionParsers.alternativeQuestionParser(scanner.next()), this.questionNumber + 1, userName, serverId);
+                sceneCtrl.showMainScreenScene();
+                sceneCtrl.showAlternativeQuestionScene(QuestionParsers.alternativeQuestionParser(scanner.next()), this.questionNumber + 1, userName, serverId);
                 break;
             }
         }
@@ -102,31 +99,24 @@ public class OpenQuestionActivityCtrl {
 
         if (writeAnswer.getText().equals(getCorrectAnswer())) {
             pointsInt += 500; //global variable for points so it remembers it
+        } else if (parseInt(writeAnswer.getText()) > parseInt(getCorrectAnswer()) * 0.95 && parseInt(writeAnswer.getText()) < parseInt(getCorrectAnswer()) * 1.05) {
+            pointsInt += 250;
         }
-        else
-            if (parseInt(writeAnswer.getText()) > parseInt(getCorrectAnswer()) * 0.95 &&  parseInt(writeAnswer.getText()) < parseInt(getCorrectAnswer()) * 1.05) {
-                pointsInt += 250;
-            }
 
 
         //uses the answerCheck method to highlight which the correct answer was
         //and to color them
         answerCheck(writeAnswer.getText(), this.getAnswer());
-
-
-        //changes the points value
-        points.setText(String.valueOf(pointsInt));
+        points.setText(String.valueOf(pointsInt)); //changes the points value
 
         goToNextQuestion();
     }
 
 
     //Method that checks whether answer is correct
-    //
     public void answerCheck(String answer, Button current) throws InterruptedException {
-
         if (Objects.equals(writeAnswer.getText(), getCorrectAnswer()) ||
-                parseInt(writeAnswer.getText()) > parseInt(getCorrectAnswer()) * 0.95 &&  parseInt(writeAnswer.getText()) < parseInt(getCorrectAnswer()) * 1.05) {
+                parseInt(writeAnswer.getText()) > parseInt(getCorrectAnswer()) * 0.95 && parseInt(writeAnswer.getText()) < parseInt(getCorrectAnswer()) * 1.05) {
             current.setStyle("-fx-background-color: #00FF00; ");  //simple CSS for clarity
         } else {
             current.setStyle("-fx-background-color: #d20716;");
@@ -135,17 +125,25 @@ public class OpenQuestionActivityCtrl {
 
     }
 
-    public void goToMainScreen (ActionEvent event) throws IOException {
+    public void goToMainScreen(ActionEvent event) throws IOException {
+        sceneCtrl.showMainScreenScene();
     }
 
 
+    public Button getAnswer() {
+        return answer;
+    }
 
-    public Button getAnswer() { return answer; }
+    public String getCorrectAnswer() {
+        return correctAnswer;
+    }
 
-    public String getCorrectAnswer() { return correctAnswer; }
+    public TextField getWriteAnswer() {
+        return writeAnswer;
+    }
 
-    public TextField getWriteAnswer() { return writeAnswer; }
-
-    public void setWriteAnswer(TextField writeAnswer) { this.writeAnswer = writeAnswer; }
+    public void setWriteAnswer(TextField writeAnswer) {
+        this.writeAnswer = writeAnswer;
+    }
 
 }
