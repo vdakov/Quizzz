@@ -13,7 +13,7 @@ public class GameConfiguration {
         this.userName              = null;
         this.roomId                = null;
         this.currentQuestionNumber = -1;
-    }git a
+    }
 
     public static GameConfiguration getConfiguration() {
         if (gameConfiguration == null) {
