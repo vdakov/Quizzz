@@ -39,7 +39,7 @@ public class AlternativeQuestionActivityCtrl {
     @FXML
     private Label points;
     @FXML
-    private Label addedpoints;
+    private Label addedPoints;
     @FXML
     private Label questionNumberLabel;
     @FXML
@@ -107,9 +107,10 @@ public class AlternativeQuestionActivityCtrl {
     }
 
     //Initializes the sample question screen through hardcoding
-    public void initialize() {
+    public void initialize(){
         //changes the points value
         points.setText(String.valueOf(pointsInt));
+        addedPoints.setText("+");
 
         //resets the colors to white each time
         getAnswerTop().setStyle("-fx-background-color: #b38df7;; -fx-border-color:  #b38df7;");
@@ -134,7 +135,7 @@ public class AlternativeQuestionActivityCtrl {
         answerCheck(labelAnswerBottom.getText(), this.getAnswerBottom());
 
         //changes the points value
-        addedpoints.setText(String.valueOf(addedPointsInt));
+        addedPoints.setText("+"+String.valueOf(addedPointsInt));
 
 
         //sends the server a delete request to ensure the same activity does not appear twice
