@@ -32,7 +32,7 @@ public class ComparisonQuestionActivityCtrl {
     private int pointsInt;
     private final double startTime = 10;
     private IntegerProperty timeSeconds =
-            new SimpleIntegerProperty((int)startTime);
+            new SimpleIntegerProperty((int) startTime);
     private Timeline timeline;
     @FXML
     private Label sampleQuestion;
@@ -69,13 +69,13 @@ public class ComparisonQuestionActivityCtrl {
         //resets the colors to white each time
     }
 
-    public void startTimer(){
+    public void startTimer() {
         progressBarTime.progressProperty().bind(Bindings.divide(timeSeconds, startTime));
         timeLabel.textProperty().bind(timeSeconds.asString());
-        timeSeconds.set((int)startTime);
+        timeSeconds.set((int) startTime);
         timeline = new Timeline();
         timeline.getKeyFrames().add(
-                new KeyFrame(Duration.seconds(startTime+1),
+                new KeyFrame(Duration.seconds(startTime + 1),
                         new KeyValue(timeSeconds, 0)));
         timeline.playFromStart();
     }

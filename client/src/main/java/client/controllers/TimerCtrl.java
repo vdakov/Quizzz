@@ -8,22 +8,14 @@ import javafx.event.*;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Application;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
 import javafx.util.Duration;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 
 import javax.inject.Inject;
-import java.util.Locale;
 
-public class TimerCtrl{
+public class TimerCtrl {
 
     private final Integer startTime = 10;
     private final ServerUtils server;
@@ -49,7 +41,7 @@ public class TimerCtrl{
         timeSeconds.set(startTime);
         timeline = new Timeline();
         timeline.getKeyFrames().add(
-                new KeyFrame(Duration.seconds(startTime+1),
+                new KeyFrame(Duration.seconds(startTime + 1),
                         new KeyValue(timeSeconds, 0)));
         timeline.playFromStart();
     }

@@ -40,7 +40,7 @@ public class AlternativeQuestionActivityCtrl {
     private String correctAnswer;
     private final double startTime = 10;
     private IntegerProperty timeSeconds =
-            new SimpleIntegerProperty((int)startTime);
+            new SimpleIntegerProperty((int) startTime);
     private Timeline timeline;
 
     @FXML
@@ -132,15 +132,15 @@ public class AlternativeQuestionActivityCtrl {
 
     }
 
-    public void startTimer(){
+    public void startTimer() {
         double timeProgress = 1;
         progressBarTime.progressProperty().bind(Bindings.divide(timeSeconds, startTime));
 
         timeLabel.textProperty().bind(timeSeconds.asString());
-        timeSeconds.set((int)startTime);
+        timeSeconds.set((int) startTime);
         timeline = new Timeline();
         timeline.getKeyFrames().add(
-                new KeyFrame(Duration.seconds(startTime+1),
+                new KeyFrame(Duration.seconds(startTime + 1),
                         new KeyValue(timeSeconds, 0)));
         timeline.playFromStart();
     }
@@ -167,7 +167,7 @@ public class AlternativeQuestionActivityCtrl {
 
         if (current.getText().equals(getCorrectAnswer())) {
             // multiply the score by percentage time remaining
-            pointsInt += 500.0 * ((float)timeSeconds.getValue()/startTime); //global variable for points so it remembers it
+            pointsInt += 500.0 * ((float) timeSeconds.getValue() / startTime); //global variable for points so it remembers it
         }
 
         //uses the answerCheck method to highlight which the correct answer was
