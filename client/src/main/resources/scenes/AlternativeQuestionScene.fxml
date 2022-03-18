@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -90,5 +91,14 @@
                 <Font name="Chalkboard" size="40.0" />
             </font>
         </Text>
+      <ToolBar fx:id="toolbar" prefHeight="57.0" prefWidth="362.0" GridPane.columnIndex="7" GridPane.rowIndex="7">
+        <items>
+            <ImageView fx:id="emoji1" fitHeight="60.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="emoji2" fitHeight="60.0" fitWidth="73.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="emoji3" fitHeight="60.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="emoji4" fitHeight="60.0" fitWidth="73.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="emoji5" fitHeight="60.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true" />
+        </items>
+      </ToolBar>
     </children>
 </GridPane>

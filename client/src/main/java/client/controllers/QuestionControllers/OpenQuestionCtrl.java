@@ -10,6 +10,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToolBar;
+import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -37,6 +39,18 @@ public class OpenQuestionCtrl {
     private TextField writeAnswer;
     @FXML
     private String correctAnswer;
+    @FXML
+    private ToolBar toolbar;
+    @FXML
+    private ImageView emoji1;
+    @FXML
+    private ImageView emoji2;
+    @FXML
+    private ImageView emoji3;
+    @FXML
+    private ImageView emoji4;
+    @FXML
+    private ImageView emoji5;
 
 
     //Constructor for the Question Controller
@@ -55,6 +69,16 @@ public class OpenQuestionCtrl {
         this.sampleQuestion.setText((openQuestion == null) ? "" : openQuestion.getQuestion().getKey());
 
         this.correctAnswer = "100";
+
+        // if(serverId is Multiplayer)
+        {
+            toolbar.setStyle("-fx-opacity: 1");
+            emoji1.setStyle("-fx-opacity: 1 ");
+            emoji2.setStyle("-fx-opacity: 1");
+            emoji3.setStyle("-fx-opacity: 1 ");
+            emoji4.setStyle("-fx-opacity: 1");
+            emoji5.setStyle("-fx-opacity: 1 ");
+        }
     }
 
     //Initializes the sample question screen through hardcoding

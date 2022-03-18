@@ -9,6 +9,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ToolBar;
+import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -35,6 +37,19 @@ public class AlternativeQuestionCtrl {
     private Label labelAnswerBottom;
     @FXML
     private String correctAnswer;
+    @FXML
+    private ToolBar toolbar;
+    @FXML
+    private ImageView emoji1;
+    @FXML
+    private ImageView emoji2;
+    @FXML
+    private ImageView emoji3;
+    @FXML
+    private ImageView emoji4;
+    @FXML
+    private ImageView emoji5;
+
 
 
     //Constructor for the Question Controller
@@ -57,6 +72,17 @@ public class AlternativeQuestionCtrl {
         labelAnswerCenter.setText((alternativeQuestion == null) ? "" : alternativeQuestion.getOptions().get(2).getKey());
 
         this.correctAnswer = "" + ((alternativeQuestion == null) ? "" : alternativeQuestion.getOptions().get(1).getKey());
+
+        // if(serverId is Multiplayer)
+        {
+            toolbar.setStyle("-fx-opacity: 1");
+            emoji1.setStyle("-fx-opacity: 1 ");
+            emoji2.setStyle("-fx-opacity: 1");
+            emoji3.setStyle("-fx-opacity: 1 ");
+            emoji4.setStyle("-fx-opacity: 1");
+            emoji5.setStyle("-fx-opacity: 1 ");
+        }
+
     }
 
     public void goToNextQuestion() {
@@ -95,6 +121,8 @@ public class AlternativeQuestionCtrl {
         getAnswerTop().setStyle("-fx-background-color: #b38df7;; -fx-border-color:  #b38df7;");
         getAnswerCenter().setStyle("-fx-background-color: #ffd783; -fx-border-color:  #ffd783");
         getAnswerBottom().setStyle("-fx-background-color: #ffa382; -fx-border-color:  #ffa382");
+
+
     }
 
 

@@ -9,6 +9,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ToolBar;
+import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -37,6 +39,18 @@ public class KnowledgeQuestionCtrl {
     private Label labelAnswerBottom;
     @FXML
     private String correctAnswer;
+    @FXML
+    private ToolBar toolbar;
+    @FXML
+    private ImageView emoji1;
+    @FXML
+    private ImageView emoji2;
+    @FXML
+    private ImageView emoji3;
+    @FXML
+    private ImageView emoji4;
+    @FXML
+    private ImageView emoji5;
 
 
     //Constructor for the Question Controller
@@ -60,6 +74,16 @@ public class KnowledgeQuestionCtrl {
         labelAnswerCenter.setText((knowledgeQuestion == null) ? "" : knowledgeQuestion.getOptions().get(2));
 
         this.correctAnswer = "" + ((knowledgeQuestion == null) ? "" : knowledgeQuestion.getOptions().get(1));
+
+        // if(serverId is Multiplayer)
+        {
+            toolbar.setStyle("-fx-opacity: 1");
+            emoji1.setStyle("-fx-opacity: 1 ");
+            emoji2.setStyle("-fx-opacity: 1");
+            emoji3.setStyle("-fx-opacity: 1 ");
+            emoji4.setStyle("-fx-opacity: 1");
+            emoji5.setStyle("-fx-opacity: 1 ");
+        }
     }
 
     //Initializes the sample question screen through hardcoding
