@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -61,7 +62,7 @@
         </Label>
         <Label fx:id="labelAnswerTop" alignment="CENTER_RIGHT" prefHeight="64.0" prefWidth="272.0" wrapText="true" GridPane.columnIndex="7" GridPane.rowIndex="4">
             <font>
-                <Font name="Chalkboard" size="26.0" />
+                <Font name="Chalkboard" size="22.0" />
             </font>
         </Label>
         <Button fx:id="answerTop" mnemonicParsing="false" onAction="#answer" prefHeight="65.0" prefWidth="270.0" style="-fx-background-color: #b38df7;" text="1" textAlignment="CENTER" GridPane.columnIndex="6" GridPane.rowIndex="4">
@@ -81,13 +82,22 @@
         </Button>
         <Label fx:id="labelAnswerCenter" alignment="CENTER_RIGHT" prefHeight="64.0" prefWidth="272.0" wrapText="true" GridPane.columnIndex="7" GridPane.rowIndex="5">
             <font>
-                <Font name="Chalkboard" size="26.0" />
+                <Font name="Chalkboard" size="22.0" />
             </font>
         </Label>
         <Label fx:id="labelAnswerBottom" alignment="CENTER_RIGHT" prefHeight="64.0" prefWidth="272.0" wrapText="true" GridPane.columnIndex="7" GridPane.rowIndex="6">
             <font>
-                <Font name="Chalkboard" size="26.0" />
+                <Font name="Chalkboard" size="22.0" />
             </font>
         </Label>
+      <ToolBar fx:id="toolbar" prefHeight="57.0" prefWidth="362.0" GridPane.columnIndex="7" GridPane.rowIndex="7">
+         <items>
+            <ImageView fx:id="emoji1" fitHeight="60.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="emoji2" fitHeight="60.0" fitWidth="73.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="emoji3" fitHeight="60.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="emoji4" fitHeight="60.0" fitWidth="73.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="emoji5" fitHeight="60.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true" />
+         </items>
+      </ToolBar>
     </children>
 </GridPane>
