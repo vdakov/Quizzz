@@ -126,13 +126,13 @@ public class AlternativeQuestionCtrl {
         long end = mTime + 1000;
 
         // This should be setting the colour and then go to a new question screen but it doesn't work right now
-        do {
-            if (answer.equals(getCorrectAnswer())) {
-                current.setStyle("-fx-background-color: #00FF00; "); //simple CSS for clarity
-            } else {
-                current.setStyle("-fx-background-color: #d20716; ");
-            }
-        } while (System.currentTimeMillis() < end);
+        //do {
+        if (answer.equals(getCorrectAnswer())) {
+            current.setStyle("-fx-background-color: #00FF00; "); //simple CSS for clarity
+        } else {
+            current.setStyle("-fx-background-color: #d20716; ");
+        }
+        //} while (System.currentTimeMillis() < end);
 
         this.initialize();
 
