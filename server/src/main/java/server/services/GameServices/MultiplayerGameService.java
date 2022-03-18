@@ -5,10 +5,8 @@ import commons.Exceptions.NotEnoughActivitiesException;
 import commons.Questions.Question;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Service;
-import server.entities.Game;
 import server.entities.GameCatalog;
 import server.entities.MultiPlayerGame;
-import server.entities.SinglePlayerGame;
 import server.repositories.ActivityRepository;
 import server.services.QuestionGenerator.QuestionGenerator;
 

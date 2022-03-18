@@ -101,7 +101,7 @@ public class KnowledgeQuestionActivityCtrl {
      * Displays the next question to the user after the transition is finished
      */
     public void displayNextQuestion() {
-        sceneCtrl.showNextQuestion();
+        //sceneCtrl.showNextQuestion();
     }
 
     public void answerQuestion() {
@@ -117,7 +117,7 @@ public class KnowledgeQuestionActivityCtrl {
     }
 
     public void goToMainScreen () throws IOException {
-        sceneCtrl.showMainScreen();
+        //sceneCtrl.showMainScreen();
 
     }
 

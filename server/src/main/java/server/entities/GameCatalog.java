@@ -1,12 +1,6 @@
 package server.entities;
 
-import commons.Questions.Question;
-import org.apache.commons.lang3.tuple.Pair;
-import server.services.GameServices.Util;
-
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class GameCatalog {
 
@@ -23,7 +17,7 @@ public class GameCatalog {
     }
 
     public static GameCatalog getGameCatalog() {
-        if(gameCatalog == null) {
+        if (gameCatalog == null) {
             gameCatalog = new GameCatalog();
         }
         return gameCatalog;
