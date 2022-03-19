@@ -16,18 +16,22 @@
 package client.communication;
 
 import commons.Actions.Action;
+import commons.GameContainer;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.GenericType;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.glassfish.jersey.client.ClientConfig;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 
 public class ServerUtils {
 
-    private static final String SERVER = "http://localhost:8080/";
+    private static final String SERVER = "fw";
 
     public String createNewSinglePlayerRoom(String userName) {
         return ClientBuilder.newClient(new ClientConfig())
@@ -87,9 +91,58 @@ public class ServerUtils {
                 .request().delete(); //;
     }
 
-    public void alert() {
+    public void alert(String input) {
         ClientBuilder.newClient(new ClientConfig()) //
                 .target(SERVER).path("api/activities/alert") //
-                .request().get(); //;
+                .request(APPLICATION_JSON)
+                .buildPost(Entity.entity(input, APPLICATION_JSON)).invoke(); //;
+    }
+
+    public ObservableList<GameContainer> listOfCurrentGames(){
+       ArrayList<GameContainer> games=  ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/multiplayer/currentGames") //
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .get(new GenericType<>() {});
+
+       ObservableList<GameContainer> currentGames= FXCollections.observableArrayList(games);
+
+       return currentGames;
+    }
+
+    public ArrayList<String> listOfAllGameIds(){
+        ArrayList<String> gameIds=  ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/multiplayer/gameIDList") //
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .get(new GenericType<>() {});
+
+        return gameIds;
+    }
+
+    public String createNewMultiplayerGame(String playerId){
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER).path("api/multiplayer/createNewGame/"+playerId)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .get(new GenericType<>(){});
+    }
+
+    public void joinExistingMultiplayerGame(String playerId, String gameID){
+        ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER).path("api/multiplayer/joinGame/"+playerId +"/" + gameID)
+                .request().get();
+    }
+
+    public int getNumPlayersInGame(String gameID){
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER).path("api/multiplayer/"+gameID+"/numPlayers")
+                .request().get(new GenericType<>(){});
+    }
+
+    public void removePlayer(String userName, String gameID){
+         ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER).path("api/multiplayer/"+userName+"/"+gameID)
+                .request().get();
     }
 }

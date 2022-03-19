@@ -10,12 +10,14 @@ public class Game {
 
     private String gameId;
     private List<Pair<Question, String>> gameQuestionsWithAnswers;
-    private List<Pair<String, Integer>> scores;
+    private List<Pair<String, Integer>> player_Score;
+
+
 
     public Game(String gameId, List<Pair<Question, String>> gameQuestionsWithAnswers) {
         this.gameId = gameId;
         this.gameQuestionsWithAnswers = gameQuestionsWithAnswers;
-        this.scores = new ArrayList<>();
+        this.player_Score = new ArrayList<>();
     }
 
     public String getGameId() {
@@ -35,7 +37,15 @@ public class Game {
     }
 
     public void addUser(String user) {
-        scores.add(Pair.of(user, 0));
+        player_Score.add(Pair.of(user, 0));
+    }
+
+    public void removeUser(String userName){
+        for (int i = 0; i < player_Score.size(); i++) {
+            if (player_Score.get(i).getKey().equals(userName)) {
+                player_Score.remove(i);
+            }
+        }
     }
 
     public Question getQuestion(int number) {
@@ -47,7 +57,7 @@ public class Game {
     }
 
     public int getPlayerScore(String userName) {
-        for (Pair<String, Integer> score : scores) {
+        for (Pair<String, Integer> score : player_Score) {
             if (score.getKey().equals(userName)) {
                 return score.getValue();
             }
@@ -56,13 +66,17 @@ public class Game {
     }
 
     public void updatePlayerScore(String userName, int addedScore) {
-        for (int i = 0; i < scores.size(); i++) {
-            if (scores.get(i).getKey().equals(userName)) {
-                int newValue = scores.get(i).getValue() + addedScore;
-                scores.remove(i);
-                scores.add(Pair.of(userName, newValue));
+        for (int i = 0; i < player_Score.size(); i++) {
+            if (player_Score.get(i).getKey().equals(userName)) {
+                int newValue = player_Score.get(i).getValue() + addedScore;
+                player_Score.remove(i);
+                player_Score.add(Pair.of(userName, newValue));
             }
         }
+    }
+
+    public int getNumPlayers(){
+        return this.player_Score.size();
     }
 
 

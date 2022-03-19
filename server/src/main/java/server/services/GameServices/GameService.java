@@ -14,12 +14,12 @@ import java.util.List;
 import java.util.Random;
 
 @Service
-public class SinglePlayerGameService {
+public class GameService {
 
     private ActivityRepository activityRepository;
     private GameCatalog gameCatalog;
 
-    public SinglePlayerGameService(ActivityRepository activityRepository) {
+    public GameService(ActivityRepository activityRepository) {
         this.activityRepository = activityRepository;
         this.gameCatalog = new GameCatalog();
     }
@@ -55,5 +55,23 @@ public class SinglePlayerGameService {
             gameCatalog.getGame(gameId).updatePlayerScore(userName, 500);
         }
     }
+
+    public int getNumPlayers(String gameId){
+        return gameCatalog.getGame(gameId).getNumPlayers();
+    }
+
+    public Game getGame(String gameId){
+        return  gameCatalog.getGame(gameId);
+    }
+
+    public Game joinGame(String userName, String gameId) {
+        gameCatalog.getGame(gameId).addUser(userName);
+        return  gameCatalog.getGame(gameId);
+    }
+
+    public GameCatalog getCurrentGames(){
+        return this.gameCatalog;
+    }
+
 }
 
