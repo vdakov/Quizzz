@@ -4,7 +4,6 @@ import client.communication.ServerUtils;
 import client.controllers.SceneCtrl;
 import client.logic.QuestionParsers;
 import com.google.inject.Inject;
-import commons.Actions.Action;
 import commons.Questions.AlternativeQuestion;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
@@ -12,12 +11,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToolBar;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -92,10 +89,9 @@ public class AlternativeQuestionCtrl {
 
     }
 
-    public void emoji1Animation(ActionEvent event)
+    public void emoji1Animation(MouseEvent event)
     {
-        startAnimation = emoji1;
-        transition(startAnimation);
+        transition(emoji1);
     }
 
     public void transition(ImageView image)
