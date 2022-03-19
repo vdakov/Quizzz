@@ -4,10 +4,16 @@ import client.communication.ServerUtils;
 import client.controllers.SceneCtrl;
 import com.google.inject.Inject;
 import commons.Questions.AlternativeQuestion;
+import javafx.animation.FadeTransition;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
 import java.io.IOException;
 
@@ -16,6 +22,10 @@ public class AlternativeQuestionActivityCtrl {
     // constructor needed variables
     private final ServerUtils server;
     private final SceneCtrl   sceneCtrl;
+
+    private int pointsInt;
+    private int addedPointsInt;
+    private String userAnswer;
 
     // final needed labels for questions
     @FXML
@@ -51,6 +61,10 @@ public class AlternativeQuestionActivityCtrl {
     @FXML
     private Label points;
     @FXML
+    private Label addedPoints;
+    @FXML
+    private Label questionNumberLabel;
+    @FXML
     private Label labelAnswerCenter;
     @FXML
     private Label labelAnswerTop;
@@ -59,6 +73,12 @@ public class AlternativeQuestionActivityCtrl {
     @FXML
     private String correctAnswer;
 
+    @FXML
+    private Rectangle firstOptionRectangle;
+    @FXML
+    private Rectangle secondOptionRectangle;
+    @FXML
+    private Rectangle thirdOptionRectangle;
 
     /**
      * Creates the scene with the needed dependencies
@@ -75,6 +95,8 @@ public class AlternativeQuestionActivityCtrl {
      * Initialises all the colors for the current scene
      */
     public void initialize() {
+        questionNumberLabel.setText("Question ?");
+        correctAnswer = firstOptionText.getText();
     }
 
     /**
@@ -87,7 +109,6 @@ public class AlternativeQuestionActivityCtrl {
         }
 
         getQuestionStatement().setText(alternativeQuestion.getQuestion().getKey());
-
 
         getQuestionFirstOption() .setText(alternativeQuestion.getOptions().get(0).getKey());
         getQuestionSecondOption().setText(alternativeQuestion.getOptions().get(1).getKey());
@@ -103,16 +124,53 @@ public class AlternativeQuestionActivityCtrl {
         sceneCtrl.showNextQuestion();
     }
 
-    public void answerQuestion() {
-        // answers the question and blocks the possibility to answer anymore
+    public void answerQuestion(MouseEvent event) {
+        // answers the question
+        Label current = (Label) event.getSource();
+        userAnswer = current.getText();
+
+        answerUpdate();
+        pointsUpdate();
+
+        //blocks the possibility to answer anymore
     }
 
     public void answerUpdate() {
         // after the time ends the right answer is requested and then shown
+
+        //check whether the user's answer is correct and update the boolean value
+
+        firstOptionRectangle.setStroke(Color.valueOf("#ff0000"));
+        secondOptionRectangle.setStroke(Color.valueOf("#ff0000"));
+        thirdOptionRectangle.setStroke(Color.valueOf("#ff0000"));
+        if(correctAnswer.equals(firstOptionText.getText())){
+            firstOptionRectangle.setStroke(Color.valueOf("#92d36e"));
+        } else if(correctAnswer.equals(secondOptionText.getText())){
+            secondOptionRectangle.setStroke(Color.valueOf("#92d36e"));
+        } else {
+            thirdOptionRectangle.setStroke(Color.valueOf("#92d36e"));
+        }
     }
 
     public void pointsUpdate() {
         // after the time ends the amount of won points is calculated and then shown to the player
+
+        addedPointsInt = 0;
+        if(userAnswer.equals(correctAnswer)){
+            addedPointsInt = 500;
+        }
+        addedPoints.setText("+"+String.valueOf(addedPointsInt));
+
+////        FadeTransition fadeout = new FadeTransition(Duration.seconds(1), addedPoints);
+////        fadeout.setFromValue(1);
+////        fadeout.setToValue(0);
+////        fadeout.play();
+//
+//        //after some effect
+//        pointsInt += addedPointsInt;
+//        addedPointsInt = 0;
+//        addedPoints.setText(null);
+//        points.setText(String.valueOf(pointsInt));
     }
 
     public void goToMainScreen() throws IOException {

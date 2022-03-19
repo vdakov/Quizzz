@@ -81,10 +81,9 @@
          </font>
       </Button>
       <TextField fx:id="writeAnswer" prefHeight="45.0" prefWidth="202.0" GridPane.columnIndex="6" GridPane.rowIndex="8" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c9f1fd" height="84.0" stroke="BLACK" strokeType="INSIDE" width="360.0" GridPane.columnIndex="5" GridPane.rowIndex="10" />
 
-      
-      
+
+       <Rectangle fx:id="correctAnswerRectangle" arcHeight="5.0" arcWidth="5.0" fill="#499ee8" height="84.0" stroke="#499ee8" strokeType="INSIDE" width="360.0" GridPane.columnIndex="5" GridPane.rowIndex="10" />
       <!--       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c9f1fd" height="84.0" stroke="BLACK" strokeType="INSIDE" width="360.0" GridPane.columnIndex="4" GridPane.rowIndex="6" />-->
 <!--       <Label text="Your answer : " GridPane.columnIndex="4" GridPane.rowIndex="6" />-->
        <Label fx:id="correctAnswerLabel" text=" " GridPane.columnIndex="6" GridPane.rowIndex="10" />

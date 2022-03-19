@@ -9,6 +9,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.text.Text?>
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="838.0" prefWidth="1092.0" style="-fx-background-color: #499ee8;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.QuestionControllers.KnowledgeQuestionActivityCtrl">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="10.0" prefWidth="50.0" />
@@ -72,9 +73,9 @@
            </font>
        </Label>
 
-       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c9f1fd" height="83.0" stroke="#b38df7" strokeType="INSIDE" strokeWidth="5.0" width="386.0" GridPane.columnIndex="4" GridPane.rowIndex="9" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c9f1fd" height="83.0" stroke="#ffd783" strokeType="INSIDE" strokeWidth="5.0" width="386.0" GridPane.columnIndex="4" GridPane.rowIndex="7" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c9f1fd" height="83.0" stroke="#ffa382" strokeType="INSIDE" strokeWidth="5.0" width="386.0" GridPane.columnIndex="4" GridPane.rowIndex="6" />
+       <Rectangle fx:id="firstOptionRectangle" arcHeight="5.0" arcWidth="5.0" fill="#c9f1fd" height="83.0" stroke="#b38df7" strokeType="INSIDE" strokeWidth="5.0" width="386.0" GridPane.columnIndex="4" GridPane.rowIndex="9" />
+      <Rectangle fx:id="secondOptionRectangle" arcHeight="5.0" arcWidth="5.0" fill="#c9f1fd" height="83.0" stroke="#ffd783" strokeType="INSIDE" strokeWidth="5.0" width="386.0" GridPane.columnIndex="4" GridPane.rowIndex="7" />
+      <Rectangle fx:id="thirdOptionRectangle" arcHeight="5.0" arcWidth="5.0" fill="#c9f1fd" height="83.0" stroke="#ffa382" strokeType="INSIDE" strokeWidth="5.0" width="386.0" GridPane.columnIndex="4" GridPane.rowIndex="6" />
 
       <Label fx:id="firstOptionText" alignment="CENTER_RIGHT" onMouseClicked="#answerQuestion" prefHeight="64.0" prefWidth="272.0" wrapText="true" GridPane.columnIndex="6" GridPane.rowIndex="6">
          <font>
@@ -92,6 +93,11 @@
            </font>
        </Label>
 
+       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="How much energy does it take?" textAlignment="CENTER" wrappingWidth="859.21630859375" GridPane.columnIndex="2" GridPane.rowIndex="2">
+           <font>
+               <Font name="Chalkboard" size="40.0" />
+           </font>
+       </Text>
 
 
    </children>

@@ -8,6 +8,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 import java.io.IOException;
 
@@ -39,6 +42,8 @@ public class ComparisonQuestionActivityCtrl {
     @FXML
     private ImageView thirdOptionImage;
 
+    @FXML
+    private String correctAnswer;
 
 
     @FXML
@@ -53,6 +58,14 @@ public class ComparisonQuestionActivityCtrl {
     private Label addedPoints;
     @FXML
     private Label questionNumberLabel;
+
+    @FXML
+    private Rectangle firstOptionRectangle;
+    @FXML
+    private Rectangle secondOptionRectangle;
+    @FXML
+    private Rectangle thirdOptionRectangle;
+
     //Constructor for the Question Controller
 
 
@@ -71,7 +84,8 @@ public class ComparisonQuestionActivityCtrl {
      * Initialises all the colors for the current scene
      */
     public void initialize() {
-
+        questionNumberLabel.setText("Question ?");
+        correctAnswer = firstOptionText.getText();
     }
 
     /**
@@ -84,11 +98,14 @@ public class ComparisonQuestionActivityCtrl {
         }
 
         getQuestionStatement().setText(comparisonQuestion.getQuestion().getKey());
+//        getQuestionStatement().setText("What requires more energy");
 
         getQuestionFirstOption() .setText(comparisonQuestion.getOptions().get(0).getKey());
         getQuestionSecondOption().setText(comparisonQuestion.getOptions().get(1).getKey());
         getQuestionThirdOption() .setText(comparisonQuestion.getOptions().get(2).getKey());
-
+//            getQuestionFirstOption().setText("Taking a hot shower");
+//            getQuestionSecondOption().setText("Cooking a meal on your hot plate (30min)");
+//            getQuestionThirdOption().setText("Playing a game on your playstation (3h)");
         initialize();
     }
 
@@ -99,12 +116,23 @@ public class ComparisonQuestionActivityCtrl {
         sceneCtrl.showNextQuestion();
     }
 
-    public void answerQuestion() {
+    public void answerQuestion(MouseEvent event) {
         // answers the question and blocks the possibility to answer anymore
+        Label current = (Label) event.getSource();
     }
 
     public void answerUpdate() {
         // after the time ends the right answer is requested and then shown
+        firstOptionRectangle.setStroke(Color.valueOf("#ff0000"));
+        secondOptionRectangle.setStroke(Color.valueOf("#ff0000"));
+        thirdOptionRectangle.setStroke(Color.valueOf("#ff0000"));
+        if(correctAnswer.equals(firstOptionText.getText())){
+            firstOptionRectangle.setStroke(Color.valueOf("#92d36e"));
+        } else if(correctAnswer.equals(secondOptionText.getText())){
+            secondOptionRectangle.setStroke(Color.valueOf("#92d36e"));
+        } else {
+            thirdOptionRectangle.setStroke(Color.valueOf("#92d36e"));
+        }
     }
 
     public void pointsUpdate() {
