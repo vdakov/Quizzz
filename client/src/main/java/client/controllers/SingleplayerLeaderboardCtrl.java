@@ -2,11 +2,15 @@ package client.controllers;
 
 import client.communication.ServerUtils;
 
+import commons.Leaderboard.LeaderboardEntry;
+import javafx.collections.FXCollections;
 import javafx.scene.control.TableView;
 import javafx.scene.text.Text;
 
 import com.google.inject.Inject;
 import javafx.fxml.FXML;
+
+import java.util.List;
 
 
 public class SingleplayerLeaderboardCtrl {
@@ -28,7 +32,12 @@ public class SingleplayerLeaderboardCtrl {
         this.sceneCtrl = sceneCtrl;
     }
 
+    public void initialize() {
+        List<LeaderboardEntry> leaderboardEntries = server.getSingleplayerLeaderboard();
+        leaderboardTable.setItems(FXCollections.observableList(leaderboardEntries));
+    }
+
     public void exit() {
-        //sceneCtrl.showMainScreenScene();
+        sceneCtrl.showMainScreenScene();
     }
 }

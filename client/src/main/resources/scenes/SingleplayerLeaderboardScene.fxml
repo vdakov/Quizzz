@@ -43,9 +43,9 @@
                     <font>
                         <Font size="18.0" />
                     </font>
-               <GridPane.margin>
-                  <Insets bottom="90.0" />
-               </GridPane.margin>
+                    <GridPane.margin>
+                        <Insets bottom="90.0" />
+                    </GridPane.margin>
                 </Text>
                 <Text fx:id="place2" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Sam" textAlignment="CENTER" wrappingWidth="74.462890625" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
                     <font>
@@ -63,7 +63,7 @@
                         <Insets bottom="30.0" left="100.0" top="120.0" />
                     </GridPane.margin>
                 </Text>
-                <TableView prefHeight="156.0" prefWidth="560.0" style="-fx-background-color: #d3c9fb;" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+                <TableView fx:id="leaderboardTable" prefHeight="156.0" prefWidth="560.0" style="-fx-background-color: #d3c9fb;" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
                     <columns>
                         <TableColumn prefWidth="75.0" text="Place" />
                         <TableColumn prefWidth="170.0" text="Name" />
@@ -76,14 +76,14 @@
                         <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
                     </GridPane.margin>
                 </TableView>
-            <Button mnemonicParsing="false" onAction="#exit" text="Exit" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.valignment="TOP">
-               <GridPane.margin>
-                  <Insets left="10.0" top="10.0" />
-               </GridPane.margin>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-            </Button>
+                <Button mnemonicParsing="false" onAction="#exit" text="Exit" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+                    <GridPane.margin>
+                        <Insets left="10.0" top="10.0" />
+                    </GridPane.margin>
+                    <opaqueInsets>
+                        <Insets />
+                    </opaqueInsets>
+                </Button>
             </children>
         </GridPane>
     </children>
