@@ -62,6 +62,14 @@ public class SceneCtrl {
         primaryStage.setScene(pair.getValue());
     }
 
+    public void showSingleplayerLeaderboard() {
+        System.out.println("LEADERBOARD");
+        var pair = scenes.get("SingleplayerLeaderboard");
+
+        primaryStage.setTitle("Singleplayer Leaderboard");
+        primaryStage.setScene(pair.getValue());
+    }
+
     public void showMainScreenScene() {
         var pair = scenes.get("MainScreen");
 

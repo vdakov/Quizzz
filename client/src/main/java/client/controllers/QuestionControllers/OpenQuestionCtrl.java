@@ -109,7 +109,8 @@ public class OpenQuestionCtrl {
         answerCheck(writeAnswer.getText(), this.getAnswer());
         points.setText(String.valueOf(pointsInt)); //changes the points value
 
-        goToNextQuestion();
+        if (questionNumber < 20) goToNextQuestion();
+        else sceneCtrl.showSingleplayerLeaderboard();
     }
 
 
