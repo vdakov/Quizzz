@@ -1,6 +1,8 @@
 package client;
 
 import client.controllers.*;
+import client.controllers.MultiplayerControllers.ServerBrowserController;
+import client.controllers.MultiplayerControllers.WaitingRoomController;
 import client.controllers.QuestionControllers.AlternativeQuestionCtrl;
 import client.controllers.QuestionControllers.ComparisonQuestionCtrl;
 import client.controllers.QuestionControllers.KnowledgeQuestionCtrl;
@@ -51,7 +53,9 @@ public class QuizzzClient extends Application {
             new Pair("ComparisonQuestionScene.fxml", ComparisonQuestionCtrl.class),
             new Pair("OpenQuestionScene.fxml", OpenQuestionCtrl.class),
             new Pair("KnowledgeQuestionScene.fxml", KnowledgeQuestionCtrl.class),
-            new Pair("AlternativeQuestionScene.fxml", AlternativeQuestionCtrl.class)
+            new Pair("AlternativeQuestionScene.fxml", AlternativeQuestionCtrl.class),
+            new Pair("ServerBrowserScene.fxml", ServerBrowserController.class),
+            new Pair("WaitingRoomScene.fxml", WaitingRoomController.class)
     };
 
     @Override

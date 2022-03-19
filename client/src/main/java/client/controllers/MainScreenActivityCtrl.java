@@ -2,6 +2,7 @@ package client.controllers;
 
 import client.communication.ServerUtils;
 import client.logic.QuestionParsers;
+import javafx.event.ActionEvent;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -44,5 +45,9 @@ public class MainScreenActivityCtrl {
             }
         }
 
+    }
+
+    public void enterServerBrowser(ActionEvent event){
+        this.sceneCtrl.showServerBrowser();
     }
 }

@@ -4,6 +4,7 @@ package client.controllers.MultiplayerControllers;
 import client.communication.ServerUtils;
 import client.controllers.SceneCtrl;
 import com.google.inject.Inject;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -29,6 +30,10 @@ public class WaitingRoomController {
 
     public void initialize(){
 
+    }
+
+    public void goBackToServerBrowser(ActionEvent event){
+        this.sceneCtrl.showServerBrowser();
     }
 
 

@@ -2,10 +2,10 @@ package commons;
 
 public class GameContainer {
     private String gameId;
-    private String numPlayers;
+    private Integer numPlayers;
 
 
-    public GameContainer(String gameId, String numPlayers) {
+    public GameContainer(String gameId, Integer numPlayers) {
         this.gameId = gameId;
         this.numPlayers = numPlayers;
     }
@@ -14,7 +14,7 @@ public class GameContainer {
         return gameId;
     }
 
-    public String getNumPlayers() {
+    public Integer getNumPlayers() {
         return numPlayers;
     }
 }

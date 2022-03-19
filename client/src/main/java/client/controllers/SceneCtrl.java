@@ -1,5 +1,7 @@
 package client.controllers;
 
+import client.controllers.MultiplayerControllers.ServerBrowserController;
+import client.controllers.MultiplayerControllers.WaitingRoomController;
 import client.controllers.QuestionControllers.AlternativeQuestionCtrl;
 import client.controllers.QuestionControllers.ComparisonQuestionCtrl;
 import client.controllers.QuestionControllers.KnowledgeQuestionCtrl;
@@ -75,4 +77,22 @@ public class SceneCtrl {
         primaryStage.setTitle("Add actions");
         primaryStage.setScene(pair.getValue());
     }
+
+    public void showServerBrowser(){
+        var pair= scenes.get("ServerBrowser");
+        ServerBrowserController ctrl= (ServerBrowserController) pair.getKey();
+
+        primaryStage.setTitle("Server Browser");
+        primaryStage.setScene(pair.getValue());
+    }
+
+    public void showWaitingRoom(){
+        var pair= scenes.get("WaitingRoom");
+        WaitingRoomController ctrl= (WaitingRoomController) pair.getKey();
+
+        primaryStage.setTitle("WaitingRoom");
+        primaryStage.setScene(pair.getValue());
+    }
+
+
 }
