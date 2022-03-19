@@ -95,7 +95,7 @@
       <ToolBar fx:id="toolbar" prefHeight="57.0" prefWidth="362.0" GridPane.columnIndex="7" GridPane.rowIndex="7">
         <items>
             <ImageView fitHeight="60.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="emoji1" fitHeight="60.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="emoji1" fitHeight="60.0" fitWidth="74.0" onDragDetected="#emoji1Animation" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../pictures/emojis/tears-emoji-png.png" />
                </image></ImageView>
@@ -117,5 +117,6 @@
                </image></ImageView>
         </items>
       </ToolBar>
+      <ImageView fx:id="startAnimation" fitHeight="60.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="8" GridPane.rowIndex="7" />
     </children>
 </GridPane>

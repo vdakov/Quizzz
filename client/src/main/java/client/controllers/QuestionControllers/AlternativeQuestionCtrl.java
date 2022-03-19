@@ -4,14 +4,20 @@ import client.communication.ServerUtils;
 import client.controllers.SceneCtrl;
 import client.logic.QuestionParsers;
 import com.google.inject.Inject;
+import commons.Actions.Action;
 import commons.Questions.AlternativeQuestion;
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToolBar;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.util.Duration;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -49,7 +55,8 @@ public class AlternativeQuestionCtrl {
     private ImageView emoji4;
     @FXML
     private ImageView emoji5;
-
+    @FXML
+    private ImageView startAnimation;
 
 
     //Constructor for the Question Controller
@@ -73,7 +80,7 @@ public class AlternativeQuestionCtrl {
 
         this.correctAnswer = "" + ((alternativeQuestion == null) ? "" : alternativeQuestion.getOptions().get(1).getKey());
 
-        // if(serverId is Multiplayer)
+        // if(serverId is Singleplayer)
         {
             toolbar.setStyle("-fx-opacity: 1");
             emoji1.setStyle("-fx-opacity: 1 ");
@@ -83,6 +90,22 @@ public class AlternativeQuestionCtrl {
             emoji5.setStyle("-fx-opacity: 1 ");
         }
 
+    }
+
+    public void emoji1Animation(ActionEvent event)
+    {
+        startAnimation = emoji1;
+        transition(startAnimation);
+    }
+
+    public void transition(ImageView image)
+    {
+        TranslateTransition translate = new TranslateTransition();
+        translate.setNode(image);
+        translate.setDuration(Duration.millis(3500));
+        translate.setCycleCount(1);
+        translate.setByY(-500);
+        translate.play();
     }
 
     public void goToNextQuestion() {
@@ -121,7 +144,6 @@ public class AlternativeQuestionCtrl {
         getAnswerTop().setStyle("-fx-background-color: #b38df7;; -fx-border-color:  #b38df7;");
         getAnswerCenter().setStyle("-fx-background-color: #ffd783; -fx-border-color:  #ffd783");
         getAnswerBottom().setStyle("-fx-background-color: #ffa382; -fx-border-color:  #ffa382");
-
 
     }
 
