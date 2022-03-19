@@ -109,7 +109,7 @@ public class ComparisonQuestionActivityCtrl {
         getQuestionSecondOption().setText(comparisonQuestion.getOptions().get(1).getKey());
         getQuestionThirdOption() .setText(comparisonQuestion.getOptions().get(2).getKey());
 
-        questionNumberLabel.setText("Question "+getQuestionNumber());
+        questionNumberLabel.setText("Question " + getQuestionNumber());
         points.setText(String.valueOf(getPointsInt()));
         initialize();
     }
@@ -135,9 +135,9 @@ public class ComparisonQuestionActivityCtrl {
         firstOptionRectangle.setStroke(Color.valueOf("#ff0000"));
         secondOptionRectangle.setStroke(Color.valueOf("#ff0000"));
         thirdOptionRectangle.setStroke(Color.valueOf("#ff0000"));
-        if(getCorrectAnswer().equals(firstOptionText.getText())){
+        if (getCorrectAnswer().equals(firstOptionText.getText())) {
             firstOptionRectangle.setStroke(Color.valueOf("#92d36e"));
-        } else if(getCorrectAnswer().equals(secondOptionText.getText())){
+        } else if (getCorrectAnswer().equals(secondOptionText.getText())) {
             secondOptionRectangle.setStroke(Color.valueOf("#92d36e"));
         } else {
             thirdOptionRectangle.setStroke(Color.valueOf("#92d36e"));
@@ -147,10 +147,10 @@ public class ComparisonQuestionActivityCtrl {
     public void pointsUpdate() {
         // after the time ends the amount of won points is calculated and then shown to the player
         addedPointsInt = 0;
-        if(userAnswer.equals(getCorrectAnswer())){
+        if (userAnswer.equals(getCorrectAnswer())) {
             addedPointsInt = 500;
         }
-        addedPoints.setText("+"+String.valueOf(addedPointsInt));
+        addedPoints.setText("+" + String.valueOf(addedPointsInt));
     }
 
     public void goToMainScreen () throws IOException {
@@ -177,12 +177,12 @@ public class ComparisonQuestionActivityCtrl {
         return server.getAnswer();
     }
 
-    public int getPointsInt(){
+    public int getPointsInt() {
 //        return server.getScore();
         return Integer.parseInt(server.getScore());
     }
 
-    public int getQuestionNumber(){
+    public int getQuestionNumber() {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         return gameConfiguration.getCurrentQuestionNumber();
     }

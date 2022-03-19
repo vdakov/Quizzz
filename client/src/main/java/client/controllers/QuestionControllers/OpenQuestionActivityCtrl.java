@@ -7,7 +7,6 @@ import com.google.inject.Inject;
 import commons.Questions.OpenQuestion;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -15,10 +14,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
-import org.apache.commons.lang3.ObjectUtils;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 
 public class OpenQuestionActivityCtrl {
 
@@ -102,7 +99,7 @@ public class OpenQuestionActivityCtrl {
         }
         getQuestionStatement().setText(openQuestion.getQuestion().getKey());
 
-        questionNumberLabel.setText("Question "+getQuestionNumber());
+        questionNumberLabel.setText("Question " + getQuestionNumber());
         getAnswer().setStyle("-fx-background-color: #ffd783; -fx-border-color:  #ffd783");
         points.setText(String.valueOf(getPointsInt()));
     }
@@ -115,17 +112,17 @@ public class OpenQuestionActivityCtrl {
     }
 
     public void answerQuestion(ActionEvent event) {
-        Button current = (Button)event.getSource();
+        Button current = (Button) event.getSource();
         // answers the question and blocks the possibility to answer anymore
         try {
             userAnswerString = userAnswer.getText();
-        } catch (NullPointerException e){
-            if(userAnswer.getText() == (null) || userAnswer.getText().trim().isEmpty()){
+        } catch (NullPointerException e) {
+            if (userAnswer.getText() == (null) || userAnswer.getText().trim().isEmpty()) {
                 userAnswer.setText("-99999");
             }
         } catch (NumberFormatException e) {
             userAnswer.setText("-99999");
-        } catch (Exception e ){
+        } catch (Exception e ) {
             System.out.println(e);
         }
 
@@ -136,7 +133,7 @@ public class OpenQuestionActivityCtrl {
     public void answerUpdate() {
         // after the time ends the right answer is requested and then shown
         userAnswerRectangle.setStrokeWidth(5);
-        if(Integer.parseInt(userAnswerString) == (getCorrectAnswerInt())){
+        if (Integer.parseInt(userAnswerString) == (getCorrectAnswerInt())) {
             userAnswerRectangle.setStroke(Color.valueOf("#92d36e"));
         } else {
             userAnswerRectangle.setStroke(Color.valueOf("#ff0000"));
@@ -145,17 +142,17 @@ public class OpenQuestionActivityCtrl {
         correctAnswerRectangle.setFill(Color.valueOf("#c9f1fd"));
         correctAnswerRectangle.setStrokeWidth(5);
         correctAnswerRectangle.setStroke(Color.valueOf("#000000"));
-        correctAnswerLabel.setText("Correct Answer: "+getCorrectAnswerInt());
+        correctAnswerLabel.setText("Correct Answer: " + getCorrectAnswerInt());
     }
 
     public void pointsUpdate() {
         // after the time ends the amount of won points is calculated and then shown to the player
-        if(Integer.parseInt(userAnswerString)==(getCorrectAnswerInt())){
+        if (Integer.parseInt(userAnswerString) == (getCorrectAnswerInt())) {
             addedPointsInt = 500;
-        } else if (Integer.parseInt(userAnswerString)-(getCorrectAnswerInt())<=10){
+        } else if (Integer.parseInt(userAnswerString) - (getCorrectAnswerInt()) <= 10) {
             addedPointsInt = 250;
         }
-        addedPoints.setText("+"+String.valueOf(addedPointsInt));
+        addedPoints.setText("+" + String.valueOf(addedPointsInt));
 
         //after some effect
 //        pointsInt += addedPointsInt;
@@ -183,12 +180,12 @@ public class OpenQuestionActivityCtrl {
 
     public void setWriteAnswer(TextField writeAnswer) { this.writeAnswer = writeAnswer; }
 
-    public int getPointsInt(){
+    public int getPointsInt() {
 //        return server.getScore();
         return Integer.parseInt(server.getScore());
     }
 
-    public int getQuestionNumber(){
+    public int getQuestionNumber() {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         return gameConfiguration.getCurrentQuestionNumber();
     }

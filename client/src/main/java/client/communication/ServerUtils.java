@@ -95,7 +95,7 @@ public class ServerUtils {
                 .request().get(); //;
     }
 
-    public String getAnswer(){
+    public String getAnswer() {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         return ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("api/singlePlayer/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getRoomId() + "/" + gameConfiguration.getCurrentQuestionNumber() + "/getAnswer")
@@ -103,7 +103,7 @@ public class ServerUtils {
                 .accept(APPLICATION_JSON).get(String.class);
     }
 
-    public String getScore(){
+    public String getScore() {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         return ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("api/singlePlayer/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getRoomId() + "/getScore")
