@@ -1,7 +1,13 @@
 package server.controllers.GameControllers;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.async.DeferredResult;
 import server.services.GameServices.MultiplayerGameService;
+
+import java.util.HashMap;
+import java.util.function.Consumer;
 
 @RestController
 @RequestMapping("api/multiPlayer/{userName}")
@@ -24,10 +30,29 @@ public class MultiPlayerGameController {
         multiplayerGameService.joinMultiPlayerGame(userName, roomId);
     }
 
-    @GetMapping("/{gameId}/startGame")
-    public void startMultiPlayerGame() {
-        // need more thinking how to do this properly
+    @PostMapping("/{gameId}/startGame")
+    public void startMultiPlayerGame(@PathVariable("gameId") String gameId) {
+        multiplayerGameService.startMultiPlayerGame(gameId);
+        listeners.forEach((k, l) -> l.accept(true));
     }
+
+    private HashMap<String, Consumer<Boolean>> listeners = new HashMap<>();
+
+    @GetMapping("/{gameid}/waitForGameToStart")
+    public DeferredResult<ResponseEntity<Boolean>> waitForGameToStart(@PathVariable("gameId") String gameId) {
+        var noContent = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        var res = new DeferredResult<ResponseEntity<Boolean>>(5000L, noContent);
+
+        listeners.put(gameId, q -> {
+            res.setResult(ResponseEntity.ok(q));
+        });
+        res.onCompletion(() -> {
+            listeners.remove(gameId);
+        });
+
+        return res;
+    }
+
 
     @GetMapping("/getRandomRoomCode")
     public String getRandomRoomCode() {

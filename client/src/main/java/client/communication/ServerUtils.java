@@ -98,7 +98,10 @@ public class ServerUtils {
      * @param roomId
      */
     public void startMultiPlayerRoom(String userName, String roomId) {
-        //TODO
+        ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER).path("api/multiPlayer/" + userName + "/" + roomId + "/startGame")
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON).get(new GenericType<>() {});
     }
 
     /**
