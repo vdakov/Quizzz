@@ -14,6 +14,8 @@ import javafx.scene.text.Text;
 
 import java.util.List;
 
+import java.util.List;
+
 
 public class SingleplayerLeaderboardCtrl {
     @FXML
