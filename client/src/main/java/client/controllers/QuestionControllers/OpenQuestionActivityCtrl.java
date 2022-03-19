@@ -102,6 +102,8 @@ public class OpenQuestionActivityCtrl {
         questionNumberLabel.setText("Question " + getQuestionNumber());
         getAnswer().setStyle("-fx-background-color: #ffd783; -fx-border-color:  #ffd783");
         points.setText(String.valueOf(getPointsInt()));
+
+        initialize();
     }
 
     /**
