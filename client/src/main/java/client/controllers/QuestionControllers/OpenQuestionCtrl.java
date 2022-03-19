@@ -63,7 +63,7 @@ public class OpenQuestionCtrl {
     }
 
     public void goToNextQuestion() {
-        String response = server.getQuestion(this.userName, this.serverId, this.questionNumber + 1);
+        String response = server.getSinglePlayerQuestion(this.userName, this.serverId, this.questionNumber + 1);
         Scanner scanner = new Scanner(response).useDelimiter(": ");
         System.out.println("Open question am intrat");
         String next = scanner.next();

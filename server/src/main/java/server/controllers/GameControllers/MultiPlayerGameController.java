@@ -19,7 +19,7 @@ public class MultiPlayerGameController {
     }
 
     // maybe a post request
-    @GetMapping("/{roomId}/joinGame")
+    @PostMapping("/{roomId}/joinGame")
     public void joinMultiplayerGame(@PathVariable("userName") String userName, @PathVariable("roomId") String roomId) {
         multiplayerGameService.joinMultiPlayerGame(userName, roomId);
     }

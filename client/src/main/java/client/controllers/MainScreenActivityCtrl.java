@@ -23,7 +23,7 @@ public class MainScreenActivityCtrl {
         String serverId = server.createNewSinglePlayerRoom(userName);
         System.out.println(serverId);
 
-        String response = server.getQuestion(userName, serverId, 0);
+        String response = server.getSinglePlayerQuestion(userName, serverId, 0);
         Scanner scanner = new Scanner(response).useDelimiter(": ");
         switch (scanner.next()) {
             case "OpenQuestion": {
