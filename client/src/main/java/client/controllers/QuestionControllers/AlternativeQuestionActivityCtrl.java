@@ -57,19 +57,11 @@ public class AlternativeQuestionActivityCtrl {
     @FXML
     private Button goToMainScreen;
     @FXML
-    private Button answerTop, answerBottom, answerCenter;
-    @FXML
     private Label points;
     @FXML
     private Label addedPoints;
     @FXML
     private Label questionNumberLabel;
-    @FXML
-    private Label labelAnswerCenter;
-    @FXML
-    private Label labelAnswerTop;
-    @FXML
-    private Label labelAnswerBottom;
     @FXML
     private String correctAnswer;
 
@@ -97,6 +89,7 @@ public class AlternativeQuestionActivityCtrl {
     public void initialize() {
         questionNumberLabel.setText("Question ?");
         correctAnswer = firstOptionText.getText();
+        points.setText(String.valueOf(getPointsInt()));
     }
 
     /**
@@ -143,9 +136,9 @@ public class AlternativeQuestionActivityCtrl {
         firstOptionRectangle.setStroke(Color.valueOf("#ff0000"));
         secondOptionRectangle.setStroke(Color.valueOf("#ff0000"));
         thirdOptionRectangle.setStroke(Color.valueOf("#ff0000"));
-        if(correctAnswer.equals(firstOptionText.getText())){
+        if(getCorrectAnswer().equals(firstOptionText.getText())){
             firstOptionRectangle.setStroke(Color.valueOf("#92d36e"));
-        } else if(correctAnswer.equals(secondOptionText.getText())){
+        } else if(getCorrectAnswer().equals(secondOptionText.getText())){
             secondOptionRectangle.setStroke(Color.valueOf("#92d36e"));
         } else {
             thirdOptionRectangle.setStroke(Color.valueOf("#92d36e"));
@@ -156,7 +149,7 @@ public class AlternativeQuestionActivityCtrl {
         // after the time ends the amount of won points is calculated and then shown to the player
 
         addedPointsInt = 0;
-        if(userAnswer.equals(correctAnswer)){
+        if(userAnswer.equals(getCorrectAnswer())){
             addedPointsInt = 500;
         }
         addedPoints.setText("+"+String.valueOf(addedPointsInt));
@@ -193,15 +186,11 @@ public class AlternativeQuestionActivityCtrl {
         return thirdOptionText;
     }
 
-
-    //Getters and setters
-    public Button getAnswerTop() { return answerTop; }
-
-    public Button getAnswerBottom() {
-        return answerBottom;
+    public String getCorrectAnswer() {
+        return server.getAnswer();
     }
 
-    public Button getAnswerCenter() {
-        return answerCenter;
+    public int getPointsInt(){
+        return Integer.parseInt(server.getScore());
     }
 }

@@ -86,6 +86,7 @@ public class ComparisonQuestionActivityCtrl {
     public void initialize() {
         questionNumberLabel.setText("Question ?");
         correctAnswer = firstOptionText.getText();
+        points.setText(String.valueOf(getPointsInt()));
     }
 
     /**
@@ -130,9 +131,9 @@ public class ComparisonQuestionActivityCtrl {
         firstOptionRectangle.setStroke(Color.valueOf("#ff0000"));
         secondOptionRectangle.setStroke(Color.valueOf("#ff0000"));
         thirdOptionRectangle.setStroke(Color.valueOf("#ff0000"));
-        if(correctAnswer.equals(firstOptionText.getText())){
+        if(getCorrectAnswer().equals(firstOptionText.getText())){
             firstOptionRectangle.setStroke(Color.valueOf("#92d36e"));
-        } else if(correctAnswer.equals(secondOptionText.getText())){
+        } else if(getCorrectAnswer().equals(secondOptionText.getText())){
             secondOptionRectangle.setStroke(Color.valueOf("#92d36e"));
         } else {
             thirdOptionRectangle.setStroke(Color.valueOf("#92d36e"));
@@ -142,7 +143,7 @@ public class ComparisonQuestionActivityCtrl {
     public void pointsUpdate() {
         // after the time ends the amount of won points is calculated and then shown to the player
         addedPointsInt = 0;
-        if(userAnswer.equals(correctAnswer)){
+        if(userAnswer.equals(getCorrectAnswer())){
             addedPointsInt = 500;
         }
         addedPoints.setText("+"+String.valueOf(addedPointsInt));
@@ -168,6 +169,13 @@ public class ComparisonQuestionActivityCtrl {
         return thirdOptionText;
     }
 
+    public String getCorrectAnswer() {
+        return server.getAnswer();
+    }
 
+    public int getPointsInt(){
+//        return server.getScore();
+        return Integer.parseInt(server.getScore());
+    }
 
 }

@@ -87,6 +87,7 @@ public class KnowledgeQuestionActivityCtrl {
     public void initialize() {
         questionNumberLabel.setText("Question ?");
         correctAnswer = firstOptionText.getText();
+        points.setText(String.valueOf(getPointsInt()));
     }
 
     /**
@@ -129,9 +130,9 @@ public class KnowledgeQuestionActivityCtrl {
         firstOptionRectangle.setStroke(Color.valueOf("#ff0000"));
         secondOptionRectangle.setStroke(Color.valueOf("#ff0000"));
         thirdOptionRectangle.setStroke(Color.valueOf("#ff0000"));
-        if(correctAnswer.equals(firstOptionText.getText())){
+        if(getCorrectAnswer().equals(firstOptionText.getText())){
             firstOptionRectangle.setStroke(Color.valueOf("#92d36e"));
-        } else if(correctAnswer.equals(secondOptionText.getText())){
+        } else if(getCorrectAnswer().equals(secondOptionText.getText())){
             secondOptionRectangle.setStroke(Color.valueOf("#92d36e"));
         } else {
             thirdOptionRectangle.setStroke(Color.valueOf("#92d36e"));
@@ -141,7 +142,7 @@ public class KnowledgeQuestionActivityCtrl {
     public void pointsUpdate() {
         // after the time ends the amount of won points is calculated and then shown to the player
         addedPointsInt = 0;
-        if(userAnswer.equals(correctAnswer)){
+        if(userAnswer.equals(getCorrectAnswer())){
             addedPointsInt = 500;
         }
         addedPoints.setText("+"+String.valueOf(addedPointsInt));
@@ -179,15 +180,13 @@ public class KnowledgeQuestionActivityCtrl {
         return thirdOptionText;
     }
 
-    //Getters and setters
-    public Button getAnswerTop() { return answerTop; }
-
-    public Button getAnswerBottom() {
-        return answerBottom;
+    public String getCorrectAnswer() {
+        return server.getAnswer();
     }
 
-    public Button getAnswerCenter() {
-        return answerCenter;
+    public int getPointsInt(){
+//        return server.getScore();
+        return Integer.parseInt(server.getScore());
     }
 }
 

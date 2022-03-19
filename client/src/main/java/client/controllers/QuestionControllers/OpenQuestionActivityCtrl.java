@@ -83,6 +83,7 @@ public class OpenQuestionActivityCtrl {
         questionNumberLabel.setText("Question ?");
 
         getAnswer().setStyle("-fx-background-color: #ffd783; -fx-border-color:  #ffd783");
+        points.setText(String.valueOf(getPointsInt()));
     }
 
     /**
@@ -126,7 +127,7 @@ public class OpenQuestionActivityCtrl {
     public void answerUpdate() {
         // after the time ends the right answer is requested and then shown
         correctAnswerRectangle.setFill(Color.valueOf("#c9f1fd"));
-
+        correctAnswerLabel.setText("Correct Answer: "+getCorrectAnswerInt());
     }
 
     public void pointsUpdate() {
@@ -157,8 +158,6 @@ public class OpenQuestionActivityCtrl {
 
     public Button getAnswer() { return answer; }
 
-    public String getCorrectAnswer() { return correctAnswer; }
-
     public int getCorrectAnswerInt() {
         return Integer.parseInt(server.getAnswer());
     }
@@ -167,4 +166,8 @@ public class OpenQuestionActivityCtrl {
 
     public void setWriteAnswer(TextField writeAnswer) { this.writeAnswer = writeAnswer; }
 
+    public int getPointsInt(){
+//        return server.getScore();
+        return Integer.parseInt(server.getScore());
+    }
 }

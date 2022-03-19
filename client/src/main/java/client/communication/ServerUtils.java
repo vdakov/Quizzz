@@ -102,4 +102,13 @@ public class ServerUtils {
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON).get(String.class);
     }
+
+    public String getScore(){
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER).path("api/singlePlayer/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getRoomId() + "/getScore")
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON).get(String.class);
+//        return "10";
+    }
 }
