@@ -56,20 +56,20 @@ public class GameService {
         }
     }
 
-    public int getNumPlayers(String gameId){
+    public int getNumPlayers(String gameId) {
         return gameCatalog.getGame(gameId).getNumPlayers();
     }
 
-    public Game getGame(String gameId){
-        return  gameCatalog.getGame(gameId);
+    public Game getGame(String gameId) {
+        return gameCatalog.getGame(gameId);
     }
 
     public Game joinGame(String userName, String gameId) {
         gameCatalog.getGame(gameId).addUser(userName);
-        return  gameCatalog.getGame(gameId);
+        return gameCatalog.getGame(gameId);
     }
 
-    public GameCatalog getCurrentGames(){
+    public GameCatalog getCurrentGames() {
         return this.gameCatalog;
     }
 

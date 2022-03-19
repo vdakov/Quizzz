@@ -4,14 +4,13 @@ package client.controllers.MultiplayerControllers;
 import client.communication.ServerUtils;
 import client.controllers.SceneCtrl;
 import com.google.inject.Inject;
-import commons.GameContainer;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 
-import java.util.List;
+
 
 public class WaitingRoomController {
 
@@ -33,32 +32,42 @@ public class WaitingRoomController {
     private Text gameID;
 
     @Inject
-    public WaitingRoomController(ServerUtils server, SceneCtrl sceneCtrl){
-        this.server=server;
-        this.sceneCtrl= sceneCtrl;
+    public WaitingRoomController(ServerUtils server, SceneCtrl sceneCtrl) {
+        this.server = server;
+        this.sceneCtrl = sceneCtrl;
     }
 
-    public void initialize(){
+    public void initialize() {
         this.ownerText.setText("");
     }
 
-    public void goBackToServerBrowser(ActionEvent event){
-        this.server.removePlayer(this.userName,this.gameId);
+    public void goBackToServerBrowser(ActionEvent event) {
+        server.alert(this.userName);
+        this.server.removePlayer(this.userName, this.gameId);
         this.sceneCtrl.showServerBrowser();
     }
 
-    public void adjustText(boolean owner, String gameId, String userName){
+    public void adjustText(boolean owner, String gameId, String userName) {
+        this.userName = userName;
+        this.gameId = gameId;
         this.ownerText.setText("");
-        if(owner){
-            this.owner=owner;//sets this if the owner leaves
+        if (owner) {
+            this.owner = owner; //sets this if the owner leaves
+            this.startButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    //TO BE IMPLEMENTED- START OF GAME
+                }
+            });
             this.ownerText.setText("YOU ARE THE OWNER OF THIS ROOM");
+        } else {
+            this.startButton.setDisable(true);
         }
         this.gameID.setText("GAME ID: " + gameId);
 
-        this.playerLabel.setText( "There are currently "+
+        this.playerLabel.setText("There are currently " +
                 server.getNumPlayersInGame(gameId) + " players in the room");
     }
-
 
 
 }

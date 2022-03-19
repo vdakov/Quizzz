@@ -13,7 +13,6 @@ public class Game {
     private List<Pair<String, Integer>> player_Score;
 
 
-
     public Game(String gameId, List<Pair<Question, String>> gameQuestionsWithAnswers) {
         this.gameId = gameId;
         this.gameQuestionsWithAnswers = gameQuestionsWithAnswers;
@@ -40,7 +39,7 @@ public class Game {
         player_Score.add(Pair.of(user, 0));
     }
 
-    public void removeUser(String userName){
+    public void removeUser(String userName) {
         for (int i = 0; i < player_Score.size(); i++) {
             if (player_Score.get(i).getKey().equals(userName)) {
                 player_Score.remove(i);
@@ -75,7 +74,7 @@ public class Game {
         }
     }
 
-    public int getNumPlayers(){
+    public int getNumPlayers() {
         return this.player_Score.size();
     }
 

@@ -25,8 +25,8 @@ public class SceneCtrl {
         this.primaryStage = primaryStage;
         this.scenes = scenes;
 
-      showMainScreenScene();
-      primaryStage.show();
+        showMainScreenScene();
+        primaryStage.show();
     }
 
     public void showAlternativeQuestionScene(AlternativeQuestion alternativeQuestion, int questionNo, String userName, String roomId) {
@@ -79,25 +79,24 @@ public class SceneCtrl {
         primaryStage.setScene(pair.getValue());
     }
 
-    public void showServerBrowser(){
-        var pair= scenes.get("ServerBrowser");
-        ServerBrowserController ctrl= (ServerBrowserController) pair.getKey();
+    public void showServerBrowser() {
+        var pair = scenes.get("ServerBrowser");
+        ServerBrowserController ctrl = (ServerBrowserController) pair.getKey();
 
 
         primaryStage.setTitle("Server Browser");
         primaryStage.setScene(pair.getValue());
     }
 
-    public void showWaitingRoom(boolean owner, String gameId, String userName){
-        var pair= scenes.get("WaitingRoom");
-        WaitingRoomController ctrl= (WaitingRoomController) pair.getKey();
+    public void showWaitingRoom(boolean owner, String gameId, String userName) {
+        var pair = scenes.get("WaitingRoom");
+        WaitingRoomController ctrl = (WaitingRoomController) pair.getKey();
 
-        ctrl.adjustText(owner,gameId, userName);
+        ctrl.adjustText(owner, gameId, userName);
 
         primaryStage.setTitle("WaitingRoom");
         primaryStage.setScene(pair.getValue());
     }
-
 
 
 }

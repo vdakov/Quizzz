@@ -47,7 +47,7 @@ public class MainScreenActivityCtrl {
 
     }
 
-    public void enterServerBrowser(ActionEvent event){
+    public void enterServerBrowser(ActionEvent event) {
         this.sceneCtrl.showServerBrowser();
     }
 }

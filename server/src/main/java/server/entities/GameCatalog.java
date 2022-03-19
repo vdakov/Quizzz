@@ -14,6 +14,14 @@ public class GameCatalog {
         this.gameList = gameList;
     }
 
+    public void cleanEmptyGames() {
+        for (Game game : gameList) {
+            if (game.getNumPlayers() == 0) {
+                gameList.remove(game);
+            }
+        }
+    }
+
     public List<Game> getGameList() {
         return gameList;
     }

@@ -3,14 +3,11 @@
 package server.controllers.GameControllers;
 
 import commons.GameContainer;
-import commons.Questions.Question;
 import org.springframework.web.bind.annotation.*;
 import server.entities.Game;
-import server.entities.GameCatalog;
 import server.services.GameServices.GameService;
-
 import java.util.ArrayList;
-import java.util.List;
+
 
 @RestController
 @RequestMapping("api/multiplayer")
@@ -24,14 +21,14 @@ public class MultiplayerGameController {
 
     @GetMapping("/createNewGame/{userName}")
     public String createNewGame(@PathVariable("userName") String userName) {
-        String gameId= gameService.createNewGame(userName);
+        String gameId = gameService.createNewGame(userName);
         System.out.println("CREATED GAME WITH ID " + gameId);
         return gameId;
     }
 
     @GetMapping("/joinGame/{userName}/{gameId}")
-    public void joinGame(@PathVariable("userName") String userName,@PathVariable("gameId") String gameId) {
-        gameService.joinGame(userName,gameId);
+    public void joinGame(@PathVariable("userName") String userName, @PathVariable("gameId") String gameId) {
+        gameService.joinGame(userName, gameId);
         System.out.println(userName + " JOINED GAME " + gameId);
     }
 
@@ -48,49 +45,49 @@ public class MultiplayerGameController {
     }
 
     @GetMapping("/{gameId}")
-    public Game getGame(@PathVariable("gameId") String gameId){
+    public Game getGame(@PathVariable("gameId") String gameId) {
         return gameService.getGame(gameId);
     }
 
 
     @GetMapping("/{gameId}/numPlayers")
-    public int getNumPlayer(@PathVariable("gameId") String gameId){
+    public int getNumPlayer(@PathVariable("gameId") String gameId) {
         return gameService.getNumPlayers(gameId);
     }
 
     @GetMapping("/currentGames")
-    public ArrayList<GameContainer> getCurrentGames(){
-        ArrayList<GameContainer> currentGames= new ArrayList<>();
-        for(int i=0; i<gameService.getCurrentGames().getGameList().size();i++){
-            if(gameService.getCurrentGames().getGameList().get(i)
-                    .getNumPlayers()!=0) {
+    public ArrayList<GameContainer> getCurrentGames() {
 
-                currentGames.add(
-                        new GameContainer(gameService.getCurrentGames()
-                                .getGameList().get(i).getGameId(),
-                                gameService.getCurrentGames().getGameList().
-                                        get(i).getNumPlayers())
-                );
+        gameService.getCurrentGames().cleanEmptyGames();
 
-            }
+        ArrayList<GameContainer> currentGames = new ArrayList<>();
+        for (int i = 0; i < gameService.getCurrentGames().getGameList().size(); i++) {
+
+            currentGames.add(
+                    new GameContainer(gameService.getCurrentGames()
+                            .getGameList().get(i).getGameId(),
+                            gameService.getCurrentGames().getGameList().
+                                    get(i).getNumPlayers())
+            );
+
+
         }
-
 
 
         return currentGames;
     }
 
     @GetMapping("/gameIDList")
-    public ArrayList<String> gameIDList(){
-        ArrayList<String> ids= new ArrayList<>();
-        for(int i=0;i<this.getCurrentGames().size();i++){
+    public ArrayList<String> gameIDList() {
+        ArrayList<String> ids = new ArrayList<>();
+        for (int i = 0; i < this.getCurrentGames().size(); i++) {
             ids.add(this.getCurrentGames().get(i).getGameId());
         }
         return ids;
     }
 
     @GetMapping("/removePlayer/{userName}/{gameId}")
-    public void removePlayer(@PathVariable String userName, @PathVariable String gameId){
+    public void removePlayer(@PathVariable String userName, @PathVariable String gameId) {
         this.getGame(gameId).removeUser(userName);
     }
 
