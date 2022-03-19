@@ -141,6 +141,7 @@ public class AlternativeQuestionActivityCtrl {
         timeline.getKeyFrames().add(
                 new KeyFrame(Duration.seconds(startTime + 1),      //the timeLine handles an animation which lasts start + 1 seconds
                         new KeyValue(timeSeconds, 0)));    //animation finishes when timeSeconds comes to 0
+        timeline.setOnFinished(event -> goToNextQuestion());       //proceeds to the next question if no answer was given in 10 sec
         timeline.playFromStart();                                 //start the animation
     }
     public void handleTimerButton(ActionEvent event) {

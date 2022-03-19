@@ -77,6 +77,7 @@ public class ComparisonQuestionActivityCtrl {
         timeline.getKeyFrames().add(
                 new KeyFrame(Duration.seconds(startTime + 1),
                         new KeyValue(timeSeconds, 0)));
+        timeline.setOnFinished(event -> goToNextQuestion());
         timeline.playFromStart();
     }
     public void handleTimerButton(ActionEvent event) {
