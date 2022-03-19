@@ -71,11 +71,7 @@
         </Button>
       <ToolBar fx:id="toolbar" prefHeight="40.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="9">
          <items>
-            <ImageView fx:id="emoji1" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="emoji2" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="emoji3" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="emoji4" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="emoji5" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" />
          </items>
       </ToolBar>
     </children>
