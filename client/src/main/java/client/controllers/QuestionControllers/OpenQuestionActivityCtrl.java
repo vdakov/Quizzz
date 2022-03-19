@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import org.apache.commons.lang3.ObjectUtils;
 
@@ -83,6 +84,12 @@ public class OpenQuestionActivityCtrl {
      * Initialises all the colors for the current scene
      */
     public void initialize() {
+
+        userAnswerRectangle.setStroke(Paint.valueOf("#000000"));
+        correctAnswerRectangle.setFill(Paint.valueOf("#499ee8"));
+        correctAnswerRectangle.setStrokeWidth(0);
+        addedPoints.setText(" ");
+        addedPointsInt = 0;
     }
 
     /**
@@ -143,7 +150,6 @@ public class OpenQuestionActivityCtrl {
 
     public void pointsUpdate() {
         // after the time ends the amount of won points is calculated and then shown to the player
-        addedPointsInt = 0;
         if(Integer.parseInt(userAnswerString)==(getCorrectAnswerInt())){
             addedPointsInt = 500;
         } else if (Integer.parseInt(userAnswerString)-(getCorrectAnswerInt())<=10){

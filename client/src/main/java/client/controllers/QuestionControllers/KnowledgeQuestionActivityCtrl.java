@@ -86,6 +86,12 @@ public class KnowledgeQuestionActivityCtrl {
      * Initialises all the colors for the current scene
      */
     public void initialize() {
+        firstOptionRectangle.setStroke(Color.valueOf("#b38df7"));
+        secondOptionRectangle.setStroke(Color.valueOf("#ffd783"));
+        thirdOptionRectangle.setStroke(Color.valueOf("#ffa382"));
+
+        addedPoints.setText(" ");
+        addedPointsInt = 0;
     }
 
     /**

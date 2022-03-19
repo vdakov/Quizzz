@@ -90,6 +90,12 @@ public class AlternativeQuestionActivityCtrl {
      */
     public void initialize() {
 
+        firstOptionRectangle.setStroke(Color.valueOf("#b38df7"));
+        secondOptionRectangle.setStroke(Color.valueOf("#ffd783"));
+        thirdOptionRectangle.setStroke(Color.valueOf("#ffa382"));
+
+        addedPoints.setText(" ");
+        addedPointsInt = 0;
     }
 
     /**
@@ -164,7 +170,6 @@ public class AlternativeQuestionActivityCtrl {
 //
 //        //after some effect
 //        pointsInt += addedPointsInt;
-//        addedPointsInt = 0;
 //        addedPoints.setText(null);
 //        points.setText(String.valueOf(pointsInt));
     }
