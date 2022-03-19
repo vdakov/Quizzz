@@ -66,11 +66,11 @@
          <font>
             <Font name="Chalkboard" size="24.0" />
          </font></Button>
-      <Label fx:id="timeLabel" prefHeight="103.0" prefWidth="389.0" text="10" GridPane.columnIndex="3" GridPane.rowIndex="2">
+      <Label fx:id="timeLabel" prefHeight="103.0" prefWidth="389.0" text="10" translateY="40.0" GridPane.columnIndex="3" GridPane.rowIndex="9">
          <font>
-            <Font size="74.0" />
+            <Font size="55.0" />
          </font>
       </Label>
-      <ProgressBar fx:id="progressBarTime" prefHeight="32.0" prefWidth="263.0" progress="0.0" GridPane.columnIndex="3" GridPane.rowIndex="10" />
+      <ProgressBar fx:id="progressBarTime" prefHeight="32.0" prefWidth="263.0" progress="0.0" GridPane.columnIndex="3" GridPane.rowIndex="9" />
    </children>
 </GridPane>

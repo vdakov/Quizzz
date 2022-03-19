@@ -90,9 +90,9 @@
             <Font name="Chalkboard" size="26.0" />
          </font>
       </Label>
-      <Label fx:id="timeLabel" prefHeight="298.0" prefWidth="609.0" text="10" GridPane.columnIndex="7" GridPane.rowIndex="7">
+      <Label fx:id="timeLabel" prefHeight="298.0" prefWidth="609.0" text="10" translateY="40.0" GridPane.columnIndex="7" GridPane.rowIndex="3">
          <font>
-            <Font size="96.0" />
+            <Font size="47.0" />
          </font>
       </Label>
       <ProgressBar fx:id="progressBarTime" prefHeight="31.0" prefWidth="337.0" progress="0.0" GridPane.columnIndex="7" GridPane.rowIndex="3" />

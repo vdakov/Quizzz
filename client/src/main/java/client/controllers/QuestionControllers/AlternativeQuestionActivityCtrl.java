@@ -133,20 +133,19 @@ public class AlternativeQuestionActivityCtrl {
     }
 
     public void startTimer() {
-        double timeProgress = 1;
         progressBarTime.progressProperty().bind(Bindings.divide(timeSeconds, startTime));
 
-        timeLabel.textProperty().bind(timeSeconds.asString());
+        timeLabel.textProperty().bind(timeSeconds.asString());    //bind the progressbar value to the seconds left
         timeSeconds.set((int) startTime);
         timeline = new Timeline();
         timeline.getKeyFrames().add(
-                new KeyFrame(Duration.seconds(startTime + 1),
-                        new KeyValue(timeSeconds, 0)));
-        timeline.playFromStart();
+                new KeyFrame(Duration.seconds(startTime + 1),      //the timeLine handles an animation which lasts start + 1 seconds
+                        new KeyValue(timeSeconds, 0)));    //animation finishes when timeSeconds comes to 0
+        timeline.playFromStart();                                 //start the animation
     }
     public void handleTimerButton(ActionEvent event) {
         if (timeline != null) {
-            timeline.stop();
+            timeline.stop();        //if timeline exists stop it when any answer button is pressed
         }
         timeline.stop();
         System.out.println("Time took to answer - " + timeSeconds);
@@ -157,13 +156,7 @@ public class AlternativeQuestionActivityCtrl {
     public void answer(ActionEvent event) {
         Button current = (Button) event.getSource();
 
-        // stop the timer
-        if (timeline != null) {
-            timeline.stop();
-        }
-        timeline.stop();
-        System.out.println("Time took to answer - " + (timeSeconds.getValue() - startTime) );
-        //
+        handleTimerButton(event);
 
         if (current.getText().equals(getCorrectAnswer())) {
             // multiply the score by percentage time remaining

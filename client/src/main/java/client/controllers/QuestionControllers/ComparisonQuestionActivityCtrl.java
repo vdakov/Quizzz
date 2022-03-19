@@ -93,13 +93,7 @@ public class ComparisonQuestionActivityCtrl {
         Button current = (Button) event.getSource();
         System.out.println("Comparison question am intrat");
 
-        // stop the timer
-        if (timeline != null) {
-            timeline.stop();
-        }
-        timeline.stop();
-        System.out.println("Time took to answer - " + (timeSeconds.getValue() - startTime) );
-        //
+        handleTimerButton(event);
 
         if (current.getText().equals("10")) {
             pointsInt += 500; //global variable for points so it remembers it

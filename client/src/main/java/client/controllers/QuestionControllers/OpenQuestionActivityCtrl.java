@@ -134,13 +134,7 @@ public class OpenQuestionActivityCtrl {
     public void answer(ActionEvent event) throws InterruptedException {
         Button current = (Button) event.getSource();
 
-        // stop the timer
-        if (timeline != null) {
-            timeline.stop();
-        }
-        timeline.stop();
-        System.out.println("Time took to answer - " + (timeSeconds.getValue() - startTime) );
-        //
+        handleTimerButton(event);
 
         if (writeAnswer.getText().equals(getCorrectAnswer())) {
             pointsInt += 500; //global variable for points so it remembers it
