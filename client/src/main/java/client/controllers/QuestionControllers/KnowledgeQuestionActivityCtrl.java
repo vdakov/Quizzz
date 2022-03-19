@@ -2,6 +2,7 @@ package client.controllers.QuestionControllers;
 
 import client.communication.ServerUtils;
 import client.controllers.SceneCtrl;
+import client.data.GameConfiguration;
 import com.google.inject.Inject;
 import commons.Questions.KnowledgeQuestion;
 import javafx.fxml.FXML;
@@ -85,9 +86,6 @@ public class KnowledgeQuestionActivityCtrl {
      * Initialises all the colors for the current scene
      */
     public void initialize() {
-        questionNumberLabel.setText("Question ?");
-        correctAnswer = firstOptionText.getText();
-        points.setText(String.valueOf(getPointsInt()));
     }
 
     /**
@@ -104,6 +102,9 @@ public class KnowledgeQuestionActivityCtrl {
         getQuestionFirstOption() .setText(knowledgeQuestion.getOptions().get(0));
         getQuestionSecondOption().setText(knowledgeQuestion.getOptions().get(1));
         getQuestionThirdOption() .setText(knowledgeQuestion.getOptions().get(2));
+
+        questionNumberLabel.setText("Question "+getQuestionNumber());
+        points.setText(String.valueOf(getPointsInt()));
 
         initialize();
     }
@@ -187,6 +188,11 @@ public class KnowledgeQuestionActivityCtrl {
     public int getPointsInt(){
 //        return server.getScore();
         return Integer.parseInt(server.getScore());
+    }
+
+    public int getQuestionNumber(){
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+        return gameConfiguration.getCurrentQuestionNumber();
     }
 }
 

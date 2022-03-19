@@ -2,6 +2,7 @@ package client.controllers.QuestionControllers;
 
 import client.communication.ServerUtils;
 import client.controllers.SceneCtrl;
+import client.data.GameConfiguration;
 import com.google.inject.Inject;
 import commons.Questions.OpenQuestion;
 import javafx.event.ActionEvent;
@@ -62,6 +63,8 @@ public class OpenQuestionActivityCtrl {
     @FXML
     private Label correctAnswerLabel;
     @FXML
+    private Rectangle userAnswerRectangle;
+    @FXML
     private Rectangle correctAnswerRectangle;
 
 
@@ -80,10 +83,6 @@ public class OpenQuestionActivityCtrl {
      * Initialises all the colors for the current scene
      */
     public void initialize() {
-        questionNumberLabel.setText("Question ?");
-
-        getAnswer().setStyle("-fx-background-color: #ffd783; -fx-border-color:  #ffd783");
-        points.setText(String.valueOf(getPointsInt()));
     }
 
     /**
@@ -95,7 +94,10 @@ public class OpenQuestionActivityCtrl {
             return;
         }
         getQuestionStatement().setText(openQuestion.getQuestion().getKey());
-//        getQuestionStatement().setText("Taking a hot shower(50L water)");
+
+        questionNumberLabel.setText("Question "+getQuestionNumber());
+        getAnswer().setStyle("-fx-background-color: #ffd783; -fx-border-color:  #ffd783");
+        points.setText(String.valueOf(getPointsInt()));
     }
 
     /**
@@ -112,10 +114,10 @@ public class OpenQuestionActivityCtrl {
             userAnswerString = userAnswer.getText();
         } catch (NullPointerException e){
             if(userAnswer.getText() == (null) || userAnswer.getText().trim().isEmpty()){
-                userAnswer.setText("You didn't put any answer");
+                userAnswer.setText("-99999");
             }
         } catch (NumberFormatException e) {
-            userAnswer.setText("Enter number");
+            userAnswer.setText("-99999");
         } catch (Exception e ){
             System.out.println(e);
         }
@@ -126,7 +128,16 @@ public class OpenQuestionActivityCtrl {
 
     public void answerUpdate() {
         // after the time ends the right answer is requested and then shown
+        userAnswerRectangle.setStrokeWidth(5);
+        if(Integer.parseInt(userAnswerString) == (getCorrectAnswerInt())){
+            userAnswerRectangle.setStroke(Color.valueOf("#92d36e"));
+        } else {
+            userAnswerRectangle.setStroke(Color.valueOf("#ff0000"));
+        }
+
         correctAnswerRectangle.setFill(Color.valueOf("#c9f1fd"));
+        correctAnswerRectangle.setStrokeWidth(5);
+        correctAnswerRectangle.setStroke(Color.valueOf("#000000"));
         correctAnswerLabel.setText("Correct Answer: "+getCorrectAnswerInt());
     }
 
@@ -141,10 +152,10 @@ public class OpenQuestionActivityCtrl {
         addedPoints.setText("+"+String.valueOf(addedPointsInt));
 
         //after some effect
-        pointsInt += addedPointsInt;
-        addedPointsInt = 0;
-        addedPoints.setText(null);
-        points.setText(String.valueOf(pointsInt));
+//        pointsInt += addedPointsInt;
+//        addedPointsInt = 0;
+//        addedPoints.setText(null);
+//        points.setText(String.valueOf(pointsInt));
 
     }
 
@@ -169,5 +180,10 @@ public class OpenQuestionActivityCtrl {
     public int getPointsInt(){
 //        return server.getScore();
         return Integer.parseInt(server.getScore());
+    }
+
+    public int getQuestionNumber(){
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+        return gameConfiguration.getCurrentQuestionNumber();
     }
 }

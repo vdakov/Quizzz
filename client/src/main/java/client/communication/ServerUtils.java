@@ -109,6 +109,5 @@ public class ServerUtils {
                 .target(SERVER).path("api/singlePlayer/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getRoomId() + "/getScore")
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON).get(String.class);
-//        return "10";
     }
 }

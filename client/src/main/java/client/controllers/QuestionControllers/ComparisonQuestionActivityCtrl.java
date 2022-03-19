@@ -2,6 +2,7 @@ package client.controllers.QuestionControllers;
 
 import client.communication.ServerUtils;
 import client.controllers.SceneCtrl;
+import client.data.GameConfiguration;
 import com.google.inject.Inject;
 import commons.Questions.ComparisonQuestion;
 import javafx.fxml.FXML;
@@ -84,9 +85,6 @@ public class ComparisonQuestionActivityCtrl {
      * Initialises all the colors for the current scene
      */
     public void initialize() {
-        questionNumberLabel.setText("Question ?");
-        correctAnswer = firstOptionText.getText();
-        points.setText(String.valueOf(getPointsInt()));
     }
 
     /**
@@ -99,14 +97,13 @@ public class ComparisonQuestionActivityCtrl {
         }
 
         getQuestionStatement().setText(comparisonQuestion.getQuestion().getKey());
-//        getQuestionStatement().setText("What requires more energy");
 
         getQuestionFirstOption() .setText(comparisonQuestion.getOptions().get(0).getKey());
         getQuestionSecondOption().setText(comparisonQuestion.getOptions().get(1).getKey());
         getQuestionThirdOption() .setText(comparisonQuestion.getOptions().get(2).getKey());
-//            getQuestionFirstOption().setText("Taking a hot shower");
-//            getQuestionSecondOption().setText("Cooking a meal on your hot plate (30min)");
-//            getQuestionThirdOption().setText("Playing a game on your playstation (3h)");
+
+        questionNumberLabel.setText("Question "+getQuestionNumber());
+        points.setText(String.valueOf(getPointsInt()));
         initialize();
     }
 
@@ -178,4 +175,8 @@ public class ComparisonQuestionActivityCtrl {
         return Integer.parseInt(server.getScore());
     }
 
+    public int getQuestionNumber(){
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+        return gameConfiguration.getCurrentQuestionNumber();
+    }
 }
