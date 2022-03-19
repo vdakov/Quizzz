@@ -6,6 +6,7 @@ import com.google.inject.Inject;
 import commons.Questions.OpenQuestion;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -15,6 +16,7 @@ import javafx.scene.shape.Rectangle;
 import org.apache.commons.lang3.ObjectUtils;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 public class OpenQuestionActivityCtrl {
 
@@ -105,10 +107,17 @@ public class OpenQuestionActivityCtrl {
     public void answerQuestion(ActionEvent event) {
         Button current = (Button)event.getSource();
         // answers the question and blocks the possibility to answer anymore
-        if(userAnswer.getText() == (null)){
-            userAnswer.setText("You didn't put any answer");
+        try {
+            userAnswerString = userAnswer.getText();
+        } catch (NullPointerException e){
+            if(userAnswer.getText() == (null) || userAnswer.getText().trim().isEmpty()){
+                userAnswer.setText("You didn't put any answer");
+            }
+        } catch (NumberFormatException e) {
+            userAnswer.setText("Enter number");
+        } catch (Exception e ){
+            System.out.println(e);
         }
-        userAnswerString = userAnswer.getText();
     }
 
     public void answerUpdate() {

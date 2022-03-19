@@ -47,11 +47,7 @@ public class ComparisonQuestionActivityCtrl {
 
 
     @FXML
-    private Label sampleQuestion;
-    @FXML
     private Button goToMainScreen;
-    @FXML
-    private Button answerLeft, answerCenter, answerRight;
     @FXML
     private Label points;
     @FXML
@@ -144,7 +140,7 @@ public class ComparisonQuestionActivityCtrl {
     }
 
     private Label getQuestionStatement() {
-        return sampleQuestion;
+        return questionStatement;
     }
 
     private Label getQuestionFirstOption() {
@@ -160,15 +156,5 @@ public class ComparisonQuestionActivityCtrl {
     }
 
 
-    //Getters and setters
-    public Button getAnswerTop() { return answerLeft; }
-
-    public Button getAnswerBottom() {
-        return answerRight;
-    }
-
-    public Button getAnswerCenter() {
-        return answerCenter;
-    }
 
 }

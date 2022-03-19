@@ -9,6 +9,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.text.Text?>
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="838.0" prefWidth="1092.0" style="-fx-background-color: #499ee8;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="client.controllers.QuestionControllers.ComparisonQuestionActivityCtrl">
     <columnConstraints>
@@ -79,5 +80,10 @@
        <Label fx:id="secondOptionText" onMouseClicked="#answerQuestion" prefHeight="98.0" prefWidth="269.0" wrapText="true" GridPane.columnIndex="4" GridPane.rowIndex="9" />
        <Label fx:id="thirdOptionText" onMouseClicked="#answerQuestion" prefHeight="98.0" prefWidth="269.0" wrapText="true" GridPane.columnIndex="6" GridPane.rowIndex="9" />
 
+       <Label fx:id="questionStatement" text="What requires more energy?" textAlignment="CENTER"  GridPane.columnIndex="2" GridPane.rowIndex="2">
+           <font>
+               <Font name="Chalkboard" size="40.0" />
+           </font>
+       </Label>
    </children>
 </GridPane>
