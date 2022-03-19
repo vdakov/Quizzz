@@ -44,7 +44,7 @@
                         <Font size="36.0" />
                     </font>
                     <GridPane.margin>
-                        <Insets bottom="180.0" />
+                        <Insets bottom="90.0" />
                     </GridPane.margin>
                 </Text>
                 <Text fx:id="place2" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Sam" textAlignment="CENTER" wrappingWidth="202.462890625" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
@@ -76,7 +76,7 @@
                         <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
                     </GridPane.margin>
                 </TableView>
-                <Button mnemonicParsing="false" onAction="#home" prefHeight="50.0" prefWidth="50.0" text="Home" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+                <Button mnemonicParsing="false" onAction="#exit" text="Exit" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.valignment="TOP">
                     <GridPane.margin>
                         <Insets left="10.0" top="10.0" />
                     </GridPane.margin>

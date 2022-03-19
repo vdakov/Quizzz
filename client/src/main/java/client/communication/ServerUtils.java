@@ -16,6 +16,7 @@
 package client.communication;
 
 import commons.Actions.Action;
+import commons.Leaderboard.LeaderboardEntry;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.GenericType;
@@ -55,7 +56,17 @@ public class ServerUtils {
                 .target(SERVER).path("api/activities/list") //
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
-                .get(new GenericType<>() {});
+                .get(new GenericType<>() {
+                });
+    }
+
+    public List<LeaderboardEntry> getSingleplayerLeaderboard() {
+        return ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/leaderboard/singleplayer") //
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .get(new GenericType<>() {
+                });
     }
 
     public Action getRandomAction() {

@@ -22,7 +22,7 @@ public class SceneCtrl {
         this.primaryStage = primaryStage;
         this.scenes = scenes;
 
-        showMainScreenScene();
+        showSingeleplayerLeaderboard();
         primaryStage.show();
     }
 
@@ -81,6 +81,15 @@ public class SceneCtrl {
         var pair = scenes.get("AddAction");
 
         primaryStage.setTitle("Add actions");
+        primaryStage.setScene(pair.getValue());
+    }
+
+    public void showSingeleplayerLeaderboard() {
+        var pair = scenes.get("SingleplayerLeaderboard");
+        var ctrl = (SingleplayerLeaderboardCtrl) pair.getKey();
+
+        ctrl.initialize();
+        primaryStage.setTitle("Singleplayer Leaderboard");
         primaryStage.setScene(pair.getValue());
     }
 }
