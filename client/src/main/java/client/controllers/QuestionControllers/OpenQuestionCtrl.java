@@ -5,6 +5,7 @@ import client.controllers.SceneCtrl;
 import client.logic.QuestionParsers;
 import com.google.inject.Inject;
 import commons.Questions.OpenQuestion;
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -12,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToolBar;
 import javafx.scene.image.ImageView;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -79,6 +81,16 @@ public class OpenQuestionCtrl {
             emoji4.setStyle("-fx-opacity: 1");
             emoji5.setStyle("-fx-opacity: 1 ");
         }
+    }
+
+    public void transition(ImageView image)
+    {
+        TranslateTransition translate = new TranslateTransition();
+        translate.setNode(image);
+        translate.setDuration(Duration.millis(3500));
+        translate.setCycleCount(1);
+        translate.setByY(-500);
+        translate.play();
     }
 
     //Initializes the sample question screen through hardcoding

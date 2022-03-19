@@ -91,7 +91,7 @@ public class AlternativeQuestionCtrl {
 
     public void emoji1Animation(MouseEvent event)
     {
-        transition(emoji1);
+        sceneCtrl.showMainScreenScene();
     }
 
     public void transition(ImageView image)
