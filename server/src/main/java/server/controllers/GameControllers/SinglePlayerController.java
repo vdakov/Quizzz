@@ -28,9 +28,10 @@ public class SinglePlayerController {
         return singlePlayerGameService.getPlayerScore(userName, gameId);
     }
 
-    @PostMapping("/{gameId}/{questionNumber}")
-    public void updateAnswer(@PathVariable("userName") String userName, @PathVariable("gameId") String gameId,
+    @PostMapping("/{gameId}/{questionNumber}/getAnswer")
+    public String updateAnswer(@PathVariable("userName") String userName, @PathVariable("gameId") String gameId,
                              @PathVariable("questionNumber") int questionNumber, @RequestBody String answer) {
         singlePlayerGameService.updateScore(userName, gameId, questionNumber, answer);
+        return singlePlayerGameService.getAnswer(userName, gameId, questionNumber);
     }
 }

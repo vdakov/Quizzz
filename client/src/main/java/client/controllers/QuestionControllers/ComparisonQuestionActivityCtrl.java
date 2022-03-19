@@ -20,6 +20,10 @@ public class ComparisonQuestionActivityCtrl {
     private final ServerUtils server;
     private final SceneCtrl sceneCtrl;
 
+    private int pointsInt;
+    private int addedPointsInt;
+    private String userAnswer;
+
     // final needed labels for questions
     @FXML
     private Label labelGoBack;
@@ -115,6 +119,10 @@ public class ComparisonQuestionActivityCtrl {
     public void answerQuestion(MouseEvent event) {
         // answers the question and blocks the possibility to answer anymore
         Label current = (Label) event.getSource();
+        userAnswer = current.getText();
+
+        answerUpdate();
+        pointsUpdate();
     }
 
     public void answerUpdate() {
@@ -133,6 +141,11 @@ public class ComparisonQuestionActivityCtrl {
 
     public void pointsUpdate() {
         // after the time ends the amount of won points is calculated and then shown to the player
+        addedPointsInt = 0;
+        if(userAnswer.equals(correctAnswer)){
+            addedPointsInt = 500;
+        }
+        addedPoints.setText("+"+String.valueOf(addedPointsInt));
     }
 
     public void goToMainScreen () throws IOException {

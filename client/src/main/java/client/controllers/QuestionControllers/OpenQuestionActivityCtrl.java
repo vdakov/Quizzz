@@ -118,11 +118,15 @@ public class OpenQuestionActivityCtrl {
         } catch (Exception e ){
             System.out.println(e);
         }
+
+        answerUpdate();
+        pointsUpdate();
     }
 
     public void answerUpdate() {
         // after the time ends the right answer is requested and then shown
         correctAnswerRectangle.setFill(Color.valueOf("#c9f1fd"));
+
     }
 
     public void pointsUpdate() {
@@ -156,8 +160,7 @@ public class OpenQuestionActivityCtrl {
     public String getCorrectAnswer() { return correctAnswer; }
 
     public int getCorrectAnswerInt() {
-//        return Integer.parseInt(getCorrectAnswer());
-        return 100;
+        return Integer.parseInt(server.getAnswer());
     }
 
     public TextField getWriteAnswer() { return writeAnswer; }
