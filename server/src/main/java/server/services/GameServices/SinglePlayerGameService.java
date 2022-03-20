@@ -55,5 +55,9 @@ public class SinglePlayerGameService {
             gameCatalog.getGame(gameId).updatePlayerScore(userName, 500);
         }
     }
+
+    public String getAnswer(String userName, String gameId, int questionNumber) {
+        return gameCatalog.getGame(gameId).getQuestionAnswer(questionNumber);
+    }
 }
 

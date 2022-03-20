@@ -2,12 +2,16 @@ package client.controllers.QuestionControllers;
 
 import client.communication.ServerUtils;
 import client.controllers.SceneCtrl;
+import client.data.GameConfiguration;
 import com.google.inject.Inject;
 import commons.Questions.KnowledgeQuestion;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 import java.io.IOException;
 
@@ -17,6 +21,10 @@ public class KnowledgeQuestionActivityCtrl {
     // constructor needed variables
     private final ServerUtils server;
     private final SceneCtrl   sceneCtrl;
+
+    private int pointsInt;
+    private int addedPointsInt;
+    private String userAnswer;
 
     // final needed labels for questions
     @FXML
@@ -44,6 +52,10 @@ public class KnowledgeQuestionActivityCtrl {
     @FXML
     private Label points;
     @FXML
+    private Label addedPoints;
+    @FXML
+    private Label questionNumberLabel;
+    @FXML
     private Label labelAnswerCenter;
     @FXML
     private Label labelAnswerTop;
@@ -52,6 +64,12 @@ public class KnowledgeQuestionActivityCtrl {
     @FXML
     private String correctAnswer;
 
+    @FXML
+    private Rectangle firstOptionRectangle;
+    @FXML
+    private Rectangle secondOptionRectangle;
+    @FXML
+    private Rectangle thirdOptionRectangle;
 
     /**
      * Creates the scene with the needed dependencies
@@ -68,11 +86,12 @@ public class KnowledgeQuestionActivityCtrl {
      * Initialises all the colors for the current scene
      */
     public void initialize() {
+        firstOptionRectangle.setStroke(Color.valueOf("#b38df7"));
+        secondOptionRectangle.setStroke(Color.valueOf("#ffd783"));
+        thirdOptionRectangle.setStroke(Color.valueOf("#ffa382"));
 
-        //resets the colors to white each time
-        getAnswerTop().setStyle("-fx-background-color: #b38df7;; -fx-border-color:  #b38df7;");
-        getAnswerCenter().setStyle("-fx-background-color: #ffd783; -fx-border-color:  #ffd783");
-        getAnswerBottom().setStyle("-fx-background-color: #ffa382; -fx-border-color:  #ffa382");
+        addedPoints.setText(" ");
+        addedPointsInt = 0;
     }
 
     /**
@@ -86,10 +105,12 @@ public class KnowledgeQuestionActivityCtrl {
 
         getQuestionStatement().setText(knowledgeQuestion.getQuestion().getKey());
 
-
         getQuestionFirstOption() .setText(knowledgeQuestion.getOptions().get(0));
         getQuestionSecondOption().setText(knowledgeQuestion.getOptions().get(1));
         getQuestionThirdOption() .setText(knowledgeQuestion.getOptions().get(2));
+
+        questionNumberLabel.setText("Question " + getQuestionNumber());
+        points.setText(String.valueOf(getPointsInt()));
 
         initialize();
     }
@@ -101,20 +122,53 @@ public class KnowledgeQuestionActivityCtrl {
         sceneCtrl.showNextQuestion();
     }
 
-    public void answerQuestion() {
+    public void answerQuestion(MouseEvent event) {
         // answers the question and blocks the possibility to answer anymore
+        Label current = (Label) event.getSource();
+        userAnswer = current.getText();
+
+        answerUpdate();
+        pointsUpdate();
     }
 
     public void answerUpdate() {
         // after the time ends the right answer is requested and then shown
+
+        firstOptionRectangle.setStroke(Color.valueOf("#ff0000"));
+        secondOptionRectangle.setStroke(Color.valueOf("#ff0000"));
+        thirdOptionRectangle.setStroke(Color.valueOf("#ff0000"));
+        if (getCorrectAnswer().equals(firstOptionText.getText())) {
+            firstOptionRectangle.setStroke(Color.valueOf("#92d36e"));
+        } else if (getCorrectAnswer().equals(secondOptionText.getText())) {
+            secondOptionRectangle.setStroke(Color.valueOf("#92d36e"));
+        } else {
+            thirdOptionRectangle.setStroke(Color.valueOf("#92d36e"));
+        }
     }
 
     public void pointsUpdate() {
         // after the time ends the amount of won points is calculated and then shown to the player
+        addedPointsInt = 0;
+        if (userAnswer.equals(getCorrectAnswer())) {
+            addedPointsInt = 500;
+        }
+        addedPoints.setText("+" + String.valueOf(addedPointsInt));
+
+////        FadeTransition fadeout = new FadeTransition(Duration.seconds(1), addedPoints);
+////        fadeout.setFromValue(1);
+////        fadeout.setToValue(0);
+////        fadeout.play();
+//
+//        //after some effect
+//        pointsInt += addedPointsInt;
+//        addedPointsInt = 0;
+//        addedPoints.setText(null);
+//        points.setText(String.valueOf(pointsInt));
     }
 
-    private void goToMainScreen () throws IOException {
+    public void goToMainScreen () throws IOException {
         sceneCtrl.showMainScreen();
+
     }
 
     private Label getQuestionStatement() {
@@ -122,30 +176,29 @@ public class KnowledgeQuestionActivityCtrl {
     }
 
     private Label getQuestionFirstOption() {
-        return labelAnswerTop;
+        return firstOptionText;
     }
 
     private Label getQuestionSecondOption() {
-        return labelAnswerCenter;
+        return secondOptionText;
     }
 
     private Label getQuestionThirdOption() {
-        return labelAnswerBottom;
-    }
-
-    //Getters and setters
-    public Button getAnswerTop() { return answerTop; }
-
-    public Button getAnswerBottom() {
-        return answerBottom;
-    }
-
-    public Button getAnswerCenter() {
-        return answerCenter;
+        return thirdOptionText;
     }
 
     public String getCorrectAnswer() {
-        return correctAnswer;
+        return server.getAnswer();
+    }
+
+    public int getPointsInt() {
+//        return server.getScore();
+        return Integer.parseInt(server.getScore());
+    }
+
+    public int getQuestionNumber() {
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+        return gameConfiguration.getCurrentQuestionNumber();
     }
 }
 

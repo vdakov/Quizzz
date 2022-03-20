@@ -94,4 +94,40 @@ public class ServerUtils {
                 .target(SERVER).path("api/activities/alert") //
                 .request().get(); //;
     }
+
+    public String getAnswer() {
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER).path("api/singlePlayer/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getRoomId() + "/" + gameConfiguration.getCurrentQuestionNumber() + "/getAnswer")
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON).get(String.class);
+    }
+
+    public String getScore() {
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER).path("api/singlePlayer/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getRoomId() + "/getScore")
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON).get(String.class);
+    }
+
+//    public int updateScore(String userName,String gameId, int questionNumber, String answer) {
+////        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+//        Object
+//        return ClientBuilder.newClient(new ClientConfig()) //
+////                .target(SERVER).path("api/singlePlayer/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getRoomId() + gameConfiguration.getCurrentQuestionNumber() + getAnswer()) //
+//                .target(SERVER).path("api/singlePlayer/" + userName + "/" + gameId + questionNumber + answer) //
+//                .request(APPLICATION_JSON) //
+//                .accept(APPLICATION_JSON) //
+//                .post(Entity.entity(, APPLICATION_JSON));
+//    }
+//public int updateScore(String score) {
+//        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+//    return ClientBuilder.newClient(new ClientConfig()) //
+//                .target(SERVER).path("api/singlePlayer/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getRoomId() + gameConfiguration.getCurrentQuestionNumber() + getAnswer()) //
+////            .target(SERVER).path("api/singlePlayer/" + userName + "/" + gameId + questionNumber + answer) //
+//            .request(APPLICATION_JSON) //
+//            .accept(APPLICATION_JSON) //
+//            .post(Entity.text(score, APPLICATION_JSON));
+//}
 }
