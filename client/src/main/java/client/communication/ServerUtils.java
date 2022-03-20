@@ -21,8 +21,6 @@ import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.GenericType;
 import org.glassfish.jersey.client.ClientConfig;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -115,21 +113,21 @@ public class ServerUtils {
 
 //    public int updateScore(String userName,String gameId, int questionNumber, String answer) {
 ////        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+//        Object
 //        return ClientBuilder.newClient(new ClientConfig()) //
 ////                .target(SERVER).path("api/singlePlayer/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getRoomId() + gameConfiguration.getCurrentQuestionNumber() + getAnswer()) //
 //                .target(SERVER).path("api/singlePlayer/" + userName + "/" + gameId + questionNumber + answer) //
 //                .request(APPLICATION_JSON) //
 //                .accept(APPLICATION_JSON) //
-//                .post(Entity.text(updateScore(userName, gameId, questionNumber, answer), APPLICATION_JSON));
-////                .post(Entity.text(updateScore, APPLICATION_JSON));
+//                .post(Entity.entity(, APPLICATION_JSON));
 //    }
-public int updateScore(String score) {
-        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
-    return ClientBuilder.newClient(new ClientConfig()) //
-                .target(SERVER).path("api/singlePlayer/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getRoomId() + gameConfiguration.getCurrentQuestionNumber() + getAnswer()) //
-//            .target(SERVER).path("api/singlePlayer/" + userName + "/" + gameId + questionNumber + answer) //
-            .request(APPLICATION_JSON) //
-            .accept(APPLICATION_JSON) //
-            .post(Entity.text(score, APPLICATION_JSON));
-}
+//public int updateScore(String score) {
+//        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+//    return ClientBuilder.newClient(new ClientConfig()) //
+//                .target(SERVER).path("api/singlePlayer/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getRoomId() + gameConfiguration.getCurrentQuestionNumber() + getAnswer()) //
+////            .target(SERVER).path("api/singlePlayer/" + userName + "/" + gameId + questionNumber + answer) //
+//            .request(APPLICATION_JSON) //
+//            .accept(APPLICATION_JSON) //
+//            .post(Entity.text(score, APPLICATION_JSON));
+//}
 }
