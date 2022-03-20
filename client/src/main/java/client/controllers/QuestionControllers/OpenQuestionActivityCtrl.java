@@ -37,7 +37,7 @@ public class OpenQuestionActivityCtrl {
     @FXML
     private TextField userAnswer;
 
-    private String userAnswerString;
+    private int userAnswerInt;
     private int pointsInt;
     private int addedPointsInt;
 
@@ -54,8 +54,6 @@ public class OpenQuestionActivityCtrl {
     private Label addedPoints;
     @FXML
     private Label questionNumberLabel;
-    @FXML
-    private TextField writeAnswer;
     @FXML
     private String correctAnswer;
     @FXML
@@ -82,11 +80,14 @@ public class OpenQuestionActivityCtrl {
      */
     public void initialize() {
 
+        userAnswerRectangle.setStrokeWidth(1);
         userAnswerRectangle.setStroke(Paint.valueOf("#000000"));
         correctAnswerRectangle.setFill(Paint.valueOf("#499ee8"));
         correctAnswerRectangle.setStrokeWidth(0);
         addedPoints.setText(" ");
         addedPointsInt = 0;
+        correctAnswerLabel.setText(" ");
+        userAnswer.setText("");
     }
 
     /**
@@ -117,17 +118,19 @@ public class OpenQuestionActivityCtrl {
         Button current = (Button) event.getSource();
         // answers the question and blocks the possibility to answer anymore
         try {
-            userAnswerString = userAnswer.getText();
+            userAnswerInt = Integer.parseInt(userAnswer.getText());
+            System.out.println(1);
+        } catch (NumberFormatException e) {
+            userAnswer.setText("-99999");
+            userAnswerInt = Integer.parseInt(userAnswer.getText());
         } catch (NullPointerException e) {
             if (userAnswer.getText() == (null) || userAnswer.getText().trim().isEmpty()) {
                 userAnswer.setText("-99999");
+                userAnswerInt = Integer.parseInt(userAnswer.getText());
             }
-        } catch (NumberFormatException e) {
-            userAnswer.setText("-99999");
-        } catch (Exception e ) {
+        }  catch (Exception e ) {
             System.out.println(e);
         }
-
         answerUpdate();
         pointsUpdate();
     }
@@ -135,7 +138,8 @@ public class OpenQuestionActivityCtrl {
     public void answerUpdate() {
         // after the time ends the right answer is requested and then shown
         userAnswerRectangle.setStrokeWidth(5);
-        if (Integer.parseInt(userAnswerString) == (getCorrectAnswerInt())) {
+        System.out.println(userAnswerInt);
+        if (userAnswerInt == (getCorrectAnswerInt())) {
             userAnswerRectangle.setStroke(Color.valueOf("#92d36e"));
         } else {
             userAnswerRectangle.setStroke(Color.valueOf("#ff0000"));
@@ -149,18 +153,20 @@ public class OpenQuestionActivityCtrl {
 
     public void pointsUpdate() {
         // after the time ends the amount of won points is calculated and then shown to the player
-        if (Integer.parseInt(userAnswerString) == (getCorrectAnswerInt())) {
+        if (userAnswerInt == (getCorrectAnswerInt())) {
             addedPointsInt = 500;
-        } else if (Integer.parseInt(userAnswerString) - (getCorrectAnswerInt()) <= 10) {
+        } else if (userAnswerInt > getCorrectAnswerInt() * 0.95 || userAnswerInt < getCorrectAnswerInt() * 1.05) {
             addedPointsInt = 250;
         }
         addedPoints.setText("+" + String.valueOf(addedPointsInt));
 
         //after some effect
-//        pointsInt += addedPointsInt;
-//        addedPointsInt = 0;
-//        addedPoints.setText(null);
-//        points.setText(String.valueOf(pointsInt));
+        pointsInt += addedPointsInt;
+        addedPointsInt = 0;
+        addedPoints.setText(null);
+        points.setText(String.valueOf(pointsInt));
+
+//        server.updateScore()
 
     }
 
@@ -178,12 +184,11 @@ public class OpenQuestionActivityCtrl {
         return Integer.parseInt(server.getAnswer());
     }
 
-    public TextField getWriteAnswer() { return writeAnswer; }
+    public TextField getWriteAnswer() { return userAnswer; }
 
-    public void setWriteAnswer(TextField writeAnswer) { this.writeAnswer = writeAnswer; }
+    public void setWriteAnswer(TextField writeAnswer) { this.userAnswer = userAnswer; }
 
     public int getPointsInt() {
-//        return server.getScore();
         return Integer.parseInt(server.getScore());
     }
 
