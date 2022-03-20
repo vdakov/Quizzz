@@ -140,7 +140,6 @@ public class AlternativeQuestionCtrl {
 
     public void finishGame() {
         server.addSingleplayerLeaderboardEntry(userName, pointsInt);
-
         sceneCtrl.showSingleplayerLeaderboard();
     }
 

@@ -22,7 +22,7 @@ public class SceneCtrl {
         this.primaryStage = primaryStage;
         this.scenes = scenes;
 
-        showSingeleplayerLeaderboard();
+        showMainScreenScene();
         primaryStage.show();
     }
 
