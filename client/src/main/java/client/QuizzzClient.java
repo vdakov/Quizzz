@@ -1,10 +1,12 @@
 package client;
 
-import client.controllers.*;
-import client.controllers.QuestionControllers.AlternativeQuestionCtrl;
-import client.controllers.QuestionControllers.ComparisonQuestionCtrl;
-import client.controllers.QuestionControllers.KnowledgeQuestionCtrl;
-import client.controllers.QuestionControllers.OpenQuestionCtrl;
+import client.controllers.AddActionActivityCtrl;
+import client.controllers.MainScreenActivityCtrl;
+import client.controllers.QuestionControllers.AlternativeQuestionActivityCtrl;
+import client.controllers.QuestionControllers.ComparisonQuestionActivityCtrl;
+import client.controllers.QuestionControllers.KnowledgeQuestionActivityCtrl;
+import client.controllers.QuestionControllers.OpenQuestionActivityCtrl;
+import client.controllers.SceneCtrl;
 import client.logic.FXMLConfig;
 import client.logic.ModuleConfig;
 import com.google.inject.Injector;
@@ -48,10 +50,10 @@ public class QuizzzClient extends Application {
     private final Pair<String, Class>[] scenePairs = new Pair[]{
             new Pair("MainScreenScene.fxml", MainScreenActivityCtrl.class),
             new Pair("AddActionScene.fxml", AddActionActivityCtrl.class),
-            new Pair("ComparisonQuestionScene.fxml", ComparisonQuestionCtrl.class),
-            new Pair("OpenQuestionScene.fxml", OpenQuestionCtrl.class),
-            new Pair("KnowledgeQuestionScene.fxml", KnowledgeQuestionCtrl.class),
-            new Pair("AlternativeQuestionScene.fxml", AlternativeQuestionCtrl.class)
+            new Pair("ComparisonQuestionScene.fxml", ComparisonQuestionActivityCtrl.class),
+            new Pair("OpenQuestionScene.fxml", OpenQuestionActivityCtrl.class),
+            new Pair("KnowledgeQuestionScene.fxml", KnowledgeQuestionActivityCtrl.class),
+            new Pair("AlternativeQuestionScene.fxml", AlternativeQuestionActivityCtrl.class)
     };
 
     @Override
@@ -66,7 +68,6 @@ public class QuizzzClient extends Application {
             Pair<Object, Parent> controllerParentPair = FXML_CONFIG.load(scenePair.getValue(), "scenes", scenePair.getKey());
             Pair<Object, Scene> value = new Pair<>(controllerParentPair.getKey(), new Scene(controllerParentPair.getValue())); //Pair consisting of Controller and corresponding Scene
             String key = scenePair.getKey().replace("Scene.fxml", ""); //name of the scene
-
             scenesMap.put(key, value);
         }
 

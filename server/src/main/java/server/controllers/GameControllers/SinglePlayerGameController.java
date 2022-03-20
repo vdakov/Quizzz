@@ -23,7 +23,7 @@ public class SinglePlayerGameController {
         return singlePlayerGameService.getSinglePlayerQuestion(gameId, questionNumber);
     }
 
-    @PostMapping("/{gameId}/{questionNumber}/sendAnswer")
+    @PostMapping("/{gameId}/{questionNumber}/updateAnswer")
     public void updateAnswer(@PathVariable("gameId") String gameId, @PathVariable("questionNumber") int questionNumber, @RequestBody String answer) {
         singlePlayerGameService.updateSinglePlayerScore(gameId, questionNumber, answer);
     }
@@ -32,4 +32,11 @@ public class SinglePlayerGameController {
     public int getScore(@PathVariable("gameId") String gameId) {
         return singlePlayerGameService.getSinglePlayerScore(gameId);
     }
+
+    @GetMapping("/{gameId}/{questionNumber}/getAnswer")
+    public String getAnswer(@PathVariable("userName") String userName, @PathVariable("gameId") String gameId,
+                            @PathVariable("questionNumber") int questionNumber) {
+        return singlePlayerGameService.getAnswer(userName, gameId, questionNumber);
+    }
+
 }

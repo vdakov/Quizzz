@@ -1,6 +1,6 @@
 package client.logic;
 
-import client.controllers.*;
+import client.controllers.SceneCtrl;
 import com.google.inject.Binder;
 import com.google.inject.Module;
 import com.google.inject.Scopes;

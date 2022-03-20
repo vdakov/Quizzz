@@ -60,7 +60,7 @@ public class MultiPlayerGameController {
     }
 
     @GetMapping("/{gameId}/{questionNumber}/getQuestion")
-    public String getDesiredQuestion(@PathVariable("gameId") String gameId, @PathVariable("questionNumber") int questionNumber) {
+    public String getDesiredQuestionMultiplayer(@PathVariable("gameId") String gameId, @PathVariable("questionNumber") int questionNumber) {
         return multiplayerGameService.getMultiPlayerQuestion(gameId, questionNumber);
     }
 

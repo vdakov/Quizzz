@@ -2,12 +2,16 @@ package client.controllers.QuestionControllers;
 
 import client.communication.ServerUtils;
 import client.controllers.SceneCtrl;
+import client.data.GameConfiguration;
 import com.google.inject.Inject;
 import commons.Questions.ComparisonQuestion;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 import java.io.IOException;
 
@@ -17,9 +21,14 @@ public class ComparisonQuestionActivityCtrl {
     private final ServerUtils server;
     private final SceneCtrl sceneCtrl;
 
+    private int pointsInt;
+    private int addedPointsInt;
+    private String userAnswer;
+
     // final needed labels for questions
     @FXML
     private Label labelGoBack;
+
 
     @FXML
     private Label questionStatement;
@@ -41,18 +50,26 @@ public class ComparisonQuestionActivityCtrl {
 
 
 
-    @FXML
-    private Label sampleQuestion;
+
+    private String correctAnswer;
+
+
     @FXML
     private Button goToMainScreen;
-    @FXML
-    private Button answerLeft, answerCenter, answerRight;
     @FXML
     private Label points;
     @FXML
     private Label addedPoints;
     @FXML
     private Label questionNumberLabel;
+
+    @FXML
+    private Rectangle firstOptionRectangle;
+    @FXML
+    private Rectangle secondOptionRectangle;
+    @FXML
+    private Rectangle thirdOptionRectangle;
+
     //Constructor for the Question Controller
 
 
@@ -72,6 +89,12 @@ public class ComparisonQuestionActivityCtrl {
      */
     public void initialize() {
 
+        firstOptionRectangle.setStroke(Color.valueOf("#b38df7"));
+        secondOptionRectangle.setStroke(Color.valueOf("#ffd783"));
+        thirdOptionRectangle.setStroke(Color.valueOf("#ffa382"));
+
+        addedPoints.setText(" ");
+        addedPointsInt = 0;
     }
 
     /**
@@ -89,58 +112,81 @@ public class ComparisonQuestionActivityCtrl {
         getQuestionSecondOption().setText(comparisonQuestion.getOptions().get(1).getKey());
         getQuestionThirdOption() .setText(comparisonQuestion.getOptions().get(2).getKey());
 
+        questionNumberLabel.setText("Question " + getQuestionNumber());
+        points.setText(String.valueOf(getPointsInt()));
         initialize();
     }
 
-    /**
-     * Displays the next question to the user after the transition is finished
-     */
-    public void displayNextQuestion() {
-        //sceneCtrl.showNextQuestion();
-    }
-
-    public void answerQuestion() {
+    public void answerQuestion(MouseEvent event) {
         // answers the question and blocks the possibility to answer anymore
+        Label current = (Label) event.getSource();
+        userAnswer = current.getText();
+
+        server.updateScore(userAnswer);
+
+        answerUpdate();
+        pointsUpdate();
     }
 
     public void answerUpdate() {
         // after the time ends the right answer is requested and then shown
+        firstOptionRectangle.setStroke(Color.valueOf("#ff0000"));
+        secondOptionRectangle.setStroke(Color.valueOf("#ff0000"));
+        thirdOptionRectangle.setStroke(Color.valueOf("#ff0000"));
+        if (getCorrectAnswer().equals(firstOptionText.getText())) {
+            firstOptionRectangle.setStroke(Color.valueOf("#92d36e"));
+        } else if (getCorrectAnswer().equals(secondOptionText.getText())) {
+            secondOptionRectangle.setStroke(Color.valueOf("#92d36e"));
+        } else {
+            thirdOptionRectangle.setStroke(Color.valueOf("#92d36e"));
+        }
     }
 
     public void pointsUpdate() {
         // after the time ends the amount of won points is calculated and then shown to the player
+        addedPointsInt = 0;
+        if (userAnswer.equals(getCorrectAnswer())) {
+            addedPointsInt = 500;
+        }
+        addedPoints.setText("+" + String.valueOf(addedPointsInt));
     }
 
     public void goToMainScreen () throws IOException {
-        //sceneCtrl.showMainScreen();
+        sceneCtrl.showMainScreenScene();
     }
 
+    public void displayNextQuestion() {
+        sceneCtrl.showNextQuestion();
+    }
+
+
     private Label getQuestionStatement() {
-        return sampleQuestion;
+        return questionStatement;
     }
 
     private Label getQuestionFirstOption() {
-        return null;
+        return firstOptionText;
     }
 
     private Label getQuestionSecondOption() {
-        return null;
+        return secondOptionText;
     }
 
     private Label getQuestionThirdOption() {
-        return null;
+        return thirdOptionText;
     }
 
-
-    //Getters and setters
-    public Button getAnswerTop() { return answerLeft; }
-
-    public Button getAnswerBottom() {
-        return answerRight;
+    public String getCorrectAnswer() {
+        return server.getAnswer();
     }
 
-    public Button getAnswerCenter() {
-        return answerCenter;
+    public int getPointsInt() {
+//        return server.getScore();
+        return Integer.parseInt(server.getScore());
     }
 
+    public int getQuestionNumber() {
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+        return gameConfiguration.getCurrentQuestionNumber();
+    }
 }

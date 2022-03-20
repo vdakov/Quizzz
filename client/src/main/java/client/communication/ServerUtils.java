@@ -15,6 +15,7 @@
  */
 package client.communication;
 
+import client.data.GameConfiguration;
 import commons.Actions.Action;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
@@ -40,7 +41,7 @@ public class ServerUtils {
      */
     public String createNewSinglePlayerRoom(String userName) {
         return ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER).path("api/singlePlayer/" + userName + "/createNewGame")
+                .target(SERVER).path("api/singlePlayer/" + userName + "/startNewGame")
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON).get(new GenericType<>() {});
     }
@@ -107,7 +108,6 @@ public class ServerUtils {
                 .accept(APPLICATION_JSON).get(new GenericType<>() {});
     }
 
-
     private static final ExecutorService EXEC = Executors.newSingleThreadExecutor();
     /**
      *
@@ -143,6 +143,23 @@ public class ServerUtils {
                 .target(SERVER).path("api/multiPlayer/" + userName + "/" + roomId + "/" + number + "/getQuestion")
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON).get(String.class);
+    }
+
+    public String getQuestion() {
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER).path("api/singlePlayer/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getRoomId() + "/" + gameConfiguration.getCurrentQuestionNumber() + "/getQuestion")
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON).get(String.class);
+    }
+
+    public void updateScore(String answer) {
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+        ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/singlePlayer/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getRoomId() + "/" + gameConfiguration.getCurrentQuestionNumber() + "/updateAnswer")
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .post(Entity.text(answer));
     }
 
     /**
@@ -183,4 +200,22 @@ public class ServerUtils {
                 .target(SERVER).path("api/activities/alert") //
                 .request().get(); //;
     }
+
+    public String getAnswer() {
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER).path("api/singlePlayer/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getRoomId() + "/" + gameConfiguration.getCurrentQuestionNumber() + "/getAnswer")
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON).get(String.class);
+    }
+
+    public String getScore() {
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER).path("api/singlePlayer/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getRoomId() + "/getScore")
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON).get(String.class);
+    }
+
+
 }

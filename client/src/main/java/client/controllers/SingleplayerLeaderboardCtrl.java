@@ -1,12 +1,10 @@
 package client.controllers;
 
 import client.communication.ServerUtils;
-
-import javafx.scene.control.TableView;
-import javafx.scene.text.Text;
-
 import com.google.inject.Inject;
 import javafx.fxml.FXML;
+import javafx.scene.control.TableView;
+import javafx.scene.text.Text;
 
 
 public class SingleplayerLeaderboardCtrl {

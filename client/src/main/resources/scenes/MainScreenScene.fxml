@@ -50,7 +50,7 @@
             <Font name="Chalkboard" size="18.0" />
          </font>
       </Button>
-      <TextField prefHeight="49.0" prefWidth="275.0" GridPane.columnIndex="4" GridPane.rowIndex="7">
+      <TextField fx:id="userName" prefHeight="49.0" prefWidth="275.0" GridPane.columnIndex="4" GridPane.rowIndex="7">
          <font>
             <Font name="Chalkboard" size="20.0" />
          </font>
