@@ -128,6 +128,8 @@ public class AlternativeQuestionActivityCtrl {
         Label current = (Label) event.getSource();
         userAnswer = current.getText();
 
+        server.updateScore(userAnswer);
+
         answerUpdate();
         pointsUpdate();
 

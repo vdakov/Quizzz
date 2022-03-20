@@ -122,6 +122,7 @@ public class OpenQuestionActivityCtrl {
             System.out.println(1);
         } catch (NumberFormatException e) {
             userAnswer.setText("-99999");
+            server.updateScore(userAnswer.getText());
             userAnswerInt = Integer.parseInt(userAnswer.getText());
         } catch (NullPointerException e) {
             if (userAnswer.getText() == (null) || userAnswer.getText().trim().isEmpty()) {
@@ -131,6 +132,7 @@ public class OpenQuestionActivityCtrl {
         }  catch (Exception e ) {
             System.out.println(e);
         }
+
         answerUpdate();
         pointsUpdate();
     }

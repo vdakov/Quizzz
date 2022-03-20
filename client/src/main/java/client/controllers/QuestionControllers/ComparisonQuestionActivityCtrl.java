@@ -126,6 +126,8 @@ public class ComparisonQuestionActivityCtrl {
         Label current = (Label) event.getSource();
         userAnswer = current.getText();
 
+        server.updateScore(userAnswer);
+
         answerUpdate();
         pointsUpdate();
     }

@@ -3,6 +3,8 @@ package client.controllers;
 import client.communication.ServerUtils;
 import client.data.GameConfiguration;
 import client.logic.QuestionParsers;
+import javafx.fxml.FXML;
+import javafx.scene.control.TextField;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -13,6 +15,9 @@ public class MainScreenActivityCtrl {
     private final ServerUtils server;
     private final SceneCtrl sceneCtrl;
 
+    @FXML
+    private TextField userName;
+
     @Inject
     public MainScreenActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
         this.sceneCtrl = sceneCtrl;
@@ -22,10 +27,10 @@ public class MainScreenActivityCtrl {
     public void enterSoloGame () throws IOException {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
 
-        String userName = "cata";
-        String roomId = server.createNewSinglePlayerRoom(userName);
+        String playerName = userName.getText();
+        String roomId = server.createNewSinglePlayerRoom(playerName);
         gameConfiguration.setRoomId(roomId);
-        gameConfiguration.setUserName(userName);
+        gameConfiguration.setUserName(playerName);
         gameConfiguration.setCurrentQuestionNumber(gameConfiguration.getCurrentQuestionNumber() + 1);
         String response = server.getQuestion();
         Scanner scanner = new Scanner(response).useDelimiter(": ");
