@@ -1,12 +1,9 @@
 package server.controllers;
 
 import commons.Leaderboard.LeaderboardEntry;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import server.services.GameServices.LeaderboardService;
 
-import java.util.Comparator;
 import java.util.List;
 
 @RestController
@@ -21,12 +18,14 @@ public class LeaderboardController {
     @GetMapping("/singleplayer")
     public List<LeaderboardEntry> getSingleplayerLeaderboard() {
         List<LeaderboardEntry> temp = service.list();
-        temp.sort(new Comparator<LeaderboardEntry>() {
-            @Override
-            public int compare(LeaderboardEntry o1, LeaderboardEntry o2) {
-                return o1.getScore() - o2.getScore();
-            }
-        });
+
+        temp.sort((a, b) -> b.getScore() - a.getScore()); //sorts the list by comparing the scores
+        for (int i = 0; i < temp.size(); i++) temp.get(i).setRank(i + 1); //assign ranks
         return temp;
+    }
+
+    @PostMapping("/singleplayer")
+    public LeaderboardEntry addSingleplayerLeaderboardEntry(@RequestBody LeaderboardEntry e) {
+        return service.addSingleplayerLeaderboardEntry(e);
     }
 }

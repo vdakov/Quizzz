@@ -17,4 +17,8 @@ public class LeaderboardService {
     public List<LeaderboardEntry> list() {
         return repository.findAll();
     }
+
+    public LeaderboardEntry addSingleplayerLeaderboardEntry(LeaderboardEntry e) {
+        return repository.save(e);
+    }
 }

@@ -65,7 +65,9 @@ public class SceneCtrl {
     public void showSingleplayerLeaderboard() {
         System.out.println("LEADERBOARD");
         var pair = scenes.get("SingleplayerLeaderboard");
+        var ctrl = (SingleplayerLeaderboardCtrl) pair.getKey();
 
+        ctrl.initialize();
         primaryStage.setTitle("Singleplayer Leaderboard");
         primaryStage.setScene(pair.getValue());
     }

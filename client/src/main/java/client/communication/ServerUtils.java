@@ -69,6 +69,14 @@ public class ServerUtils {
                 });
     }
 
+    public LeaderboardEntry addSingleplayerLeaderboardEntry(String name, int points) {
+        return ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/leaderboard/singleplayer") //
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .post(Entity.entity(new LeaderboardEntry(name, points), APPLICATION_JSON), LeaderboardEntry.class);
+    }
+
     public Action getRandomAction() {
         return ClientBuilder.newClient(new ClientConfig()) //
                 .target(SERVER).path("api/activities/random") //
