@@ -33,6 +33,11 @@ public class ServerUtils {
 
     private static final String SERVER = "http://localhost:8080";
 
+    /**
+     * Creates a new SinglePlayerRomm (Multiplayer Game with one player)
+     * @param userName The username of the player in the waiting room for future storing in the database
+     * @return
+     */
     public String createNewSinglePlayerRoom(String userName) {
         return ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("api/singlePlayer/" + userName + "/createNewGame")
@@ -42,6 +47,13 @@ public class ServerUtils {
                 });
     }
 
+    /**
+     * Sends a question to the player
+     * @param userName The username of the plazer
+     * @param serverId the current gameID
+     * @param number the number of the question requested
+     * @return
+     */
     public String getQuestion(String userName, String serverId, int number) {
         return ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("api/singlePlayer/" + userName + "/" + serverId + "/" + number + "/getQuestion")
@@ -63,14 +75,6 @@ public class ServerUtils {
                 });
     }
 
-    public Action getRandomAction() {
-        return ClientBuilder.newClient(new ClientConfig()) //
-                .target(SERVER).path("api/activities/random") //
-                .request(APPLICATION_JSON) //
-                .accept(APPLICATION_JSON) //
-                .get(new GenericType<>() {
-                });
-    }
 
     /**
      * Sends a new activity to the server
@@ -86,12 +90,20 @@ public class ServerUtils {
                 .post(Entity.entity(a, APPLICATION_JSON), Action.class);
     }
 
+    /**
+     * Deletes an activity from the database
+     * @param id the id of the activity to be deleted
+     */
     public void deleteActivity(String id) {
         ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("api/activities/delete/" + id)
                 .request().delete();
     }
 
+    /**
+     * Alerts the survor of a custom message (Basically a System.out.println())
+     * @param input what is printed out to the server
+     */
     public void alert(String input) {
         ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("api/activities/alert")
@@ -99,6 +111,10 @@ public class ServerUtils {
                 .buildPost(Entity.entity(input, APPLICATION_JSON)).invoke();
     }
 
+    /**
+     * Gets a list of the current games to display them on the server browser
+     * @return the list of current games
+     */
     public ObservableList<GameContainer> listOfCurrentGames() {
         ArrayList<GameContainer> games = ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("api/multiplayer/currentGames")
@@ -110,6 +126,11 @@ public class ServerUtils {
         return FXCollections.observableArrayList(games);
     }
 
+    /**
+     * Returns a list of all of the gameIDs- used to find whether
+     * the given gameID in the server browser is valid
+     * @return list of game ids
+     */
     public ArrayList<String> listOfAllGameIds() {
         ArrayList<String> gameIds = ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("api/multiplayer/gameIDList")
@@ -121,6 +142,11 @@ public class ServerUtils {
         return gameIds;
     }
 
+    /**
+     * Creates a new mulitplayer game waiting room, but does not start the game yet
+     * @param playerId the playerID of the owner having created the game
+     * @return the game id
+     */
     public String createNewMultiplayerGame(String playerId) {
         return ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("api/multiplayer/createNewGame/" + playerId)
@@ -130,12 +156,22 @@ public class ServerUtils {
                 });
     }
 
+    /**
+     * Allows a player to join a multiplayer game with a provided gameId
+     * @param playerId the username of the player joining
+     * @param gameID the id of the game to be joined
+     */
     public void joinExistingMultiplayerGame(String playerId, String gameID) {
         ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("api/multiplayer/joinGame/" + playerId + "/" + gameID)
                 .request().get();
     }
 
+    /**
+     * Returns the number of player in the current game - used to update waiting room styling
+     * @param gameID the gameID for which the amount of players is checked
+     * @return the number of players in the current game
+     */
     public int getNumPlayersInGame(String gameID) {
         return ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("api/multiplayer/" + gameID + "/numPlayers")
@@ -143,9 +179,28 @@ public class ServerUtils {
                 });
     }
 
+    /**
+     * Removes a player from the current game
+     * @param userName the username of the player to be removed- used to locate them on the server
+     * @param gameID- the gameID of the game they are removed from
+     */
     public void removePlayer(String userName, String gameID) {
         ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("api/multiplayer/removePlayer/" + userName + "/" + gameID)
                 .request().get();
+    }
+
+    /**
+     * TODO implementation
+     * Should communicate to a user whether they are the new owner or not
+     * but it is debatable how to do it since we currently do not have Webscockets
+     * @param gameID the gameID for which a new owner is provided
+     * @return the username of the new gameowner
+     */
+    public String getNewGameOwner(String gameID) {
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER).path("api/multiplayer/" + gameID + "/newGameOwner")
+                .request().get(new GenericType<>() {
+                });
     }
 }

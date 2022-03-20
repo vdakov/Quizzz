@@ -26,5 +26,6 @@
             <Font size="16.0" />
          </font>
       </Text>
+      <Button layoutX="461.0" layoutY="241.0" mnemonicParsing="false" onAction="#refresh" text="REFRESH" />
     </children>
 </AnchorPane>

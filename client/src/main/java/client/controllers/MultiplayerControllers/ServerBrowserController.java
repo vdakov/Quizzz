@@ -18,32 +18,26 @@ public class ServerBrowserController {
 
 
     @FXML
-    private TableView<GameContainer> gameTable;
+    private TableView<GameContainer> gameTable; // the table that stores the gameID and the num of Players
     @FXML
     private TableColumn<GameContainer, String> gameIdColumn;
     @FXML
     private TableColumn<GameContainer, Integer> numPlayerColumn;
+    @FXML
+    private TextField gameIdField; // the textfield where the player inputs the gameID
 
-
-    @FXML
-    private Button mainMenuButton;
-    @FXML
-    private Button joinWaitingRoom;
-    @FXML
-    private Button createWaitingRoom;
-    @FXML
-    private TextField gameIdField;
-
-    private ObservableList<GameContainer> currentGames;
+    private ObservableList<GameContainer> currentGames; // the datatype for the list that fills the table
 
     @Inject
     public ServerBrowserController(ServerUtils server, SceneCtrl sceneCtrl) {
         this.server = server;
         this.sceneCtrl = sceneCtrl;
-
-
     }
 
+    /**
+     * Initialize method of the server browser screen
+     * Sets the table names and values
+     */
     public void initialize() {
 
 
@@ -63,16 +57,31 @@ public class ServerBrowserController {
 
     }
 
+    /**
+     * Refresh method to update table on each player's whim;
+     * Deletes the previous column values and initializes them again
+     * @param event the refresh button Action event
+     */
     public void refresh(ActionEvent event) {
         this.gameTable.getColumns().remove(this.gameIdColumn);
         this.gameTable.getColumns().remove(this.numPlayerColumn);
         this.initialize();
     }
 
+    /**
+     * Returns user to main menu
+     * @param event the actionevent of the button
+     */
     public void mainMenu(ActionEvent event) {
         this.sceneCtrl.showMainScreenScene();
     }
 
+    /**
+     * Allows user to join a game with an ID provided in the text field
+     * If an invalid ID is given an alert is shown
+     * Currently enters hardcoded username since there is no unique username in multiplayer game implementation
+     * @param event
+     */
     public void joinWaitingRoom(ActionEvent event) {
         String gameId = this.gameIdField.getText();
         if (!server.listOfAllGameIds().contains(gameId)) {
@@ -80,6 +89,7 @@ public class ServerBrowserController {
             alert.setTitle("Warning");
             alert.setHeaderText("Invalid ID");
             alert.setContentText("Please enter a valid game ID!!!");
+            alert.show();
         } else {
             server.joinExistingMultiplayerGame("johny", gameId);
             this.sceneCtrl.showWaitingRoom(false, gameId, "johny");
@@ -87,6 +97,10 @@ public class ServerBrowserController {
 
     }
 
+    /**
+     * Creates a new waiting room and identifies this player as the owner
+     * @param event the ActionEvent of the button
+     */
     public void createWaitingRoom(ActionEvent event) {
         String gameId = server.createNewMultiplayerGame("cata");
         this.sceneCtrl.showWaitingRoom(true, gameId, "cata");

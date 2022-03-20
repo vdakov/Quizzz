@@ -92,7 +92,7 @@ public class SceneCtrl {
         var pair = scenes.get("WaitingRoom");
         WaitingRoomController ctrl = (WaitingRoomController) pair.getKey();
 
-        ctrl.adjustText(owner, gameId, userName);
+        ctrl.initialize(owner, gameId, userName);
 
         primaryStage.setTitle("WaitingRoom");
         primaryStage.setScene(pair.getValue());
