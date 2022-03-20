@@ -2,6 +2,7 @@ package client.controllers;
 
 import client.communication.ServerUtils;
 import client.data.GameConfiguration;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
@@ -34,5 +35,9 @@ public class MainScreenActivityCtrl {
         String response = server.getQuestion();
         Scanner scanner = new Scanner(response).useDelimiter(": ");
         sceneCtrl.showNextQuestion();
+    }
+
+    public void enterServerBrowser(ActionEvent event) {
+        this.sceneCtrl.showServerBrowser();
     }
 }

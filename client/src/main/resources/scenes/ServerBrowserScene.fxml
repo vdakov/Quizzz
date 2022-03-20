@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.*?>
+<AnchorPane fx:id="pane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.MultiplayerControllers.ServerBrowserController">
+   <children>
+      <Text layoutX="262.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SERVER BROWSER" wrappingWidth="273.546875">
+         <font>
+            <Font size="31.0" />
+         </font>
+      </Text>
+      <TableView fx:id="gameTable" layoutX="216.0" layoutY="100.0" prefHeight="200.0" prefWidth="350.0" />
+      <Button fx:id="mainMenuButton" layoutX="33.0" layoutY="29.0" mnemonicParsing="false" onAction="#mainMenu" prefHeight="26.0" prefWidth="144.0" text="MAIN MENU" />
+      <Button fx:id="joinWaitingRoom" layoutX="33.0" layoutY="180.0" mnemonicParsing="false" onAction="#joinWaitingRoom" prefHeight="83.0" prefWidth="144.0" text="JOIN">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Button>
+      <Button fx:id="createWaitingRoom" layoutX="33.0" layoutY="283.0" mnemonicParsing="false" onAction="#createWaitingRoom" prefHeight="83.0" prefWidth="144.0" text="CREATE">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Button>
+      <Button layoutX="365.0" layoutY="333.0" mnemonicParsing="false" onAction="#refresh" text="REFRESH" />
+      <TextField fx:id="gameIdField" layoutX="31.0" layoutY="135.0" />
+      <Text layoutX="33.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter Game ID:" wrappingWidth="98.13671875" />
+   </children>
+</AnchorPane>

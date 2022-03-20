@@ -74,7 +74,4 @@ public class MultiPlayerGameController {
     public int getScore(@PathVariable("userName") String userName, @PathVariable("gameId") String gameId) {
         return multiplayerGameService.getMultiPlayerScore(userName, gameId);
     }
-
-
-
 }

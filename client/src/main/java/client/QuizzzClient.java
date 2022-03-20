@@ -2,6 +2,8 @@ package client;
 
 import client.controllers.AddActionActivityCtrl;
 import client.controllers.MainScreenActivityCtrl;
+import client.controllers.MultiplayerControllers.ServerBrowserController;
+import client.controllers.MultiplayerControllers.WaitingRoomController;
 import client.controllers.QuestionControllers.AlternativeQuestionActivityCtrl;
 import client.controllers.QuestionControllers.ComparisonQuestionActivityCtrl;
 import client.controllers.QuestionControllers.KnowledgeQuestionActivityCtrl;
@@ -46,14 +48,15 @@ public class QuizzzClient extends Application {
      * @param primaryStage represents the main stage of the app
      * @throws IOException is thrown when an error regarding Input or Output occurs while the app runs
      */
-
     private final Pair<String, Class>[] scenePairs = new Pair[]{
             new Pair("MainScreenScene.fxml", MainScreenActivityCtrl.class),
             new Pair("AddActionScene.fxml", AddActionActivityCtrl.class),
             new Pair("ComparisonQuestionScene.fxml", ComparisonQuestionActivityCtrl.class),
             new Pair("OpenQuestionScene.fxml", OpenQuestionActivityCtrl.class),
             new Pair("KnowledgeQuestionScene.fxml", KnowledgeQuestionActivityCtrl.class),
-            new Pair("AlternativeQuestionScene.fxml", AlternativeQuestionActivityCtrl.class)
+            new Pair("AlternativeQuestionScene.fxml", AlternativeQuestionActivityCtrl.class),
+            new Pair("ServerBrowserScene.fxml", ServerBrowserController.class),
+            new Pair("WaitingRoomScene.fxml", WaitingRoomController.class)
     };
 
     @Override
