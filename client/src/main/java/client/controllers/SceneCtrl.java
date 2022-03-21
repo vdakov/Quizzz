@@ -35,6 +35,7 @@ public class SceneCtrl {
         this.gameConfiguration = GameConfiguration.getConfiguration();
     }
 
+
     public void initialize(Stage primaryStage, HashMap<String, Pair<Object, Scene>> scenes) {
         this.primaryStage = primaryStage;
         this.scenes = scenes;
@@ -80,6 +81,7 @@ public class SceneCtrl {
     public void showKnowledgeQuestionScene(KnowledgeQuestion knowledgeQuestion) {
         var pair = scenes.get("KnowledgeQuestion");
         KnowledgeQuestionActivityCtrl ctrl = (KnowledgeQuestionActivityCtrl) pair.getKey();
+
         ctrl.displayQuestion(knowledgeQuestion);
         primaryStage.setScene(pair.getValue());
     }
