@@ -1,5 +1,7 @@
 package client.controllers;
 
+import client.controllers.MultiplayerControllers.ServerBrowserController;
+import client.controllers.MultiplayerControllers.WaitingRoomController;
 import client.controllers.QuestionControllers.AlternativeQuestionCtrl;
 import client.controllers.QuestionControllers.ComparisonQuestionCtrl;
 import client.controllers.QuestionControllers.KnowledgeQuestionCtrl;
@@ -11,6 +13,7 @@ import commons.Questions.OpenQuestion;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Pair;
+
 
 import java.util.HashMap;
 
@@ -88,4 +91,25 @@ public class SceneCtrl {
         primaryStage.setTitle("Add actions");
         primaryStage.setScene(pair.getValue());
     }
+
+    public void showServerBrowser() {
+        var pair = scenes.get("ServerBrowser");
+        ServerBrowserController ctrl = (ServerBrowserController) pair.getKey();
+
+
+        primaryStage.setTitle("Server Browser");
+        primaryStage.setScene(pair.getValue());
+    }
+
+    public void showWaitingRoom(boolean owner, String gameId, String userName) {
+        var pair = scenes.get("WaitingRoom");
+        WaitingRoomController ctrl = (WaitingRoomController) pair.getKey();
+
+        ctrl.initialize(owner, gameId, userName);
+
+        primaryStage.setTitle("WaitingRoom");
+        primaryStage.setScene(pair.getValue());
+    }
+
+
 }

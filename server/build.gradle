@@ -3,6 +3,8 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 }
 
+
+
 dependencies {
 
 
@@ -14,3 +16,4 @@ dependencies {
 	runtimeOnly 'com.h2database:h2'
 	implementation project(":commons")
 }
+
