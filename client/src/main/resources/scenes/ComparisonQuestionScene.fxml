@@ -9,6 +9,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.ProgressBar?>
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="838.0" prefWidth="1092.0" style="-fx-background-color: #499ee8;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.QuestionControllers.ComparisonQuestionCtrl">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="300.0" minWidth="10.0" prefWidth="98.0" />
@@ -68,5 +69,11 @@
                 <Font name="Chalkboard" size="24.0" />
             </font>
         </Button>
+        <Label fx:id="timeLabel" prefHeight="103.0" prefWidth="389.0" text="10" translateY="40.0" GridPane.columnIndex="3" GridPane.rowIndex="9">
+            <font>
+                <Font size="55.0" />
+            </font>
+        </Label>
+        <ProgressBar fx:id="progressBarTime" prefHeight="32.0" prefWidth="263.0" progress="0.0" GridPane.columnIndex="3" GridPane.rowIndex="9" />
     </children>
 </GridPane>

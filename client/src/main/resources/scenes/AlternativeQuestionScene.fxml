@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -85,10 +86,16 @@
                 <Font name="Chalkboard" size="24.0" />
             </font>
         </Label>
-        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Instead of .... you could do .... instead" textAlignment="CENTER" wrappingWidth="859.21630859375" GridPane.columnIndex="2" GridPane.rowIndex="2">
-            <font>
-                <Font name="Chalkboard" size="40.0" />
-            </font>
-        </Text>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Instead of .... you could do .... instead" textAlignment="CENTER" wrappingWidth="859.21630859375" GridPane.columnIndex="2" GridPane.rowIndex="2">
+         <font>
+            <Font name="Chalkboard" size="40.0" />
+         </font>
+      </Text>
+      <Label fx:id="timeLabel" prefHeight="172.0" prefWidth="485.0" text="10" translateY="40.0" GridPane.columnIndex="7" GridPane.rowIndex="7">
+         <font>
+            <Font size="45.0" />
+         </font>
+      </Label>
+      <ProgressBar fx:id="progressBarTime" prefHeight="32.0" prefWidth="338.0" progress="0.0" GridPane.columnIndex="7" GridPane.rowIndex="7" />
     </children>
 </GridPane>
