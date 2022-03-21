@@ -30,7 +30,7 @@ import java.util.Scanner;
 
 import static javax.xml.bind.DatatypeConverter.parseInt;
 
-public class OpenQuestionCtrl {
+public class OpenQuestionActivityCtrl {
 
 
     private final ServerUtils server;
@@ -75,7 +75,7 @@ public class OpenQuestionCtrl {
 
     //Constructor for the Question Controller
     @Inject
-    public OpenQuestionCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
+    public OpenQuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
         this.server = server;
         this.sceneCtrl = sceneCtrl;
     }

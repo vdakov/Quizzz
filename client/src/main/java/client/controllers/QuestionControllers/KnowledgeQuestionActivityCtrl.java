@@ -26,7 +26,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 
-public class KnowledgeQuestionCtrl {
+public class KnowledgeQuestionActivityCtrl {
 
     private final ServerUtils server;
     private final SceneCtrl sceneCtrl;
@@ -74,7 +74,7 @@ public class KnowledgeQuestionCtrl {
 
     //Constructor for the Question Controller
     @Inject
-    public KnowledgeQuestionCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
+    public KnowledgeQuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
         this.server = server;
         this.sceneCtrl = sceneCtrl;
         this.knowledgeQuestion = null;

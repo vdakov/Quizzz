@@ -2,10 +2,10 @@ package client.controllers;
 
 import client.controllers.MultiplayerControllers.ServerBrowserController;
 import client.controllers.MultiplayerControllers.WaitingRoomController;
-import client.controllers.QuestionControllers.AlternativeQuestionCtrl;
-import client.controllers.QuestionControllers.ComparisonQuestionCtrl;
-import client.controllers.QuestionControllers.KnowledgeQuestionCtrl;
-import client.controllers.QuestionControllers.OpenQuestionCtrl;
+import client.controllers.QuestionControllers.AlternativeQuestionActivityCtrl;
+import client.controllers.QuestionControllers.ComparisonQuestionActivityCtrl;
+import client.controllers.QuestionControllers.KnowledgeQuestionActivityCtrl;
+import client.controllers.QuestionControllers.OpenQuestionActivityCtrl;
 import commons.Questions.AlternativeQuestion;
 import commons.Questions.ComparisonQuestion;
 import commons.Questions.KnowledgeQuestion;
@@ -33,7 +33,7 @@ public class SceneCtrl {
 
     public void showAlternativeQuestionScene(AlternativeQuestion alternativeQuestion, int questionNo, String userName, String roomId) {
         var pair = scenes.get("AlternativeQuestion");
-        AlternativeQuestionCtrl ctrl = (AlternativeQuestionCtrl) pair.getKey();
+        AlternativeQuestionActivityCtrl ctrl = (AlternativeQuestionActivityCtrl) pair.getKey();
 
         ctrl.startTimer();
         primaryStage.setTitle("Question type 1");
@@ -43,7 +43,7 @@ public class SceneCtrl {
 
     public void showKnowledgeQuestionScene(KnowledgeQuestion knowledgeQuestion, int questionNo, String userName, String roomId) {
         var pair = scenes.get("KnowledgeQuestion");
-        KnowledgeQuestionCtrl ctrl = (KnowledgeQuestionCtrl) pair.getKey();
+        KnowledgeQuestionActivityCtrl ctrl = (KnowledgeQuestionActivityCtrl) pair.getKey();
 
 
         primaryStage.setTitle("Question type 2");
@@ -54,7 +54,7 @@ public class SceneCtrl {
 
     public void showOpenQuestionScene(OpenQuestion openQuestion, int questionNo, String userName, String roomId) {
         var pair = scenes.get("OpenQuestion");
-        OpenQuestionCtrl ctrl = (OpenQuestionCtrl) pair.getKey();
+        OpenQuestionActivityCtrl ctrl = (OpenQuestionActivityCtrl) pair.getKey();
 
 
         primaryStage.setTitle("Question type 3");
@@ -65,7 +65,7 @@ public class SceneCtrl {
 
     public void showComparisonQuestionScene(ComparisonQuestion comparisonQuestion, int questionNo, String userName, String roomId) {
         var pair = scenes.get("ComparisonQuestion");
-        ComparisonQuestionCtrl ctrl = (ComparisonQuestionCtrl) pair.getKey();
+        ComparisonQuestionActivityCtrl ctrl = (ComparisonQuestionActivityCtrl) pair.getKey();
 
 
         primaryStage.setTitle("Question type 4");

@@ -27,7 +27,7 @@ import java.util.Scanner;
 
 import javafx.util.Duration;
 
-public class AlternativeQuestionCtrl {
+public class AlternativeQuestionActivityCtrl {
     private final ServerUtils server;
     private final SceneCtrl sceneCtrl;
     private String userName;
@@ -76,7 +76,7 @@ public class AlternativeQuestionCtrl {
 
     //Constructor for the Question Controller
     @Inject
-    public AlternativeQuestionCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
+    public AlternativeQuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
         this.server = server;
         this.sceneCtrl = sceneCtrl;
     }

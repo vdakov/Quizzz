@@ -25,7 +25,7 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class ComparisonQuestionCtrl {
+public class ComparisonQuestionActivityCtrl {
 
     private final ServerUtils server;
     private final SceneCtrl sceneCtrl;
@@ -64,7 +64,7 @@ public class ComparisonQuestionCtrl {
 
     //Constructor for the Question Controller
     @Inject
-    public ComparisonQuestionCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
+    public ComparisonQuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
         this.server = server;
         this.sceneCtrl = sceneCtrl;
     }

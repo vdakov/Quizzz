@@ -4,10 +4,10 @@ import client.controllers.AddActionActivityCtrl;
 import client.controllers.MainScreenActivityCtrl;
 import client.controllers.MultiplayerControllers.ServerBrowserController;
 import client.controllers.MultiplayerControllers.WaitingRoomController;
-import client.controllers.QuestionControllers.AlternativeQuestionCtrl;
-import client.controllers.QuestionControllers.ComparisonQuestionCtrl;
-import client.controllers.QuestionControllers.KnowledgeQuestionCtrl;
-import client.controllers.QuestionControllers.OpenQuestionCtrl;
+import client.controllers.QuestionControllers.AlternativeQuestionActivityCtrl;
+import client.controllers.QuestionControllers.ComparisonQuestionActivityCtrl;
+import client.controllers.QuestionControllers.KnowledgeQuestionActivityCtrl;
+import client.controllers.QuestionControllers.OpenQuestionActivityCtrl;
 import client.controllers.SceneCtrl;
 import client.controllers.SingleplayerLeaderboardCtrl;
 import client.logic.FXMLConfig;
@@ -53,10 +53,10 @@ public class QuizzzClient extends Application {
     private final Pair<String, Class>[] scenePairs = new Pair[]{
             new Pair("MainScreenScene.fxml", MainScreenActivityCtrl.class),
             new Pair("AddActionScene.fxml", AddActionActivityCtrl.class),
-            new Pair("ComparisonQuestionScene.fxml", ComparisonQuestionCtrl.class),
-            new Pair("OpenQuestionScene.fxml", OpenQuestionCtrl.class),
-            new Pair("KnowledgeQuestionScene.fxml", KnowledgeQuestionCtrl.class),
-            new Pair("AlternativeQuestionScene.fxml", AlternativeQuestionCtrl.class),
+            new Pair("ComparisonQuestionScene.fxml", ComparisonQuestionActivityCtrl.class),
+            new Pair("OpenQuestionScene.fxml", OpenQuestionActivityCtrl.class),
+            new Pair("KnowledgeQuestionScene.fxml", KnowledgeQuestionActivityCtrl.class),
+            new Pair("AlternativeQuestionScene.fxml", AlternativeQuestionActivityCtrl.class),
             new Pair("ServerBrowserScene.fxml", ServerBrowserController.class),
             new Pair("WaitingRoomScene.fxml", WaitingRoomController.class),
             new Pair("SingleplayerLeaderboardScene.fxml", SingleplayerLeaderboardCtrl.class)
