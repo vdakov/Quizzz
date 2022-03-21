@@ -18,6 +18,7 @@ public class SceneCtrl {
     private Stage primaryStage;
     private HashMap<String, Pair<Object, Scene>> scenes;
 
+
     public void initialize(Stage primaryStage, HashMap<String, Pair<Object, Scene>> scenes) {
         this.primaryStage = primaryStage;
         this.scenes = scenes;
@@ -32,6 +33,7 @@ public class SceneCtrl {
 
         primaryStage.setTitle("Question type 1");
         ctrl.setQuestion(alternativeQuestion, questionNo, userName, roomId);
+        ctrl.startTimer();
         primaryStage.setScene(pair.getValue());
     }
 
@@ -41,6 +43,7 @@ public class SceneCtrl {
 
         primaryStage.setTitle("Question type 2");
         ctrl.setQuestion(knowledgeQuestion, questionNo, userName, roomId);
+        ctrl.startTimer();
         primaryStage.setScene(pair.getValue());
     }
 
@@ -50,6 +53,7 @@ public class SceneCtrl {
 
         primaryStage.setTitle("Question type 3");
         ctrl.setQuestion(openQuestion, questionNo, userName, roomId);
+        ctrl.startTimer();
         primaryStage.setScene(pair.getValue());
     }
 
@@ -59,6 +63,15 @@ public class SceneCtrl {
 
         primaryStage.setTitle("Question type 4");
         ctrl.setQuestion(comparisonQuestion, questionNo, userName, roomId);
+        ctrl.startTimer();
+        primaryStage.setScene(pair.getValue());
+    }
+
+    public void showSingleplayerLeaderboard() {
+        System.out.println("LEADERBOARD");
+        var pair = scenes.get("SingleplayerLeaderboard");
+
+        primaryStage.setTitle("Singleplayer Leaderboard");
         primaryStage.setScene(pair.getValue());
     }
 

@@ -26,6 +26,12 @@ public class AlternativeQuestionCtrl {
     private int questionNumber;
     private AlternativeQuestion alternativeQuestion;
     private int pointsInt;
+    private String correctAnswer;
+    private final double startTime = 10;
+    private IntegerProperty timeSeconds =
+            new SimpleIntegerProperty((int) startTime);
+    private Timeline timeline;
+
     @FXML
     private Label sampleQuestion;
     @FXML
@@ -131,6 +137,9 @@ public class AlternativeQuestionCtrl {
                 sceneCtrl.showAlternativeQuestionScene(QuestionParsers.alternativeQuestionParser(scanner.next()), this.questionNumber + 1, userName, serverId);
                 break;
             }
+            default:
+                //start timer when next question is shown
+                //startTimer();
         }
     }
 
@@ -148,8 +157,11 @@ public class AlternativeQuestionCtrl {
     public void answer(ActionEvent event) {
         Button current = (Button) event.getSource();
 
+        handleTimerButton(event);
+
         if (current.getText().equals(getCorrectAnswer())) {
-            pointsInt += 500; //global variable for points so it remembers it
+            // multiply the score by percentage time remaining
+            pointsInt += 500.0 * ((float) timeSeconds.getValue() / startTime); //global variable for points so it remembers it
         }
 
         //uses the answerCheck method to highlight which the correct answer was
@@ -161,7 +173,8 @@ public class AlternativeQuestionCtrl {
         //changes the points value
         points.setText(String.valueOf(pointsInt));
 
-        goToNextQuestion();
+        if (questionNumber < 20) goToNextQuestion();
+        else sceneCtrl.showSingleplayerLeaderboard();
     }
 
 
@@ -171,13 +184,13 @@ public class AlternativeQuestionCtrl {
         long end = mTime + 1000;
 
         // This should be setting the colour and then go to a new question screen but it doesn't work right now
-        do {
-            if (answer.equals(getCorrectAnswer())) {
-                current.setStyle("-fx-background-color: #00FF00; "); //simple CSS for clarity
-            } else {
-                current.setStyle("-fx-background-color: #d20716; ");
-            }
-        } while (System.currentTimeMillis() < end);
+        //do {
+        if (answer.equals(getCorrectAnswer())) {
+            current.setStyle("-fx-background-color: #00FF00; "); //simple CSS for clarity
+        } else {
+            current.setStyle("-fx-background-color: #d20716; ");
+        }
+        //} while (System.currentTimeMillis() < end);
 
         this.initialize();
 

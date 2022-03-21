@@ -51,7 +51,8 @@ public class QuizzzClient extends Application {
             new Pair("ComparisonQuestionScene.fxml", ComparisonQuestionCtrl.class),
             new Pair("OpenQuestionScene.fxml", OpenQuestionCtrl.class),
             new Pair("KnowledgeQuestionScene.fxml", KnowledgeQuestionCtrl.class),
-            new Pair("AlternativeQuestionScene.fxml", AlternativeQuestionCtrl.class)
+            new Pair("AlternativeQuestionScene.fxml", AlternativeQuestionCtrl.class),
+            new Pair("SingleplayerLeaderboardScene.fxml", SingleplayerLeaderboardCtrl.class)
     };
 
     @Override

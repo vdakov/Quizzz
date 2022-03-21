@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToolBar;
 import javafx.scene.image.ImageView;
@@ -31,6 +32,10 @@ public class OpenQuestionCtrl {
     private String userName;
     private String serverId;
     private int pointsInt;
+    private final double startTime = 10;
+    private IntegerProperty timeSeconds =
+            new SimpleIntegerProperty((int) startTime);
+    private Timeline timeline;
     @FXML
     private Label sampleQuestion;
     @FXML
@@ -98,6 +103,25 @@ public class OpenQuestionCtrl {
         getAnswer().setStyle("-fx-background-color: #ffd783; -fx-border-color:  #ffd783");
     }
 
+    public void startTimer() {
+        progressBarTime.progressProperty().bind(Bindings.divide(timeSeconds, startTime));
+        timeLabel.textProperty().bind(timeSeconds.asString());
+        timeSeconds.set((int) startTime);
+        timeline = new Timeline();
+        timeline.getKeyFrames().add(
+                new KeyFrame(Duration.seconds(startTime + 1),
+                        new KeyValue(timeSeconds, 0)));
+        timeline.setOnFinished(event -> goToNextQuestion());
+        timeline.playFromStart();
+    }
+    public void handleTimerButton(ActionEvent event) {
+        if (timeline != null) {
+            timeline.stop();
+        }
+        timeline.stop();
+        System.out.println("Time took to answer - " + timeSeconds);
+    }
+
     public void goToNextQuestion() {
         String response = server.getQuestion(this.userName, this.serverId, this.questionNumber + 1);
         Scanner scanner = new Scanner(response).useDelimiter(": ");
@@ -133,6 +157,8 @@ public class OpenQuestionCtrl {
     public void answer(ActionEvent event) throws InterruptedException {
         Button current = (Button) event.getSource();
 
+        handleTimerButton(event);
+
         if (writeAnswer.getText().equals(getCorrectAnswer())) {
             pointsInt += 500; //global variable for points so it remembers it
         } else if (parseInt(writeAnswer.getText()) > parseInt(getCorrectAnswer()) * 0.95 && parseInt(writeAnswer.getText()) < parseInt(getCorrectAnswer()) * 1.05) {
@@ -145,7 +171,8 @@ public class OpenQuestionCtrl {
         answerCheck(writeAnswer.getText(), this.getAnswer());
         points.setText(String.valueOf(pointsInt)); //changes the points value
 
-        goToNextQuestion();
+        if (questionNumber < 20) goToNextQuestion();
+        else sceneCtrl.showSingleplayerLeaderboard();
     }
 
 
