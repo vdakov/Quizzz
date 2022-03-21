@@ -5,17 +5,13 @@ import client.controllers.SceneCtrl;
 import client.logic.QuestionParsers;
 import com.google.inject.Inject;
 import commons.Questions.ComparisonQuestion;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ToolBar;
+import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -30,10 +26,7 @@ public class ComparisonQuestionCtrl {
     private String userName;
     private String serverId;
     private int pointsInt;
-    private final double startTime = 10;
-    private IntegerProperty timeSeconds =
-            new SimpleIntegerProperty((int) startTime);
-    private Timeline timeline;
+
     @FXML
     private Label sampleQuestion;
     @FXML
@@ -41,9 +34,17 @@ public class ComparisonQuestionCtrl {
     @FXML
     private Label points;
     @FXML
-    private Label timeLabel;
+    private ToolBar toolbar;
     @FXML
-    private ProgressBar progressBarTime;
+    private ImageView emoji1;
+    @FXML
+    private ImageView emoji2;
+    @FXML
+    private ImageView emoji3;
+    @FXML
+    private ImageView emoji4;
+    @FXML
+    private ImageView emoji5;
 
     //Constructor for the Question Controller
     @Inject
@@ -59,6 +60,26 @@ public class ComparisonQuestionCtrl {
         this.serverId = serverId;
 
         this.sampleQuestion.setText((comparisonQuestion == null) ? "" : comparisonQuestion.getQuestion().getKey());
+
+        // if(serverId is Multiplayer)
+        {
+            toolbar.setStyle("-fx-opacity: 1");
+            emoji1.setStyle("-fx-opacity: 1 ");
+            emoji2.setStyle("-fx-opacity: 1");
+            emoji3.setStyle("-fx-opacity: 1 ");
+            emoji4.setStyle("-fx-opacity: 1");
+            emoji5.setStyle("-fx-opacity: 1 ");
+        }
+    }
+
+    public void transition(ImageView image)
+    {
+        TranslateTransition translate = new TranslateTransition();
+        translate.setNode(image);
+        translate.setDuration(Duration.millis(3500));
+        translate.setCycleCount(1);
+        translate.setByY(-500);
+        translate.play();
     }
 
     //Initializes the sample question screen through hardcoding
@@ -67,32 +88,12 @@ public class ComparisonQuestionCtrl {
         //resets the colors to white each time
     }
 
-    public void startTimer() {
-        progressBarTime.progressProperty().bind(Bindings.divide(timeSeconds, startTime));
-        timeLabel.textProperty().bind(timeSeconds.asString());
-        timeSeconds.set((int) startTime);
-        timeline = new Timeline();
-        timeline.getKeyFrames().add(
-                new KeyFrame(Duration.seconds(startTime + 1),
-                        new KeyValue(timeSeconds, 0)));
-        timeline.setOnFinished(event -> goToNextQuestion());
-        timeline.playFromStart();
-    }
-    public void handleTimerButton(ActionEvent event) {
-        if (timeline != null) {
-            timeline.stop();
-        }
-        timeline.stop();
-        System.out.println("Time took to answer - " + timeSeconds);
-    }
 
 
     //method for answering the question- activated on click of button in QuestionScreen scene
     public void answer(ActionEvent event) {
         Button current = (Button) event.getSource();
         System.out.println("Comparison question am intrat");
-
-        handleTimerButton(event);
 
         if (current.getText().equals("10")) {
             pointsInt += 500; //global variable for points so it remembers it

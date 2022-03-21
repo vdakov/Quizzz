@@ -5,18 +5,14 @@ import client.controllers.SceneCtrl;
 import client.logic.QuestionParsers;
 import com.google.inject.Inject;
 import commons.Questions.AlternativeQuestion;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
-
+import javafx.scene.control.ToolBar;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -31,10 +27,7 @@ public class AlternativeQuestionCtrl {
     private AlternativeQuestion alternativeQuestion;
     private int pointsInt;
     private String correctAnswer;
-    private final double startTime = 10;
-    private IntegerProperty timeSeconds =
-            new SimpleIntegerProperty((int) startTime);
-    private Timeline timeline;
+
 
     @FXML
     private Label sampleQuestion;
@@ -49,10 +42,19 @@ public class AlternativeQuestionCtrl {
     @FXML
     private Label labelAnswerBottom;
     @FXML
-    private Label timeLabel;
+    private ToolBar toolbar;
     @FXML
-    private ProgressBar progressBarTime;
-
+    private ImageView emoji1;
+    @FXML
+    private ImageView emoji2;
+    @FXML
+    private ImageView emoji3;
+    @FXML
+    private ImageView emoji4;
+    @FXML
+    private ImageView emoji5;
+    @FXML
+    private ImageView startAnimation;
 
 
     //Constructor for the Question Controller
@@ -75,6 +77,32 @@ public class AlternativeQuestionCtrl {
         labelAnswerCenter.setText((alternativeQuestion == null) ? "" : alternativeQuestion.getOptions().get(2).getKey());
 
         this.correctAnswer = "" + ((alternativeQuestion == null) ? "" : alternativeQuestion.getOptions().get(1).getKey());
+
+        // if(serverId is Singleplayer)
+        {
+            toolbar.setStyle("-fx-opacity: 1");
+            emoji1.setStyle("-fx-opacity: 1 ");
+            emoji2.setStyle("-fx-opacity: 1");
+            emoji3.setStyle("-fx-opacity: 1 ");
+            emoji4.setStyle("-fx-opacity: 1");
+            emoji5.setStyle("-fx-opacity: 1 ");
+        }
+
+    }
+
+    public void emoji1Animation(MouseEvent event)
+    {
+        sceneCtrl.showMainScreenScene();
+    }
+
+    public void transition(ImageView image)
+    {
+        TranslateTransition translate = new TranslateTransition();
+        translate.setNode(image);
+        translate.setDuration(Duration.millis(3500));
+        translate.setCycleCount(1);
+        translate.setByY(-500);
+        translate.play();
     }
 
     public void goToNextQuestion() {
@@ -117,29 +145,6 @@ public class AlternativeQuestionCtrl {
         getAnswerCenter().setStyle("-fx-background-color: #ffd783; -fx-border-color:  #ffd783");
         getAnswerBottom().setStyle("-fx-background-color: #ffa382; -fx-border-color:  #ffa382");
 
-        // start the timer on screen init
-        //startTimer();
-
-    }
-
-    public void startTimer() {
-        progressBarTime.progressProperty().bind(Bindings.divide(timeSeconds, startTime));
-
-        timeLabel.textProperty().bind(timeSeconds.asString());    //bind the progressbar value to the seconds left
-        timeSeconds.set((int) startTime);
-        timeline = new Timeline();
-        timeline.getKeyFrames().add(
-                new KeyFrame(Duration.seconds(startTime + 1),      //the timeLine handles an animation which lasts start + 1 seconds
-                        new KeyValue(timeSeconds, 0)));    //animation finishes when timeSeconds comes to 0
-        timeline.setOnFinished(event -> goToNextQuestion());       //proceeds to the next question if no answer was given in 10 sec
-        timeline.playFromStart();                                 //start the animation
-    }
-    public void handleTimerButton(ActionEvent event) {
-        if (timeline != null) {
-            timeline.stop();        //if timeline exists stop it when any answer button is pressed
-        }
-        timeline.stop();
-        System.out.println("Time took to answer - " + timeSeconds);
     }
 
 
@@ -147,11 +152,10 @@ public class AlternativeQuestionCtrl {
     public void answer(ActionEvent event) {
         Button current = (Button) event.getSource();
 
-        handleTimerButton(event);
 
         if (current.getText().equals(getCorrectAnswer())) {
             // multiply the score by percentage time remaining
-            pointsInt += 500.0 * ((float) timeSeconds.getValue() / startTime); //global variable for points so it remembers it
+            pointsInt += 500.0 ; //global variable for points so it remembers it
         }
 
         //uses the answerCheck method to highlight which the correct answer was
