@@ -2,231 +2,193 @@ package client.controllers.QuestionControllers;
 
 import client.communication.ServerUtils;
 import client.controllers.SceneCtrl;
-import client.logic.QuestionParsers;
+import client.data.GameConfiguration;
 import com.google.inject.Inject;
 import commons.Questions.OpenQuestion;
-import javafx.animation.TranslateTransition;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.scene.control.ProgressBar;
-import javafx.util.Duration;
-
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToolBar;
 import javafx.scene.image.ImageView;
-import javafx.util.Duration;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 import java.io.IOException;
-import java.util.Objects;
-import java.util.Scanner;
-
-import static javax.xml.bind.DatatypeConverter.parseInt;
 
 public class OpenQuestionActivityCtrl {
 
-
+    // constructor needed variables
     private final ServerUtils server;
-    private final SceneCtrl sceneCtrl;
-    private OpenQuestion openQuestion;
-    private int questionNumber;
-    private String userName;
-    private String serverId;
-    private int pointsInt;
-    private final double startTime = 10;
-    private IntegerProperty timeSeconds =
-            new SimpleIntegerProperty((int) startTime);
-    private Timeline timeline;
+    private final SceneCtrl   sceneCtrl;
+
+    // final needed labels for questions
+    @FXML
+    private Label labelGoBack;
 
     @FXML
+    private Label questionStatement;
+    @FXML
+    private ImageView questionStatementImage;
+
+    @FXML
+    private Label submitAnswer;
+    @FXML
+    private TextField userAnswer;
+
+    private int userAnswerInt;
+    private int pointsInt;
+    private int addedPointsInt;
+    // current labels
+    @FXML
     private Label sampleQuestion;
+    @FXML
+    private Button goToMainScreen;
     @FXML
     private Button answer;
     @FXML
     private Label points;
     @FXML
+    private Label addedPoints;
+    @FXML
+    private Label questionNumberLabel;
+
+    @FXML
     private TextField writeAnswer;
+
     @FXML
     private String correctAnswer;
     @FXML
-    private ToolBar toolbar;
+    private Label correctAnswerLabel;
+
     @FXML
-    private ImageView emoji1;
+    private Rectangle userAnswerRectangle;
     @FXML
-    private ImageView emoji2;
-    @FXML
-    private ImageView emoji3;
-    @FXML
-    private ImageView emoji4;
-    @FXML
-    private ImageView emoji5;
-    @FXML
-    private Label timeLabel;
-    @FXML
-    private ProgressBar progressBarTime;
+    private Rectangle correctAnswerRectangle;
 
 
-    //Constructor for the Question Controller
+
+    /**
+     * Creates the scene with the needed dependencies
+     * @param server    initialised the communication with the server
+     * @param sceneCtrl the scene controller
+     */
     @Inject
     public OpenQuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
         this.server = server;
         this.sceneCtrl = sceneCtrl;
     }
 
-    public void setQuestion(OpenQuestion openQuestion, int questionNumber, String userName, String serverId) {
-        this.openQuestion = openQuestion;
-        this.questionNumber = questionNumber;
-        this.userName = userName;
-        this.serverId = serverId;
-
-        this.sampleQuestion.setText((openQuestion == null) ? "" : openQuestion.getQuestion().getKey());
-
-        this.correctAnswer = "100";
-
-        // if(serverId is Multiplayer)
-        {
-            toolbar.setStyle("-fx-opacity: 1");
-            emoji1.setStyle("-fx-opacity: 1 ");
-            emoji2.setStyle("-fx-opacity: 1");
-            emoji3.setStyle("-fx-opacity: 1 ");
-            emoji4.setStyle("-fx-opacity: 1");
-            emoji5.setStyle("-fx-opacity: 1 ");
-        }
-    }
-
-    public void startTimer() {
-        progressBarTime.progressProperty().bind(Bindings.divide(timeSeconds, startTime));
-        timeLabel.textProperty().bind(timeSeconds.asString());
-        timeSeconds.set((int) startTime);
-        timeline = new Timeline();
-        timeline.getKeyFrames().add(
-                new KeyFrame(Duration.seconds(startTime + 1),
-                        new KeyValue(timeSeconds, 0)));
-        timeline.setOnFinished(event -> goToNextQuestion());
-        timeline.playFromStart();
-    }
-    public void handleTimerButton(ActionEvent event) {
-        if (timeline != null) {
-            timeline.stop();
-        }
-        timeline.stop();
-        System.out.println("Time took to answer - " + timeSeconds);
-    }
-
-
-    public void transition(ImageView image)
-    {
-        TranslateTransition translate = new TranslateTransition();
-        translate.setNode(image);
-        translate.setDuration(Duration.millis(3500));
-        translate.setCycleCount(1);
-        translate.setByY(-500);
-        translate.play();
-    }
-
-    //Initializes the sample question screen through hardcoding
+    /**
+     * Initialises all the colors for the current scene
+     */
     public void initialize() {
+
+
         getAnswer().setStyle("-fx-background-color: #ffd783; -fx-border-color:  #ffd783");
     }
 
-
-    public void goToNextQuestion() {
-        String response = server.getQuestion(this.userName, this.serverId, this.questionNumber + 1);
-        Scanner scanner = new Scanner(response).useDelimiter(": ");
-        System.out.println("Open question am intrat");
-        String next = scanner.next();
-        System.out.println(next + questionNumber);
-        switch (next) {
-            case "OpenQuestion": {
-                sceneCtrl.showMainScreenScene();
-                sceneCtrl.showOpenQuestionScene(QuestionParsers.openQuestionParser(scanner.next()), this.questionNumber + 1, userName, serverId);
-                break;
-            }
-            case "KnowledgeQuestion": {
-                sceneCtrl.showMainScreenScene();
-                sceneCtrl.showKnowledgeQuestionScene(QuestionParsers.knowledgeQuestionParser(scanner.next()), this.questionNumber + 1, userName, serverId);
-                break;
-            }
-            case "ComparisonQuestion": {
-                sceneCtrl.showMainScreenScene();
-                sceneCtrl.showComparisonQuestionScene(QuestionParsers.comparisonQuestionParser(scanner.next()), this.questionNumber + 1, userName, serverId);
-                break;
-            }
-            case "AlternativeQuestion": {
-                sceneCtrl.showMainScreenScene();
-                sceneCtrl.showAlternativeQuestionScene(QuestionParsers.alternativeQuestionParser(scanner.next()), this.questionNumber + 1, userName, serverId);
-                break;
-            }
+    /**
+     * Sets the text for the needed question given as parameter
+     * @param openQuestion the question that is set
+     */
+    public void displayQuestion(OpenQuestion openQuestion) {
+        if (openQuestion == null) {
+            return;
         }
+        getQuestionStatement().setText(openQuestion.getQuestion().getKey());
+
+        initialize();
     }
 
+    /**
+     * Displays the next question to the user after the transition is finished
+     */
+    public void displayNextQuestion() {
+        sceneCtrl.showNextQuestion();
+    }
 
-    //method for answering the question- activated on click of button in QuestionScreen scene
-    public void answer(ActionEvent event) throws InterruptedException {
-        Button current = (Button) event.getSource();
-
-        handleTimerButton(event);
-
-        if (writeAnswer.getText().equals(getCorrectAnswer())) {
-            pointsInt += 500; //global variable for points so it remembers it
-        } else if (parseInt(writeAnswer.getText()) > parseInt(getCorrectAnswer()) * 0.95 && parseInt(writeAnswer.getText()) < parseInt(getCorrectAnswer()) * 1.05) {
-            pointsInt += 250;
+    public void answerQuestion() {
+        // answers the question and blocks the possibility to answer anymore
+        try {
+            userAnswerInt = Integer.parseInt(userAnswer.getText());
+            System.out.println(1);
+        } catch (NumberFormatException e) {
+            userAnswer.setText("-99999");
+            server.updateScore(userAnswer.getText());
+            userAnswerInt = Integer.parseInt(userAnswer.getText());
+        } catch (NullPointerException e) {
+            if (userAnswer.getText() == (null) || userAnswer.getText().trim().isEmpty()) {
+                userAnswer.setText("-99999");
+                userAnswerInt = Integer.parseInt(userAnswer.getText());
+            }
+        }  catch (Exception e ) {
+            System.out.println(e);
         }
 
-
-        //uses the answerCheck method to highlight which the correct answer was
-        //and to color them
-        answerCheck(writeAnswer.getText(), this.getAnswer());
-        points.setText(String.valueOf(pointsInt)); //changes the points value
-
-        if (questionNumber < 20) goToNextQuestion();
-        else finishGame();
+        answerUpdate();
+        pointsUpdate();
     }
 
-    public void finishGame() {
-        server.addSingleplayerLeaderboardEntry(userName, pointsInt);
-        sceneCtrl.showSingleplayerLeaderboard();
-    }
-
-
-    //Method that checks whether answer is correct
-    public void answerCheck(String answer, Button current) throws InterruptedException {
-        if (Objects.equals(writeAnswer.getText(), getCorrectAnswer()) ||
-                parseInt(writeAnswer.getText()) > parseInt(getCorrectAnswer()) * 0.95 && parseInt(writeAnswer.getText()) < parseInt(getCorrectAnswer()) * 1.05) {
-            current.setStyle("-fx-background-color: #00FF00; ");  //simple CSS for clarity
+    public void answerUpdate() {
+        // after the time ends the right answer is requested and then shown
+        userAnswerRectangle.setStrokeWidth(5);
+        System.out.println(userAnswerInt);
+        if (userAnswerInt == (getCorrectAnswerInt())) {
+            userAnswerRectangle.setStroke(Color.valueOf("#92d36e"));
         } else {
-            current.setStyle("-fx-background-color: #d20716;");
+            userAnswerRectangle.setStroke(Color.valueOf("#ff0000"));
         }
 
+        correctAnswerRectangle.setFill(Color.valueOf("#c9f1fd"));
+        correctAnswerRectangle.setStrokeWidth(5);
+        correctAnswerRectangle.setStroke(Color.valueOf("#000000"));
+        correctAnswerLabel.setText("Correct Answer: " + getCorrectAnswerInt());
+    }
+
+    public void pointsUpdate() {
+        // after the time ends the amount of won points is calculated and then shown to the player
+        if (userAnswerInt == (getCorrectAnswerInt())) {
+            addedPointsInt = 500;
+        } else if (userAnswerInt > getCorrectAnswerInt() * 0.95 || userAnswerInt < getCorrectAnswerInt() * 1.05) {
+            addedPointsInt = 250;
+        }
+        addedPoints.setText("+" + String.valueOf(addedPointsInt));
+
+        //after some effect
+        pointsInt += addedPointsInt;
+        addedPointsInt = 0;
+        addedPoints.setText(null);
+        points.setText(String.valueOf(pointsInt));
+
+//        server.updateScore()
 
     }
 
-    public void goToMainScreen(ActionEvent event) throws IOException {
+    public void goToMainScreen () throws IOException {
         sceneCtrl.showMainScreenScene();
     }
 
 
-    public Button getAnswer() {
-        return answer;
+    private Label getQuestionStatement() {
+        return sampleQuestion;
     }
 
-    public String getCorrectAnswer() {
-        return correctAnswer;
+    public Button getAnswer() { return answer; }
+
+    public int getCorrectAnswerInt() {
+        return Integer.parseInt(server.getAnswer());
     }
 
-    public TextField getWriteAnswer() {
-        return writeAnswer;
+    public TextField getWriteAnswer() { return userAnswer; }
+
+    public void setWriteAnswer(TextField writeAnswer) { this.userAnswer = userAnswer; }
+
+    public int getPointsInt() {
+        return Integer.parseInt(server.getScore());
     }
 
-    public void setWriteAnswer(TextField writeAnswer) {
-        this.writeAnswer = writeAnswer;
+    public int getQuestionNumber() {
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+        return gameConfiguration.getCurrentQuestionNumber();
     }
-
 }
