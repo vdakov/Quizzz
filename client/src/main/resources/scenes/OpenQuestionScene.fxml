@@ -10,6 +10,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.ProgressBar?>
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="838.0"
           prefWidth="1092.0" style="-fx-background-color: #499ee8;" xmlns="http://javafx.com/javafx/17"
           xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.QuestionControllers.OpenQuestionCtrl">
@@ -69,5 +70,11 @@
         </Label>
         <TextField fx:id="writeAnswer" prefHeight="45.0" prefWidth="202.0" GridPane.columnIndex="6"
                    GridPane.rowIndex="4"/>
+        <Label fx:id="timeLabel" prefHeight="121.0" prefWidth="202.0" text="10" translateY="40.0" GridPane.columnIndex="6" GridPane.rowIndex="6">
+            <font>
+                <Font size="46.0" />
+            </font>
+        </Label>
+        <ProgressBar fx:id="progressBarTime" prefHeight="29.0" prefWidth="202.0" progress="1.0" GridPane.columnIndex="6" GridPane.rowIndex="6" />
     </children>
 </GridPane>

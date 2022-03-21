@@ -5,10 +5,18 @@ import client.controllers.SceneCtrl;
 import client.logic.QuestionParsers;
 import com.google.inject.Inject;
 import commons.Questions.ComparisonQuestion;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -22,12 +30,20 @@ public class ComparisonQuestionCtrl {
     private String userName;
     private String serverId;
     private int pointsInt;
+    private final double startTime = 10;
+    private IntegerProperty timeSeconds =
+            new SimpleIntegerProperty((int) startTime);
+    private Timeline timeline;
     @FXML
     private Label sampleQuestion;
     @FXML
     private Button answerLeft, answerCenter, answerRight;
     @FXML
     private Label points;
+    @FXML
+    private Label timeLabel;
+    @FXML
+    private ProgressBar progressBarTime;
 
     //Constructor for the Question Controller
     @Inject
@@ -51,11 +67,32 @@ public class ComparisonQuestionCtrl {
         //resets the colors to white each time
     }
 
+    public void startTimer() {
+        progressBarTime.progressProperty().bind(Bindings.divide(timeSeconds, startTime));
+        timeLabel.textProperty().bind(timeSeconds.asString());
+        timeSeconds.set((int) startTime);
+        timeline = new Timeline();
+        timeline.getKeyFrames().add(
+                new KeyFrame(Duration.seconds(startTime + 1),
+                        new KeyValue(timeSeconds, 0)));
+        timeline.setOnFinished(event -> goToNextQuestion());
+        timeline.playFromStart();
+    }
+    public void handleTimerButton(ActionEvent event) {
+        if (timeline != null) {
+            timeline.stop();
+        }
+        timeline.stop();
+        System.out.println("Time took to answer - " + timeSeconds);
+    }
+
 
     //method for answering the question- activated on click of button in QuestionScreen scene
     public void answer(ActionEvent event) {
         Button current = (Button) event.getSource();
         System.out.println("Comparison question am intrat");
+
+        handleTimerButton(event);
 
         if (current.getText().equals("10")) {
             pointsInt += 500; //global variable for points so it remembers it
@@ -70,7 +107,8 @@ public class ComparisonQuestionCtrl {
         //changes the points value
         points.setText(String.valueOf(pointsInt));
 
-        goToNextQuestion();
+        if (questionNumber < 20) goToNextQuestion();
+        else sceneCtrl.showSingleplayerLeaderboard();
     }
 
 
@@ -80,13 +118,13 @@ public class ComparisonQuestionCtrl {
         long end = mTime + 1000;
 
         // This should be setting the colour and then go to a new question screen but it doesn't work right now
-        do {
-            if (answer.equals("10")) {
-                current.setStyle("-fx-background-color: #00FF00; "); //simple CSS for clarity
-            } else {
-                current.setStyle("-fx-background-color: #d20716; ");
-            }
-        } while (System.currentTimeMillis() < end);
+        //do {
+        if (answer.equals("10")) {
+            current.setStyle("-fx-background-color: #00FF00; "); //simple CSS for clarity
+        } else {
+            current.setStyle("-fx-background-color: #d20716; ");
+        }
+        // } while (System.currentTimeMillis() < end);
 
         this.initialize();
 
