@@ -87,10 +87,10 @@ public class ServerUtils {
 
     private static final ExecutorService EXEC = Executors.newSingleThreadExecutor();
 
-    private boolean statedGame = false;
+    private boolean startedGame = false;
 
     public boolean isGameStarted() {
-        return statedGame;
+        return startedGame;
     }
     /**
      *
@@ -109,7 +109,7 @@ public class ServerUtils {
                return;
            }
 
-            statedGame = true;
+            startedGame = true;
         });
 
     }
@@ -117,7 +117,7 @@ public class ServerUtils {
     public String getQuestion() {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
 
-        String gameType = (gameConfiguration.isSinglePlayer() == true) ? "singlePlayer" : "multiPlayer";
+        String gameType = (gameConfiguration.isSinglePlayer()) ? "singlePlayer" : "multiPlayer";
 
 
         return ClientBuilder.newClient(new ClientConfig())
@@ -130,7 +130,7 @@ public class ServerUtils {
     public void updateScore(String answer) {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
 
-        String gameType = (gameConfiguration.isSinglePlayer() == true) ? "singlePlayer" : "multiPlayer";
+        String gameType = (gameConfiguration.isSinglePlayer()) ? "singlePlayer" : "multiPlayer";
 
         ClientBuilder.newClient(new ClientConfig()) //
                 .target(SERVER).path("api/" + gameType + "/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getRoomId() + "/" +
@@ -208,7 +208,7 @@ public class ServerUtils {
     public String getAnswer() {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
 
-        String gameType = (gameConfiguration.isSinglePlayer() == true) ? "singlePlayer" : "multiPlayer";
+        String gameType = (gameConfiguration.isSinglePlayer()) ? "singlePlayer" : "multiPlayer";
 
         return ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("api/" + gameType + "/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getRoomId() + "/" +
@@ -220,7 +220,7 @@ public class ServerUtils {
     public String getScore() {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
 
-        String gameType = (gameConfiguration.isSinglePlayer() == true) ? "singlePlayer" : "multiPlayer";
+        String gameType = (gameConfiguration.isSinglePlayer()) ? "singlePlayer" : "multiPlayer";
 
         return ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("api/" + gameType + "/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getRoomId() + "/getScore")

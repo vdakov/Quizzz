@@ -86,16 +86,15 @@ public class WaitingRoomController {
             this.startButton.setDisable(false);
         }
         this.gameID.setText("GAME ID: " + gameId);
+
     }
 
     /**
      * Refresh method to update the number of current players
-     *
-     * @param event the event listener of the button
      */
-    public void refresh(ActionEvent event) {
+    public void refresh() {
         this.initialize(this.owner, this.gameId, this.userName);
-        if (server.isGameStarted() == true) {
+        if (server.isGameStarted()) {
             sceneCtrl.showNextQuestion();
         }
     }
