@@ -10,7 +10,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import server.services.ActionService;
-import commons.Actions.Action;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

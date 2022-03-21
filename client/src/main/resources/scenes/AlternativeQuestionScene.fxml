@@ -1,122 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.image.Image?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
-
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="838.0" prefWidth="1092.0" style="-fx-background-color: #499ee8;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.QuestionControllers.AlternativeQuestionCtrl">
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="838.0" prefWidth="1092.0" style="-fx-background-color: #499ee8;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="client.controllers.QuestionControllers.AlternativeQuestionActivityCtrl">
     <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="10.0" prefWidth="100.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="340.0" minWidth="0.0" prefWidth="340.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="21.0" minWidth="0.0" prefWidth="21.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="60.0" minWidth="10.0" prefWidth="60.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="9.0" minWidth="9.0" prefWidth="9.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="39.0" minWidth="10.0" prefWidth="39.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="399.0" minWidth="10.0" prefWidth="399.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="10.0" prefWidth="114.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="10.0" prefWidth="50.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="114.0" minWidth="7.0" prefWidth="104.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="425.0" minWidth="3.0" prefWidth="19.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="411.0" minWidth="3.0" prefWidth="411.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="149.0" minWidth="3.0" prefWidth="15.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="149.0" minWidth="3.0" prefWidth="71.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="259.0" minWidth="3.0" prefWidth="259.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="205.0" minWidth="0.0" prefWidth="17.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="10.0" prefWidth="20.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="158.0" minWidth="10.0" prefWidth="82.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="9.0" prefWidth="48.0" />
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints maxHeight="600.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="52.0" minHeight="10.0" prefHeight="52.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="176.0" minHeight="10.0" prefHeight="176.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="86.0" minHeight="10.0" prefHeight="86.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="103.0" minHeight="10.0" prefHeight="103.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="76.0" minHeight="10.0" prefHeight="76.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="120.0" minHeight="10.0" prefHeight="120.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="132.0" minHeight="10.0" prefHeight="132.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="600.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="300.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="90.0" minHeight="0.0" prefHeight="33.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="112.0" minHeight="0.0" prefHeight="24.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="220.0" minHeight="2.0" prefHeight="31.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="345.0" minHeight="0.0" prefHeight="76.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="429.0" minHeight="5.0" prefHeight="25.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="486.0" minHeight="0.0" prefHeight="100.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="486.0" minHeight="0.0" prefHeight="121.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="486.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="486.0" minHeight="10.0" prefHeight="115.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="486.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="483.0" minHeight="10.0" prefHeight="99.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="300.0" minHeight="0.0" prefHeight="55.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="300.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c9f1fd" height="83.0" stroke="BLACK" strokeType="INSIDE" width="386.0" GridPane.columnIndex="5" GridPane.rowIndex="6" />
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c9f1fd" height="83.0" stroke="BLACK" strokeType="INSIDE" width="386.0" GridPane.columnIndex="5" GridPane.rowIndex="5" />
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c9f1fd" height="83.0" stroke="BLACK" strokeType="INSIDE" width="386.0" GridPane.columnIndex="5" GridPane.rowIndex="4" />
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c9f1fd" height="403.0" stroke="BLACK" strokeType="INSIDE" width="360.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-        <Button mnemonicParsing="false" onAction="#goToMainScreen" prefHeight="34.0" prefWidth="76.0" style="-fx-background-color: #5bc0de; -fx-border-color: #c9f1fd;" text="Home" GridPane.columnIndex="2" GridPane.rowIndex="1">
+        <Button fx:id="goToMainScreen" mnemonicParsing="false" onAction="#goToMainScreen" prefHeight="34.0" prefWidth="76.0" style="-fx-background-color: #5bc0de; -fx-border-color: #c9f1fd;" text="Home" GridPane.columnIndex="1" GridPane.rowIndex="1">
             <font>
                 <Font size="14.0" />
             </font>
         </Button>
-        <ImageView fitHeight="210.0" fitWidth="340.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-        <Label fx:id="sampleQuestion" alignment="TOP_LEFT" prefHeight="122.0" prefWidth="338.0" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="6">
-            <font>
-                <Font name="Chalkboard" size="20.0" />
-            </font>
-        </Label>
-        <Label fx:id="points" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="33.0" prefWidth="341.0" text="Points: Amount  " textAlignment="RIGHT" GridPane.columnIndex="7" GridPane.rowIndex="1">
+        <Label alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="77.0" text="Points:" textAlignment="RIGHT" GridPane.columnIndex="9" GridPane.rowIndex="1">
             <font>
                 <Font name="Chalkboard" size="18.0" />
             </font>
         </Label>
-        <Label fx:id="labelAnswerTop" alignment="CENTER_RIGHT" prefHeight="64.0" prefWidth="330.0" textAlignment="RIGHT" wrapText="true" GridPane.columnIndex="7" GridPane.rowIndex="4">
+        <Label fx:id="points" alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="98.0" text="0 " textAlignment="RIGHT" GridPane.columnIndex="9" GridPane.rowIndex="2">
             <font>
-                <Font name="Chalkboard" size="22.0" />
+                <Font name="Chalkboard" size="18.0" />
             </font>
         </Label>
-        <Button fx:id="answerTop" mnemonicParsing="false" onAction="#answer" prefHeight="65.0" prefWidth="270.0" style="-fx-background-color: #b38df7;" text="1" textAlignment="CENTER" GridPane.columnIndex="6" GridPane.rowIndex="4">
+        <Label fx:id="addedPoints" text=" " alignment="CENTER_RIGHT" prefHeight="33.0" prefWidth="182.0" textAlignment="RIGHT" textFill="#92d36e" GridPane.columnIndex="9" GridPane.rowIndex="3" />
+
+        <Button fx:id="emoji" mnemonicParsing="false" prefHeight="63.0" prefWidth="65.0" text="Emoji" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c9f1fd" height="38.0" stroke="BLACK" strokeType="INSIDE" width="777.0" GridPane.columnIndex="2" GridPane.rowIndex="12" />
+        <Button fx:id="moveNext" onAction="#displayNextQuestion" alignment="CENTER_RIGHT" mnemonicParsing="false" text="Next" GridPane.columnIndex="9" GridPane.rowIndex="12" />
+
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c9f1fd" height="38.0" stroke="BLACK" strokeType="INSIDE" width="142.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+        <Label fx:id="questionNumberLabel" alignment="CENTER" prefHeight="21.0" prefWidth="106.0" text="Question 1" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c9f1fd" height="451.0" stroke="BLACK" strokeType="INSIDE" width="405.0" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+        <ImageView fx:id="imageSrc" fitHeight="182.0" fitWidth="368.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+        <Label fx:id="sampleQuestion" alignment="TOP_LEFT" prefHeight="159.0" prefWidth="375.0" text="Question contents" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="9">
             <font>
-                <Font name="Chalkboard" size="24.0" />
-            </font>
-        </Button>
-        <Button fx:id="answerCenter" mnemonicParsing="false" onAction="#answer" prefHeight="65.0" prefWidth="19.0" style="-fx-background-color: #ffd783;" text="2" GridPane.columnIndex="6" GridPane.rowIndex="5">
-            <font>
-                <Font name="Chalkboard" size="24.0" />
-            </font>
-        </Button>
-        <Button fx:id="answerBottom" mnemonicParsing="false" onAction="#answer" prefHeight="65.0" prefWidth="270.0" style="-fx-background-color: #ffa382;" text="3" GridPane.columnIndex="6" GridPane.rowIndex="6">
-            <font>
-                <Font name="Chalkboard" size="24.0" />
-            </font>
-        </Button>
-        <Label fx:id="labelAnswerCenter" alignment="CENTER_RIGHT" prefHeight="64.0" prefWidth="330.0" textAlignment="RIGHT" wrapText="true" GridPane.columnIndex="7" GridPane.rowIndex="5">
-            <font>
-                <Font name="Chalkboard" size="22.0" />
+                <Font name="Chalkboard" size="16.0" />
             </font>
         </Label>
-        <Label fx:id="labelAnswerBottom" alignment="CENTER_RIGHT" prefHeight="64.0" prefWidth="330.0" textAlignment="RIGHT" wrapText="true" GridPane.columnIndex="7" GridPane.rowIndex="6">
+
+        <Rectangle fx:id="firstOptionRectangle" arcHeight="5.0" arcWidth="5.0" fill="#c9f1fd" height="83.0" stroke="#b38df7" strokeType="INSIDE" width="386.0" strokeWidth="5.0" GridPane.columnIndex="4" GridPane.rowIndex="6" />
+        <Rectangle fx:id="secondOptionRectangle" arcHeight="5.0" arcWidth="5.0" fill="#c9f1fd" height="83.0" stroke="#ffd783" strokeType="INSIDE" width="386.0" strokeWidth="5.0" GridPane.columnIndex="4" GridPane.rowIndex="7" />
+        <Rectangle fx:id="thirdOptionRectangle" arcHeight="5.0" arcWidth="5.0" fill="#c9f1fd" height="83.0" stroke="#ffa382" strokeType="INSIDE" width="386.0" strokeWidth="5.0" GridPane.columnIndex="4" GridPane.rowIndex="9" />
+
+        <Label fx:id="firstOptionText" onMouseClicked="#answerQuestion" alignment="CENTER_RIGHT" prefHeight="64.0" prefWidth="272.0" wrapText="true" GridPane.columnIndex="6" GridPane.rowIndex="6">
             <font>
-                <Font name="Chalkboard" size="22.0" />
+                <Font name="Chalkboard" size="26.0" />
             </font>
         </Label>
+        <Label fx:id="secondOptionText" onMouseClicked="#answerQuestion" alignment="CENTER_RIGHT" prefHeight="64.0" prefWidth="272.0" wrapText="true" GridPane.columnIndex="6" GridPane.rowIndex="7">
+            <font>
+                <Font name="Chalkboard" size="26.0" />
+            </font>
+        </Label>
+        <Label fx:id="thirdOptionText" onMouseClicked="#answerQuestion" alignment="CENTER_RIGHT" prefHeight="64.0" prefWidth="272.0" wrapText="true" GridPane.columnIndex="6" GridPane.rowIndex="9">
+            <font>
+                <Font name="Chalkboard" size="26.0" />
+            </font>
+        </Label>
+
         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Instead of .... you could do .... instead" textAlignment="CENTER" wrappingWidth="859.21630859375" GridPane.columnIndex="2" GridPane.rowIndex="2">
             <font>
                 <Font name="Chalkboard" size="40.0" />
             </font>
         </Text>
-      <ToolBar fx:id="toolbar" prefHeight="57.0" prefWidth="362.0" GridPane.columnIndex="7" GridPane.rowIndex="7">
-        <items>
-            <ImageView fitHeight="60.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="emoji1" fitHeight="60.0" fitWidth="74.0" onDragDetected="#emoji1Animation" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../pictures/emojis/tears-emoji-png.png" />
-               </image></ImageView>
-            <ImageView fx:id="emoji2" fitHeight="60.0" fitWidth="73.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../pictures/emojis/sunglasses-emoji.png" />
-               </image></ImageView>
-            <ImageView fx:id="emoji3" fitHeight="60.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../pictures/emojis/hearts-eyes-emoji.png" />
-               </image></ImageView>
-            <ImageView fx:id="emoji4" fitHeight="60.0" fitWidth="73.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../pictures/emojis/fearful-emoji.png" />
-               </image></ImageView>
-            <ImageView fx:id="emoji5" fitHeight="60.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../pictures/emojis/angry-emoji.png" />
-               </image></ImageView>
-        </items>
-      </ToolBar>
-      <ImageView fx:id="startAnimation" fitHeight="60.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="8" GridPane.rowIndex="7" />
+
+
     </children>
 </GridPane>

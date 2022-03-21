@@ -1,53 +1,54 @@
 package server.entities;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 public class GameCatalog {
-    private List<Game> gameList;
+
+    private static GameCatalog gameCatalog = null;
+
+    private HashMap<String, SinglePlayerGame> singlePlayerGames;
+    private HashMap<String, MultiPlayerGame>  multiPlayerGames;
+    private MultiPlayerGame multiplayerRandomRoom;
 
     public GameCatalog() {
-        this.gameList = new ArrayList<>();
+        this.singlePlayerGames     = new HashMap<>();
+        this.multiPlayerGames      = new HashMap<>();
+        this.multiplayerRandomRoom = null;
     }
 
-    public GameCatalog(List<Game> gameList) {
-        this.gameList = gameList;
-    }
-
-    /**
-     * Method that ensures there are no empty games in server browser
-     */
-    public void cleanEmptyGames() {
-        for (Game game : gameList) {
-            if (game.getNumPlayers() == 0) {
-                gameList.remove(game);
-            }
+    public static GameCatalog getGameCatalog() {
+        if (gameCatalog == null) {
+            gameCatalog = new GameCatalog();
         }
+        return gameCatalog;
     }
 
-    public List<Game> getGameList() {
-        return gameList;
+    public void addSinglePlayerGame(SinglePlayerGame singlePlayerGame) {
+        singlePlayerGames.put(singlePlayerGame.getGameId(), singlePlayerGame);
     }
 
-    public void setGameList(List<Game> gameList) {
-        this.gameList = gameList;
+    public SinglePlayerGame getSinglePlayerGame(String gameId) {
+        return singlePlayerGames.get(gameId);
     }
 
-    public void addGame(Game game) {
-        gameList.add(game);
+    public void addMultiPlayerGame(MultiPlayerGame multiPlayerGame) {
+        multiPlayerGames.put(multiPlayerGame.getGameId(), multiPlayerGame);
     }
 
-    /**
-     * Returns a given game through its id
-     * @param id the id of the requested game
-     * @return Game Object
-     */
-    public Game getGame(String id) {
-        for (Game game : gameList) {
-            if (game.getGameId().equals(id)) {
-                return game;
-            }
+    public MultiPlayerGame getMultiPlayerGame(String gameId) {
+        System.out.println(multiplayerRandomRoom.getGameId() + "      " + gameId);
+        if (gameId.equals(multiplayerRandomRoom.getGameId())) {
+            return multiplayerRandomRoom;
         }
-        return null;
+
+        return multiPlayerGames.get(gameId);
+    }
+
+    public MultiPlayerGame getMultiplayerRandomRoom() {
+        return multiplayerRandomRoom;
+    }
+
+    public void setMultiplayerRandomRoom(MultiPlayerGame multiplayerRandomRoom) {
+        this.multiplayerRandomRoom = multiplayerRandomRoom;
     }
 }

@@ -1,11 +1,9 @@
 package server.entities;
 
 import commons.Exceptions.NotEnoughActivitiesException;
-
 import commons.Questions.Question;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.Test;
-
 
 import java.util.List;
 

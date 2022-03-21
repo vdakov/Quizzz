@@ -15,50 +15,129 @@
  */
 package client.communication;
 
+import client.data.GameConfiguration;
 import commons.Actions.Action;
 import commons.Leaderboard.LeaderboardEntry;
-import commons.GameContainer;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.GenericType;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import jakarta.ws.rs.core.Response;
 import org.glassfish.jersey.client.ClientConfig;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 
 public class ServerUtils {
 
-    private static final String SERVER = "http://localhost:8080";
+    // the server location
+    private static final String SERVER = "http://localhost:8080/";
 
     /**
-     * Creates a new SinglePlayerRomm (Multiplayer Game with one player)
-     * @param userName The username of the player in the waiting room for future storing in the database
-     * @return
+     * Creates a new SinglePlayer game with the room owner userName
+     * @param userName the userName of the player that creates the room
+     * @return the roomId for the recently created room
      */
     public String createNewSinglePlayerRoom(String userName) {
         return ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER).path("api/singlePlayer/" + userName + "/createNewGame")
+                .target(SERVER).path("api/singlePlayer/" + userName + "/startNewGame")
                 .request(APPLICATION_JSON)
-                .accept(APPLICATION_JSON).get(new GenericType<>() {
-                });
+                .accept(APPLICATION_JSON).get(new GenericType<>() {});
+    }
+
+    public String createNewMultiPlayerRoom(String userName) {
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER).path("api/multiPlayer/" + userName + "/createNewGame")
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON).get(new GenericType<>() {});
+    }
+
+    public void joinMultiPlayerRoom(String userName, String roomId) {
+        ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER).path("api/multiPlayer/" + userName + "/" + roomId + "/joinGame")
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON).get(new GenericType<>() {});
     }
 
     /**
-     * Sends a question to the player
-     * @param userName The username of the plazer
-     * @param serverId the current gameID
-     * @param number the number of the question requested
+     * Get the id for the multiplayer room composed of random players
+     * @param userName the userName of the player requesting this information
+     * @return the roomId of the random multiPlayer room
+     */
+    public String getRandomMultiPlayerRoomId(String userName) {
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER).path("api/multiPlayer/" + userName + "/getRandomRoomCode")
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON).get(new GenericType<>() {});
+    }
+
+    /**
+     * Starts a multiPlayer game
+     * @param userName
+     * @param roomId
+     */
+    public void startMultiPlayerRoom(String userName, String roomId) {
+        ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER).path("api/multiPlayer/" + userName + "/" + roomId + "/startGame")
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON).get(new GenericType<>() {});
+    }
+
+    private static final ExecutorService EXEC = Executors.newSingleThreadExecutor();
+
+    private boolean startedGame = false;
+
+    public boolean isGameStarted() {
+        return startedGame;
+    }
+    /**
+     *
+     * @param userName
+     * @param roomId
      * @return
      */
-    public String getQuestion(String userName, String serverId, int number) {
+    public void waitForMultiPlayerRoomStart(String userName, String roomId) {
+        EXEC.submit(() -> {
+           var res = ClientBuilder.newClient(new ClientConfig())
+                   .target(SERVER).path("api/multiPlayer/" + userName + "/" + roomId + "/waitForGameToStart")
+                   .request(APPLICATION_JSON)
+                   .accept(APPLICATION_JSON).get(Response.class);
+
+           if (res.getStatus() == 204) {
+               return;
+           }
+
+            startedGame = true;
+        });
+
+    }
+
+    public String getQuestion() {
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+
+        String gameType = (gameConfiguration.isSinglePlayer()) ? "singlePlayer" : "multiPlayer";
+
+
         return ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER).path("api/singlePlayer/" + userName + "/" + serverId + "/" + number + "/getQuestion")
+                .target(SERVER).path("api/" + gameType + "/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getRoomId() + "/" +
+                        gameConfiguration.getCurrentQuestionNumber() + "/getQuestion")
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON).get(String.class);
+    }
+
+    public void updateScore(String answer) {
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+
+        String gameType = (gameConfiguration.isSinglePlayer()) ? "singlePlayer" : "multiPlayer";
+
+        ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/" + gameType + "/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getRoomId() + "/" +
+                        gameConfiguration.getCurrentQuestionNumber() + "/updateAnswer")
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .post(Entity.text(answer));
     }
 
     /**
@@ -71,8 +150,7 @@ public class ServerUtils {
                 .target(SERVER).path("api/activities/list") //
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
-                .get(new GenericType<>() {
-                });
+                .get(new GenericType<>() {});
     }
 
     public List<LeaderboardEntry> getSingleplayerLeaderboard() {
@@ -101,7 +179,6 @@ public class ServerUtils {
                 });
     }
 
-
     /**
      * Sends a new activity to the server
      *
@@ -109,124 +186,47 @@ public class ServerUtils {
      * @return the action that was added
      */
     public Action addActivity(Action a) {
-        return ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER).path("api/activities")
-                .request(APPLICATION_JSON)
-                .accept(APPLICATION_JSON)
+        return ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/activities") //
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
                 .post(Entity.entity(a, APPLICATION_JSON), Action.class);
     }
 
-    /**
-     * Deletes an activity from the database
-     * @param id the id of the activity to be deleted
-     */
     public void deleteActivity(String id) {
-        ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER).path("api/activities/delete/" + id)
-                .request().delete();
+        ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/activities/delete/" + id) //
+                .request().delete(); //;
     }
 
-    /**
-     * Alerts the survor of a custom message (Basically a System.out.println())
-     * @param input what is printed out to the server
-     */
-    public void alert(String input) {
-        ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER).path("api/activities/alert")
-                .request(APPLICATION_JSON)
-                .buildPost(Entity.entity(input, APPLICATION_JSON)).invoke();
+    public void alert() {
+        ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/activities/alert") //
+                .request().get(); //;
     }
 
-    /**
-     * Gets a list of the current games to display them on the server browser
-     * @return the list of current games
-     */
-    public ObservableList<GameContainer> listOfCurrentGames() {
-        ArrayList<GameContainer> games = ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER).path("api/multiplayer/currentGames")
-                .request(APPLICATION_JSON)
-                .accept(APPLICATION_JSON)
-                .get(new GenericType<>() {
-                });
+    public String getAnswer() {
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
 
-        return FXCollections.observableArrayList(games);
-    }
+        String gameType = (gameConfiguration.isSinglePlayer()) ? "singlePlayer" : "multiPlayer";
 
-    /**
-     * Returns a list of all of the gameIDs- used to find whether
-     * the given gameID in the server browser is valid
-     * @return list of game ids
-     */
-    public ArrayList<String> listOfAllGameIds() {
-        ArrayList<String> gameIds = ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER).path("api/multiplayer/gameIDList")
-                .request(APPLICATION_JSON)
-                .accept(APPLICATION_JSON)
-                .get(new GenericType<>() {
-                });
-
-        return gameIds;
-    }
-
-    /**
-     * Creates a new mulitplayer game waiting room, but does not start the game yet
-     * @param playerId the playerID of the owner having created the game
-     * @return the game id
-     */
-    public String createNewMultiplayerGame(String playerId) {
         return ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER).path("api/multiplayer/createNewGame/" + playerId)
+                .target(SERVER).path("api/" + gameType + "/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getRoomId() + "/" +
+                        gameConfiguration.getCurrentQuestionNumber() + "/getAnswer")
                 .request(APPLICATION_JSON)
-                .accept(APPLICATION_JSON)
-                .get(new GenericType<>() {
-                });
+                .accept(APPLICATION_JSON).get(String.class);
     }
 
-    /**
-     * Allows a player to join a multiplayer game with a provided gameId
-     * @param playerId the username of the player joining
-     * @param gameID the id of the game to be joined
-     */
-    public void joinExistingMultiplayerGame(String playerId, String gameID) {
-        ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER).path("api/multiplayer/joinGame/" + playerId + "/" + gameID)
-                .request().get();
-    }
+    public String getScore() {
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
 
-    /**
-     * Returns the number of player in the current game - used to update waiting room styling
-     * @param gameID the gameID for which the amount of players is checked
-     * @return the number of players in the current game
-     */
-    public int getNumPlayersInGame(String gameID) {
+        String gameType = (gameConfiguration.isSinglePlayer()) ? "singlePlayer" : "multiPlayer";
+
         return ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER).path("api/multiplayer/" + gameID + "/numPlayers")
-                .request().get(new GenericType<>() {
-                });
+                .target(SERVER).path("api/" + gameType + "/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getRoomId() + "/getScore")
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON).get(String.class);
     }
 
-    /**
-     * Removes a player from the current game
-     * @param userName the username of the player to be removed- used to locate them on the server
-     * @param gameID- the gameID of the game they are removed from
-     */
-    public void removePlayer(String userName, String gameID) {
-        ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER).path("api/multiplayer/removePlayer/" + userName + "/" + gameID)
-                .request().get();
-    }
 
-    /**
-     * TODO implementation
-     * Should communicate to a user whether they are the new owner or not
-     * but it is debatable how to do it since we currently do not have Webscockets
-     * @param gameID the gameID for which a new owner is provided
-     * @return the username of the new gameowner
-     */
-    public String getNewGameOwner(String gameID) {
-        return ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER).path("api/multiplayer/" + gameID + "/newGameOwner")
-                .request().get(new GenericType<>() {
-                });
-    }
 }

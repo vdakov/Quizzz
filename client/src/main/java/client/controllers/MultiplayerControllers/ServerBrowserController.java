@@ -7,7 +7,9 @@ import commons.GameContainer;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 
@@ -48,7 +50,7 @@ public class ServerBrowserController {
         numPlayerColumn.setCellValueFactory(new PropertyValueFactory<GameContainer, Integer>("numPlayers"));
 
 
-        this.currentGames = server.listOfCurrentGames();
+        //this.currentGames = server.listOfCurrentGames();
 
         this.gameTable.getColumns().add(gameIdColumn);
         this.gameTable.getColumns().add(numPlayerColumn);
@@ -83,17 +85,26 @@ public class ServerBrowserController {
      * @param event
      */
     public void joinWaitingRoom(ActionEvent event) {
-        String gameId = this.gameIdField.getText();
-        if (!server.listOfAllGameIds().contains(gameId)) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Warning");
-            alert.setHeaderText("Invalid ID");
-            alert.setContentText("Please enter a valid game ID!!!");
-            alert.show();
-        } else {
-            server.joinExistingMultiplayerGame("johny", gameId);
-            this.sceneCtrl.showWaitingRoom(false, gameId, "johny");
-        }
+          // we will connect to the initialised random room
+        String playerName = "test";
+
+        String roomId = server.getRandomMultiPlayerRoomId(playerName);
+        System.out.println(roomId);
+
+        server.joinMultiPlayerRoom(playerName, roomId);
+        this.sceneCtrl.showWaitingRoom(true, roomId, playerName);
+
+//        String gameId = this.gameIdField.getText();
+//        if (!server.listOfAllGameIds().contains(gameId)) {
+//            Alert alert = new Alert(Alert.AlertType.WARNING);
+//            alert.setTitle("Warning");
+//            alert.setHeaderText("Invalid ID");
+//            alert.setContentText("Please enter a valid game ID!!!");
+//            alert.show();
+//        } else {
+//            server.joinExistingMultiplayerGame("johny", gameId);
+//            this.sceneCtrl.showWaitingRoom(false, gameId, "johny");
+//        }
 
     }
 
@@ -102,7 +113,7 @@ public class ServerBrowserController {
      * @param event the ActionEvent of the button
      */
     public void createWaitingRoom(ActionEvent event) {
-        String gameId = server.createNewMultiplayerGame("cata");
-        this.sceneCtrl.showWaitingRoom(true, gameId, "cata");
+        //String gameId = server.createNewMultiplayerGame("cata");
+        //this.sceneCtrl.showWaitingRoom(true, gameId, "cata");
     }
 }
