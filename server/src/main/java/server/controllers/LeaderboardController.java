@@ -19,7 +19,6 @@ public class LeaderboardController {
     public List<LeaderboardEntry> getSingleplayerLeaderboard() {
         List<LeaderboardEntry> temp = service.list();
 
-        temp.sort((a, b) -> b.getScore() - a.getScore()); //sorts the list by comparing the scores
         for (int i = 0; i < temp.size(); i++) temp.get(i).setRank(i + 1); //assign ranks
         return temp;
     }

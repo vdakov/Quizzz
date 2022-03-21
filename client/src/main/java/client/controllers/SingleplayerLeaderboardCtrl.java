@@ -39,6 +39,7 @@ public class SingleplayerLeaderboardCtrl {
     }
 
     public void initialize() {
+        //set which field each column contains
         placeCol.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getRank() + ""));
         nameCol.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getUsername()));
         pointsCol.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getScore() + ""));

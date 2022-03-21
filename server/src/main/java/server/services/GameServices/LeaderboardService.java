@@ -1,6 +1,7 @@
 package server.services.GameServices;
 
 import commons.Leaderboard.LeaderboardEntry;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import server.repositories.SingleplayerLeaderboardRepository;
 
@@ -15,7 +16,7 @@ public class LeaderboardService {
     }
 
     public List<LeaderboardEntry> list() {
-        return repository.findAll();
+        return repository.findAll(Sort.by(Sort.Order.desc("score")));
     }
 
     public LeaderboardEntry addSingleplayerLeaderboardEntry(LeaderboardEntry e) {
