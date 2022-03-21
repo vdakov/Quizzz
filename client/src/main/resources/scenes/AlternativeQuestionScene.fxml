@@ -89,11 +89,11 @@
             </font>
         </Label>
 
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Instead of .... you could do .... instead" textAlignment="CENTER" wrappingWidth="859.21630859375" GridPane.columnIndex="2" GridPane.rowIndex="2">
-         <font>
-            <Font name="Chalkboard" size="40.0" />
-         </font>
-      </Text>
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Instead of .... you could do .... instead" textAlignment="CENTER" wrappingWidth="859.21630859375" GridPane.columnIndex="2" GridPane.rowIndex="2">
+            <font>
+                <Font name="Chalkboard" size="40.0" />
+            </font>
+        </Text>
 
 
     </children>
