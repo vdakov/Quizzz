@@ -71,7 +71,7 @@
                 <Font name="Chalkboard" size="24.0" />
             </font>
         </Button>
-      <ToolBar fx:id="toolbar" prefHeight="40.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="9">
+      <ToolBar fx:id="toolbar" prefHeight="40.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="9">
          <items>
             <ImageView fx:id="emoji1" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
                <image>
