@@ -73,7 +73,6 @@ public class SceneCtrl {
     public void showOpenQuestionScene(OpenQuestion openQuestion) {
         var pair = scenes.get("OpenQuestion");
         OpenQuestionActivityCtrl ctrl = (OpenQuestionActivityCtrl) pair.getKey();
-
         ctrl.displayQuestion(openQuestion);
         primaryStage.setScene(pair.getValue());
     }
@@ -81,7 +80,6 @@ public class SceneCtrl {
     public void showKnowledgeQuestionScene(KnowledgeQuestion knowledgeQuestion) {
         var pair = scenes.get("KnowledgeQuestion");
         KnowledgeQuestionActivityCtrl ctrl = (KnowledgeQuestionActivityCtrl) pair.getKey();
-
         ctrl.displayQuestion(knowledgeQuestion);
         primaryStage.setScene(pair.getValue());
     }
@@ -89,7 +87,6 @@ public class SceneCtrl {
     public void showComparisonQuestionScene(ComparisonQuestion comparisonQuestion) {
         var pair = scenes.get("ComparisonQuestion");
         ComparisonQuestionActivityCtrl ctrl = (ComparisonQuestionActivityCtrl) pair.getKey();
-
         ctrl.displayQuestion(comparisonQuestion);
         primaryStage.setScene(pair.getValue());
     }
@@ -97,7 +94,6 @@ public class SceneCtrl {
     public void showAlternativeQuestionScene(AlternativeQuestion alternativeQuestion) {
         var pair = scenes.get("AlternativeQuestion");
         AlternativeQuestionActivityCtrl ctrl = (AlternativeQuestionActivityCtrl) pair.getKey();
-
         ctrl.displayQuestion(alternativeQuestion);
         primaryStage.setScene(pair.getValue());
     }
