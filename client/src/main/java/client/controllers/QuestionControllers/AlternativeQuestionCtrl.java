@@ -21,8 +21,10 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.control.ProgressBar;
+
 import java.io.IOException;
 import java.util.Scanner;
+
 import javafx.util.Duration;
 
 public class AlternativeQuestionCtrl {
@@ -105,13 +107,11 @@ public class AlternativeQuestionCtrl {
 
     }
 
-    public void emoji1Animation(MouseEvent event)
-    {
+    public void emoji1Animation(MouseEvent event) {
         sceneCtrl.showMainScreenScene();
     }
 
-    public void transition(ImageView image)
-    {
+    public void transition(ImageView image) {
         TranslateTransition translate = new TranslateTransition();
         translate.setNode(image);
         translate.setDuration(Duration.millis(3500));
@@ -174,6 +174,7 @@ public class AlternativeQuestionCtrl {
         timeline.setOnFinished(event -> goToNextQuestion());       //proceeds to the next question if no answer was given in 10 sec
         timeline.playFromStart();                                 //start the animation
     }
+
     public void handleTimerButton(ActionEvent event) {
         if (timeline != null) {
             timeline.stop();        //if timeline exists stop it when any answer button is pressed
@@ -191,7 +192,7 @@ public class AlternativeQuestionCtrl {
 
         if (current.getText().equals(getCorrectAnswer())) {
             // multiply the score by percentage time remaining
-            pointsInt += 500.0 *((float) timeSeconds.getValue() / startTime); //global variable for points so it remembers it
+            pointsInt += 500.0 * ((float) timeSeconds.getValue() / startTime); //global variable for points so it remembers it
         }
 
         //uses the answerCheck method to highlight which the correct answer was
