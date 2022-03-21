@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #499ee8;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17" fx:controller="client.controllers.MultiplayerControllers.ServerBrowserController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="377.5999511718749" minWidth="10.0" prefWidth="332.8000122070313" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="204.60001220703126" minHeight="10.0" prefHeight="204.60001220703126" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="128.59998168945316" minHeight="10.0" prefHeight="62.199987792968784" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="SERVER BROWSER" wrappingWidth="273.546875" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+         <font>
+            <Font size="31.0" />
+         </font>
+      </Text>
+      <TableView fx:id="gameTable" prefHeight="134.0" prefWidth="237.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Button fx:id="mainMenuButton" mnemonicParsing="false" onAction="#mainMenu" prefHeight="26.0" prefWidth="144.0" text="MAIN MENU" GridPane.halignment="CENTER" />
+      <Button fx:id="joinWaitingRoom" mnemonicParsing="false" onAction="#joinWaitingRoom" prefHeight="78.0" prefWidth="222.0" text="JOIN" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+         <font>
+            <Font size="30.0" />
+         </font>
+         <GridPane.margin>
+            <Insets />
+         </GridPane.margin>
+      </Button>
+      <Button fx:id="createWaitingRoom" mnemonicParsing="false" onAction="#createWaitingRoom" prefHeight="83.0" prefWidth="221.0" text="CREATE" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Button>
+      <Button mnemonicParsing="false" onAction="#refresh" text="REFRESH" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+         <GridPane.margin>
+            <Insets />
+         </GridPane.margin>
+      </Button>
+      <TextField fx:id="gameIdField" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets top="-100.0" />
+         </GridPane.margin>
+      </TextField>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Enter Game ID:" wrappingWidth="122.936767578125" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets top="-140.0" />
+         </GridPane.margin>
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+   </children>
+</GridPane>

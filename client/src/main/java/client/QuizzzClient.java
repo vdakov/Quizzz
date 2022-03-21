@@ -1,14 +1,27 @@
 package client;
 
-import client.controllers.*;
+import client.controllers.AddActionActivityCtrl;
+import client.controllers.MainScreenActivityCtrl;
+import client.controllers.MultiplayerControllers.ServerBrowserController;
+import client.controllers.MultiplayerControllers.WaitingRoomController;
+import client.controllers.QuestionControllers.AlternativeQuestionActivityCtrl;
+import client.controllers.QuestionControllers.ComparisonQuestionActivityCtrl;
+import client.controllers.QuestionControllers.KnowledgeQuestionActivityCtrl;
+import client.controllers.QuestionControllers.OpenQuestionActivityCtrl;
+import client.controllers.SceneCtrl;
+import client.controllers.SingleplayerLeaderboardCtrl;
 import client.logic.FXMLConfig;
 import client.logic.ModuleConfig;
 import com.google.inject.Injector;
 import javafx.application.Application;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.HashMap;
 
 import static com.google.inject.Guice.createInjector;
 
@@ -36,19 +49,34 @@ public class QuizzzClient extends Application {
      * @param primaryStage represents the main stage of the app
      * @throws IOException is thrown when an error regarding Input or Output occurs while the app runs
      */
+    private final Pair<String, Class>[] scenePairs = new Pair[]{
+            new Pair("MainScreenScene.fxml", MainScreenActivityCtrl.class),
+            new Pair("AddActionScene.fxml", AddActionActivityCtrl.class),
+            new Pair("ComparisonQuestionScene.fxml", ComparisonQuestionActivityCtrl.class),
+            new Pair("OpenQuestionScene.fxml", OpenQuestionActivityCtrl.class),
+            new Pair("KnowledgeQuestionScene.fxml", KnowledgeQuestionActivityCtrl.class),
+            new Pair("AlternativeQuestionScene.fxml", AlternativeQuestionActivityCtrl.class),
+            new Pair("ServerBrowserScene.fxml", ServerBrowserController.class),
+            new Pair("WaitingRoomScene.fxml", WaitingRoomController.class),
+            new Pair("SingleplayerLeaderboardScene.fxml", SingleplayerLeaderboardCtrl.class)
+    };
+
     @Override
-    public void start(Stage primaryStage) throws IOException {
-        var overviewActivity        = FXML_CONFIG.load(OverviewActionsActivityCtrl.class, "scenes", "OverviewActionsScene.fxml");
-        var addActivity                  = FXML_CONFIG.load(AddActionActivityCtrl.class, "scenes", "AddActionScene.fxml");
-        var mainScreenActivity          = FXML_CONFIG.load(MainScreenActivityCtrl.class, "scenes", "MainScreenScene.fxml");
-       // var questionScreenWhatIsActivity  = FXML_CONFIG.load(QuestionSceneWhatIsActivityCtrl.class, "scenes", "QuestionSceneWhatIs.fxml");
-        var questionScreenGuessXActivity = FXML_CONFIG.load(QuestionSceneGuessXActivityCtrl.class, "scenes", "QuestionSceneGuessX.fxml");
-        var questionScreenHowMuchActivity = FXML_CONFIG.load(QuestionSceneHowMuchActivityCtrl.class, "scenes", "QuestionSceneHowMuch.fxml");
-        var questionScreenInsteadOfActivity = FXML_CONFIG.load(QuestionSceneInsteadOfActivityCtrl.class, "scenes", "QuestionSceneInsteadOf.fxml");
+    public void start(Stage primaryStage) {
+        //make a hashmap to easily look up any scene using its filename (without the .fxml extension)
+        HashMap<String, Pair<Object, Scene>> scenesMap = new HashMap<>();
+
+        for (int i = 0; i < scenePairs.length; i++) {
+            var scenePair = scenePairs[i];
+
+            //Because the Controllers are not from the same class, they are stored as Objects and should be cast to the correct type when retrieving them
+            Pair<Object, Parent> controllerParentPair = FXML_CONFIG.load(scenePair.getValue(), "scenes", scenePair.getKey());
+            Pair<Object, Scene> value = new Pair<>(controllerParentPair.getKey(), new Scene(controllerParentPair.getValue())); //Pair consisting of Controller and corresponding Scene
+            String key = scenePair.getKey().replace("Scene.fxml", ""); //name of the scene
+            scenesMap.put(key, value);
+        }
 
         var sceneCtrl = INJECTOR.getInstance(SceneCtrl.class);
-
-        sceneCtrl.initialize(primaryStage, mainScreenActivity, questionScreenInsteadOfActivity, questionScreenHowMuchActivity, questionScreenGuessXActivity,
-                overviewActivity, addActivity);
+        sceneCtrl.initialize(primaryStage, scenesMap);
     }
 }

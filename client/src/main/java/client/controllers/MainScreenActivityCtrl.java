@@ -1,29 +1,46 @@
 package client.controllers;
 
-import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import client.communication.ServerUtils;
+import client.data.GameConfiguration;
+import javafx.fxml.FXML;
+import javafx.scene.control.TextField;
 
+import javax.inject.Inject;
 import java.io.IOException;
-import java.util.Objects;
 
 public class MainScreenActivityCtrl {
 
+    private final ServerUtils server;
+    private final SceneCtrl sceneCtrl;
 
+    @FXML
+    private TextField userName;
 
-    private Scene scene;
-    private Stage stage;
-    private Parent root;
+    @Inject
+    public MainScreenActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
+        this.sceneCtrl = sceneCtrl;
+        this.server = server;
+    }
 
-    public void enterSoloGame (ActionEvent event) throws IOException {
+    public void enterSoloGame () throws IOException {
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
 
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../../scenes/QuestionSceneHowMuch.fxml")));
-        stage = (Stage) ( (Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        String playerName = userName.getText();
+        String roomId = server.createNewSinglePlayerRoom(playerName);
+        gameConfiguration.setRoomId(roomId);
+        gameConfiguration.setUserName(playerName);
+        gameConfiguration.setCurrentQuestionNumber(gameConfiguration.getCurrentQuestionNumber() + 1);
+        gameConfiguration.setGameTypeSingleplayer();
+        sceneCtrl.showNextQuestion();
+    }
+
+    public void showSingleplayerLeaderboard() {
+        sceneCtrl.showSingleplayerLeaderboard();
+    }
+    
+    public void enterServerBrowser() {
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+        gameConfiguration.setGameTypeMultiPlayer();
+        this.sceneCtrl.showServerBrowser();
     }
 }

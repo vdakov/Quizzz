@@ -62,7 +62,7 @@ public class OverviewActionsActivityCtrl implements Initializable {
     }
 
     public void addActivity() {
-        sceneCtrl.showAddActionScene();
+       // sceneCtrl.showAddActionScene();
     }
 
     public void refresh() {

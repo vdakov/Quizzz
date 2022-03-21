@@ -45,12 +45,12 @@
             <Font name="Chalkboard" size="18.0" />
          </font>
       </Button>
-      <Button mnemonicParsing="false" prefHeight="56.0" prefWidth="275.0" style="-fx-background-color: #5bc0de; -fx-border-color: #c9f1fd;" text="Singleplayer Leaderboard" textFill="WHITE" GridPane.columnIndex="4" GridPane.rowIndex="9">
+      <Button mnemonicParsing="false" onAction="#showSingleplayerLeaderboard" prefHeight="56.0" prefWidth="275.0" style="-fx-background-color: #5bc0de; -fx-border-color: #c9f1fd;" text="Singleplayer Leaderboard" textFill="WHITE" GridPane.columnIndex="4" GridPane.rowIndex="9">
          <font>
             <Font name="Chalkboard" size="18.0" />
          </font>
       </Button>
-      <TextField prefHeight="49.0" prefWidth="275.0" GridPane.columnIndex="4" GridPane.rowIndex="7">
+      <TextField fx:id="userName" prefHeight="49.0" prefWidth="275.0" GridPane.columnIndex="4" GridPane.rowIndex="7">
          <font>
             <Font name="Chalkboard" size="20.0" />
          </font>
@@ -60,7 +60,7 @@
       </TextField>
 
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff05" height="158.0" stroke="#caf0fa" strokeType="INSIDE" width="264.0" GridPane.columnIndex="6" GridPane.rowIndex="8" />
-      <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="245.0" style="-fx-border-color: #c9f1fd; -fx-background-color: #5bc0de;" text="Multiplayer" textFill="WHITE" GridPane.columnIndex="7" GridPane.rowIndex="8">
+      <Button mnemonicParsing="false" onAction="#enterServerBrowser" prefHeight="60.0" prefWidth="245.0" style="-fx-border-color: #c9f1fd; -fx-background-color: #5bc0de;" text="Multiplayer" textFill="WHITE" GridPane.columnIndex="7" GridPane.rowIndex="8">
          <font>
             <Font name="Chalkboard" size="18.0" />
          </font>

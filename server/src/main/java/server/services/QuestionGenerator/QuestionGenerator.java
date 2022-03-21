@@ -3,9 +3,7 @@ package server.services.QuestionGenerator;
 import commons.Actions.ActionCatalog;
 import commons.Exceptions.NotEnoughActivitiesException;
 import commons.Questions.Question;
-import commons.Actions.*;
 import org.apache.commons.lang3.tuple.Pair;
-
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -66,7 +64,7 @@ public class QuestionGenerator {
         // add open questions
         questionWithAnswerList.addAll(openQuestionsGenerator       (questionDistribution.get(0), actionCatalog, random));
         // add knowledge questions
-        questionWithAnswerList.addAll(knowledgeQuestionsGenerator  (questionDistribution.get(1), actionCatalog, random));
+        questionWithAnswerList.addAll(knowledgeQuestionsGenerator  (questionDistribution.get(0), actionCatalog, random));
         // add comparison questions
         questionWithAnswerList.addAll(comparisonQuestionsGenerator (questionDistribution.get(2), actionCatalog, random));
         // add alternative questions
