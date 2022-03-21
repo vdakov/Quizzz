@@ -45,4 +45,8 @@ public class MainScreenActivityCtrl {
         }
 
     }
+
+    public void showSingleplayerLeaderboard() {
+        sceneCtrl.showSingleplayerLeaderboard();
+    }
 }
