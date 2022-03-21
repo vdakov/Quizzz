@@ -86,7 +86,11 @@ public class ServerUtils {
 
     private static final ExecutorService EXEC = Executors.newSingleThreadExecutor();
 
-    public boolean isGameStarted = false;
+    private boolean statedGame = false;
+
+    public boolean isGameStarted() {
+        return statedGame;
+    }
     /**
      *
      * @param userName
@@ -104,7 +108,7 @@ public class ServerUtils {
                return;
            }
 
-           isGameStarted = true;
+            statedGame = true;
         });
 
     }
@@ -116,7 +120,8 @@ public class ServerUtils {
 
 
         return ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER).path("api/" + gameType +"/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getRoomId() + "/" + gameConfiguration.getCurrentQuestionNumber() + "/getQuestion")
+                .target(SERVER).path("api/" + gameType + "/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getRoomId() + "/" +
+                        gameConfiguration.getCurrentQuestionNumber() + "/getQuestion")
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON).get(String.class);
     }
@@ -127,7 +132,8 @@ public class ServerUtils {
         String gameType = (gameConfiguration.isSinglePlayer() == true) ? "singlePlayer" : "multiPlayer";
 
         ClientBuilder.newClient(new ClientConfig()) //
-                .target(SERVER).path("api/" + gameType + "/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getRoomId() + "/" + gameConfiguration.getCurrentQuestionNumber() + "/updateAnswer")
+                .target(SERVER).path("api/" + gameType + "/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getRoomId() + "/" +
+                        gameConfiguration.getCurrentQuestionNumber() + "/updateAnswer")
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
                 .post(Entity.text(answer));
@@ -178,7 +184,8 @@ public class ServerUtils {
         String gameType = (gameConfiguration.isSinglePlayer() == true) ? "singlePlayer" : "multiPlayer";
 
         return ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER).path("api/" + gameType + "/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getRoomId() + "/" + gameConfiguration.getCurrentQuestionNumber() + "/getAnswer")
+                .target(SERVER).path("api/" + gameType + "/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getRoomId() + "/" +
+                        gameConfiguration.getCurrentQuestionNumber() + "/getAnswer")
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON).get(String.class);
     }

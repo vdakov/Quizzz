@@ -2,7 +2,6 @@ package client.controllers.MultiplayerControllers;
 
 import client.communication.ServerUtils;
 import client.controllers.SceneCtrl;
-import client.data.GameConfiguration;
 import com.google.inject.Inject;
 import commons.GameContainer;
 import javafx.collections.ObservableList;
@@ -12,8 +11,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-
-import java.util.Scanner;
 
 
 public class ServerBrowserController {

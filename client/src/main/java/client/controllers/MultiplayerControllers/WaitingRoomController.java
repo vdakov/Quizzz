@@ -95,7 +95,7 @@ public class WaitingRoomController {
      */
     public void refresh(ActionEvent event) {
         this.initialize(this.owner, this.gameId, this.userName);
-        if(server.isGameStarted == true) {
+        if (server.isGameStarted() == true) {
             sceneCtrl.showNextQuestion();
         }
     }
