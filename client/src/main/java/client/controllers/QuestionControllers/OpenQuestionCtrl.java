@@ -5,11 +5,16 @@ import client.controllers.SceneCtrl;
 import client.logic.QuestionParsers;
 import com.google.inject.Inject;
 import commons.Questions.OpenQuestion;
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToolBar;
+import javafx.scene.image.ImageView;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -27,6 +32,7 @@ public class OpenQuestionCtrl {
     private String userName;
     private String serverId;
     private int pointsInt;
+
     @FXML
     private Label sampleQuestion;
     @FXML
@@ -37,6 +43,18 @@ public class OpenQuestionCtrl {
     private TextField writeAnswer;
     @FXML
     private String correctAnswer;
+    @FXML
+    private ToolBar toolbar;
+    @FXML
+    private ImageView emoji1;
+    @FXML
+    private ImageView emoji2;
+    @FXML
+    private ImageView emoji3;
+    @FXML
+    private ImageView emoji4;
+    @FXML
+    private ImageView emoji5;
 
 
     //Constructor for the Question Controller
@@ -55,12 +73,33 @@ public class OpenQuestionCtrl {
         this.sampleQuestion.setText((openQuestion == null) ? "" : openQuestion.getQuestion().getKey());
 
         this.correctAnswer = "100";
+
+        // if(serverId is Multiplayer)
+        {
+            toolbar.setStyle("-fx-opacity: 1");
+            emoji1.setStyle("-fx-opacity: 1 ");
+            emoji2.setStyle("-fx-opacity: 1");
+            emoji3.setStyle("-fx-opacity: 1 ");
+            emoji4.setStyle("-fx-opacity: 1");
+            emoji5.setStyle("-fx-opacity: 1 ");
+        }
+    }
+
+    public void transition(ImageView image)
+    {
+        TranslateTransition translate = new TranslateTransition();
+        translate.setNode(image);
+        translate.setDuration(Duration.millis(3500));
+        translate.setCycleCount(1);
+        translate.setByY(-500);
+        translate.play();
     }
 
     //Initializes the sample question screen through hardcoding
     public void initialize() {
         getAnswer().setStyle("-fx-background-color: #ffd783; -fx-border-color:  #ffd783");
     }
+
 
     public void goToNextQuestion() {
         String response = server.getQuestion(this.userName, this.serverId, this.questionNumber + 1);
@@ -96,6 +135,7 @@ public class OpenQuestionCtrl {
     //method for answering the question- activated on click of button in QuestionScreen scene
     public void answer(ActionEvent event) throws InterruptedException {
         Button current = (Button) event.getSource();
+
 
         if (writeAnswer.getText().equals(getCorrectAnswer())) {
             pointsInt += 500; //global variable for points so it remembers it

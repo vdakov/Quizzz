@@ -5,10 +5,14 @@ import client.controllers.SceneCtrl;
 import client.logic.QuestionParsers;
 import com.google.inject.Inject;
 import commons.Questions.ComparisonQuestion;
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ToolBar;
+import javafx.scene.image.ImageView;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -22,12 +26,25 @@ public class ComparisonQuestionCtrl {
     private String userName;
     private String serverId;
     private int pointsInt;
+
     @FXML
     private Label sampleQuestion;
     @FXML
     private Button answerLeft, answerCenter, answerRight;
     @FXML
     private Label points;
+    @FXML
+    private ToolBar toolbar;
+    @FXML
+    private ImageView emoji1;
+    @FXML
+    private ImageView emoji2;
+    @FXML
+    private ImageView emoji3;
+    @FXML
+    private ImageView emoji4;
+    @FXML
+    private ImageView emoji5;
 
     //Constructor for the Question Controller
     @Inject
@@ -43,6 +60,26 @@ public class ComparisonQuestionCtrl {
         this.serverId = serverId;
 
         this.sampleQuestion.setText((comparisonQuestion == null) ? "" : comparisonQuestion.getQuestion().getKey());
+
+        // if(serverId is Multiplayer)
+        {
+            toolbar.setStyle("-fx-opacity: 1");
+            emoji1.setStyle("-fx-opacity: 1 ");
+            emoji2.setStyle("-fx-opacity: 1");
+            emoji3.setStyle("-fx-opacity: 1 ");
+            emoji4.setStyle("-fx-opacity: 1");
+            emoji5.setStyle("-fx-opacity: 1 ");
+        }
+    }
+
+    public void transition(ImageView image)
+    {
+        TranslateTransition translate = new TranslateTransition();
+        translate.setNode(image);
+        translate.setDuration(Duration.millis(3500));
+        translate.setCycleCount(1);
+        translate.setByY(-500);
+        translate.play();
     }
 
     //Initializes the sample question screen through hardcoding
@@ -50,6 +87,7 @@ public class ComparisonQuestionCtrl {
 
         //resets the colors to white each time
     }
+
 
 
     //method for answering the question- activated on click of button in QuestionScreen scene

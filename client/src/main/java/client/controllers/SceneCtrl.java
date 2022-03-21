@@ -1,5 +1,7 @@
 package client.controllers;
 
+import client.controllers.MultiplayerControllers.ServerBrowserController;
+import client.controllers.MultiplayerControllers.WaitingRoomController;
 import client.controllers.QuestionControllers.AlternativeQuestionCtrl;
 import client.controllers.QuestionControllers.ComparisonQuestionCtrl;
 import client.controllers.QuestionControllers.KnowledgeQuestionCtrl;
@@ -12,11 +14,13 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
+
 import java.util.HashMap;
 
 public class SceneCtrl {
     private Stage primaryStage;
     private HashMap<String, Pair<Object, Scene>> scenes;
+
 
     public void initialize(Stage primaryStage, HashMap<String, Pair<Object, Scene>> scenes) {
         this.primaryStage = primaryStage;
@@ -86,12 +90,23 @@ public class SceneCtrl {
         primaryStage.setScene(pair.getValue());
     }
 
-    public void showSingeleplayerLeaderboard() {
-        var pair = scenes.get("SingleplayerLeaderboard");
-        var ctrl = (SingleplayerLeaderboardCtrl) pair.getKey();
+    public void showServerBrowser() {
+        var pair = scenes.get("ServerBrowser");
+        ServerBrowserController ctrl = (ServerBrowserController) pair.getKey();
 
-        ctrl.initialize();
-        primaryStage.setTitle("Singleplayer Leaderboard");
+
+        primaryStage.setTitle("Server Browser");
         primaryStage.setScene(pair.getValue());
     }
+
+    public void showWaitingRoom(boolean owner, String gameId, String userName) {
+        var pair = scenes.get("WaitingRoom");
+        WaitingRoomController ctrl = (WaitingRoomController) pair.getKey();
+
+        ctrl.initialize(owner, gameId, userName);
+
+        primaryStage.setTitle("WaitingRoom");
+        primaryStage.setScene(pair.getValue());
+    }
+
 }

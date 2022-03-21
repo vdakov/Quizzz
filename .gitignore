@@ -29,6 +29,7 @@ bin/
 *.iws
 *.iml
 *.ipr
+.metadata
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
@@ -46,3 +47,4 @@ out/
 /server/src/main/resources/activity-bank-pictures
 quizzzz.mv.lock.db
 *.db
+.metadata

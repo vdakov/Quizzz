@@ -78,9 +78,9 @@ public class ActionController {
 
 
     //test mapping to use as println cuz I am pretty bad at writing tests :(
-    @GetMapping("/alert")
-    public void alert() {
-        System.out.println("HELLO");
+    @PostMapping("/alert")
+    public void alert(@RequestBody String input) {
+        System.out.println(input);
     }
 
 

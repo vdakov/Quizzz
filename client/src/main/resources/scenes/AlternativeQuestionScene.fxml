@@ -2,6 +2,8 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -55,9 +57,9 @@
                 <Font name="Chalkboard" size="18.0" />
             </font>
         </Label>
-        <Label fx:id="labelAnswerTop" alignment="CENTER_RIGHT" prefHeight="64.0" prefWidth="330.0" wrapText="true" GridPane.columnIndex="7" GridPane.rowIndex="4">
+        <Label fx:id="labelAnswerTop" alignment="CENTER_RIGHT" prefHeight="64.0" prefWidth="330.0" textAlignment="RIGHT" wrapText="true" GridPane.columnIndex="7" GridPane.rowIndex="4">
             <font>
-                <Font name="Chalkboard" size="24.0" />
+                <Font name="Chalkboard" size="22.0" />
             </font>
         </Label>
         <Button fx:id="answerTop" mnemonicParsing="false" onAction="#answer" prefHeight="65.0" prefWidth="270.0" style="-fx-background-color: #b38df7;" text="1" textAlignment="CENTER" GridPane.columnIndex="6" GridPane.rowIndex="4">
@@ -75,14 +77,14 @@
                 <Font name="Chalkboard" size="24.0" />
             </font>
         </Button>
-        <Label fx:id="labelAnswerCenter" alignment="CENTER_RIGHT" prefHeight="64.0" prefWidth="330.0" wrapText="true" GridPane.columnIndex="7" GridPane.rowIndex="5">
+        <Label fx:id="labelAnswerCenter" alignment="CENTER_RIGHT" prefHeight="64.0" prefWidth="330.0" textAlignment="RIGHT" wrapText="true" GridPane.columnIndex="7" GridPane.rowIndex="5">
             <font>
-                <Font name="Chalkboard" size="24.0" />
+                <Font name="Chalkboard" size="22.0" />
             </font>
         </Label>
-        <Label fx:id="labelAnswerBottom" alignment="CENTER_RIGHT" prefHeight="64.0" prefWidth="330.0" wrapText="true" GridPane.columnIndex="7" GridPane.rowIndex="6">
+        <Label fx:id="labelAnswerBottom" alignment="CENTER_RIGHT" prefHeight="64.0" prefWidth="330.0" textAlignment="RIGHT" wrapText="true" GridPane.columnIndex="7" GridPane.rowIndex="6">
             <font>
-                <Font name="Chalkboard" size="24.0" />
+                <Font name="Chalkboard" size="22.0" />
             </font>
         </Label>
         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Instead of .... you could do .... instead" textAlignment="CENTER" wrappingWidth="859.21630859375" GridPane.columnIndex="2" GridPane.rowIndex="2">
@@ -90,5 +92,31 @@
                 <Font name="Chalkboard" size="40.0" />
             </font>
         </Text>
+      <ToolBar fx:id="toolbar" prefHeight="57.0" prefWidth="362.0" GridPane.columnIndex="7" GridPane.rowIndex="7">
+        <items>
+            <ImageView fitHeight="60.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="emoji1" fitHeight="60.0" fitWidth="74.0" onDragDetected="#emoji1Animation" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../pictures/emojis/tears-emoji-png.png" />
+               </image></ImageView>
+            <ImageView fx:id="emoji2" fitHeight="60.0" fitWidth="73.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../pictures/emojis/sunglasses-emoji.png" />
+               </image></ImageView>
+            <ImageView fx:id="emoji3" fitHeight="60.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../pictures/emojis/hearts-eyes-emoji.png" />
+               </image></ImageView>
+            <ImageView fx:id="emoji4" fitHeight="60.0" fitWidth="73.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../pictures/emojis/fearful-emoji.png" />
+               </image></ImageView>
+            <ImageView fx:id="emoji5" fitHeight="60.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../pictures/emojis/angry-emoji.png" />
+               </image></ImageView>
+        </items>
+      </ToolBar>
+      <ImageView fx:id="startAnimation" fitHeight="60.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="8" GridPane.rowIndex="7" />
     </children>
 </GridPane>
