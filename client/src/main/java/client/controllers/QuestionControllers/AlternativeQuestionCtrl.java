@@ -14,9 +14,16 @@ import javafx.scene.control.ToolBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
-
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.scene.control.ProgressBar;
 import java.io.IOException;
 import java.util.Scanner;
+import javafx.util.Duration;
 
 public class AlternativeQuestionCtrl {
     private final ServerUtils server;
@@ -27,6 +34,14 @@ public class AlternativeQuestionCtrl {
     private AlternativeQuestion alternativeQuestion;
     private int pointsInt;
     private String correctAnswer;
+    private final double startTime = 10;
+    private IntegerProperty timeSeconds =
+            new SimpleIntegerProperty((int) startTime);
+    private Timeline timeline;
+    @FXML
+    private Label timeLabel;
+    @FXML
+    private ProgressBar progressBarTime;
 
 
     @FXML
@@ -147,15 +162,36 @@ public class AlternativeQuestionCtrl {
 
     }
 
+    public void startTimer() {
+        progressBarTime.progressProperty().bind(Bindings.divide(timeSeconds, startTime));
+
+        timeLabel.textProperty().bind(timeSeconds.asString());    //bind the progressbar value to the seconds left
+        timeSeconds.set((int) startTime);
+        timeline = new Timeline();
+        timeline.getKeyFrames().add(
+                new KeyFrame(Duration.seconds(startTime + 1),      //the timeLine handles an animation which lasts start + 1 seconds
+                        new KeyValue(timeSeconds, 0)));    //animation finishes when timeSeconds comes to 0
+        timeline.setOnFinished(event -> goToNextQuestion());       //proceeds to the next question if no answer was given in 10 sec
+        timeline.playFromStart();                                 //start the animation
+    }
+    public void handleTimerButton(ActionEvent event) {
+        if (timeline != null) {
+            timeline.stop();        //if timeline exists stop it when any answer button is pressed
+        }
+        timeline.stop();
+        System.out.println("Time took to answer - " + timeSeconds);
+    }
+
 
     //method for answering the question- activated on click of button in QuestionScreen scene
     public void answer(ActionEvent event) {
         Button current = (Button) event.getSource();
 
+        handleTimerButton(event);
 
         if (current.getText().equals(getCorrectAnswer())) {
             // multiply the score by percentage time remaining
-            pointsInt += 500.0 ; //global variable for points so it remembers it
+            pointsInt += 500.0 *((float) timeSeconds.getValue() / startTime); //global variable for points so it remembers it
         }
 
         //uses the answerCheck method to highlight which the correct answer was

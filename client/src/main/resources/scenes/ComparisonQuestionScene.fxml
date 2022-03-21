@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -11,7 +12,6 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.scene.control.ProgressBar?>
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="838.0" prefWidth="1092.0" style="-fx-background-color: #499ee8;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.QuestionControllers.ComparisonQuestionCtrl">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="10.0" prefWidth="98.0" />
@@ -99,5 +99,11 @@
             </ImageView>
          </items>
       </ToolBar>
+        <Label fx:id="timeLabel" prefHeight="121.0" prefWidth="202.0" text="10" translateY="40.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
+            <font>
+                <Font size="46.0" />
+            </font>
+        </Label>
+        <ProgressBar fx:id="progressBarTime" prefHeight="29.0" prefWidth="202.0" progress="1.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
     </children>
 </GridPane>

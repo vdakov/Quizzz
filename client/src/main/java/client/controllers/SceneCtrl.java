@@ -22,6 +22,7 @@ public class SceneCtrl {
     private HashMap<String, Pair<Object, Scene>> scenes;
 
 
+
     public void initialize(Stage primaryStage, HashMap<String, Pair<Object, Scene>> scenes) {
         this.primaryStage = primaryStage;
         this.scenes = scenes;
@@ -34,6 +35,7 @@ public class SceneCtrl {
         var pair = scenes.get("AlternativeQuestion");
         AlternativeQuestionCtrl ctrl = (AlternativeQuestionCtrl) pair.getKey();
 
+        ctrl.startTimer();
         primaryStage.setTitle("Question type 1");
         ctrl.setQuestion(alternativeQuestion, questionNo, userName, roomId);
         primaryStage.setScene(pair.getValue());
@@ -43,8 +45,10 @@ public class SceneCtrl {
         var pair = scenes.get("KnowledgeQuestion");
         KnowledgeQuestionCtrl ctrl = (KnowledgeQuestionCtrl) pair.getKey();
 
+
         primaryStage.setTitle("Question type 2");
         ctrl.setQuestion(knowledgeQuestion, questionNo, userName, roomId);
+        ctrl.startTimer();
         primaryStage.setScene(pair.getValue());
     }
 
@@ -52,8 +56,10 @@ public class SceneCtrl {
         var pair = scenes.get("OpenQuestion");
         OpenQuestionCtrl ctrl = (OpenQuestionCtrl) pair.getKey();
 
+
         primaryStage.setTitle("Question type 3");
         ctrl.setQuestion(openQuestion, questionNo, userName, roomId);
+        ctrl.startTimer();
         primaryStage.setScene(pair.getValue());
     }
 
@@ -61,8 +67,10 @@ public class SceneCtrl {
         var pair = scenes.get("ComparisonQuestion");
         ComparisonQuestionCtrl ctrl = (ComparisonQuestionCtrl) pair.getKey();
 
+
         primaryStage.setTitle("Question type 4");
         ctrl.setQuestion(comparisonQuestion, questionNo, userName, roomId);
+        ctrl.startTimer();
         primaryStage.setScene(pair.getValue());
     }
 
