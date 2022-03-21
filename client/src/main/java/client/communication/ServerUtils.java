@@ -16,6 +16,7 @@
 package client.communication;
 
 import commons.Actions.Action;
+import commons.Leaderboard.LeaderboardEntry;
 import commons.GameContainer;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
@@ -43,7 +44,6 @@ public class ServerUtils {
                 .target(SERVER).path("api/singlePlayer/" + userName + "/createNewGame")
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON).get(new GenericType<>() {
-
                 });
     }
 
@@ -69,6 +69,32 @@ public class ServerUtils {
     public List<Action> getActivities() {
         return ClientBuilder.newClient(new ClientConfig()) //
                 .target(SERVER).path("api/activities/list") //
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .get(new GenericType<>() {
+                });
+    }
+
+    public List<LeaderboardEntry> getSingleplayerLeaderboard() {
+        return ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/leaderboard/singleplayer") //
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .get(new GenericType<>() {
+                });
+    }
+
+    public LeaderboardEntry addSingleplayerLeaderboardEntry(String name, int points) {
+        return ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/leaderboard/singleplayer") //
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .post(Entity.entity(new LeaderboardEntry(name, points), APPLICATION_JSON), LeaderboardEntry.class);
+    }
+
+    public Action getRandomAction() {
+        return ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/activities/random") //
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
                 .get(new GenericType<>() {

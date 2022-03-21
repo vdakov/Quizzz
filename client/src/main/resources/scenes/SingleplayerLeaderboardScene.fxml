@@ -1,87 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
-
-<AnchorPane prefHeight="838.0" prefWidth="1092.0" style="-fx-background-color: #8749e8;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.SingleplayerLeaderboardCtrl">
+<?import javafx.scene.text.*?>
+<AnchorPane prefHeight="838.0" prefWidth="1092.0" style="-fx-background-color: #8749e8;"
+            xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="client.controllers.SingleplayerLeaderboardCtrl">
     <children>
-        <GridPane alignment="CENTER" layoutX="-298.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <GridPane alignment="CENTER" layoutX="-298.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0"
+                  AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
             </rowConstraints>
             <children>
-                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="LEADERBOARD" textAlignment="CENTER" wrappingWidth="602.13671875" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="LEADERBOARD" textAlignment="CENTER"
+                      wrappingWidth="602.13671875" GridPane.halignment="CENTER" GridPane.valignment="TOP">
                     <font>
-                        <Font name="DejaVu Sans Mono Bold" size="48.0" />
+                        <Font name="DejaVu Sans Mono Bold" size="48.0"/>
                     </font>
                 </Text>
-                <Rectangle fill="#d3c9fb" height="180.0" smooth="false" stroke="#7b7691" strokeType="INSIDE" width="200.0" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
-                <Rectangle fill="#d3c9fb" height="120.0" smooth="false" stroke="#7b7691" strokeType="INSIDE" width="200.0" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+                <Rectangle fill="#d3c9fb" height="180.0" smooth="false" stroke="#7b7691" strokeType="INSIDE"
+                           width="200.0" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM"/>
+                <Rectangle fill="#d3c9fb" height="120.0" smooth="false" stroke="#7b7691" strokeType="INSIDE"
+                           width="200.0" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
                     <GridPane.margin>
-                        <Insets right="400.0" />
+                        <Insets right="400.0"/>
                     </GridPane.margin>
                 </Rectangle>
-                <Rectangle fill="#d3c9fb" height="60.0" smooth="false" stroke="#7b7691" strokeType="INSIDE" width="200.0" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+                <Rectangle fill="#d3c9fb" height="60.0" smooth="false" stroke="#7b7691" strokeType="INSIDE"
+                           width="200.0" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
                     <GridPane.margin>
-                        <Insets left="400.0" />
+                        <Insets left="400.0"/>
                     </GridPane.margin>
                 </Rectangle>
-                <Text fx:id="place1" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Vasil" textAlignment="CENTER" wrappingWidth="202.462890625" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+                <Text fx:id="place1" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Vasil"
+                      textAlignment="CENTER" wrappingWidth="202.462890625" GridPane.halignment="CENTER"
+                      GridPane.valignment="BOTTOM">
                     <font>
-                        <Font size="36.0" />
+                        <Font size="36.0"/>
                     </font>
                     <GridPane.margin>
-                        <Insets bottom="180.0" />
+                        <Insets bottom="180.0"/>
                     </GridPane.margin>
                 </Text>
-                <Text fx:id="place2" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Sam" textAlignment="CENTER" wrappingWidth="202.462890625" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+                <Text fx:id="place2" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Sam"
+                      textAlignment="CENTER" wrappingWidth="202.462890625" GridPane.halignment="CENTER"
+                      GridPane.valignment="BOTTOM">
                     <font>
-                        <Font size="36.0" />
+                        <Font size="36.0"/>
                     </font>
                     <GridPane.margin>
-                        <Insets bottom="120.0" right="400.0" />
+                        <Insets bottom="120.0" right="400.0"/>
                     </GridPane.margin>
                 </Text>
-                <Text fx:id="place3" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Delia" textAlignment="CENTER" wrappingWidth="200.462890625" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+                <Text fx:id="place3" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Delia"
+                      textAlignment="CENTER" wrappingWidth="200.462890625" GridPane.halignment="CENTER"
+                      GridPane.valignment="BOTTOM">
                     <font>
-                        <Font size="36.0" />
+                        <Font size="36.0"/>
                     </font>
                     <GridPane.margin>
-                        <Insets bottom="60.0" left="400.0" />
+                        <Insets bottom="60.0" left="400.0"/>
                     </GridPane.margin>
                 </Text>
-                <TableView fx:id="leaderboardTable" prefHeight="156.0" prefWidth="560.0" style="-fx-background-color: #d3c9fb;" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+                <TableView fx:id="leaderboardTable" prefHeight="156.0" prefWidth="560.0"
+                           style="-fx-background-color: #d3c9fb;" GridPane.halignment="CENTER" GridPane.rowIndex="1"
+                           GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
                     <columns>
-                        <TableColumn prefWidth="75.0" text="Place" />
-                        <TableColumn prefWidth="170.0" text="Name" />
-                        <TableColumn prefWidth="170.0" text="Points" />
+                        <TableColumn fx:id="placeCol" prefWidth="75.0" text="Place"/>
+                        <TableColumn fx:id="nameCol" prefWidth="170.0" text="Name"/>
+                        <TableColumn fx:id="pointsCol" prefWidth="170.0" text="Points"/>
                     </columns>
                     <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
                     </columnResizePolicy>
                     <GridPane.margin>
-                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0"/>
                     </GridPane.margin>
                 </TableView>
-                <Button mnemonicParsing="false" onAction="#home" prefHeight="50.0" prefWidth="50.0" text="Home" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+                <Button mnemonicParsing="false" onAction="#exit" text="Exit" textAlignment="CENTER"
+                        GridPane.halignment="LEFT" GridPane.valignment="TOP">
                     <GridPane.margin>
-                        <Insets left="10.0" top="10.0" />
+                        <Insets left="10.0" top="10.0"/>
                     </GridPane.margin>
                     <opaqueInsets>
-                        <Insets />
+                        <Insets/>
                     </opaqueInsets>
                 </Button>
             </children>

@@ -1,12 +1,15 @@
 package client;
 
-import client.controllers.*;
+import client.controllers.AddActionActivityCtrl;
+import client.controllers.MainScreenActivityCtrl;
 import client.controllers.MultiplayerControllers.ServerBrowserController;
 import client.controllers.MultiplayerControllers.WaitingRoomController;
 import client.controllers.QuestionControllers.AlternativeQuestionCtrl;
 import client.controllers.QuestionControllers.ComparisonQuestionCtrl;
 import client.controllers.QuestionControllers.KnowledgeQuestionCtrl;
 import client.controllers.QuestionControllers.OpenQuestionCtrl;
+import client.controllers.SceneCtrl;
+import client.controllers.SingleplayerLeaderboardCtrl;
 import client.logic.FXMLConfig;
 import client.logic.ModuleConfig;
 import com.google.inject.Injector;
@@ -55,7 +58,8 @@ public class QuizzzClient extends Application {
             new Pair("KnowledgeQuestionScene.fxml", KnowledgeQuestionCtrl.class),
             new Pair("AlternativeQuestionScene.fxml", AlternativeQuestionCtrl.class),
             new Pair("ServerBrowserScene.fxml", ServerBrowserController.class),
-            new Pair("WaitingRoomScene.fxml", WaitingRoomController.class)
+            new Pair("WaitingRoomScene.fxml", WaitingRoomController.class),
+            new Pair("SingleplayerLeaderboardScene.fxml", SingleplayerLeaderboardCtrl.class)
     };
 
     @Override

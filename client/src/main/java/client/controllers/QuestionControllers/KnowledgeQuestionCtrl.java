@@ -171,7 +171,12 @@ public class KnowledgeQuestionCtrl {
         points.setText(String.valueOf(pointsInt));
 
         if (questionNumber < 20) goToNextQuestion();
-        else sceneCtrl.showSingleplayerLeaderboard();
+        else finishGame();
+    }
+
+    public void finishGame() {
+        server.addSingleplayerLeaderboardEntry(userName, pointsInt);
+        sceneCtrl.showSingleplayerLeaderboard();
     }
 
 

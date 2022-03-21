@@ -168,7 +168,7 @@ public class AlternativeQuestionCtrl {
         points.setText(String.valueOf(pointsInt));
 
         if (questionNumber < 20) goToNextQuestion();
-        else sceneCtrl.showSingleplayerLeaderboard();
+        else finishGame();
     }
 
 
@@ -188,6 +188,11 @@ public class AlternativeQuestionCtrl {
 
         this.initialize();
 
+    }
+
+    public void finishGame() {
+        server.addSingleplayerLeaderboardEntry(userName, pointsInt);
+        sceneCtrl.showSingleplayerLeaderboard();
     }
 
     public void goToMainScreen(ActionEvent event) throws IOException {

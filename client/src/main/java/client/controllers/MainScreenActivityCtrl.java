@@ -47,6 +47,10 @@ public class MainScreenActivityCtrl {
 
     }
 
+    public void showSingleplayerLeaderboard() {
+        sceneCtrl.showSingleplayerLeaderboard();
+    }
+    
     public void enterServerBrowser(ActionEvent event) {
         this.sceneCtrl.showServerBrowser();
     }
