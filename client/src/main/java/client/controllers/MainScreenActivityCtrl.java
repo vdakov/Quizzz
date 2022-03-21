@@ -34,6 +34,10 @@ public class MainScreenActivityCtrl {
         sceneCtrl.showNextQuestion();
     }
 
+    public void showSingleplayerLeaderboard() {
+        sceneCtrl.showSingleplayerLeaderboard();
+    }
+    
     public void enterServerBrowser() {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         gameConfiguration.setGameTypeMultiPlayer();
