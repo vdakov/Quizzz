@@ -27,10 +27,7 @@ public class KnowledgeQuestionCtrl {
     private String roomId;
     private KnowledgeQuestion knowledgeQuestion;
     private int pointsInt;
-    private final double startTime = 10;
-    private IntegerProperty timeSeconds =
-            new SimpleIntegerProperty((int) startTime);
-    private Timeline timeline;
+
     @FXML
     private Label sampleQuestion;
     @FXML
@@ -123,24 +120,6 @@ public class KnowledgeQuestionCtrl {
         this.correctAnswer = "" + ((knowledgeQuestion == null) ? "" : knowledgeQuestion.getOptions().get(1));
     }
 
-    public void startTimer() {
-        progressBarTime.progressProperty().bind(Bindings.divide(timeSeconds, startTime));
-        timeLabel.textProperty().bind(timeSeconds.asString());
-        timeSeconds.set((int) startTime);
-        timeline = new Timeline();
-        timeline.getKeyFrames().add(
-                new KeyFrame(Duration.seconds(startTime + 1),
-                        new KeyValue(timeSeconds, 0)));
-        timeline.setOnFinished(event -> goToNextQuestion());
-        timeline.playFromStart();
-    }
-    public void handleTimerButton(ActionEvent event) {
-        if (timeline != null) {
-            timeline.stop();
-        }
-        timeline.stop();
-        System.out.println("Time took to answer - " + timeSeconds);
-    }
 
     public void goToNextQuestion() {
         String response = server.getQuestion(this.userName, this.roomId, this.questionNumber + 1);
@@ -177,7 +156,6 @@ public class KnowledgeQuestionCtrl {
     public void answer(ActionEvent event) throws InterruptedException {
         Button current = (Button) event.getSource();
 
-        handleTimerButton(event);
 
         if (current.getText().equals(getCorrectAnswer())) {
             pointsInt += 500; //global variable for points so it remembers it

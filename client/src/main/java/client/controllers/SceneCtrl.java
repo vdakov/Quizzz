@@ -33,7 +33,6 @@ public class SceneCtrl {
 
         primaryStage.setTitle("Question type 1");
         ctrl.setQuestion(alternativeQuestion, questionNo, userName, roomId);
-        ctrl.startTimer();
         primaryStage.setScene(pair.getValue());
     }
 
@@ -43,7 +42,6 @@ public class SceneCtrl {
 
         primaryStage.setTitle("Question type 2");
         ctrl.setQuestion(knowledgeQuestion, questionNo, userName, roomId);
-        ctrl.startTimer();
         primaryStage.setScene(pair.getValue());
     }
 
@@ -53,7 +51,6 @@ public class SceneCtrl {
 
         primaryStage.setTitle("Question type 3");
         ctrl.setQuestion(openQuestion, questionNo, userName, roomId);
-        ctrl.startTimer();
         primaryStage.setScene(pair.getValue());
     }
 
@@ -63,7 +60,6 @@ public class SceneCtrl {
 
         primaryStage.setTitle("Question type 4");
         ctrl.setQuestion(comparisonQuestion, questionNo, userName, roomId);
-        ctrl.startTimer();
         primaryStage.setScene(pair.getValue());
     }
 

@@ -27,10 +27,7 @@ public class AlternativeQuestionCtrl {
     private AlternativeQuestion alternativeQuestion;
     private int pointsInt;
     private String correctAnswer;
-    private final double startTime = 10;
-    private IntegerProperty timeSeconds =
-            new SimpleIntegerProperty((int) startTime);
-    private Timeline timeline;
+
 
     @FXML
     private Label sampleQuestion;
@@ -44,8 +41,6 @@ public class AlternativeQuestionCtrl {
     private Label labelAnswerTop;
     @FXML
     private Label labelAnswerBottom;
-    @FXML
-    private String correctAnswer;
     @FXML
     private ToolBar toolbar;
     @FXML
@@ -157,11 +152,10 @@ public class AlternativeQuestionCtrl {
     public void answer(ActionEvent event) {
         Button current = (Button) event.getSource();
 
-        handleTimerButton(event);
 
         if (current.getText().equals(getCorrectAnswer())) {
             // multiply the score by percentage time remaining
-            pointsInt += 500.0 * ((float) timeSeconds.getValue() / startTime); //global variable for points so it remembers it
+            pointsInt += 500.0 ; //global variable for points so it remembers it
         }
 
         //uses the answerCheck method to highlight which the correct answer was
