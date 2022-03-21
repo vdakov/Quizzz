@@ -35,7 +35,6 @@ public class SceneCtrl {
     private OpenQuestionActivityCtrl openQuestionActivityCtrl;
     private Scene questionGuessXScene;
 
-    private TimerCtrl timerCtrl;   // testing timer
     private Scene timerScene;
 
 
