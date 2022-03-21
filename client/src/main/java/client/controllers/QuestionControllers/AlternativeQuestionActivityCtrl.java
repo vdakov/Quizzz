@@ -110,6 +110,7 @@ public class AlternativeQuestionActivityCtrl {
         getQuestionSecondOption().setText(alternativeQuestion.getOptions().get(1).getKey());
         getQuestionThirdOption() .setText(alternativeQuestion.getOptions().get(2).getKey());
 
+        points.setText(String.valueOf(getPointsInt()));
         initialize();
     }
 

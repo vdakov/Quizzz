@@ -62,11 +62,12 @@ public class MultiplayerGameService {
     }
 
     public void joinMultiPlayerGame(String userName, String roomId) {
+        System.out.println("RoomId:    " + gameCatalog.getMultiPlayerGame(roomId));
         gameCatalog.getMultiPlayerGame(roomId).addUser(userName);
     }
 
     public String getMultiPlayerQuestion(String gameId, int number) {
-        Question question = gameCatalog.getSinglePlayerGame(gameId).getQuestion(number);
+        Question question = gameCatalog.getMultiPlayerGame(gameId).getQuestion(number);
         return (Util.getQuestionType(question) + ": " + question.toJsonString());
     }
 
@@ -83,5 +84,9 @@ public class MultiplayerGameService {
 
     public void startMultiPlayerGame(String gameId) {
         gameCatalog.getMultiPlayerGame(gameId).setGameStatusOngoing();
+    }
+
+    public String getAnswer(String userName, String gameId, int questionNumber) {
+        return gameCatalog.getMultiPlayerGame(gameId).getQuestionAnswer(questionNumber);
     }
 }

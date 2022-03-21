@@ -2,13 +2,11 @@ package client.controllers;
 
 import client.communication.ServerUtils;
 import client.data.GameConfiguration;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.util.Scanner;
 
 public class MainScreenActivityCtrl {
 
@@ -32,12 +30,13 @@ public class MainScreenActivityCtrl {
         gameConfiguration.setRoomId(roomId);
         gameConfiguration.setUserName(playerName);
         gameConfiguration.setCurrentQuestionNumber(gameConfiguration.getCurrentQuestionNumber() + 1);
-        String response = server.getQuestion();
-        Scanner scanner = new Scanner(response).useDelimiter(": ");
+        gameConfiguration.setGameTypeSingleplayer();
         sceneCtrl.showNextQuestion();
     }
 
-    public void enterServerBrowser(ActionEvent event) {
+    public void enterServerBrowser() {
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+        gameConfiguration.setGameTypeMultiPlayer();
         this.sceneCtrl.showServerBrowser();
     }
 }

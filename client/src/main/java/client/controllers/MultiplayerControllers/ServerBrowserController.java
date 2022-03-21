@@ -2,6 +2,7 @@ package client.controllers.MultiplayerControllers;
 
 import client.communication.ServerUtils;
 import client.controllers.SceneCtrl;
+import client.data.GameConfiguration;
 import com.google.inject.Inject;
 import commons.GameContainer;
 import javafx.collections.ObservableList;
@@ -11,6 +12,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+
+import java.util.Scanner;
 
 
 public class ServerBrowserController {
@@ -85,7 +88,16 @@ public class ServerBrowserController {
      * @param event
      */
     public void joinWaitingRoom(ActionEvent event) {
-        String gameId = this.gameIdField.getText();
+          // we will connect to the initialised random room
+        String playerName = "test";
+
+        String roomId = server.getRandomMultiPlayerRoomId(playerName);
+        System.out.println(roomId);
+
+        server.joinMultiPlayerRoom(playerName, roomId);
+        this.sceneCtrl.showWaitingRoom(true, roomId, playerName);
+
+//        String gameId = this.gameIdField.getText();
 //        if (!server.listOfAllGameIds().contains(gameId)) {
 //            Alert alert = new Alert(Alert.AlertType.WARNING);
 //            alert.setTitle("Warning");

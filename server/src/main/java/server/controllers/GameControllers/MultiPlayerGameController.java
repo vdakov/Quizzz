@@ -25,15 +25,17 @@ public class MultiPlayerGameController {
     }
 
     // maybe a post request
-    @PostMapping("/{roomId}/joinGame")
-    public void joinMultiplayerGame(@PathVariable("userName") String userName, @PathVariable("roomId") String roomId) {
+    @GetMapping("/{roomId}/joinGame")
+    public boolean joinMultiplayerGame(@PathVariable("userName") String userName, @PathVariable("roomId") String roomId) {
         multiplayerGameService.joinMultiPlayerGame(userName, roomId);
+        return true;
     }
 
-    @PostMapping("/{gameId}/startGame")
-    public void startMultiPlayerGame(@PathVariable("gameId") String gameId) {
+    @GetMapping("/{gameId}/startGame")
+    public boolean startMultiPlayerGame(@PathVariable("gameId") String gameId) {
         multiplayerGameService.startMultiPlayerGame(gameId);
         listeners.forEach((k, l) -> l.accept(true));
+        return true;
     }
 
     private HashMap<String, Consumer<Boolean>> listeners = new HashMap<>();
@@ -73,5 +75,11 @@ public class MultiPlayerGameController {
     @GetMapping("/{gameId}/getScore")
     public int getScore(@PathVariable("userName") String userName, @PathVariable("gameId") String gameId) {
         return multiplayerGameService.getMultiPlayerScore(userName, gameId);
+    }
+
+    @GetMapping("/{gameId}/{questionNumber}/getAnswer")
+    public String getAnswer(@PathVariable("userName") String userName, @PathVariable("gameId") String gameId,
+                            @PathVariable("questionNumber") int questionNumber) {
+        return multiplayerGameService.getAnswer(userName, gameId, questionNumber);
     }
 }

@@ -3,6 +3,7 @@ package client.controllers.MultiplayerControllers;
 
 import client.communication.ServerUtils;
 import client.controllers.SceneCtrl;
+import client.data.GameConfiguration;
 import com.google.inject.Inject;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -57,29 +58,34 @@ public class WaitingRoomController {
      * Adjusts all of the text field to the current user
      *
      * @param owner    boolean value for whether this players is the current owner of the game
-     * @param gameId   stores the gameId
+     * @param roomId   stores the gameId
      * @param userName stores the current player's username
      */
-    public void initialize(boolean owner, String gameId, String userName) {
+    public void initialize(boolean owner, String roomId, String userName) {
         this.userName = userName;
-        this.gameId = gameId;
+        this.gameId = roomId;
         this.ownerText.setText("");
         this.startButton.setDisable(true);
+
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+        gameConfiguration.setRoomId(roomId);
+        gameConfiguration.setUserName(userName);
+        gameConfiguration.setCurrentQuestionNumber(gameConfiguration.getCurrentQuestionNumber() + 1);
+        gameConfiguration.setGameTypeMultiPlayer();
+
+        server.waitForMultiPlayerRoomStart(userName, gameId);
         if (owner) {
             this.owner = owner; //sets this if the owner leaves
             this.startButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    //TO BE IMPLEMENTED- START OF GAME
+                    server.startMultiPlayerRoom(userName, gameId);
                 }
             });
             this.ownerText.setText("YOU ARE THE OWNER OF THIS ROOM");
             this.startButton.setDisable(false);
         }
         this.gameID.setText("GAME ID: " + gameId);
-
-        //this.playerLabel.setText("There are currently " +
-        //        server.getNumPlayersInGame(gameId) + " players in the room");
     }
 
     /**
@@ -89,6 +95,9 @@ public class WaitingRoomController {
      */
     public void refresh(ActionEvent event) {
         this.initialize(this.owner, this.gameId, this.userName);
+        if(server.isGameStarted == true) {
+            sceneCtrl.showNextQuestion();
+        }
     }
 
 

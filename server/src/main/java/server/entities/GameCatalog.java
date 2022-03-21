@@ -36,6 +36,11 @@ public class GameCatalog {
     }
 
     public MultiPlayerGame getMultiPlayerGame(String gameId) {
+        System.out.println(multiplayerRandomRoom.getGameId() + "      " + gameId);
+        if(gameId.equals(multiplayerRandomRoom.getGameId())) {
+            return multiplayerRandomRoom;
+        }
+
         return multiPlayerGames.get(gameId);
     }
 
