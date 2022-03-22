@@ -5,13 +5,22 @@ import client.controllers.SceneCtrl;
 import client.data.GameConfiguration;
 import com.google.inject.Inject;
 import commons.Questions.OpenQuestion;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
 import java.io.IOException;
 
@@ -65,6 +74,11 @@ public class OpenQuestionActivityCtrl {
     @FXML
     private Rectangle correctAnswerRectangle;
 
+    @FXML
+    private Label timeLabel;
+    @FXML
+    private ProgressBar progressBarTime;
+
 
 
     /**
@@ -98,6 +112,7 @@ public class OpenQuestionActivityCtrl {
         getQuestionStatement().setText(openQuestion.getQuestion().getKey());
 
         initialize();
+        startTimer();
     }
 
     /**
@@ -162,6 +177,32 @@ public class OpenQuestionActivityCtrl {
 
 //        server.updateScore()
 
+    }
+
+    private final double startTime = 10;
+    private IntegerProperty timeSeconds =
+            new SimpleIntegerProperty((int) startTime);
+    private Timeline timeline;
+
+    private void startTimer() {
+        progressBarTime.progressProperty().bind(Bindings.divide(timeSeconds, startTime));
+
+        timeLabel.textProperty().bind(timeSeconds.asString());    //bind the progressbar value to the seconds left
+        timeSeconds.set((int) startTime);
+        timeline = new Timeline();
+        timeline.getKeyFrames().add(
+                new KeyFrame(Duration.seconds(startTime + 1),      //the timeLine handles an animation which lasts start + 1 seconds
+                        new KeyValue(timeSeconds, 0)));    //animation finishes when timeSeconds comes to 0
+        timeline.setOnFinished(event -> displayNextQuestion());       //proceeds to the next question if no answer was given in 10 sec
+        timeline.playFromStart();                                 //start the animation
+    }
+
+    public void handleTimerButton(ActionEvent event) {
+        if (timeline != null) {
+            timeline.stop();        //if timeline exists stop it when any answer button is pressed
+        }
+        timeline.stop();
+        System.out.println("Time took to answer - " + timeSeconds);
     }
 
     public void goToMainScreen () throws IOException {

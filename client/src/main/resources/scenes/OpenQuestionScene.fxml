@@ -87,5 +87,12 @@
         <!--       <Label prefHeight="21.0" prefWidth="131.0" text="Correct answer : " GridPane.columnIndex="4" GridPane.rowIndex="8" />-->
         <!--       <Label fx:id="userAnswer" text="show what player typed..." GridPane.columnIndex="5" GridPane.rowIndex="8" />-->
 
+        <Label fx:id="timeLabel" prefHeight="121.0" prefWidth="202.0" text="10" translateY="40.0" GridPane.columnIndex="6" GridPane.rowIndex="11">
+            <font>
+                <Font size="46.0" />
+            </font>
+        </Label>
+        <ProgressBar fx:id="progressBarTime" prefHeight="29.0" prefWidth="202.0" progress="1.0" GridPane.columnIndex="6" GridPane.rowIndex="11" />
+
     </children>
 </GridPane>
