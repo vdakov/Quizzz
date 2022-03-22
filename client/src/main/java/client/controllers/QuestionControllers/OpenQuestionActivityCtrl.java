@@ -4,11 +4,11 @@ import client.communication.ServerUtils;
 import client.controllers.SceneCtrl;
 import com.google.inject.Inject;
 import commons.Questions.OpenQuestion;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -61,7 +61,7 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         startTimer();
     }
 
-    public void answerOpenQuestion(MouseEvent event) {
+    public void answerQuestion(ActionEvent event) {
         // answers the question and blocks the possibility to answer anymore
         try {
             userAnswerInt = Integer.parseInt(answerTextfield.getText());
