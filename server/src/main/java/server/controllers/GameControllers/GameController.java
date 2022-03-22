@@ -28,7 +28,7 @@ public class GameController {
     }
 
     /**
-     * Returns a response with the string whether the room was created or a corresponding error message
+     * Returns a response with the string whether the room was created or gives a corresponding error message
      *
      * @param userName the userName of the desired player
      * @param gameType the type of the game
@@ -58,39 +58,10 @@ public class GameController {
 
                 return ResponseEntity.status(HttpStatus.OK).body(roomId);
             } catch (Exception e) {
-                System.out.println(e);
+                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
             }
-
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
         }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
-
-    @GetMapping("/{roomId}/startGame")
-    public ResponseEntity<Object> startNewGame(@PathVariable("userName") String userName, @PathVariable("gameType") String gameType, @PathVariable("roomId") String roomId) {
-        ResponseEntity<Object> response = ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-
-        if (gameType.equals("SINGLEPLAYER")) {
-            try {
-                return (singlePlayerGameService.startSinglePlayerGame(roomId)) ? ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-        }
-
-        if (gameType.equals("MULTIPLAYER")) {
-            try {
-                return (multiplayerGameService.startMultiPlayerGame(roomId)) ? ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-
-            response = ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
-            return response;
-        }
-
-        return response;
-    }
-
 }

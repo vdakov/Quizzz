@@ -61,14 +61,16 @@ public class MultiplayerGameService {
         return gameId;
     }
 
-    public void joinMultiPlayerGame(String userName, String roomId) {
+    public boolean joinMultiPlayerGame(String userName, String roomId) {
         System.out.println("RoomId:    " + gameCatalog.getMultiPlayerGame(roomId));
         gameCatalog.getMultiPlayerGame(roomId).addUser(userName);
+        return true;
     }
 
-    public String getMultiPlayerQuestion(String gameId, int number) {
+    public Question getMultiPlayerQuestion(String gameId, int number) {
         Question question = gameCatalog.getMultiPlayerGame(gameId).getQuestion(number);
-        return (Util.getQuestionType(question) + ": " + question.toJsonString());
+        System.out.println((Util.getQuestionType(question) + ": " + question.toJsonString()));
+        return question;
     }
 
     public void updateMultiPlayerScore(String userName, String gameId, int questionNumber, String userAnswer) {
@@ -78,7 +80,7 @@ public class MultiplayerGameService {
         }
     }
 
-    public int getMultiPlayerScore(String userName, String gameId) {
+    public Integer getMultiPlayerScore(String userName, String gameId) {
         return gameCatalog.getMultiPlayerGame(gameId).getPlayerScore(userName);
     }
 
@@ -87,7 +89,7 @@ public class MultiplayerGameService {
         return true;
     }
 
-    public String getAnswer(String userName, String gameId, int questionNumber) {
+    public String getMultiPlayerAnswer(String userName, String gameId, int questionNumber) {
         return gameCatalog.getMultiPlayerGame(gameId).getQuestionAnswer(questionNumber);
     }
 }

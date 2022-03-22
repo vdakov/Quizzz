@@ -40,16 +40,17 @@ public class SinglePlayerGameService {
         return gameId;
     }
 
-    public boolean startSinglePlayerGame(String roomId) {
+    public boolean startSinglePlayerGame(String userName, String roomId) {
         return true;
     }
 
-    public String getSinglePlayerQuestion(String gameId, int number) {
+    public Question getSinglePlayerQuestion(String gameId, int number) {
         Question question = gameCatalog.getSinglePlayerGame(gameId).getQuestion(number);
-        return (Util.getQuestionType(question) + ": " + question.toJsonString());
+        System.out.println((Util.getQuestionType(question) + ": " + question.toJsonString()));
+        return question;
     }
 
-    public int getSinglePlayerScore(String gameId) {
+    public Integer getSinglePlayerScore(String gameId) {
         return gameCatalog.getSinglePlayerGame(gameId).getPlayerScore();
     }
 
@@ -60,7 +61,7 @@ public class SinglePlayerGameService {
         }
     }
 
-    public String getAnswer(String userName, String gameId, int questionNumber) {
+    public String getSinglePlayerAnswer(String userName, String gameId, int questionNumber) {
         return gameCatalog.getSinglePlayerGame(gameId).getQuestionAnswer(questionNumber);
     }
 }

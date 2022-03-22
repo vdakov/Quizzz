@@ -76,7 +76,7 @@
         </Label>
 
         <Rectangle fx:id="userAnswerRectangle" arcHeight="5.0" arcWidth="5.0" fill="#c9f1fd" height="84.0" width="360.0" GridPane.columnIndex="4" GridPane.rowIndex="8" />
-        <Button fx:id="answer" mnemonicParsing="false" onAction="#answerOpenQuestion" prefHeight="39.0" prefWidth="112.0" style="-fx-background-color: #ffd783;" text="Your guess" GridPane.columnIndex="5" GridPane.rowIndex="8">
+        <Button fx:id="answer" mnemonicParsing="false" onAction="#answerQuestion" prefHeight="39.0" prefWidth="112.0" style="-fx-background-color: #ffd783;" text="Your guess" GridPane.columnIndex="5" GridPane.rowIndex="8">
             <font>
                 <Font name="Chalkboard" size="18.0" />
             </font>
