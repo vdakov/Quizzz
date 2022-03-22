@@ -28,7 +28,7 @@ public class AlternativeQuestionActivityCtrl extends QuestionActivityCtrl {
             return;
         }
 
-        questionStatement.setText(alternativeQuestion.getQuestion().getKey());
+        sampleQuestion.setText(alternativeQuestion.getQuestion().getKey());
 
         firstOptionText.setText(alternativeQuestion.getOptions().get(0).getKey());
         secondOptionText.setText(alternativeQuestion.getOptions().get(1).getKey());

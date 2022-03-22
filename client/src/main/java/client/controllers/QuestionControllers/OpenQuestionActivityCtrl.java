@@ -8,13 +8,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
-    @FXML
-    private TextField userAnswer;
-
     private int userAnswerInt;
     private int addedPointsInt;
     // current labels
@@ -22,6 +20,8 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
     private Button answer;
     @FXML
     private Label correctAnswerLabel;
+    @FXML
+    private TextField answerTextfield;
 
     @FXML
     private Rectangle userAnswerRectangle;
@@ -61,19 +61,19 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         startTimer();
     }
 
-    public void answerQuestion() {
+    public void answerOpenQuestion(MouseEvent event) {
         // answers the question and blocks the possibility to answer anymore
         try {
-            userAnswerInt = Integer.parseInt(userAnswer.getText());
+            userAnswerInt = Integer.parseInt(answerTextfield.getText());
             System.out.println(1);
         } catch (NumberFormatException e) {
-            userAnswer.setText("-99999");
-            server.updateScore(userAnswer.getText());
-            userAnswerInt = Integer.parseInt(userAnswer.getText());
+            answerTextfield.setText("-99999");
+            server.updateScore(answerTextfield.getText());
+            userAnswerInt = Integer.parseInt(answerTextfield.getText());
         } catch (NullPointerException e) {
-            if (userAnswer.getText() == (null) || userAnswer.getText().trim().isEmpty()) {
-                userAnswer.setText("-99999");
-                userAnswerInt = Integer.parseInt(userAnswer.getText());
+            if (answerTextfield.getText() == (null) || answerTextfield.getText().trim().isEmpty()) {
+                answerTextfield.setText("-99999");
+                userAnswerInt = Integer.parseInt(answerTextfield.getText());
             }
         } catch (Exception e) {
             System.out.println(e);
