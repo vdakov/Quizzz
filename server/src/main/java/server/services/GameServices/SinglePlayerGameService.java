@@ -5,8 +5,8 @@ import commons.Exceptions.NotEnoughActivitiesException;
 import commons.Questions.Question;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Service;
-import server.entities.GameCatalog;
-import server.entities.SinglePlayerGame;
+import server.entities.RoomCatalog;
+import server.entities.SingleplayerRoom;
 import server.repositories.ActivityRepository;
 import server.services.QuestionGenerator.QuestionGenerator;
 
@@ -17,11 +17,11 @@ import java.util.Random;
 public class SinglePlayerGameService {
 
     private ActivityRepository activityRepository;
-    private GameCatalog gameCatalog;
+    private RoomCatalog roomCatalog;
 
     public SinglePlayerGameService(ActivityRepository activityRepository) {
         this.activityRepository = activityRepository;
-        gameCatalog = GameCatalog.getGameCatalog();
+        roomCatalog = RoomCatalog.getGameCatalog();
     }
 
     public String createNewSinglePlayerGame(String userName) {
@@ -35,8 +35,8 @@ public class SinglePlayerGameService {
             System.out.println("Not enough activities");
             return "GAME GENERATION FAILED";
         }
-        SinglePlayerGame newGame = new SinglePlayerGame(gameId, userName, questionList);
-        gameCatalog.addSinglePlayerGame(newGame);
+        SingleplayerRoom newGame = new SingleplayerRoom(gameId, userName, questionList);
+        roomCatalog.addSingleplayerGame(newGame);
         return gameId;
     }
 
@@ -45,24 +45,24 @@ public class SinglePlayerGameService {
     }
 
     public Question getSinglePlayerQuestion(String gameId, int number) {
-        Question question = gameCatalog.getSinglePlayerGame(gameId).getQuestion(number);
+        Question question = roomCatalog.getSinglePlayerGame(gameId).getQuestion(number);
         System.out.println((Util.getQuestionType(question) + ": " + question.toJsonString()));
         return question;
     }
 
     public Integer getSinglePlayerScore(String gameId) {
-        return gameCatalog.getSinglePlayerGame(gameId).getPlayerScore();
+        return roomCatalog.getSinglePlayerGame(gameId).getPlayerScore();
     }
 
     public void updateSinglePlayerScore(String gameId, int questionNumber, String userAnswer) {
-        if (userAnswer.equals(gameCatalog.getSinglePlayerGame(gameId).getQuestionAnswer(questionNumber))) {
-            SinglePlayerGame singlePlayerGame = gameCatalog.getSinglePlayerGame(gameId);
+        if (userAnswer.equals(roomCatalog.getSinglePlayerGame(gameId).getQuestionAnswer(questionNumber))) {
+            SingleplayerRoom singlePlayerGame = roomCatalog.getSinglePlayerGame(gameId);
             singlePlayerGame.setPlayerScore(singlePlayerGame.getPlayerScore() + 500);
         }
     }
 
     public String getSinglePlayerAnswer(String userName, String gameId, int questionNumber) {
-        return gameCatalog.getSinglePlayerGame(gameId).getQuestionAnswer(questionNumber);
+        return roomCatalog.getSinglePlayerGame(gameId).getQuestionAnswer(questionNumber);
     }
 }
 

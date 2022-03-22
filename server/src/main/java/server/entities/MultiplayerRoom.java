@@ -6,25 +6,29 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.util.HashMap;
 import java.util.List;
 
-public class MultiPlayerGame extends Game {
+public class MultiplayerRoom extends Room {
 
-    private enum GameStatus {
+    public enum MultiplayerRoomStatus {
         WAITING,
         ONGOING
     }
 
-    private GameStatus gameStatus;
+    private MultiplayerRoomStatus multiplayerRoomStatus;
     private HashMap<String, Integer> playerScores;
 
-    public MultiPlayerGame(String gameId, String roomCreator, List<Pair<Question, String>> gameQuestionsWithAnswers) {
+    public MultiplayerRoom(String gameId, String roomCreator, List<Pair<Question, String>> gameQuestionsWithAnswers) {
         super(gameId, roomCreator, gameQuestionsWithAnswers);
         this.playerScores = new HashMap<>();
 
-        this.gameStatus = GameStatus.WAITING;
+        this.multiplayerRoomStatus = MultiplayerRoomStatus.WAITING;
+    }
+
+    public MultiplayerRoomStatus getMultiplayerGameStatus() {
+        return multiplayerRoomStatus;
     }
 
     public void setGameStatusOngoing() {
-        gameStatus = GameStatus.ONGOING;
+        multiplayerRoomStatus = multiplayerRoomStatus.ONGOING;
     }
 
     public void addUser(String user) {

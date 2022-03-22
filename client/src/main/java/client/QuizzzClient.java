@@ -63,7 +63,7 @@ public class QuizzzClient extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        //make a hashmap to easily look up any scenei using its filename (without the .fxml extension)
+        //make a hashmap to easily look up any scene using its filename (without the .fxml extension)
         HashMap<String, Pair<Object, Scene>> scenesMap = new HashMap<>();
 
         for (int i = 0; i < scenePairs.length; i++) {
