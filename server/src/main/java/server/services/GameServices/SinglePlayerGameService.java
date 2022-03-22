@@ -40,6 +40,10 @@ public class SinglePlayerGameService {
         return gameId;
     }
 
+    public boolean startSinglePlayerGame(String roomId) {
+        return true;
+    }
+
     public String getSinglePlayerQuestion(String gameId, int number) {
         Question question = gameCatalog.getSinglePlayerGame(gameId).getQuestion(number);
         return (Util.getQuestionType(question) + ": " + question.toJsonString());

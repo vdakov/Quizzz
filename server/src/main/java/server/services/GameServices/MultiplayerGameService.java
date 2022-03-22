@@ -82,8 +82,9 @@ public class MultiplayerGameService {
         return gameCatalog.getMultiPlayerGame(gameId).getPlayerScore(userName);
     }
 
-    public void startMultiPlayerGame(String gameId) {
+    public boolean startMultiPlayerGame(String gameId) {
         gameCatalog.getMultiPlayerGame(gameId).setGameStatusOngoing();
+        return true;
     }
 
     public String getAnswer(String userName, String gameId, int questionNumber) {
