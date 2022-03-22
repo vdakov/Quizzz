@@ -29,9 +29,9 @@ public class KnowledgeQuestionActivityCtrl {
 
     // constructor needed variables
     private final ServerUtils server;
-    private final SceneCtrl   sceneCtrl;
+    private final SceneCtrl sceneCtrl;
+    private final GameConfiguration gameConfig = GameConfiguration.getConfiguration();
 
-    private int pointsInt;
     private int addedPointsInt;
     private String userAnswer;
 
@@ -87,6 +87,7 @@ public class KnowledgeQuestionActivityCtrl {
 
     /**
      * Creates the scene with the needed dependencies
+     *
      * @param server    initialised the communication with the server
      * @param sceneCtrl the scene controller
      */
@@ -110,6 +111,7 @@ public class KnowledgeQuestionActivityCtrl {
 
     /**
      * Sets the text for the needed question given as parameter
+     *
      * @param knowledgeQuestion the question that is set
      */
     public void displayQuestion(KnowledgeQuestion knowledgeQuestion) {
@@ -119,9 +121,9 @@ public class KnowledgeQuestionActivityCtrl {
 
         getQuestionStatement().setText(knowledgeQuestion.getQuestion().getKey());
 
-        getQuestionFirstOption() .setText(knowledgeQuestion.getOptions().get(0));
+        getQuestionFirstOption().setText(knowledgeQuestion.getOptions().get(0));
         getQuestionSecondOption().setText(knowledgeQuestion.getOptions().get(1));
-        getQuestionThirdOption() .setText(knowledgeQuestion.getOptions().get(2));
+        getQuestionThirdOption().setText(knowledgeQuestion.getOptions().get(2));
 
         questionNumberLabel.setText("Question " + getQuestionNumber());
         points.setText(String.valueOf(getPointsInt()));
@@ -202,15 +204,19 @@ public class KnowledgeQuestionActivityCtrl {
         System.out.println("Time took to answer - " + timeSeconds);
     }
 
-    public void goToMainScreen () throws IOException {
+    public void goToMainScreen() throws IOException {
         sceneCtrl.showMainScreenScene();
-
     }
 
     public void displayNextQuestion() {
+        if (gameConfig.getCurrentQuestionNumber() >= 20) finishGame();
         sceneCtrl.showNextQuestion();
     }
 
+    public void finishGame() {
+        server.addSingleplayerLeaderboardEntry(GameConfiguration.getConfiguration().getUserName(), Integer.parseInt(server.getScore()));
+        sceneCtrl.showSingleplayerLeaderboard();
+    }
 
     private Label getQuestionStatement() {
         return sampleQuestion;
@@ -233,13 +239,11 @@ public class KnowledgeQuestionActivityCtrl {
     }
 
     public int getPointsInt() {
-//        return server.getScore();
         return Integer.parseInt(server.getScore());
     }
 
     public int getQuestionNumber() {
-        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
-        return gameConfiguration.getCurrentQuestionNumber();
+        return gameConfig.getCurrentQuestionNumber();
     }
 }
 

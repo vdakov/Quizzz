@@ -25,17 +25,15 @@ import javafx.util.Duration;
 import java.io.IOException;
 
 
-
 public class AlternativeQuestionActivityCtrl {
 
     // constructor needed variables
     private final ServerUtils server;
-    private final SceneCtrl   sceneCtrl;
+    private final SceneCtrl sceneCtrl;
+    private final GameConfiguration gameConfig = GameConfiguration.getConfiguration();
 
-    private int pointsInt;
     private int addedPointsInt;
     private String userAnswer;
-    private int questionNumber;
 
     @FXML
     private Label timeLabel;
@@ -90,6 +88,7 @@ public class AlternativeQuestionActivityCtrl {
 
     /**
      * Creates the scene with the needed dependencies
+     *
      * @param server    initialised the communication with the server
      * @param sceneCtrl the scene controller
      */
@@ -113,6 +112,7 @@ public class AlternativeQuestionActivityCtrl {
 
     /**
      * Sets the text for the needed question given as parameter
+     *
      * @param alternativeQuestion the question that is set
      */
     public void displayQuestion(AlternativeQuestion alternativeQuestion) {
@@ -123,9 +123,9 @@ public class AlternativeQuestionActivityCtrl {
         getQuestionStatement().setText(alternativeQuestion.getQuestion().getKey());
 
 
-        getQuestionFirstOption() .setText(alternativeQuestion.getOptions().get(0).getKey());
+        getQuestionFirstOption().setText(alternativeQuestion.getOptions().get(0).getKey());
         getQuestionSecondOption().setText(alternativeQuestion.getOptions().get(1).getKey());
-        getQuestionThirdOption() .setText(alternativeQuestion.getOptions().get(2).getKey());
+        getQuestionThirdOption().setText(alternativeQuestion.getOptions().get(2).getKey());
 
         points.setText(String.valueOf(getPointsInt()));
         initialize();
@@ -212,7 +212,13 @@ public class AlternativeQuestionActivityCtrl {
 
 
     public void displayNextQuestion() {
+        if (gameConfig.getCurrentQuestionNumber() >= 20) finishGame();
         sceneCtrl.showNextQuestion();
+    }
+
+    public void finishGame() {
+        server.addSingleplayerLeaderboardEntry(GameConfiguration.getConfiguration().getUserName(), Integer.parseInt(server.getScore()));
+        sceneCtrl.showSingleplayerLeaderboard();
     }
 
 
@@ -245,7 +251,6 @@ public class AlternativeQuestionActivityCtrl {
     }
 
     public int getQuestionNumber() {
-        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
-        return gameConfiguration.getCurrentQuestionNumber();
+        return gameConfig.getCurrentQuestionNumber();
     }
 }

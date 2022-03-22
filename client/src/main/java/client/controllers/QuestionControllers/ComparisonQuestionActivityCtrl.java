@@ -29,8 +29,8 @@ public class ComparisonQuestionActivityCtrl {
     // constructor needed variables
     private final ServerUtils server;
     private final SceneCtrl sceneCtrl;
+    private final GameConfiguration gameConfig = GameConfiguration.getConfiguration();
 
-    private int pointsInt;
     private int addedPointsInt;
     private String userAnswer;
 
@@ -63,8 +63,6 @@ public class ComparisonQuestionActivityCtrl {
     private ProgressBar progressBarTime;
 
 
-
-
     private String correctAnswer;
 
 
@@ -89,6 +87,7 @@ public class ComparisonQuestionActivityCtrl {
 
     /**
      * Creates the scene with the needed dependencies
+     *
      * @param server    initialised the communication with the server
      * @param sceneCtrl the scene controller
      */
@@ -113,6 +112,7 @@ public class ComparisonQuestionActivityCtrl {
 
     /**
      * Sets the text for the needed question given as parameter
+     *
      * @param comparisonQuestion the question that is set
      */
     public void displayQuestion(ComparisonQuestion comparisonQuestion) {
@@ -122,9 +122,9 @@ public class ComparisonQuestionActivityCtrl {
 
         getQuestionStatement().setText(comparisonQuestion.getQuestion().getKey());
 
-        getQuestionFirstOption() .setText(comparisonQuestion.getOptions().get(0).getKey());
+        getQuestionFirstOption().setText(comparisonQuestion.getOptions().get(0).getKey());
         getQuestionSecondOption().setText(comparisonQuestion.getOptions().get(1).getKey());
-        getQuestionThirdOption() .setText(comparisonQuestion.getOptions().get(2).getKey());
+        getQuestionThirdOption().setText(comparisonQuestion.getOptions().get(2).getKey());
 
         questionNumberLabel.setText("Question " + getQuestionNumber());
         points.setText(String.valueOf(getPointsInt()));
@@ -192,12 +192,18 @@ public class ComparisonQuestionActivityCtrl {
         System.out.println("Time took to answer - " + timeSeconds);
     }
 
-    public void goToMainScreen () throws IOException {
+    public void goToMainScreen() throws IOException {
         sceneCtrl.showMainScreenScene();
     }
 
     public void displayNextQuestion() {
+        if (gameConfig.getCurrentQuestionNumber() >= 20) finishGame();
         sceneCtrl.showNextQuestion();
+    }
+
+    public void finishGame() {
+        server.addSingleplayerLeaderboardEntry(GameConfiguration.getConfiguration().getUserName(), Integer.parseInt(server.getScore()));
+        sceneCtrl.showSingleplayerLeaderboard();
     }
 
 
@@ -227,7 +233,6 @@ public class ComparisonQuestionActivityCtrl {
     }
 
     public int getQuestionNumber() {
-        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
-        return gameConfiguration.getCurrentQuestionNumber();
+        return gameConfig.getCurrentQuestionNumber();
     }
 }

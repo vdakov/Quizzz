@@ -28,7 +28,8 @@ public class OpenQuestionActivityCtrl {
 
     // constructor needed variables
     private final ServerUtils server;
-    private final SceneCtrl   sceneCtrl;
+    private final SceneCtrl sceneCtrl;
+    private final GameConfiguration gameConfig = GameConfiguration.getConfiguration();
 
     // final needed labels for questions
     @FXML
@@ -80,9 +81,9 @@ public class OpenQuestionActivityCtrl {
     private ProgressBar progressBarTime;
 
 
-
     /**
      * Creates the scene with the needed dependencies
+     *
      * @param server    initialised the communication with the server
      * @param sceneCtrl the scene controller
      */
@@ -103,6 +104,7 @@ public class OpenQuestionActivityCtrl {
 
     /**
      * Sets the text for the needed question given as parameter
+     *
      * @param openQuestion the question that is set
      */
     public void displayQuestion(OpenQuestion openQuestion) {
@@ -119,7 +121,13 @@ public class OpenQuestionActivityCtrl {
      * Displays the next question to the user after the transition is finished
      */
     public void displayNextQuestion() {
+        if (gameConfig.getCurrentQuestionNumber() >= 20) finishGame();
         sceneCtrl.showNextQuestion();
+    }
+
+    public void finishGame() {
+        server.addSingleplayerLeaderboardEntry(GameConfiguration.getConfiguration().getUserName(), Integer.parseInt(server.getScore()));
+        sceneCtrl.showSingleplayerLeaderboard();
     }
 
     public void answerQuestion() {
@@ -136,7 +144,7 @@ public class OpenQuestionActivityCtrl {
                 userAnswer.setText("-99999");
                 userAnswerInt = Integer.parseInt(userAnswer.getText());
             }
-        }  catch (Exception e ) {
+        } catch (Exception e) {
             System.out.println(e);
         }
 
@@ -205,7 +213,7 @@ public class OpenQuestionActivityCtrl {
         System.out.println("Time took to answer - " + timeSeconds);
     }
 
-    public void goToMainScreen () throws IOException {
+    public void goToMainScreen() throws IOException {
         sceneCtrl.showMainScreenScene();
     }
 
@@ -214,22 +222,27 @@ public class OpenQuestionActivityCtrl {
         return sampleQuestion;
     }
 
-    public Button getAnswer() { return answer; }
+    public Button getAnswer() {
+        return answer;
+    }
 
     public int getCorrectAnswerInt() {
         return Integer.parseInt(server.getAnswer());
     }
 
-    public TextField getWriteAnswer() { return userAnswer; }
+    public TextField getWriteAnswer() {
+        return userAnswer;
+    }
 
-    public void setWriteAnswer(TextField writeAnswer) { this.userAnswer = userAnswer; }
+    public void setWriteAnswer(TextField writeAnswer) {
+        this.userAnswer = userAnswer;
+    }
 
     public int getPointsInt() {
         return Integer.parseInt(server.getScore());
     }
 
     public int getQuestionNumber() {
-        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
-        return gameConfiguration.getCurrentQuestionNumber();
+        return gameConfig.getCurrentQuestionNumber();
     }
 }
