@@ -39,11 +39,11 @@ public class RoomCatalog {
      * @throws IllegalArgumentException when the game is null, it's id is null or if a game with that id is already in progress
      */
     public void addSingleplayerGame(SingleplayerRoom singleplayerGame) throws IllegalArgumentException {
-        if(singleplayerGame == null || singleplayerGame.getGameId() == null) {
+        if (singleplayerGame == null || singleplayerGame.getGameId() == null) {
             throw new IllegalArgumentException("Singleplayer game or it's id is null");
         }
 
-        if(singleplayerRooms.get(singleplayerGame.getGameId()) != null) {
+        if (singleplayerRooms.get(singleplayerGame.getGameId()) != null) {
             throw new IllegalArgumentException("Game with the same ID already exists");
         }
 
@@ -67,11 +67,11 @@ public class RoomCatalog {
      * @throws IllegalArgumentException when the game is null, it's id is null or if a game with that id is already in progress
      */
     public void addMultiplayerGame(MultiplayerRoom multiplayerGame) throws IllegalArgumentException {
-        if(multiplayerGame == null || multiplayerGame.getGameId() == null) {
+        if (multiplayerGame == null || multiplayerGame.getGameId() == null) {
             throw new IllegalArgumentException("Multiplayer game or it's id is null");
         }
 
-        if(multiplayerRooms.get(multiplayerGame.getGameId()) != null) {
+        if (multiplayerRooms.get(multiplayerGame.getGameId()) != null) {
             throw new IllegalArgumentException("Game with the same ID already exists");
         }
 

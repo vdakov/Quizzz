@@ -50,7 +50,7 @@ public class Room {
      * @throws IllegalArgumentException when the question list with answers size is smaller than the parameter
      */
     public Question getQuestion(int number) throws IllegalArgumentException {
-        if(this.roomQuestionsWithAnswers.size() < number) {
+        if (this.roomQuestionsWithAnswers.size() < number) {
             throw new IllegalArgumentException("The wanted size is too big: getQuestion");
         }
 
@@ -65,7 +65,7 @@ public class Room {
      * @throws IllegalArgumentException when the question list with answers size is smaller than the parameter
      */
     public String getQuestionAnswer(int number) throws IllegalArgumentException {
-        if(this.roomQuestionsWithAnswers.size() < number) {
+        if (this.roomQuestionsWithAnswers.size() < number) {
             throw new IllegalArgumentException("The wanted size is too big: getAnswer");
         }
 
