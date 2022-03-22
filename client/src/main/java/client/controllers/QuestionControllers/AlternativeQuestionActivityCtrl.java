@@ -3,7 +3,6 @@ package client.controllers.QuestionControllers;
 import client.communication.ServerUtils;
 import client.controllers.SceneCtrl;
 import client.data.GameConfiguration;
-import client.logic.QuestionParsers;
 import com.google.inject.Inject;
 import commons.Questions.AlternativeQuestion;
 import javafx.animation.KeyFrame;
@@ -14,10 +13,6 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
@@ -25,12 +20,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
-import java.util.Objects;
-import java.util.Scanner;
 
 
 
