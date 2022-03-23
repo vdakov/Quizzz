@@ -27,7 +27,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
-import javax.swing.plaf.basic.BasicButtonUI;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -75,11 +74,13 @@ public class OverviewActionsActivityCtrl implements Initializable {
        // sceneCtrl.showAddActionScene();
     }
 
-    public void deleteActivity(){
+    public void deleteActivity() {
 
     }
 
-    public void editActivity(){}
+    public void editActivity() {
+
+    }
 
     public void refresh() {
         var activities = server.getActivities();
