@@ -13,9 +13,9 @@
                 <TableColumn fx:id="colSource" prefWidth="242.0" text="source" />
             </columns>
         </TableView>
-        <Button fx:id="addButton" layoutX="399.0" layoutY="359.0" mnemonicParsing="false" onAction="#addActivity" text="Add Activity" />
-        <Button fx:id="refreshButton" layoutX="19.0" layoutY="360.0" mnemonicParsing="false" onAction="#refresh" prefHeight="25.0" prefWidth="80.0" text="Refresh" />
-        <Button fx:id="editButton" layoutX="301.0" layoutY="359.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="88.0" text="Edit Activity" />
-        <Button fx:id="deleteButton" layoutX="489.0" layoutY="359.0" mnemonicParsing="false" text="Delete Activity" />
+        <Button fx:id="addButton" onAction="#addActivity" layoutX="399.0" layoutY="359.0" mnemonicParsing="false" text="Add Activity" />
+        <Button fx:id="refreshButton" onAction="#refresh" layoutX="19.0" layoutY="360.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Refresh" />
+        <Button fx:id="editButton" onAction="#editActivity" layoutX="301.0" layoutY="359.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="88.0" text="Edit Activity" />
+        <Button fx:id="deleteButton" onAction="#deleteActivity" layoutX="489.0" layoutY="359.0" mnemonicParsing="false" text="Delete Activity" />
     </children>
 </AnchorPane>

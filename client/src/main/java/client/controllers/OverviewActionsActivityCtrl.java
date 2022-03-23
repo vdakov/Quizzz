@@ -21,6 +21,7 @@ import commons.Actions.Action;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -70,16 +71,20 @@ public class OverviewActionsActivityCtrl implements Initializable {
         colSource.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getSource()));
     }
 
-    public void addActivity() {
+    public void addActivity(ActionEvent event) {
        // sceneCtrl.showAddActionScene();
+        Action newAction = new Action();
+        server.addActivity(newAction);
     }
 
-    public void deleteActivity() {
-
+    public void deleteActivity(ActionEvent event) {
+        String id = event.getSource().toString();
+        server.deleteActivity(id);
     }
 
-    public void editActivity() {
-
+    public void editActivity(ActionEvent event) {
+        String id = event.getSource().toString();
+        server.editActivity(id);
     }
 
     public void refresh() {

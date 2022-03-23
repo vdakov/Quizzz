@@ -199,6 +199,13 @@ public class ServerUtils {
                 .request().delete(); //;
     }
 
+    public void editActivity(String id) {
+//        Action a = new Action();
+//        ClientBuilder.newClient(new ClientConfig()) //
+//                .target(SERVER).path("api/activities/delete/" + id) //
+//                .request().put(Entity.entity(a, APPLICATION_JSON), Action.class); //;
+    }
+
     public void alert() {
         ClientBuilder.newClient(new ClientConfig()) //
                 .target(SERVER).path("api/activities/alert") //
