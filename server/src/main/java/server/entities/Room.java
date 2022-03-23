@@ -7,9 +7,17 @@ import java.util.List;
 
 public class Room {
 
+    public enum RoomStatus {
+        WAITING,
+        ONGOING,
+        FINISHED
+    }
+
+
     private final String                       roomId;
     private final String                       roomCreator;
     private final List<Pair<Question, String>> roomQuestionsWithAnswers;
+    private       RoomStatus                   roomStatus;
 
     /**
      * Constructor for a new game room
@@ -22,6 +30,24 @@ public class Room {
         this.roomId = roomId;
         this.roomCreator = roomCreator;
         this.roomQuestionsWithAnswers = roomQuestionsWithAnswers;
+
+        this.roomStatus = RoomStatus.WAITING;
+    }
+
+    /**
+     * Returns the status of the current multiplayer room
+     *
+     * @return the status of the current multiplayer room
+     */
+    public RoomStatus getRoomStatus() {
+        return roomStatus;
+    }
+
+    /**
+     * Sets the current room status to the given parameter
+     */
+    public void setRoomStatus(RoomStatus roomStatus) {
+        this.roomStatus = roomStatus;
     }
 
     /**
@@ -29,7 +55,7 @@ public class Room {
      *
      * @return a String representing the id
      */
-    public String getGameId() {
+    public String getRoomId() {
         return this.roomId;
     }
 
@@ -64,7 +90,7 @@ public class Room {
      * @return the answer at the desired question number
      * @throws IllegalArgumentException when the question list with answers size is smaller than the parameter
      */
-    public String getQuestionAnswer(int number) throws IllegalArgumentException {
+    public String getAnswer(int number) throws IllegalArgumentException {
         if (this.roomQuestionsWithAnswers.size() < number) {
             throw new IllegalArgumentException("The wanted size is too big: getAnswer");
         }

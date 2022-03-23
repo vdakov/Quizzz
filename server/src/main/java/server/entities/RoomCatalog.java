@@ -11,7 +11,7 @@ public class RoomCatalog {
     private MultiplayerRoom multiplayerRandomRoom;
 
     /**
-     * Constructor that initialised this and only instance of GameCatalog ( in the server there can be only 1 game catalog,
+     * Constructor that initialised this and only instance of GameCatalog ( in the server there can be only 1 room catalog,
      * that is why we chose to use the singleton design pattern to implement this functionality
      */
     public RoomCatalog() {
@@ -23,9 +23,9 @@ public class RoomCatalog {
     /**
      * Returns the instance of game catalog
      *
-     * @return the instance of game catalog
+     * @return the instance of room catalog
      */
-    public static RoomCatalog getGameCatalog() {
+    public static RoomCatalog getRoomCatalog() {
         if (roomCatalog == null) {
             roomCatalog = new RoomCatalog();
         }
@@ -33,59 +33,59 @@ public class RoomCatalog {
     }
 
     /**
-     * Adds a singleplayer game if possible or throw exception if one with the same id exists or the game that is wanted to be added is null
+     * Adds a singleplayer room if possible or throw exception if one with the same id exists or the room that is wanted to be added is null
      *
-     * @param singleplayerGame the singleplayer game that is wanted to be added
-     * @throws IllegalArgumentException when the game is null, it's id is null or if a game with that id is already in progress
+     * @param  singleplayerRoom the singleplayer room that is wanted to be added
+     * @throws IllegalArgumentException when the room is null, it's id is null or if a room with that id is already in progress
      */
-    public void addSingleplayerGame(SingleplayerRoom singleplayerGame) throws IllegalArgumentException {
-        if (singleplayerGame == null || singleplayerGame.getGameId() == null) {
-            throw new IllegalArgumentException("Singleplayer game or it's id is null");
+    public void addSingleplayerRoom(SingleplayerRoom singleplayerRoom) throws IllegalArgumentException {
+        if (singleplayerRoom == null || singleplayerRoom.getRoomId() == null) {
+            throw new IllegalArgumentException("Singleplayer room or it's id is null");
         }
 
-        if (singleplayerRooms.get(singleplayerGame.getGameId()) != null) {
-            throw new IllegalArgumentException("Game with the same ID already exists");
+        if (singleplayerRooms.get(singleplayerRoom.getRoomId()) != null) {
+            throw new IllegalArgumentException("Room with the same ID already exists");
         }
 
-        singleplayerRooms.put(singleplayerGame.getGameId(), singleplayerGame);
+        singleplayerRooms.put(singleplayerRoom.getRoomId(), singleplayerRoom);
     }
 
     /**
-     * Returns the singleplayer game
+     * Returns the singleplayer room
      *
-     * @param roomId the id of the game we are looking for
-     * @return the singleplayer game with the given id or null if a game with that id does not exist
+     * @param  roomId the id of the room we are looking for
+     * @return the singleplayer room with the given id or null if a room with that id does not exist
      */
-    public SingleplayerRoom getSinglePlayerGame(String roomId) {
+    public SingleplayerRoom getSinglePlayerRoom(String roomId) {
         return singleplayerRooms.get(roomId);
     }
 
     /**
-     * Adds a multiplayer game if possible or throw exception if one with the same id exists or the game that is wanted to be added is null
+     * Adds a multiplayer room if possible or throw exception if one with the same id exists or the room that is wanted to be added is null
      *
-     * @param multiplayerGame the singleplayer game that is wanted to be added
-     * @throws IllegalArgumentException when the game is null, it's id is null or if a game with that id is already in progress
+     * @param  multiplayerRoom the singleplayer room that is wanted to be added
+     * @throws IllegalArgumentException when the room is null, it's id is null or if a room with that id is already in progress
      */
-    public void addMultiplayerGame(MultiplayerRoom multiplayerGame) throws IllegalArgumentException {
-        if (multiplayerGame == null || multiplayerGame.getGameId() == null) {
-            throw new IllegalArgumentException("Multiplayer game or it's id is null");
+    public void addMultiplayerRoom(MultiplayerRoom multiplayerRoom) throws IllegalArgumentException {
+        if (multiplayerRoom == null || multiplayerRoom.getRoomId() == null) {
+            throw new IllegalArgumentException("Multiplayer room or it's id is null");
         }
 
-        if (multiplayerRooms.get(multiplayerGame.getGameId()) != null) {
-            throw new IllegalArgumentException("Game with the same ID already exists");
+        if (multiplayerRooms.get(multiplayerRoom.getRoomId()) != null) {
+            throw new IllegalArgumentException("Room with the same ID already exists");
         }
 
-        multiplayerRooms.put(multiplayerGame.getGameId(), multiplayerGame);
+        multiplayerRooms.put(multiplayerRoom.getRoomId(), multiplayerRoom);
     }
 
     /**
-     * Returns the multiplayer game
+     * Returns the multiplayer room
      *
-     * @param roomId the id of the game we are looking for
-     * @return the multiplayer game with the given id or null if a game with that id does not exist
+     * @param roomId the id of the room we are looking for
+     * @return the multiplayer room with the given id or null if a room with that id does not exist
      */
-    public MultiplayerRoom getMultiPlayerGame(String roomId) {
-        if (roomId.equals(multiplayerRandomRoom.getGameId())) {
+    public MultiplayerRoom getMultiPlayerRoom(String roomId) {
+        if (roomId.equals(multiplayerRandomRoom.getRoomId())) {
             return multiplayerRandomRoom;
         }
 
@@ -102,7 +102,7 @@ public class RoomCatalog {
     }
 
     /**
-     * Sets the multiplayer random room to the multiplayer game given as parameter
+     * Sets the multiplayer random room to the multiplayer room given as parameter
      * @param multiplayerRoom the room that will be set to be the new random room
      */
     public void setMultiplayerRandomRoom(MultiplayerRoom multiplayerRoom) {

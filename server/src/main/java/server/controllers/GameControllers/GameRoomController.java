@@ -5,13 +5,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import server.services.GameServices.MultiplayerGameService;
-import server.services.GameServices.SinglePlayerGameService;
+import server.services.GameServices.SingleplayerGameService;
 
 @RestController
 @RequestMapping("api/{username}/{gameType}/{roomId}")
 public class GameRoomController {
 
-    private final SinglePlayerGameService singlePlayerGameService;
+    private final SingleplayerGameService singlePlayerGameService;
     private final MultiplayerGameService  multiplayerGameService;
 
     /**
@@ -20,7 +20,7 @@ public class GameRoomController {
      * @param singlePlayerGameService the service for the singleplayer game features
      * @param multiplayerGameService  the service for the multiplayer  game features
      */
-    public GameRoomController(SinglePlayerGameService singlePlayerGameService, MultiplayerGameService multiplayerGameService) {
+    public GameRoomController(SingleplayerGameService singlePlayerGameService, MultiplayerGameService multiplayerGameService) {
         this.singlePlayerGameService = singlePlayerGameService;
         this.multiplayerGameService  = multiplayerGameService;
     }
@@ -37,7 +37,7 @@ public class GameRoomController {
     public ResponseEntity<Object> startNewGame(@PathVariable("username") String username, @PathVariable("gameType") String gameType, @PathVariable("roomId") String roomId) {
         if (gameType.equals("SINGLEPLAYER")) {
             try {
-                return (singlePlayerGameService.startSinglePlayerGame(username, roomId)) ? ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
+                return (singlePlayerGameService.startSinglePlayerGame(username, roomId)) ? ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             } catch (Exception e) {
                 return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
             }
@@ -45,7 +45,7 @@ public class GameRoomController {
 
         if (gameType.equals("MULTIPLAYER")) {
             try {
-                return (multiplayerGameService.startMultiPlayerGame(roomId)) ? ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
+                return (multiplayerGameService.startMultiPlayerGame(username, roomId)) ? ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
             } catch (Exception e) {
                 return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
             }
@@ -64,12 +64,12 @@ public class GameRoomController {
      * @return the desired question or an error message
      */
     @GetMapping("/{questionNumber}/getQuestion")
-    public ResponseEntity<Question> getNextQuestion(@PathVariable("username") String username, @PathVariable("gameType") String gameType,
+    public ResponseEntity<Question> getQuestion(@PathVariable("username") String username, @PathVariable("gameType") String gameType,
                                                     @PathVariable("roomId") String roomId, @PathVariable("questionNumber") String questionNumber) {
         if (gameType.equals("SINGLEPLAYER")) {
             try {
                 int questionNo = Integer.parseInt(questionNumber);
-                Question question = singlePlayerGameService.getSinglePlayerQuestion(username, questionNo);
+                Question question = singlePlayerGameService.getSinglePlayerQuestion(username, roomId, questionNo);
 
                 if (question == null) {
                     return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -86,7 +86,7 @@ public class GameRoomController {
         if (gameType.equals("MULTIPLAYER")) {
             try {
                 int questionNo = Integer.parseInt(questionNumber);
-                Question question = multiplayerGameService.getMultiPlayerQuestion(roomId, questionNo);
+                Question question = multiplayerGameService.getMultiPlayerQuestion(username, roomId, questionNo);
 
                 if (question == null) {
                     return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -96,50 +96,6 @@ public class GameRoomController {
             } catch (NumberFormatException e) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             } catch (Exception e) {
-                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
-            }
-        }
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-    }
-
-    /**
-     * Updates the score of the player according to the given and correct answer or gives a corresponding error message
-     *
-     * @param username the username of the player that gives the answer
-     * @param gameType the type of the game
-     * @param roomId the id of the game that the player is in
-     * @param questionNumber the number of the answered question
-     * @param answer the user answer to the question
-     * @return whether the request was successful or not
-     */
-    @PostMapping("/{questionNumber}/postAnswer")
-    public ResponseEntity<Object> updateAnswer(@PathVariable("username") String username, @PathVariable("gameType") String gameType,
-                                               @PathVariable("roomId") String roomId, @PathVariable("questionNumber") String questionNumber, @RequestBody String answer) {
-        if (gameType.equals("SINGLEPLAYER")) {
-            try {
-                int questionNo = Integer.parseInt(questionNumber);
-                singlePlayerGameService.updateSinglePlayerScore(roomId, questionNo, answer);
-
-                return ResponseEntity.status(HttpStatus.OK).build();
-            } catch (NumberFormatException e) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-            }
-            catch (Exception e) {
-                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
-            }
-        }
-
-        if (gameType.equals("MULTIPLAYER")) {
-            try {
-                int questionNo = Integer.parseInt(questionNumber);
-                multiplayerGameService.updateMultiPlayerScore(username, roomId, questionNo, answer);
-
-                return ResponseEntity.status(HttpStatus.OK).build();
-            } catch (NumberFormatException e) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-            }
-            catch (Exception e) {
                 return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
             }
         }
@@ -210,7 +166,7 @@ public class GameRoomController {
     public ResponseEntity<Integer> getScore(@PathVariable("username") String username, @PathVariable("gameType") String gameType, @PathVariable("roomId") String roomId) {
         if (gameType.equals("SINGLEPLAYER")) {
             try {
-                Integer score = singlePlayerGameService.getSinglePlayerScore(roomId);
+                Integer score = singlePlayerGameService.getSinglePlayerScore(username, roomId);
                 return (score != null) ? ResponseEntity.status(HttpStatus.OK).body(score) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             } catch (Exception e) {
                 return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
@@ -222,6 +178,48 @@ public class GameRoomController {
                 Integer score = multiplayerGameService.getMultiPlayerScore(username, roomId);
                 return (score != null) ? ResponseEntity.status(HttpStatus.OK).body(score) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
+            }
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
+    /**
+     * Updates the score of the player according to the given and correct answer or gives a corresponding error message
+     *
+     * @param username the username of the player that gives the answer
+     * @param gameType the type of the game
+     * @param roomId the id of the game that the player is in
+     * @param questionNumber the number of the answered question
+     * @param userAnswer the user answer to the question
+     * @return whether the request was successful or not
+     */
+    @PostMapping("/{questionNumber}/postAnswer")
+    public ResponseEntity<Object> updateAnswer(@PathVariable("username") String username, @PathVariable("gameType") String gameType,
+                                               @PathVariable("roomId") String roomId, @PathVariable("questionNumber") String questionNumber, @RequestBody String userAnswer) {
+        if (gameType.equals("SINGLEPLAYER")) {
+            try {
+                int questionNo = Integer.parseInt(questionNumber);
+                return singlePlayerGameService.updateSinglePlayerScore(username, roomId, questionNo, userAnswer) ?
+                        ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            } catch (NumberFormatException e) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            }
+            catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
+            }
+        }
+
+        if (gameType.equals("MULTIPLAYER")) {
+            try {
+                int questionNo = Integer.parseInt(questionNumber);
+                return multiplayerGameService.updateMultiPlayerScore(username, roomId, questionNo, userAnswer) ?
+                        ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            } catch (NumberFormatException e) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            }
+            catch (Exception e) {
                 return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
             }
         }

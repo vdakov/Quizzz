@@ -44,7 +44,7 @@ public class SingleplayerRoom extends Room {
      *
      * @param additionalPoints the number of points the player will add
      */
-    public void updateScore(int additionalPoints) {
+    public void updatePlayerScore(int additionalPoints) {
         this.playerScore += additionalPoints;
     }
 }

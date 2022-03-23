@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import server.services.GameServices.MultiplayerGameService;
-import server.services.GameServices.SinglePlayerGameService;
+import server.services.GameServices.SingleplayerGameService;
 
 @RestController
 @RequestMapping("api/{username}/{gameType}")
 public class GameController {
 
-    private final SinglePlayerGameService singlePlayerGameService;
+    private final SingleplayerGameService singlePlayerGameService;
     private final MultiplayerGameService  multiplayerGameService;
 
     /**
@@ -22,7 +22,7 @@ public class GameController {
      * @param singlePlayerGameService the service for the singleplayer game features
      * @param multiplayerGameService  the service for the multiplayer  game features
      */
-    public GameController(SinglePlayerGameService singlePlayerGameService, MultiplayerGameService multiplayerGameService) {
+    public GameController(SingleplayerGameService singlePlayerGameService, MultiplayerGameService multiplayerGameService) {
         this.singlePlayerGameService = singlePlayerGameService;
         this.multiplayerGameService  = multiplayerGameService;
     }

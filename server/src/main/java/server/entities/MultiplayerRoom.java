@@ -8,16 +8,10 @@ import java.util.List;
 
 public class MultiplayerRoom extends Room {
 
-    public enum MultiplayerRoomStatus {
-        WAITING,
-        ONGOING
-    }
-
-    private MultiplayerRoomStatus    multiplayerRoomStatus;
     private final HashMap<String, Integer> playerScores;
 
     /**
-     * Constructor for a multiplayer game
+     * Constructor for a multiplayer room
      *
      * @param roomId the id of the new game room
      * @param roomCreator the creator of the new room
@@ -27,29 +21,12 @@ public class MultiplayerRoom extends Room {
         super(roomId, roomCreator, roomQuestionsWithAnswers);
 
         this.playerScores = new HashMap<>();
-        this.multiplayerRoomStatus = MultiplayerRoomStatus.WAITING;
-    }
-
-    /**
-     * Returns the status of the current multiplayer game
-     *
-     * @return the status of the current multiplayer game
-     */
-    public MultiplayerRoomStatus getMultiplayerGameStatus() {
-        return multiplayerRoomStatus;
-    }
-
-    /**
-     * Sets the current game status as ongoing
-     */
-    public void setGameStatusOngoing() {
-        multiplayerRoomStatus = MultiplayerRoomStatus.ONGOING;
     }
 
     /**
      * Adds a user to the score leaderboard
      *
-     * @param username the username of the player that joins the game
+     * @param username the username of the player that joins the room
      */
     public void addPlayer(String username) {
         playerScores.put(username, 0);
@@ -58,7 +35,7 @@ public class MultiplayerRoom extends Room {
     /**
      * Removes a user from the score leaderboard
      *
-     * @param username the username of the player that leaves the game
+     * @param username the username of the player that leaves the room
      */
     public void removePlayer(String username) {
         playerScores.remove(username);
