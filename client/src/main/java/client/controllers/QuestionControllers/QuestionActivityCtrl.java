@@ -16,6 +16,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
@@ -65,12 +70,7 @@ public class QuestionActivityCtrl {
     protected Label questionNumberLabel;
     @FXML
     protected String correctAnswer;
-    @FXML
-    protected Rectangle firstOptionRectangle;
-    @FXML
-    protected Rectangle secondOptionRectangle;
-    @FXML
-    protected Rectangle thirdOptionRectangle;
+
     protected IntegerProperty timeSeconds =
             new SimpleIntegerProperty((int) startTime);
     protected Timeline timeline;
@@ -84,9 +84,9 @@ public class QuestionActivityCtrl {
      * Initialises all the colors for the current scene
      */
     public void initialize() {
-        //firstOptionRectangle.setStroke(Color.valueOf("#b38df7"));
-        //secondOptionRectangle.setStroke(Color.valueOf("#ffd783"));
-        //thirdOptionRectangle.setStroke(Color.valueOf("#ffa382"));
+        firstOptionText.setBorder(Border.EMPTY);
+        secondOptionText.setBorder(Border.EMPTY);
+        thirdOptionText.setBorder(Border.EMPTY);
 
         addedPoints.setText(" ");
         addedPointsInt = 0;
@@ -100,6 +100,8 @@ public class QuestionActivityCtrl {
 
         server.updateScore(userAnswer);
 
+        handleTimer(event);
+
         answerUpdate();
         pointsUpdate();
 
@@ -111,15 +113,16 @@ public class QuestionActivityCtrl {
 
         //check whether the user's answer is correct and update the boolean value
 
-        //firstOptionRectangle.setStroke(Color.valueOf("#ff0000"));
-        //secondOptionRectangle.setStroke(Color.valueOf("#ff0000"));
-        //thirdOptionRectangle.setStroke(Color.valueOf("#ff0000"));
+        firstOptionText.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(50), BorderStroke.THICK)));
+        secondOptionText.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(50), BorderStroke.THICK)));
+        thirdOptionText.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(50), BorderStroke.THICK)));
+
         if (getCorrectAnswer().equals(firstOptionText.getText())) {
-            //firstOptionRectangle.setStroke(Color.valueOf("#92d36e"));
+            firstOptionText.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(50), BorderStroke.THICK)));
         } else if (getCorrectAnswer().equals(secondOptionText.getText())) {
-            //secondOptionRectangle.setStroke(Color.valueOf("#92d36e"));
+            secondOptionText.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(50), BorderStroke.THICK)));
         } else {
-            //thirdOptionRectangle.setStroke(Color.valueOf("#92d36e"));
+            thirdOptionText.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(50), BorderStroke.THICK)));
         }
     }
 
@@ -157,7 +160,7 @@ public class QuestionActivityCtrl {
         timeline.playFromStart();                                 //start the animation
     }
 
-    public void handleTimerButton(ActionEvent event) {
+    public void handleTimer(MouseEvent event) {
         if (timeline != null) {
             timeline.stop();        //if timeline exists stop it when any answer button is pressed
         }
