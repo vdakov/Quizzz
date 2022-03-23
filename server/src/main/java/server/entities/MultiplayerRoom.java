@@ -14,7 +14,7 @@ public class MultiplayerRoom extends Room {
     }
 
     private MultiplayerRoomStatus    multiplayerRoomStatus;
-    private HashMap<String, Integer> playerScores;
+    private final HashMap<String, Integer> playerScores;
 
     /**
      * Constructor for a multiplayer game
@@ -43,7 +43,7 @@ public class MultiplayerRoom extends Room {
      * Sets the current game status as ongoing
      */
     public void setGameStatusOngoing() {
-        multiplayerRoomStatus = multiplayerRoomStatus.ONGOING;
+        multiplayerRoomStatus = MultiplayerRoomStatus.ONGOING;
     }
 
     /**
