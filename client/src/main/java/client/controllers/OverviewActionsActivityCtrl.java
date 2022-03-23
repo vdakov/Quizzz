@@ -23,9 +23,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
+import javax.swing.plaf.basic.BasicButtonUI;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -46,6 +48,14 @@ public class OverviewActionsActivityCtrl implements Initializable {
     private TableColumn<Action, String> colConsumption;
     @FXML
     private TableColumn<Action, String> colSource;
+    @FXML
+    private Button refreshButton;
+    @FXML
+    private Button addButton;
+    @FXML
+    private Button editButton;
+    @FXML
+    private Button deleteButton;
 
     @Inject
     public OverviewActionsActivityCtrl(ServerUtils server, SceneCtrl mainCtrl) {
@@ -64,6 +74,12 @@ public class OverviewActionsActivityCtrl implements Initializable {
     public void addActivity() {
        // sceneCtrl.showAddActionScene();
     }
+
+    public void deleteActivity(){
+
+    }
+
+    public void editActivity(){}
 
     public void refresh() {
         var activities = server.getActivities();
