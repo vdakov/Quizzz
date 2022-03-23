@@ -85,9 +85,9 @@ public class QuestionActivityCtrl {
      * Initialises all the colors for the current scene
      */
     public void initialize() {
-        firstOptionRectangle.setStroke(Color.valueOf("#b38df7"));
-        secondOptionRectangle.setStroke(Color.valueOf("#ffd783"));
-        thirdOptionRectangle.setStroke(Color.valueOf("#ffa382"));
+        //firstOptionRectangle.setStroke(Color.valueOf("#b38df7"));
+        //secondOptionRectangle.setStroke(Color.valueOf("#ffd783"));
+        //thirdOptionRectangle.setStroke(Color.valueOf("#ffa382"));
 
         addedPoints.setText(" ");
         addedPointsInt = 0;
@@ -112,15 +112,15 @@ public class QuestionActivityCtrl {
 
         //check whether the user's answer is correct and update the boolean value
 
-        firstOptionRectangle.setStroke(Color.valueOf("#ff0000"));
-        secondOptionRectangle.setStroke(Color.valueOf("#ff0000"));
-        thirdOptionRectangle.setStroke(Color.valueOf("#ff0000"));
+        //firstOptionRectangle.setStroke(Color.valueOf("#ff0000"));
+        //secondOptionRectangle.setStroke(Color.valueOf("#ff0000"));
+        //thirdOptionRectangle.setStroke(Color.valueOf("#ff0000"));
         if (getCorrectAnswer().equals(firstOptionText.getText())) {
-            firstOptionRectangle.setStroke(Color.valueOf("#92d36e"));
+            //firstOptionRectangle.setStroke(Color.valueOf("#92d36e"));
         } else if (getCorrectAnswer().equals(secondOptionText.getText())) {
-            secondOptionRectangle.setStroke(Color.valueOf("#92d36e"));
+            //secondOptionRectangle.setStroke(Color.valueOf("#92d36e"));
         } else {
-            thirdOptionRectangle.setStroke(Color.valueOf("#92d36e"));
+            //thirdOptionRectangle.setStroke(Color.valueOf("#92d36e"));
         }
     }
 

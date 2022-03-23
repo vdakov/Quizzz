@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #499ee8;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #499ee8;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.MainScreenActivityCtrl">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="145.20001220703125" minWidth="10.0" percentWidth="5.0" prefWidth="30.79998779296875" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="554.6667236328125" minWidth="10.0" percentWidth="45.0" prefWidth="536.5334228515625" />
@@ -38,7 +38,7 @@
           <RowConstraints minHeight="10.0" percentHeight="33.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField maxWidth="-Infinity" prefHeight="60.0" prefWidth="450.0" promptText="Enter your name..." GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <TextField fx:id="userName" maxWidth="-Infinity" prefHeight="60.0" prefWidth="450.0" promptText="Enter your name..." GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>
