@@ -1,19 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #8749e8;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.SingleplayerLeaderboardCtrl">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #8749e8;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.SingleplayerLeaderboardCtrl">
     <children>
         <GridPane alignment="CENTER" layoutX="-298.0" layoutY="155.0" prefHeight="683.0" prefWidth="1214.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <columnConstraints>
@@ -26,11 +20,11 @@
             <children>
                 <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="LEADERBOARD" textAlignment="CENTER" wrappingWidth="602.13671875" GridPane.halignment="CENTER" GridPane.valignment="TOP">
                     <font>
-                        <Font name="Impact" size="72.0" />
+                        <Font size="72.0" />
                     </font>
-               <GridPane.margin>
-                  <Insets top="25.0" />
-               </GridPane.margin>
+                    <GridPane.margin>
+                        <Insets top="25.0" />
+                    </GridPane.margin>
                 </Text>
                 <Rectangle fill="#d3c9fb" height="180.0" smooth="false" stroke="#7b7691" strokeType="INSIDE" width="200.0" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
                 <Rectangle fill="#d3c9fb" height="120.0" smooth="false" stroke="#7b7691" strokeType="INSIDE" width="200.0" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
@@ -80,14 +74,18 @@
                         <Insets bottom="10.0" left="25.0" right="25.0" top="10.0" />
                     </GridPane.margin>
                 </TableView>
-            <ImageView fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="LEFT" GridPane.valignment="TOP">
-               <image>
-                  <Image url="@../pictures/home.png" />
-               </image>
-               <GridPane.margin>
-                  <Insets left="25.0" top="25.0" />
-               </GridPane.margin>
-            </ImageView>
+                <Button mnemonicParsing="false" onAction="#exit" style="-fx-background-color: transparent;" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+                    <graphic>
+                        <ImageView fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@pictures/home.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <GridPane.margin>
+                        <Insets left="25.0" top="25.0" />
+                    </GridPane.margin>
+                </Button>
             </children>
         </GridPane>
     </children>

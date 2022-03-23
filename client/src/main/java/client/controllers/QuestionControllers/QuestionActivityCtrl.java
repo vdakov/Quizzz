@@ -9,7 +9,6 @@ import javafx.animation.Timeline;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -21,7 +20,6 @@ import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -98,7 +96,9 @@ public class QuestionActivityCtrl {
 
     public void answerQuestion(MouseEvent event) {
         // answers the question
-        if(answered){return;}
+        if (answered) {
+            return;
+        }
 
         Label current = (Label) event.getSource();
         userAnswer = current.getText();

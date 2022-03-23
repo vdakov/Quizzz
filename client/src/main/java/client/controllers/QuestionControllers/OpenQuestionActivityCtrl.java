@@ -11,7 +11,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
     private int userAnswerInt;
@@ -43,8 +42,7 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
     /**
      * Initialises all the colors for the current scene
      */
-    public void initialize()
-    {
+    public void initialize() {
         answer.setStyle("-fx-background-color: #ffd783; -fx-border-color:  #ffd783; -fx-background-radius: 15; -fx-border-radius: 15;");
         userAnswerRectangle.setBorder(Border.EMPTY);
         correctAnswerRectangle.setOpacity(0);
@@ -70,7 +68,9 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
 
     public void answerQuestion(ActionEvent event) {
         // answers the question and blocks the possibility to answer anymore
-        if(answered){return;}
+        if (answered) {
+            return;
+        }
         answered = true;
 
         try {
