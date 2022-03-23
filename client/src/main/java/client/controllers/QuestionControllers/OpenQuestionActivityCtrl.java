@@ -48,6 +48,7 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         answer.setStyle("-fx-background-color: #ffd783; -fx-border-color:  #ffd783; -fx-background-radius: 15; -fx-border-radius: 15;");
         userAnswerRectangle.setBorder(Border.EMPTY);
         correctAnswerRectangle.setOpacity(0);
+        answered = false;
     }
 
     /**
@@ -60,6 +61,8 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
             return;
         }
         sampleQuestion.setText(openQuestion.getQuestion().getKey());
+        questionNumberLabel.setText("Question " + getQuestionNumber());
+        points.setText(String.valueOf(getPointsInt()));
 
         initialize();
         startTimer();
@@ -67,6 +70,9 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
 
     public void answerQuestion(ActionEvent event) {
         // answers the question and blocks the possibility to answer anymore
+        if(answered){return;}
+        answered = true;
+
         try {
             userAnswerInt = Integer.parseInt(answerTextfield.getText());
             System.out.println(1);

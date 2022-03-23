@@ -34,6 +34,7 @@ public class QuestionActivityCtrl {
     protected final double startTime = 10;
     protected int addedPointsInt;
     protected String userAnswer;
+    protected boolean answered;
     @FXML
     protected Label timeLabel;
     @FXML
@@ -88,6 +89,8 @@ public class QuestionActivityCtrl {
         secondOptionText.setBorder(Border.EMPTY);
         thirdOptionText.setBorder(Border.EMPTY);
 
+        answered = false;
+
         addedPoints.setText(" ");
         addedPointsInt = 0;
     }
@@ -95,12 +98,13 @@ public class QuestionActivityCtrl {
 
     public void answerQuestion(MouseEvent event) {
         // answers the question
+        if(answered){return;}
+
         Label current = (Label) event.getSource();
         userAnswer = current.getText();
+        answered = true;
 
         server.updateScore(userAnswer);
-
-        handleTimer(event);
 
         answerUpdate();
         pointsUpdate();
@@ -124,6 +128,8 @@ public class QuestionActivityCtrl {
         } else {
             thirdOptionText.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(50), BorderStroke.THICK)));
         }
+
+
     }
 
     public void pointsUpdate() {

@@ -109,7 +109,7 @@
                 <graphic>
                     <ImageView fitHeight="30.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                         <image>
-                            <Image url="@../pictures/light-bulb.jpg" />
+                            <Image url="@pictures/light-bulb.jpg" />
                         </image>
                     </ImageView>
                 </graphic>
@@ -118,7 +118,7 @@
                 <graphic>
                     <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                         <image>
-                            <Image url="@../pictures/fire.png" />
+                            <Image url="@pictures/fire.png" />
                         </image>
                     </ImageView>
                 </graphic>
@@ -127,7 +127,7 @@
                 <graphic>
                     <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                         <image>
-                            <Image url="@../pictures/clock-joker.png" />
+                            <Image url="@pictures/clock-joker.png" />
                         </image>
                     </ImageView>
                 </graphic>

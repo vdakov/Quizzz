@@ -177,7 +177,7 @@
             <ImageView fitHeight="200.0" fitWidth="260.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" />
          </children>
       </GridPane>
-      <Label alignment="CENTER" prefHeight="17.0" prefWidth="869.0" style="-fx-background-color: #2d4b5a; -fx-background-radius: 50;" text="What requires most energy?" textFill="WHITESMOKE" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="5">
+      <Label fx:id="questionStatement" alignment="CENTER" prefHeight="17.0" prefWidth="869.0" style="-fx-background-color: #2d4b5a; -fx-background-radius: 50;" text="What requires most energy?" textFill="WHITESMOKE" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="5">
          <font>
             <Font size="46.0" />
          </font>
