@@ -26,9 +26,31 @@ Agenda for OOP Project meeting 7.1 - Group 30
 * [16:44-16:45] Closure (schedule next meeting)
 
 # Tips and Tops
+* We have worked a lot a lot, but integrate stuff better in the end
 
 # Contributions and improvements from this week
+- Delia's emojis will be done 
+- Vasko has done the multiplayer server + will do admin panel
+- Catalin will finish multiplayer game
+- Dima has done time controller + will finish singleplayer
+- Kyongsu did the question transition + will do admin panel
+- Sydney refactored code + finished singleplayer leaderboard + will finish singleplayer game
 
-# IMPORTANT
 
-# Deadlines
+# Feedback
+
+## Green flags
+* The application looks good overall and all of the must issues are done, which is good
+
+## Yellow flags
+* Make use of time estimates and update time spent on the issues (not the MR)
+* Tasks should be more granular and well-defined.
+* Issues that are added to the sprint should also be assigned.
+* Commits should have clearer titles
+* Issues should be distributed evenly
+* Don't leave the pipeline faling for long
+* Don't forget to participate in code reviewing
+
+## Red flags
+* There should be more tests written
+* There should be more comments 
