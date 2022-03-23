@@ -24,7 +24,7 @@ public class SingleplayerRoom extends Room {
     /**
      * Returns the current score of the player
      *
-     * @return
+     * @return the score of the player in the room
      */
     public int getPlayerScore() {
         return this.playerScore;

@@ -63,7 +63,7 @@ public class MultiplayerGameService {
 
     public boolean joinMultiPlayerGame(String userName, String roomId) {
         System.out.println("RoomId:    " + roomCatalog.getMultiPlayerGame(roomId));
-        roomCatalog.getMultiPlayerGame(roomId).addUser(userName);
+        roomCatalog.getMultiPlayerGame(roomId).addPlayer(userName);
         return true;
     }
 

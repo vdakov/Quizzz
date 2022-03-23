@@ -10,7 +10,7 @@ import server.services.GameServices.MultiplayerGameService;
 import server.services.GameServices.SinglePlayerGameService;
 
 @RestController
-@RequestMapping("api/{userName}/{gameType}")
+@RequestMapping("api/{username}/{gameType}")
 public class GameController {
 
     private final SinglePlayerGameService singlePlayerGameService;
@@ -30,15 +30,15 @@ public class GameController {
     /**
      * Returns a response with the string whether the room was created or gives a corresponding error message
      *
-     * @param userName the userName of the desired player
+     * @param username the username of the desired player
      * @param gameType the type of the game
      * @return the response entity with the needed data or the error message
      */
     @GetMapping("/createNewGame")
-    public ResponseEntity<String> createNewGame(@PathVariable("userName") String userName, @PathVariable("gameType") String gameType) {
+    public ResponseEntity<String> createNewGame(@PathVariable("username") String username, @PathVariable("gameType") String gameType) {
         if (gameType.equals("SINGLEPLAYER")) {
             try {
-                String roomId = singlePlayerGameService.createNewSinglePlayerGame(userName);
+                String roomId = singlePlayerGameService.createNewSinglePlayerGame(username);
                 if (roomId == null) {
                     return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
                 }
@@ -51,7 +51,7 @@ public class GameController {
 
         if (gameType.equals("MULTIPLAYER")) {
             try {
-                String roomId = multiplayerGameService.createNewMultiPlayerGame(userName);
+                String roomId = multiplayerGameService.createNewMultiPlayerGame(username);
                 if (roomId == null) {
                     return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
                 }
