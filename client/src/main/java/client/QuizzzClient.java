@@ -52,7 +52,7 @@ public class QuizzzClient extends Application {
     private final Pair<String, Class>[] scenePairs = new Pair[]{
             new Pair("MainScreenScene.fxml", MainScreenActivityCtrl.class),
             new Pair("AddActionScene.fxml", AddActionActivityCtrl.class),
-            new Pair("ComparisonQuestionScene.fxml", ComparisonQuestionActivityCtrl.class),
+            new Pair("ComparisonQuestionSceneOld.fxml", ComparisonQuestionActivityCtrl.class),
             new Pair("OpenQuestionScene.fxml", OpenQuestionActivityCtrl.class),
             new Pair("KnowledgeQuestionScene.fxml", KnowledgeQuestionActivityCtrl.class),
             new Pair("AlternativeQuestionScene.fxml", AlternativeQuestionActivityCtrl.class),
