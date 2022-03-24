@@ -69,6 +69,8 @@ public class QuestionActivityCtrl {
     protected Label questionNumberLabel;
     @FXML
     protected String correctAnswer;
+    @FXML
+    protected Button emoji;
 
     protected IntegerProperty timeSeconds =
             new SimpleIntegerProperty((int) startTime);
@@ -91,6 +93,9 @@ public class QuestionActivityCtrl {
 
         addedPoints.setText(" ");
         addedPointsInt = 0;
+
+        if (gameConfig.isSinglePlayer()) emoji.setVisible(false);
+        else emoji.setVisible(true);
     }
 
 
