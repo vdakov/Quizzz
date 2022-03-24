@@ -1,204 +1,246 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ProgressBar?>
-<?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #3084f2;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.QuestionControllers.ComparisonQuestionActivityCtrl">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0"
+          prefWidth="1280.0" style="-fx-background-color: #3084f2;" xmlns="http://javafx.com/javafx/16"
+          xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="client.controllers.QuestionControllers.ComparisonQuestionActivityCtrl">
     <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="10.0" percentWidth="5.0" prefWidth="30.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="133.66668605804443" minWidth="7.0" percentWidth="10.0" prefWidth="73.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="411.0" minWidth="3.0" percentWidth="23.33" prefWidth="292.2222595214844" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="411.0" minWidth="10.0" percentWidth="23.33" prefWidth="294.888936360677" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="411.0" minWidth="3.0" percentWidth="23.33" prefWidth="279.7777303059895" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="110.0" minWidth="110.0" percentWidth="10.0" prefWidth="110.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="9.0" percentWidth="5.0" prefWidth="14.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="10.0" percentWidth="5.0" prefWidth="30.0"/>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="133.66668605804443" minWidth="7.0" percentWidth="10.0"
+                           prefWidth="73.0"/>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="411.0" minWidth="3.0" percentWidth="23.33"
+                           prefWidth="292.2222595214844"/>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="411.0" minWidth="10.0" percentWidth="23.33"
+                           prefWidth="294.888936360677"/>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="411.0" minWidth="3.0" percentWidth="23.33"
+                           prefWidth="279.7777303059895"/>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="110.0" minWidth="110.0" percentWidth="10.0" prefWidth="110.0"/>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="9.0" percentWidth="5.0" prefWidth="14.0"/>
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints maxHeight="300.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="130.0" minHeight="0.0" percentHeight="3.0" prefHeight="42.666673024495424" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="152.0" minHeight="0.0" percentHeight="2.0" prefHeight="24.666659037272154" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="220.0" minHeight="2.0" percentHeight="5.0" prefHeight="56.66667175292969" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="345.0" minHeight="0.0" percentHeight="5.0" prefHeight="42.66669209798178" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="345.0" minHeight="10.0" percentHeight="10.0" prefHeight="81.33330281575522" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="524.6666412353516" minHeight="0.0" percentHeight="60.0" prefHeight="462.66669718424487" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="300.0" minHeight="0.0" percentHeight="15.0" prefHeight="140.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="300.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="130.0" minHeight="0.0" percentHeight="3.0" prefHeight="42.666673024495424"
+                        vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="152.0" minHeight="0.0" percentHeight="2.0" prefHeight="24.666659037272154"
+                        vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="220.0" minHeight="2.0" percentHeight="5.0" prefHeight="56.66667175292969"
+                        vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="345.0" minHeight="0.0" percentHeight="5.0" prefHeight="42.66669209798178"
+                        vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="345.0" minHeight="10.0" percentHeight="10.0" prefHeight="81.33330281575522"
+                        vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="524.6666412353516" minHeight="0.0" percentHeight="60.0"
+                        prefHeight="462.66669718424487" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="300.0" minHeight="0.0" percentHeight="15.0" prefHeight="140.0" vgrow="SOMETIMES"/>
     </rowConstraints>
     <children>
-        <Button fx:id="goToMainScreen" mnemonicParsing="false" onAction="#goToMainScreen" prefHeight="34.0" prefWidth="76.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" GridPane.columnIndex="1" GridPane.rowIndex="2">
+        <Button fx:id="goToMainScreen" mnemonicParsing="false" onAction="#goToMainScreen" prefHeight="34.0"
+                prefWidth="76.0" style="-fx-background-color: transparent; -fx-border-color: transparent;">
             <font>
-                <Font size="14.0" />
+                <Font size="14.0"/>
             </font>
             <graphic>
-                <ImageView fitHeight="71.0" fitWidth="92.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitWidth="50.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@pictures/home.png" />
+                        <Image url="@pictures/home.png"/>
                     </image>
                 </ImageView>
             </graphic>
+            <GridPane.margin>
+                <Insets left="25.0" top="75.0"/>
+            </GridPane.margin>
         </Button>
-        <Label alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="117.0" text="Points:" textAlignment="RIGHT" GridPane.columnIndex="5" GridPane.rowIndex="1">
+        <Label alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="117.0" text="Points:" textAlignment="RIGHT"
+               GridPane.columnIndex="5" GridPane.rowIndex="1">
             <font>
-                <Font name="Chalkboard" size="18.0" />
+                <Font name="Chalkboard" size="18.0"/>
             </font>
         </Label>
-        <Label fx:id="points" alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="98.0" text="0 " textAlignment="CENTER" GridPane.columnIndex="5" GridPane.rowIndex="2">
+        <Label fx:id="points" alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="98.0" text="0 "
+               textAlignment="CENTER" GridPane.columnIndex="5" GridPane.rowIndex="2">
             <font>
-                <Font name="Chalkboard" size="18.0" />
+                <Font name="Chalkboard" size="18.0"/>
             </font>
         </Label>
-        <Label fx:id="addedPoints" alignment="CENTER_RIGHT" prefHeight="33.0" prefWidth="182.0" text=" " textAlignment="RIGHT" textFill="#92d36e" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+        <Label fx:id="addedPoints" alignment="CENTER_RIGHT" prefHeight="33.0" prefWidth="182.0" text=" "
+               textAlignment="RIGHT" textFill="#92d36e" GridPane.columnIndex="5" GridPane.rowIndex="3"/>
 
-        <Button fx:id="emoji" disable="true" mnemonicParsing="false" opacity="0.0" prefHeight="63.0" prefWidth="66.0" text="Emoji" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-        <Label fx:id="questionNumberLabel" alignment="CENTER" prefHeight="38.0" prefWidth="114.0" style="-fx-background-color: #2d4b5a; -fx-text-fill: #f6f6f6; -fx-background-radius: 40;" text="Question 1" textFill="WHITESMOKE" GridPane.columnIndex="2" GridPane.rowIndex="4">
+        <Button fx:id="emoji" disable="true" mnemonicParsing="false" opacity="0.0" prefHeight="63.0" prefWidth="66.0"
+                text="Emoji" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+        <Label fx:id="questionNumberLabel" alignment="CENTER" prefHeight="38.0" prefWidth="114.0"
+               style="-fx-background-color: #2d4b5a; -fx-text-fill: #f6f6f6; -fx-background-radius: 40;"
+               text="Question 1" textFill="WHITESMOKE" GridPane.columnIndex="2" GridPane.rowIndex="4">
             <font>
-                <Font name="Trebuchet MS" size="15.0" />
+                <Font name="Trebuchet MS" size="15.0"/>
             </font>
         </Label>
-        <Button fx:id="moveNext" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#displayNextQuestion" opacity="0.0" prefHeight="54.0" prefWidth="93.0" text="Next" textAlignment="CENTER" GridPane.columnIndex="5" GridPane.rowIndex="7" />
-        <ProgressBar fx:id="progressBarTime" prefHeight="40.0" prefWidth="927.0" progress="1.0" style="a: #000000;" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="7" />
+        <Button fx:id="moveNext" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false"
+                onAction="#displayNextQuestion" opacity="0.0" prefHeight="54.0" prefWidth="93.0" text="Next"
+                textAlignment="CENTER" GridPane.columnIndex="5" GridPane.rowIndex="7"/>
+        <ProgressBar fx:id="progressBarTime" prefHeight="40.0" prefWidth="927.0" progress="1.0" style="a: #000000;"
+                     GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="7"/>
 
-        <Label fx:id="timeLabel" text="10" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER">
+        <Label fx:id="timeLabel" text="10" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="7"
+               GridPane.valignment="CENTER">
             <font>
-                <Font size="36.0" />
+                <Font size="36.0"/>
             </font>
         </Label>
-        <Label alignment="CENTER" prefHeight="114.0" prefWidth="956.0" text="QUIZZZZ" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="3">
+        <Label alignment="CENTER" prefHeight="114.0" prefWidth="956.0" text="QUIZZZZ" textAlignment="CENTER"
+               GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="3">
             <font>
-                <Font size="100.0" />
+                <Font size="100.0"/>
             </font>
             <effect>
-                <DropShadow blurType="ONE_PASS_BOX" height="18.07" radius="7.07" width="12.21" />
+                <DropShadow blurType="ONE_PASS_BOX" height="18.07" radius="7.07" width="12.21"/>
             </effect>
         </Label>
         <GridPane GridPane.columnIndex="2" GridPane.rowIndex="6">
             <rowConstraints>
-                <RowConstraints maxHeight="221.66668701171875" minHeight="10.0" percentHeight="50.0" prefHeight="200.33331298828125" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="260.0" minHeight="10.0" prefHeight="260.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="221.66668701171875" minHeight="10.0" percentHeight="50.0"
+                                prefHeight="200.33331298828125" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="260.0" minHeight="10.0" prefHeight="260.0" vgrow="SOMETIMES"/>
             </rowConstraints>
             <children>
 
-                <Label fx:id="firstOptionText" alignment="CENTER" onMouseClicked="#answerQuestion" prefHeight="255.0" prefWidth="285.0" style="-fx-background-color: #b38df7; -fx-background-radius: 50;" text="1" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                <Label fx:id="firstOptionText" alignment="CENTER" onMouseClicked="#answerQuestion" prefHeight="255.0"
+                       prefWidth="285.0" style="-fx-background-color: #b38df7; -fx-background-radius: 50;" text="1"
+                       wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                     <font>
-                        <Font size="18.0" />
+                        <Font size="18.0"/>
                     </font>
                 </Label>
-                <ImageView pickOnBounds="true" preserveRatio="true" />
+                <ImageView pickOnBounds="true" preserveRatio="true"/>
             </children>
             <columnConstraints>
-                <ColumnConstraints percentWidth="100.0" />
+                <ColumnConstraints percentWidth="100.0"/>
             </columnConstraints>
         </GridPane>
         <GridPane GridPane.columnIndex="3" GridPane.rowIndex="6">
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="285.0" minWidth="10.0" percentWidth="100.0" prefWidth="172.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="285.0" minWidth="10.0" percentWidth="100.0"
+                                   prefWidth="172.0"/>
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints minHeight="10.0" percentHeight="50.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" percentHeight="50.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
             </rowConstraints>
             <children>
-                <Label fx:id="secondOptionText" alignment="CENTER" onMouseClicked="#answerQuestion" prefHeight="255.0" prefWidth="285.0" style="-fx-background-color: #ffd783; -fx-background-radius: 50;" text="2" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                <Label fx:id="secondOptionText" alignment="CENTER" onMouseClicked="#answerQuestion" prefHeight="255.0"
+                       prefWidth="285.0" style="-fx-background-color: #ffd783; -fx-background-radius: 50;" text="2"
+                       wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                     <font>
-                        <Font size="18.0" />
+                        <Font size="18.0"/>
                     </font>
                 </Label>
-                <ImageView pickOnBounds="true" preserveRatio="true" />
+                <ImageView pickOnBounds="true" preserveRatio="true"/>
             </children>
         </GridPane>
         <GridPane prefHeight="444.0" prefWidth="275.0" GridPane.columnIndex="4" GridPane.rowIndex="6">
             <rowConstraints>
-                <RowConstraints maxHeight="221.66668701171875" minHeight="10.0" percentHeight="50.0" prefHeight="211.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="260.0" minHeight="10.0" prefHeight="260.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="221.66668701171875" minHeight="10.0" percentHeight="50.0" prefHeight="211.0"
+                                vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="260.0" minHeight="10.0" prefHeight="260.0" vgrow="SOMETIMES"/>
             </rowConstraints>
             <columnConstraints>
-                <ColumnConstraints maxWidth="289.0" minWidth="188.0" percentWidth="100.0" prefWidth="202.0" />
+                <ColumnConstraints maxWidth="289.0" minWidth="188.0" percentWidth="100.0" prefWidth="202.0"/>
             </columnConstraints>
             <children>
-                <Label fx:id="thirdOptionText" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#answerQuestion" prefHeight="255.0" prefWidth="285.0" style="-fx-background-color: #ffa382; -fx-background-radius: 50;" text="3" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                <Label fx:id="thirdOptionText" alignment="CENTER" contentDisplay="CENTER"
+                       onMouseClicked="#answerQuestion" prefHeight="255.0" prefWidth="285.0"
+                       style="-fx-background-color: #ffa382; -fx-background-radius: 50;" text="3" wrapText="true"
+                       GridPane.halignment="CENTER" GridPane.rowIndex="1">
                     <font>
-                        <Font size="18.0" />
+                        <Font size="18.0"/>
                     </font>
                 </Label>
-                <ImageView pickOnBounds="true" preserveRatio="true" />
+                <ImageView pickOnBounds="true" preserveRatio="true"/>
             </children>
         </GridPane>
-        <Label fx:id="questionStatement" alignment="CENTER" prefHeight="17.0" prefWidth="869.0" style="-fx-background-color: #2d4b5a; -fx-background-radius: 50;" text="What requires most energy?" textFill="WHITESMOKE" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="5">
+        <Label fx:id="questionStatement" alignment="CENTER" prefHeight="17.0" prefWidth="869.0"
+               style="-fx-background-color: #2d4b5a; -fx-background-radius: 50;" text="What requires most energy?"
+               textFill="WHITESMOKE" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="5">
             <font>
-                <Font size="46.0" />
+                <Font size="32.0"/>
             </font>
         </Label>
         <ToolBar fx:id="toolbar" prefHeight="40.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
             <items>
                 <ImageView fx:id="emoji1" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../pictures/emojis/tears-emoji-png.png" />
+                        <Image url="@../pictures/emojis/tears-emoji-png.png"/>
                     </image>
                 </ImageView>
                 <ImageView fx:id="emoji2" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../pictures/emojis/sunglasses-emoji.png" />
+                        <Image url="@../pictures/emojis/sunglasses-emoji.png"/>
                     </image>
                 </ImageView>
                 <ImageView fx:id="emoji3" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../pictures/emojis/hearts-eyes-emoji.png" />
+                        <Image url="@../pictures/emojis/hearts-eyes-emoji.png"/>
                     </image>
                 </ImageView>
                 <ImageView fx:id="emoji4" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../pictures/emojis/fearful-emoji.png" />
+                        <Image url="@../pictures/emojis/fearful-emoji.png"/>
                     </image>
                 </ImageView>
                 <ImageView fx:id="emoji5" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../pictures/emojis/angry-emoji.png" />
+                        <Image url="@../pictures/emojis/angry-emoji.png"/>
                     </image>
                 </ImageView>
             </items>
         </ToolBar>
         <GridPane GridPane.columnIndex="5" GridPane.rowIndex="5" GridPane.rowSpan="2">
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="29.777830123901367" minWidth="0.0" prefWidth="13.111207008361816" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="96.88881333669026" minWidth="10.0" prefWidth="94.22212632497151" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="29.777830123901367" minWidth="0.0"
+                                   prefWidth="13.111207008361816"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="96.88881333669026" minWidth="10.0"
+                                   prefWidth="94.22212632497151"/>
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
             </rowConstraints>
             <children>
-                <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="115.0" style="-fx-background-radius: 50; -fx-background-color: #2467bf;" text="Hint" textFill="WHITESMOKE" GridPane.columnIndex="1">
+                <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="115.0"
+                        style="-fx-background-radius: 50; -fx-background-color: #2467bf;" text="Hint"
+                        textFill="WHITESMOKE" GridPane.columnIndex="1">
                     <graphic>
                         <ImageView fitHeight="30.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@pictures/light-bulb.jpg" />
+                                <Image url="@pictures/light-bulb.jpg"/>
                             </image>
                         </ImageView>
                     </graphic>
                 </Button>
-                <Button mnemonicParsing="false" style="-fx-background-radius: 50; -fx-background-color: #2467bf;" text="2X Point" textFill="WHITESMOKE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <Button mnemonicParsing="false" style="-fx-background-radius: 50; -fx-background-color: #2467bf;"
+                        text="2X Point" textFill="WHITESMOKE" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@pictures/fire.png" />
+                                <Image url="@pictures/fire.png"/>
                             </image>
                         </ImageView>
                     </graphic>
                 </Button>
-                <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="114.0" style="-fx-background-radius: 50; -fx-background-color: #2467bf;" text="--Time" textFill="WHITESMOKE" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="114.0"
+                        style="-fx-background-radius: 50; -fx-background-color: #2467bf;" text="--Time"
+                        textFill="WHITESMOKE" GridPane.columnIndex="1" GridPane.rowIndex="2">
                     <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@pictures/clock-joker.png" />
+                                <Image url="@pictures/clock-joker.png"/>
                             </image>
                         </ImageView>
                     </graphic>
