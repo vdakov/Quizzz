@@ -47,6 +47,7 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         userAnswerRectangle.setBorder(Border.EMPTY);
         answerTextfield.setText("");
         correctAnswerRectangle.setOpacity(0);
+        answerTextfield.setText("");
         answered = false;
     }
 

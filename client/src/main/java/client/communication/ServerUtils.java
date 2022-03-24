@@ -122,7 +122,7 @@ public class ServerUtils {
 
         return ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("api/" + gameType + "/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getRoomId() + "/" +
-                        gameConfiguration.getCurrentQuestionNumber() + "/getQuestion")
+                        (gameConfiguration.getCurrentQuestionNumber() - 1) + "/getQuestion")
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON).get(String.class);
     }

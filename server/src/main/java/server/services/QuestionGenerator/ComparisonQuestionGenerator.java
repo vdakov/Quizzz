@@ -12,6 +12,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import static java.util.Comparator.comparing;
+
 public class ComparisonQuestionGenerator {
 
 
@@ -33,7 +35,7 @@ public class ComparisonQuestionGenerator {
 
         Action firstAction = actionCatalog.getNormalAction();
         Action secondAction = actionCatalog.getAction(firstAction.getConsumption(), 5, 25, random);
-        Action thirdAction  = actionCatalog.getAction(firstAction.getConsumption(), 30, 75, random);
+        Action thirdAction = actionCatalog.getAction(firstAction.getConsumption(), 30, 75, random);
 
         List<Pair<String, String>> options = new ArrayList<>();
         options.add(Pair.of(firstAction.getTitle(), firstAction.getImagePath()));
@@ -45,8 +47,9 @@ public class ComparisonQuestionGenerator {
         int sign = (random.nextBoolean()) ? 1 : -1;
 
         ComparisonQuestion comparisonQuestion = new ComparisonQuestion(Pair.of(makeComparisonStatement(sign), null), options);
+        Action mostUsage = List.of(firstAction, secondAction, thirdAction).stream().max(comparing(a -> sign * a.getConsumption())).get();
 
-        return Pair.of(comparisonQuestion, Long.toString(sign * Math.max(sign * firstAction.getConsumption(), Math.max(sign * secondAction.getConsumption(), sign * thirdAction.getConsumption()))));
+        return Pair.of(comparisonQuestion, mostUsage.getTitle());
     }
 
     public static String makeComparisonStatement(int sign) {
