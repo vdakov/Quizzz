@@ -10,7 +10,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
-import org.checkerframework.checker.units.qual.A;
 
 public class EditActionActivityCtrl {
 
