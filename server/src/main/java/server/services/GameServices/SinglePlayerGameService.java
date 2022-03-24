@@ -25,7 +25,7 @@ public class SinglePlayerGameService {
     }
 
     public String createNewSinglePlayerGame(String userName) {
-        String gameId               = Util.getAlphaNumericString(10);
+        String gameId = Util.getAlphaNumericString(10);
         ActionCatalog actionCatalog = new ActionCatalog(activityRepository.findAll());
 
         List<Pair<Question, String>> questionList = null;

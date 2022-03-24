@@ -46,6 +46,7 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         answer.setStyle("-fx-background-color: #ffd783; -fx-border-color:  #ffd783; -fx-background-radius: 15; -fx-border-radius: 15;");
         userAnswerRectangle.setBorder(Border.EMPTY);
         correctAnswerRectangle.setOpacity(0);
+        answerTextfield.setText("");
         answered = false;
     }
 

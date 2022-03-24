@@ -177,7 +177,7 @@ public class QuestionActivityCtrl {
     public void displayNextQuestion() {
         timeline.stop();
         if (gameConfig.getCurrentQuestionNumber() >= 20) finishGame();
-        sceneCtrl.showNextQuestion();
+        else sceneCtrl.showNextQuestion();
     }
 
     public void finishGame() {
@@ -186,6 +186,7 @@ public class QuestionActivityCtrl {
     }
 
     public void goToMainScreen() throws IOException {
+        timeline.stop();
         sceneCtrl.showMainScreenScene();
     }
 
