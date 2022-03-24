@@ -29,6 +29,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -72,6 +73,10 @@ public class OverviewActionsActivityCtrl implements Initializable {
         colSource.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getSource()));
     }
 
+    public void userContribution() {
+
+    }
+
     public void addActivity(ActionEvent event) {
         sceneCtrl.showAddActionScene();
         refresh();
@@ -91,6 +96,10 @@ public class OverviewActionsActivityCtrl implements Initializable {
         var activities = server.getActivities();
         data = FXCollections.observableList(activities);
         table.setItems(data);
+    }
+
+    public void goToMainScreen() throws IOException {
+        sceneCtrl.showMainScreenScene();
     }
 
 }
