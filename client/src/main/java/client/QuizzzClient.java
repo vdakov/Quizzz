@@ -1,6 +1,6 @@
 package client;
 
-import client.controllers.AddActionActivityCtrl;
+import client.controllers.AdminInterface.AddActionActivityCtrl;
 import client.controllers.MainScreenActivityCtrl;
 import client.controllers.MultiplayerControllers.ServerBrowserController;
 import client.controllers.MultiplayerControllers.WaitingRoomController;

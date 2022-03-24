@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="256.0" prefWidth="485.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.AdminInterface.AddActionActivityCtrl">
+<AnchorPane prefHeight="256.0" prefWidth="485.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.AdminInterface.EditActionActivityCtrl">
     <children>
         <Button layoutX="353.0" layoutY="211.0" mnemonicParsing="false" onAction="#ok" text="Ok" />
         <Button layoutX="411.0" layoutY="211.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
@@ -15,6 +15,6 @@
         <Label layoutX="15.0" layoutY="166.0" text="imgSource" />
         <Label layoutX="14.0" layoutY="130.0" text="Source" />
         <TextField fx:id="source" layoutX="94.0" layoutY="125.0" prefHeight="26.0" prefWidth="370.0" text="source" />
-        <Label layoutX="213.0" layoutY="22.0" text="Add Action" />
+      <Label layoutX="213.0" layoutY="22.0" text="Edit Action" />
     </children>
 </AnchorPane>

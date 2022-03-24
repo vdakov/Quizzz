@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package client.controllers;
+package client.controllers.AdminInterface;
 
 import client.communication.ServerUtils;
+import client.controllers.SceneCtrl;
 import com.google.inject.Inject;
 import commons.Actions.Action;
 import javafx.beans.property.SimpleStringProperty;
@@ -72,9 +73,8 @@ public class OverviewActionsActivityCtrl implements Initializable {
     }
 
     public void addActivity(ActionEvent event) {
-       // sceneCtrl.showAddActionScene();
-        Action newAction = new Action();
-        server.addActivity(newAction);
+        sceneCtrl.showAddActionScene();
+        refresh();
     }
 
     public void deleteActivity(ActionEvent event) {
@@ -84,6 +84,7 @@ public class OverviewActionsActivityCtrl implements Initializable {
 
     public void editActivity(ActionEvent event) {
         String id = event.getSource().toString();
+//        table.edit(1, );
         server.editActivity(id);
     }
 

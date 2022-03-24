@@ -1,6 +1,7 @@
-package client.controllers;
+package client.controllers.AdminInterface;
 
 import client.communication.ServerUtils;
+import client.controllers.SceneCtrl;
 import com.google.inject.Inject;
 import commons.Actions.Action;
 import jakarta.ws.rs.WebApplicationException;
@@ -9,8 +10,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
+import org.checkerframework.checker.units.qual.A;
 
-public class AddActionActivityCtrl {
+public class EditActionActivityCtrl {
 
     private final ServerUtils server;
     private final SceneCtrl sceneCtrl;
@@ -28,7 +30,7 @@ public class AddActionActivityCtrl {
     private TextField consumption;
 
     @Inject
-    public AddActionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
+    public EditActionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
         this.sceneCtrl = sceneCtrl;
         this.server = server;
 
@@ -56,6 +58,11 @@ public class AddActionActivityCtrl {
     }
 
     private Action getActivity() {
+        try {
+            consumption.getText();
+        } catch (NumberFormatException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+        }
         return new Action(null, null, title.getText(), Integer.parseInt(consumption.getText()), source.getText());
     }
 
