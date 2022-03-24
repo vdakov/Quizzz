@@ -86,7 +86,7 @@ public class ServerBrowserController {
      */
     public void joinWaitingRoom(ActionEvent event) {
           // we will connect to the initialised random room
-        String playerName = "test";
+        String playerName = "test2";
 
         String roomId = server.getRandomMultiPlayerRoomId(playerName);
         System.out.println(roomId);

@@ -21,6 +21,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.HashSet;
 
 public class QuestionActivityCtrl {
     // constructor needed variables
@@ -76,10 +78,12 @@ public class QuestionActivityCtrl {
             new SimpleIntegerProperty((int) startTime);
     protected Timeline timeline;
 
+
     public QuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
         this.server = server;
         this.sceneCtrl = sceneCtrl;
     }
+
 
     /**
      * Initialises all the colors for the current scene

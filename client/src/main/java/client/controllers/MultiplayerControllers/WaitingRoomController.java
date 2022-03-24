@@ -11,6 +11,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 
+import java.util.HashSet;
+
 
 public class WaitingRoomController {
 
@@ -32,10 +34,13 @@ public class WaitingRoomController {
     @FXML
     private Text gameID; // displays the gameID of the current waiting room
 
+    private final HashSet<String> ongoingGames;
+
     @Inject
     public WaitingRoomController(ServerUtils server, SceneCtrl sceneCtrl) {
         this.server = server;
         this.sceneCtrl = sceneCtrl;
+        this.ongoingGames = new HashSet<>();
     }
 
     /**
@@ -69,11 +74,29 @@ public class WaitingRoomController {
 
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         gameConfiguration.setRoomId(roomId);
-        gameConfiguration.setUserName(userName);
+        gameConfiguration.setUserName(userName + "cata123");
         gameConfiguration.setCurrentQuestionNumber(gameConfiguration.getCurrentQuestionNumber() + 1);
         gameConfiguration.setGameTypeMultiPlayer();
 
-        server.waitForMultiPlayerRoomStart(userName, gameId);
+        server.waitForMultiPlayerRoomStart(q -> {
+            ongoingGames.add(q);
+
+            System.out.println("AM PRIMIT UPDATE");
+            ongoingGames.forEach(k -> {
+                System.out.println(k.toString());
+            });
+
+            System.out.println("Game configuration  " + gameConfiguration.getRoomId());
+
+            if(ongoingGames.contains(gameConfiguration.getRoomId())) {
+                System.out.println("Am intrat si aici 1234");
+                //server.stop();
+                sceneCtrl.showNextQuestion();
+                System.out.println("Why nu mergi?");
+            }
+        });
+
+
         if (owner) {
             this.owner = owner; //sets this if the owner leaves
             this.startButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -94,9 +117,6 @@ public class WaitingRoomController {
      */
     public void refresh() {
         this.initialize(this.owner, this.gameId, this.userName);
-        if (server.isGameStarted()) {
-            sceneCtrl.showNextQuestion();
-        }
     }
 
 

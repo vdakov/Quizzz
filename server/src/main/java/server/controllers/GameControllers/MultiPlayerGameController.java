@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.async.DeferredResult;
 import server.services.GameServices.MultiplayerGameService;
 
+import javax.swing.text.html.parser.Entity;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Consumer;
 
 @RestController
@@ -34,22 +36,25 @@ public class MultiPlayerGameController {
     @GetMapping("/{gameId}/startGame")
     public boolean startMultiPlayerGame(@PathVariable("gameId") String gameId) {
         multiplayerGameService.startMultiPlayerGame(gameId);
-        listeners.forEach((k, l) -> l.accept(true));
+        System.out.println("WOW: GAME STARTED");
+        listeners.forEach((k, l) -> l.accept(gameId));
         return true;
     }
 
-    private HashMap<String, Consumer<Boolean>> listeners = new HashMap<>();
+    private Map<Object, Consumer<String>> listeners = new HashMap<>();
 
-    @GetMapping("/{gameid}/waitForGameToStart")
-    public DeferredResult<ResponseEntity<Boolean>> waitForGameToStart(@PathVariable("gameId") String gameId) {
+    @GetMapping("/{gameId}/waitForGameToStart")
+    public DeferredResult<ResponseEntity<String>> waitForGameToStart(@PathVariable("gameId") String gameId) {
         var noContent = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        var res = new DeferredResult<ResponseEntity<Boolean>>(5000L, noContent);
+        var res = new DeferredResult<ResponseEntity<String>>(5000L, noContent);
 
-        listeners.put(gameId, q -> {
+        var key = new Object();
+        listeners.put(key, q -> {
+            System.out.println("AM reusit sa dau update");
             res.setResult(ResponseEntity.ok(q));
         });
         res.onCompletion(() -> {
-            listeners.remove(gameId);
+            listeners.remove(key);
         });
 
         return res;

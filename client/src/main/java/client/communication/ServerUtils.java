@@ -24,9 +24,11 @@ import jakarta.ws.rs.core.GenericType;
 import jakarta.ws.rs.core.Response;
 import org.glassfish.jersey.client.ClientConfig;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.function.Consumer;
 
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 
@@ -87,31 +89,29 @@ public class ServerUtils {
 
     private static final ExecutorService EXEC = Executors.newSingleThreadExecutor();
 
-    private boolean startedGame = false;
-
-    public boolean isGameStarted() {
-        return startedGame;
-    }
-    /**
-     *
-     * @param userName
-     * @param roomId
-     * @return
-     */
-    public void waitForMultiPlayerRoomStart(String userName, String roomId) {
+    public void waitForMultiPlayerRoomStart(Consumer<String> startedGame) {
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         EXEC.submit(() -> {
-           var res = ClientBuilder.newClient(new ClientConfig())
-                   .target(SERVER).path("api/multiPlayer/" + userName + "/" + roomId + "/waitForGameToStart")
-                   .request(APPLICATION_JSON)
-                   .accept(APPLICATION_JSON).get(Response.class);
+            while(!Thread.interrupted()) {
+                System.out.println(gameConfiguration.getUserName() + "  " + gameConfiguration.getRoomId());
+                var res = ClientBuilder.newClient(new ClientConfig())
+                        .target(SERVER).path("api/multiPlayer/" + gameConfiguration.getUserName()
+                                + "/" + gameConfiguration.getRoomId() + "/waitForGameToStart")
+                        .request(APPLICATION_JSON)
+                        .accept(APPLICATION_JSON).get(Response.class);
 
-           if (res.getStatus() == 204) {
-               return;
-           }
+                if (res.getStatus() == 204) {
+                    return;
+                }
 
-            startedGame = true;
+                String gameInProgress = res.readEntity(String.class);
+                startedGame.accept(gameInProgress);
+            }
         });
+    }
 
+    public void stop() {
+        EXEC.shutdownNow();
     }
 
     public String getQuestion() {
