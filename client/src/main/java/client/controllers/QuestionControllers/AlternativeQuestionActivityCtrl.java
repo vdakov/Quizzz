@@ -33,8 +33,9 @@ public class AlternativeQuestionActivityCtrl extends QuestionActivityCtrl {
         firstOptionText.setText(alternativeQuestion.getOptions().get(0).getKey());
         secondOptionText.setText(alternativeQuestion.getOptions().get(1).getKey());
         thirdOptionText.setText(alternativeQuestion.getOptions().get(2).getKey());
-
+        questionNumberLabel.setText("Question " + getQuestionNumber());
         points.setText(String.valueOf(getPointsInt()));
+
         initialize();
         startTimer();
         System.out.println("Timer started");

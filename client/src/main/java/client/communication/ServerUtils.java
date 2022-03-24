@@ -37,6 +37,7 @@ public class ServerUtils {
 
     /**
      * Creates a new SinglePlayer game with the room owner userName
+     *
      * @param userName the userName of the player that creates the room
      * @return the roomId for the recently created room
      */
@@ -44,25 +45,29 @@ public class ServerUtils {
         return ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("api/singlePlayer/" + userName + "/startNewGame")
                 .request(APPLICATION_JSON)
-                .accept(APPLICATION_JSON).get(new GenericType<>() {});
+                .accept(APPLICATION_JSON).get(new GenericType<>() {
+                });
     }
 
     public String createNewMultiPlayerRoom(String userName) {
         return ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("api/multiPlayer/" + userName + "/createNewGame")
                 .request(APPLICATION_JSON)
-                .accept(APPLICATION_JSON).get(new GenericType<>() {});
+                .accept(APPLICATION_JSON).get(new GenericType<>() {
+                });
     }
 
     public void joinMultiPlayerRoom(String userName, String roomId) {
         ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("api/multiPlayer/" + userName + "/" + roomId + "/joinGame")
                 .request(APPLICATION_JSON)
-                .accept(APPLICATION_JSON).get(new GenericType<>() {});
+                .accept(APPLICATION_JSON).get(new GenericType<>() {
+                });
     }
 
     /**
      * Get the id for the multiplayer room composed of random players
+     *
      * @param userName the userName of the player requesting this information
      * @return the roomId of the random multiPlayer room
      */
@@ -70,11 +75,13 @@ public class ServerUtils {
         return ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("api/multiPlayer/" + userName + "/getRandomRoomCode")
                 .request(APPLICATION_JSON)
-                .accept(APPLICATION_JSON).get(new GenericType<>() {});
+                .accept(APPLICATION_JSON).get(new GenericType<>() {
+                });
     }
 
     /**
      * Starts a multiPlayer game
+     *
      * @param userName
      * @param roomId
      */
@@ -82,7 +89,8 @@ public class ServerUtils {
         ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("api/multiPlayer/" + userName + "/" + roomId + "/startGame")
                 .request(APPLICATION_JSON)
-                .accept(APPLICATION_JSON).get(new GenericType<>() {});
+                .accept(APPLICATION_JSON).get(new GenericType<>() {
+                });
     }
 
     private static final ExecutorService EXEC = Executors.newSingleThreadExecutor();
@@ -92,22 +100,22 @@ public class ServerUtils {
     public boolean isGameStarted() {
         return startedGame;
     }
+
     /**
-     *
      * @param userName
      * @param roomId
      * @return
      */
     public void waitForMultiPlayerRoomStart(String userName, String roomId) {
         EXEC.submit(() -> {
-           var res = ClientBuilder.newClient(new ClientConfig())
-                   .target(SERVER).path("api/multiPlayer/" + userName + "/" + roomId + "/waitForGameToStart")
-                   .request(APPLICATION_JSON)
-                   .accept(APPLICATION_JSON).get(Response.class);
+            var res = ClientBuilder.newClient(new ClientConfig())
+                    .target(SERVER).path("api/multiPlayer/" + userName + "/" + roomId + "/waitForGameToStart")
+                    .request(APPLICATION_JSON)
+                    .accept(APPLICATION_JSON).get(Response.class);
 
-           if (res.getStatus() == 204) {
-               return;
-           }
+            if (res.getStatus() == 204) {
+                return;
+            }
 
             startedGame = true;
         });
@@ -150,7 +158,8 @@ public class ServerUtils {
                 .target(SERVER).path("api/activities/list") //
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
-                .get(new GenericType<>() {});
+                .get(new GenericType<>() {
+                });
     }
 
     public List<LeaderboardEntry> getSingleplayerLeaderboard() {

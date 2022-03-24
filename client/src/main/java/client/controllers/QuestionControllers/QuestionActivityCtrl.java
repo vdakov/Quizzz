@@ -9,15 +9,17 @@ import javafx.animation.Timeline;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -30,6 +32,7 @@ public class QuestionActivityCtrl {
     protected final double startTime = 10;
     protected int addedPointsInt;
     protected String userAnswer;
+    protected boolean answered;
     @FXML
     protected Label timeLabel;
     @FXML
@@ -67,11 +70,8 @@ public class QuestionActivityCtrl {
     @FXML
     protected String correctAnswer;
     @FXML
-    protected Rectangle firstOptionRectangle;
-    @FXML
-    protected Rectangle secondOptionRectangle;
-    @FXML
-    protected Rectangle thirdOptionRectangle;
+    protected Button emoji;
+
     protected IntegerProperty timeSeconds =
             new SimpleIntegerProperty((int) startTime);
     protected Timeline timeline;
@@ -85,19 +85,29 @@ public class QuestionActivityCtrl {
      * Initialises all the colors for the current scene
      */
     public void initialize() {
-        firstOptionRectangle.setStroke(Color.valueOf("#b38df7"));
-        secondOptionRectangle.setStroke(Color.valueOf("#ffd783"));
-        thirdOptionRectangle.setStroke(Color.valueOf("#ffa382"));
+        firstOptionText.setBorder(Border.EMPTY);
+        secondOptionText.setBorder(Border.EMPTY);
+        thirdOptionText.setBorder(Border.EMPTY);
+
+        answered = false;
 
         addedPoints.setText(" ");
         addedPointsInt = 0;
+
+        if (gameConfig.isSinglePlayer()) emoji.setVisible(false);
+        else emoji.setVisible(true);
     }
 
 
     public void answerQuestion(MouseEvent event) {
         // answers the question
+        if (answered) {
+            return;
+        }
+
         Label current = (Label) event.getSource();
         userAnswer = current.getText();
+        answered = true;
 
         server.updateScore(userAnswer);
 
@@ -112,16 +122,19 @@ public class QuestionActivityCtrl {
 
         //check whether the user's answer is correct and update the boolean value
 
-        firstOptionRectangle.setStroke(Color.valueOf("#ff0000"));
-        secondOptionRectangle.setStroke(Color.valueOf("#ff0000"));
-        thirdOptionRectangle.setStroke(Color.valueOf("#ff0000"));
+        firstOptionText.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(50), BorderStroke.THICK)));
+        secondOptionText.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(50), BorderStroke.THICK)));
+        thirdOptionText.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(50), BorderStroke.THICK)));
+
         if (getCorrectAnswer().equals(firstOptionText.getText())) {
-            firstOptionRectangle.setStroke(Color.valueOf("#92d36e"));
+            firstOptionText.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(50), BorderStroke.THICK)));
         } else if (getCorrectAnswer().equals(secondOptionText.getText())) {
-            secondOptionRectangle.setStroke(Color.valueOf("#92d36e"));
+            secondOptionText.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(50), BorderStroke.THICK)));
         } else {
-            thirdOptionRectangle.setStroke(Color.valueOf("#92d36e"));
+            thirdOptionText.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(50), BorderStroke.THICK)));
         }
+
+
     }
 
     public void pointsUpdate() {
@@ -158,7 +171,7 @@ public class QuestionActivityCtrl {
         timeline.playFromStart();                                 //start the animation
     }
 
-    public void handleTimerButton(ActionEvent event) {
+    public void handleTimer(MouseEvent event) {
         if (timeline != null) {
             timeline.stop();        //if timeline exists stop it when any answer button is pressed
         }
@@ -169,7 +182,7 @@ public class QuestionActivityCtrl {
     public void displayNextQuestion() {
         timeline.stop();
         if (gameConfig.getCurrentQuestionNumber() >= 20) finishGame();
-        sceneCtrl.showNextQuestion();
+        else sceneCtrl.showNextQuestion();
     }
 
     public void finishGame() {
@@ -178,6 +191,7 @@ public class QuestionActivityCtrl {
     }
 
     public void goToMainScreen() throws IOException {
+        timeline.stop();
         sceneCtrl.showMainScreenScene();
     }
 

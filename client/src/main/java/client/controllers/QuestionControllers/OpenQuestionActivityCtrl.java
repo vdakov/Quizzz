@@ -9,8 +9,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
     private int userAnswerInt;
@@ -24,9 +24,9 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
     private TextField answerTextfield;
 
     @FXML
-    private Rectangle userAnswerRectangle;
+    private GridPane userAnswerRectangle;
     @FXML
-    private Rectangle correctAnswerRectangle;
+    private GridPane correctAnswerRectangle;
 
     /**
      * Creates the scene with the needed dependencies
@@ -43,7 +43,12 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
      * Initialises all the colors for the current scene
      */
     public void initialize() {
-        answer.setStyle("-fx-background-color: #ffd783; -fx-border-color:  #ffd783");
+        answer.setStyle("-fx-background-color: #ffd783; -fx-border-color:  #ffd783; -fx-background-radius: 15; -fx-border-radius: 15;");
+        userAnswerRectangle.setBorder(Border.EMPTY);
+        answerTextfield.setText("");
+        correctAnswerRectangle.setOpacity(0);
+        answerTextfield.setText("");
+        answered = false;
     }
 
     /**
@@ -56,6 +61,11 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
             return;
         }
         sampleQuestion.setText(openQuestion.getQuestion().getKey());
+        questionNumberLabel.setText("Question " + getQuestionNumber());
+        points.setText(String.valueOf(getPointsInt()));
+
+        if (gameConfig.isSinglePlayer()) emoji.setVisible(false);
+        else emoji.setVisible(true);
 
         initialize();
         startTimer();
@@ -63,6 +73,11 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
 
     public void answerQuestion(ActionEvent event) {
         // answers the question and blocks the possibility to answer anymore
+        if (answered) {
+            return;
+        }
+        answered = true;
+
         try {
             userAnswerInt = Integer.parseInt(answerTextfield.getText());
             System.out.println(1);
@@ -85,18 +100,17 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
 
     public void answerUpdate() {
         // after the time ends the right answer is requested and then shown
-        userAnswerRectangle.setStrokeWidth(5);
         System.out.println(userAnswerInt);
         if (userAnswerInt == Integer.parseInt(getCorrectAnswer())) {
-            userAnswerRectangle.setStroke(Color.valueOf("#92d36e"));
+            userAnswerRectangle.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(30), BorderStroke.THICK)));
         } else {
-            userAnswerRectangle.setStroke(Color.valueOf("#ff0000"));
+            userAnswerRectangle.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(30), BorderStroke.THICK)));
+            correctAnswerRectangle.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(30), BorderStroke.THICK)));
+            correctAnswerLabel.setText(getCorrectAnswer());
         }
 
-        correctAnswerRectangle.setFill(Color.valueOf("#c9f1fd"));
-        correctAnswerRectangle.setStrokeWidth(5);
-        correctAnswerRectangle.setStroke(Color.valueOf("#000000"));
-        correctAnswerLabel.setText("Correct Answer: " + getCorrectAnswer());
+        correctAnswerRectangle.setOpacity(1);
+
     }
 
     public void pointsUpdate() {
