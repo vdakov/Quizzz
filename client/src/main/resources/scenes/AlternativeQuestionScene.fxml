@@ -16,10 +16,11 @@
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #3084f2;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.QuestionControllers.AlternativeQuestionActivityCtrl">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="10.0" percentWidth="5.0" prefWidth="30.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="133.66668605804443" minWidth="7.0" percentWidth="10.0" prefWidth="73.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="411.0" minWidth="3.0" percentWidth="23.33" prefWidth="300.6666259765625" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="411.0" minWidth="10.0" percentWidth="23.33" prefWidth="297.33337402343744" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="411.0" minWidth="3.0" percentWidth="23.33" prefWidth="266.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="133.66668605804443" minWidth="7.0" percentWidth="15.0" prefWidth="73.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="133.66668605804443" minWidth="10.0" percentWidth="5.0" prefWidth="100.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="411.0" minWidth="3.0" percentWidth="20.0" prefWidth="300.6666259765625" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="411.0" minWidth="10.0" percentWidth="20.0" prefWidth="297.33337402343744" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="411.0" minWidth="3.0" percentWidth="20.0" prefWidth="266.0" />
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="110.0" minWidth="110.0" percentWidth="10.0" prefWidth="110.0" />
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="9.0" percentWidth="5.0" prefWidth="14.0" />
     </columnConstraints>
@@ -49,68 +50,68 @@
             <Insets left="25.0" top="75.0" />
          </GridPane.margin>
         </Button>
-        <Label alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="117.0" text="Points:" textAlignment="RIGHT" GridPane.columnIndex="5">
+        <Label alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="117.0" text="Points:" textAlignment="RIGHT" GridPane.columnIndex="6">
             <font>
                 <Font name="Chalkboard" size="18.0" />
             </font>
         </Label>
-        <Label fx:id="points" alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="98.0" text="0 " textAlignment="CENTER" GridPane.columnIndex="5" GridPane.rowIndex="1">
+        <Label fx:id="points" alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="98.0" text="0 " textAlignment="CENTER" GridPane.columnIndex="6" GridPane.rowIndex="1">
             <font>
                 <Font name="Chalkboard" size="18.0" />
             </font>
         </Label>
-        <Label fx:id="addedPoints" alignment="CENTER_RIGHT" prefHeight="33.0" prefWidth="182.0" text=" " textAlignment="RIGHT" textFill="#92d36e" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+        <Label fx:id="addedPoints" alignment="CENTER_RIGHT" prefHeight="33.0" prefWidth="182.0" text=" " textAlignment="RIGHT" textFill="#92d36e" GridPane.columnIndex="6" GridPane.rowIndex="2" />
 
         <Button fx:id="emoji" mnemonicParsing="false" prefHeight="63.0" prefWidth="66.0" text="Emoji" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-        <Label fx:id="questionNumberLabel" alignment="CENTER" prefHeight="38.0" prefWidth="114.0" style="-fx-background-color: #2d4b5a; -fx-text-fill: #f6f6f6; -fx-background-radius: 40;" text="Question 1" textFill="WHITESMOKE" GridPane.columnIndex="2" GridPane.rowIndex="3">
+        <Label fx:id="questionNumberLabel" alignment="CENTER" prefHeight="38.0" prefWidth="114.0" style="-fx-background-color: #2d4b5a; -fx-text-fill: #f6f6f6; -fx-background-radius: 40;" text="Question 1" textFill="WHITESMOKE" GridPane.columnIndex="3" GridPane.rowIndex="3">
             <font>
                 <Font name="Trebuchet MS" size="15.0" />
             </font>
         </Label>
-        <Label fx:id="secondOptionText" alignment="CENTER" onMouseClicked="#answerQuestion" prefHeight="80.0" prefWidth="300.0" style="-fx-background-color: #ffd783; -fx-background-radius: 50;" text="2" wrapText="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+        <Label fx:id="secondOptionText" alignment="CENTER" onMouseClicked="#answerQuestion" prefHeight="80.0" prefWidth="250.0" style="-fx-background-color: #ffd783; -fx-background-radius: 50;" text="2" wrapText="true" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="6">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Button fx:id="moveNext" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#displayNextQuestion" opacity="0.0" prefHeight="54.0" prefWidth="93.0" text="Next" textAlignment="CENTER" GridPane.columnIndex="5" GridPane.rowIndex="7" />
+        <Button fx:id="moveNext" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#displayNextQuestion" opacity="0.0" prefHeight="54.0" prefWidth="93.0" text="Next" textAlignment="CENTER" GridPane.columnIndex="6" GridPane.rowIndex="7" />
 
-        <Label fx:id="firstOptionText" alignment="CENTER" onMouseClicked="#answerQuestion" prefHeight="80.0" prefWidth="300.0" style="-fx-background-color: #b38df7; -fx-background-radius: 50;" text="1" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+        <Label fx:id="firstOptionText" alignment="CENTER" onMouseClicked="#answerQuestion" prefHeight="80.0" prefWidth="250.0" style="-fx-background-color: #b38df7; -fx-background-radius: 50;" text="1" wrapText="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="6">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label fx:id="thirdOptionText" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#answerQuestion" prefHeight="80.0" prefWidth="300.0" style="-fx-background-color: #ffa382; -fx-background-radius: 50;" text="3" wrapText="true" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+        <Label fx:id="thirdOptionText" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#answerQuestion" prefHeight="80.0" prefWidth="250.0" style="-fx-background-color: #ffa382; -fx-background-radius: 50;" text="3" wrapText="true" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="6">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <ProgressBar fx:id="progressBarTime" prefHeight="40.0" prefWidth="927.0" progress="1.0" style="a: #000000;" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="7" />
+        <ProgressBar fx:id="progressBarTime" prefHeight="40.0" prefWidth="927.0" progress="1.0" style="a: #000000;" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="7" />
 
-        <Label fx:id="timeLabel" text="10" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER">
+        <Label fx:id="timeLabel" text="10" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER">
             <font>
                 <Font size="36.0" />
             </font>
         </Label>
-        <AnchorPane prefHeight="344.0" prefWidth="558.0" style="-fx-border-color: #587882; -fx-border-width: 5; -fx-border-radius: 5;" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="4">
+        <AnchorPane prefHeight="344.0" prefWidth="558.0" style="-fx-border-color: #587882; -fx-border-width: 5; -fx-border-radius: 5;" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="4">
             <children>
                 <ImageView fx:id="imageSrc" fitHeight="268.0" fitWidth="273.0" layoutX="40.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@pictures/blank.jpg" />
                     </image>
                 </ImageView>
-                <Label alignment="CENTER" layoutX="337.0" layoutY="13.0" prefHeight="63.0" prefWidth="540.0" style="-fx-background-color: #2d4b5a; -fx-background-radius: 50;" text="Instead of ... you could do ... instead" textFill="WHITESMOKE">
+                <Label alignment="CENTER" layoutX="337.0" layoutY="13.0" prefHeight="63.0" prefWidth="540.0" style="-fx-background-color: #2d4b5a; -fx-background-radius: 50;" text="Instead of ... you could do ... instead" textFill="WHITESMOKE" AnchorPane.bottomAnchor="280.0" AnchorPane.leftAnchor="340.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                     <font>
-                        <Font size="32.0" />
+                        <Font size="24.0" />
                     </font>
                 </Label>
-                <Label fx:id="sampleQuestion" alignment="CENTER" layoutX="337.0" layoutY="90.0" prefHeight="251.0" prefWidth="540.0" style="-fx-background-color: #2d4b5a; -fx-text-fill: #f5f5f5; -fx-background-radius: 50;" text="Question contents" textAlignment="CENTER" textFill="WHITESMOKE" wrapText="true">
+                <Label fx:id="sampleQuestion" alignment="CENTER" layoutX="337.0" layoutY="90.0" prefHeight="251.0" prefWidth="540.0" style="-fx-background-color: #2d4b5a; -fx-text-fill: #f5f5f5; -fx-background-radius: 50;" text="Question contents" textAlignment="CENTER" textFill="WHITESMOKE" wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="340.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="80.0">
                     <font>
                         <Font name="Chalkboard" size="16.0" />
                     </font>
                 </Label>
             </children>
         </AnchorPane>
-        <GridPane GridPane.columnIndex="5" GridPane.rowIndex="4" GridPane.rowSpan="3">
+        <GridPane GridPane.columnIndex="6" GridPane.rowIndex="4" GridPane.rowSpan="3">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="29.777830123901367" minWidth="0.0" prefWidth="13.111207008361816" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="96.88881333669026" minWidth="10.0" prefWidth="94.22212632497151" />
@@ -150,7 +151,7 @@
                 </Button>
             </children>
         </GridPane>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="QUIZZZZ" textAlignment="CENTER" wrappingWidth="379.73674392700195" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="QUIZZZZ" textAlignment="CENTER" wrappingWidth="379.73674392700195" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="2">
          <font>
             <Font size="81.0" />
          </font>
