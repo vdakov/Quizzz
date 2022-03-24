@@ -2,10 +2,9 @@ package client.logic;
 
 import client.controllers.AddActionActivityCtrl;
 import client.controllers.MainScreenActivityCtrl;
-import client.controllers.QuestionControllers.AlternativeQuestionActivityCtrl;
-import client.controllers.QuestionControllers.ComparisonQuestionActivityCtrl;
-import client.controllers.QuestionControllers.KnowledgeQuestionActivityCtrl;
-import client.controllers.QuestionControllers.OpenQuestionActivityCtrl;
+import client.controllers.MultiplayerControllers.ServerBrowserController;
+import client.controllers.MultiplayerControllers.WaitingRoomController;
+import client.controllers.QuestionControllers.*;
 import client.controllers.SceneCtrl;
 import com.google.inject.Binder;
 import com.google.inject.Module;
@@ -27,5 +26,9 @@ public class ModuleConfig implements Module {
         binder.bind(KnowledgeQuestionActivityCtrl.class).in(Scopes.SINGLETON);
         binder.bind(AlternativeQuestionActivityCtrl.class).in(Scopes.SINGLETON);
         binder.bind(ComparisonQuestionActivityCtrl.class).in(Scopes.SINGLETON);
+
+        binder.bind(QuestionActivityCtrl.class).in(Scopes.SINGLETON);
+        binder.bind(WaitingRoomController.class).in(Scopes.SINGLETON);
+        binder.bind(ServerBrowserController.class).in(Scopes.SINGLETON);
     }
 }

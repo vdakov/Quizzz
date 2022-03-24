@@ -20,9 +20,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
+import javax.inject.Inject;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
 
 public class QuestionActivityCtrl {
     // constructor needed variables
@@ -79,6 +78,7 @@ public class QuestionActivityCtrl {
     protected Timeline timeline;
 
 
+    @Inject
     public QuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
         this.server = server;
         this.sceneCtrl = sceneCtrl;

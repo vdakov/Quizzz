@@ -45,12 +45,14 @@ public class SceneCtrl {
     }
 
     public void showNextQuestion() {
+        System.out.println("Cumva am intrat aici");
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         gameConfiguration.setCurrentQuestionNumber(gameConfiguration.getCurrentQuestionNumber() + 1);
         String response = serverUtils.getQuestion();
         Scanner scanner = new Scanner(response).useDelimiter(": ");
         String questionType = scanner.next();
-        primaryStage.setTitle("Question #" + gameConfiguration.getCurrentQuestionNumber() + ": " + questionType);
+        //primaryStage.setTitle("Question #" + gameConfiguration.getCurrentQuestionNumber() + ": " + questionType);
+        System.out.println(questionType);
         switch (questionType) {
             case "OpenQuestion": {
                 this.showOpenQuestionScene(QuestionParsers.openQuestionParser(scanner.next()));
@@ -72,6 +74,7 @@ public class SceneCtrl {
     }
 
     public void showOpenQuestionScene(OpenQuestion openQuestion) {
+        System.out.println("Open question in");
         var pair = scenes.get("OpenQuestion");
         OpenQuestionActivityCtrl ctrl = (OpenQuestionActivityCtrl) pair.getKey();
         ctrl.displayQuestion(openQuestion);
@@ -79,6 +82,7 @@ public class SceneCtrl {
     }
 
     public void showKnowledgeQuestionScene(KnowledgeQuestion knowledgeQuestion) {
+        System.out.println("Knowledge question in");
         var pair = scenes.get("KnowledgeQuestion");
         KnowledgeQuestionActivityCtrl ctrl = (KnowledgeQuestionActivityCtrl) pair.getKey();
 
@@ -87,6 +91,7 @@ public class SceneCtrl {
     }
 
     public void showComparisonQuestionScene(ComparisonQuestion comparisonQuestion) {
+        System.out.println("Comparison question in");
         var pair = scenes.get("ComparisonQuestion");
         ComparisonQuestionActivityCtrl ctrl = (ComparisonQuestionActivityCtrl) pair.getKey();
         ctrl.displayQuestion(comparisonQuestion);
@@ -94,6 +99,7 @@ public class SceneCtrl {
     }
 
     public void showAlternativeQuestionScene(AlternativeQuestion alternativeQuestion) {
+        System.out.println("Alternative question in");
         var pair = scenes.get("AlternativeQuestion");
         AlternativeQuestionActivityCtrl ctrl = (AlternativeQuestionActivityCtrl) pair.getKey();
         ctrl.displayQuestion(alternativeQuestion);

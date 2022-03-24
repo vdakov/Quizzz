@@ -88,14 +88,13 @@ public class WaitingRoomController {
 
             System.out.println("Game configuration  " + gameConfiguration.getRoomId());
 
-            if(ongoingGames.contains(gameConfiguration.getRoomId())) {
+            if (ongoingGames.contains(gameConfiguration.getRoomId())) {
                 System.out.println("Am intrat si aici 1234");
                 //server.stop();
                 sceneCtrl.showNextQuestion();
                 System.out.println("Why nu mergi?");
             }
         });
-
 
         if (owner) {
             this.owner = owner; //sets this if the owner leaves

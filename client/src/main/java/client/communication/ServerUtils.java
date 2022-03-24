@@ -24,7 +24,6 @@ import jakarta.ws.rs.core.GenericType;
 import jakarta.ws.rs.core.Response;
 import org.glassfish.jersey.client.ClientConfig;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -92,7 +91,7 @@ public class ServerUtils {
     public void waitForMultiPlayerRoomStart(Consumer<String> startedGame) {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         EXEC.submit(() -> {
-            while(!Thread.interrupted()) {
+            while (!Thread.interrupted()) {
                 System.out.println(gameConfiguration.getUserName() + "  " + gameConfiguration.getRoomId());
                 var res = ClientBuilder.newClient(new ClientConfig())
                         .target(SERVER).path("api/multiPlayer/" + gameConfiguration.getUserName()
@@ -100,11 +99,16 @@ public class ServerUtils {
                         .request(APPLICATION_JSON)
                         .accept(APPLICATION_JSON).get(Response.class);
 
+                System.out.println("I got a response");
+
+                System.out.println(res.getStatus());
+
                 if (res.getStatus() == 204) {
                     return;
                 }
 
                 String gameInProgress = res.readEntity(String.class);
+                System.out.println("Game accepted: " + gameInProgress);
                 startedGame.accept(gameInProgress);
             }
         });

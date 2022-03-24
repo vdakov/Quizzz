@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.async.DeferredResult;
 import server.services.GameServices.MultiplayerGameService;
 
-import javax.swing.text.html.parser.Entity;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -46,16 +45,18 @@ public class MultiPlayerGameController {
     @GetMapping("/{gameId}/waitForGameToStart")
     public DeferredResult<ResponseEntity<String>> waitForGameToStart(@PathVariable("gameId") String gameId) {
         var noContent = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        var res = new DeferredResult<ResponseEntity<String>>(5000L, noContent);
+        var res = new DeferredResult<ResponseEntity<String>>(50000L, noContent);
 
         var key = new Object();
         listeners.put(key, q -> {
             System.out.println("AM reusit sa dau update");
             res.setResult(ResponseEntity.ok(q));
         });
-        res.onCompletion(() -> {
-            listeners.remove(key);
-        });
+//        res.onCompletion(() -> {
+//            listeners.remove(key);
+//        });
+
+        System.out.println("Listeners size: " + listeners.size());
 
         return res;
     }
