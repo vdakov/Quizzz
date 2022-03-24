@@ -17,7 +17,7 @@ import java.util.Random;
 public class MultiplayerGameService {
 
     private ActivityRepository activityRepository;
-    private GameCatalog        gameCatalog;
+    private GameCatalog gameCatalog;
 
     public MultiplayerGameService(ActivityRepository activityRepository) {
         this.activityRepository = activityRepository;
@@ -32,7 +32,7 @@ public class MultiplayerGameService {
 
         List<Pair<Question, String>> questionList = null;
         try {
-            questionList = QuestionGenerator.generateQuestions(actionCatalog, 20, 2, 7, new Random());
+            questionList = QuestionGenerator.generateQuestions(actionCatalog, 21, 2, 7, new Random());
         } catch (NotEnoughActivitiesException e) {
             System.out.println("Not enough activities");
             return;

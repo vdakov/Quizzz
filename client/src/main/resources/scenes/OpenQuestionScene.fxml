@@ -153,33 +153,21 @@
                 </TextField>
             </children>
         </GridPane>
-        <GridPane GridPane.columnIndex="4" GridPane.rowIndex="6">
+        <GridPane fx:id="correctAnswerRectangle" maxHeight="90.0" prefHeight="90.0" prefWidth="100.0" style="-fx-background-color: #2d4b5a; -fx-background-radius: 30; -fx-border-color: #00ff00; -fx-border-width: 5; -fx-border-radius: 15;" GridPane.columnIndex="5" GridPane.rowIndex="6">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints />
             </columnConstraints>
             <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <GridPane fx:id="correctAnswerRectangle" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="90.0" prefWidth="315.0" style="-fx-background-color: #2d4b5a; -fx-background-radius: 30; -fx-border-color: #00ff00; -fx-border-width: 5; -fx-border-radius: 15;" GridPane.columnIndex="1">
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="98.88888549804688" minWidth="0.0" prefWidth="21.666666666666664" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="368.44439697265625" minWidth="10.0" prefWidth="140.111083984375" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="390.66670227050787" minWidth="10.0" prefWidth="158.55558268229163" />
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                    <children>
-                        <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="121.0" style="-fx-background-color: #ffd783; -fx-background-radius: 15;" text="Correct was" GridPane.columnIndex="1">
-                            <font>
-                                <Font name="Chalkboard" size="18.0" />
-                            </font>
-                        </Button>
-                        <Label fx:id="correctAnswerLabel" prefHeight="27.0" prefWidth="140.0" text="sdfwefwe" textFill="WHITESMOKE" GridPane.columnIndex="2" />
-                    </children>
-                </GridPane>
+                  <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="121.0" style="-fx-background-color: #ffd783; -fx-background-radius: 15;" text="Correct was" GridPane.halignment="CENTER">
+                      <font>
+                          <Font name="Chalkboard" size="18.0" />
+                      </font>
+                  </Button>
+                  <Label fx:id="correctAnswerLabel" prefHeight="27.0" prefWidth="106.0" textFill="WHITESMOKE" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
             </children>
         </GridPane>
         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="QUIZZZZ" textAlignment="CENTER" wrappingWidth="379.73674392700195" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="2">

@@ -72,6 +72,9 @@
             <font>
                 <Font size="18.0" />
             </font>
+         <padding>
+            <Insets left="10.0" right="10.0" />
+         </padding>
         </Label>
         <Button fx:id="moveNext" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#displayNextQuestion" opacity="0.0" prefHeight="54.0" prefWidth="93.0" text="Next" textAlignment="CENTER" GridPane.columnIndex="6" GridPane.rowIndex="7" />
 
@@ -79,11 +82,17 @@
             <font>
                 <Font size="18.0" />
             </font>
+         <padding>
+            <Insets left="10.0" right="10.0" />
+         </padding>
         </Label>
         <Label fx:id="thirdOptionText" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#answerQuestion" prefHeight="80.0" prefWidth="250.0" style="-fx-background-color: #ffa382; -fx-background-radius: 50;" text="3" wrapText="true" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="6">
             <font>
                 <Font size="18.0" />
             </font>
+         <padding>
+            <Insets left="10.0" right="10.0" />
+         </padding>
         </Label>
         <ProgressBar fx:id="progressBarTime" prefHeight="40.0" prefWidth="927.0" progress="1.0" style="a: #000000;" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="7" />
 

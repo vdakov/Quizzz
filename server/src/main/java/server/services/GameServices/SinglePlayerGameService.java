@@ -30,7 +30,7 @@ public class SinglePlayerGameService {
 
         List<Pair<Question, String>> questionList = null;
         try {
-            questionList = QuestionGenerator.generateQuestions(actionCatalog, 20, 2, 7, new Random());
+            questionList = QuestionGenerator.generateQuestions(actionCatalog, 21, 2, 7, new Random());
         } catch (NotEnoughActivitiesException e) {
             System.out.println("Not enough activities");
             return "GAME GENERATION FAILED";
