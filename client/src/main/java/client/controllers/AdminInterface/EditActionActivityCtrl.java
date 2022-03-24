@@ -11,13 +11,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 
+import java.util.List;
+
 public class EditActionActivityCtrl {
 
     private final ServerUtils server;
     private final SceneCtrl sceneCtrl;
 
-    @FXML
-    private TextField id;
+    private String id;
 
     @FXML
     private TextField title;
@@ -32,7 +33,6 @@ public class EditActionActivityCtrl {
     public EditActionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
         this.sceneCtrl = sceneCtrl;
         this.server = server;
-
     }
 
     public void cancel() {
@@ -42,7 +42,7 @@ public class EditActionActivityCtrl {
 
     public void ok() {
         try {
-            server.addActivity(getActivity());
+            server.editActivity(id, getActivity());
         } catch (WebApplicationException e) {
 
             var alert = new Alert(Alert.AlertType.ERROR);
@@ -66,10 +66,16 @@ public class EditActionActivityCtrl {
     }
 
     private void clearFields() {
-        id.clear();
         title.clear();
         source.clear();
         consumption.clear();
+    }
+
+    public void showOriginalAction() {
+        Action editingAction = server.getActivityById(id);
+        title.setText(editingAction.getTitle());
+        source.setText(editingAction.getSource());
+        consumption.setText(String.valueOf(editingAction.getConsumption()));
     }
 
     public void keyPressed(KeyEvent e) {

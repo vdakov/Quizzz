@@ -187,7 +187,7 @@ public class ServerUtils {
      */
     public Action addActivity(Action a) {
         return ClientBuilder.newClient(new ClientConfig()) //
-                .target(SERVER).path("api/activities") //
+                .target(SERVER).path("api/activities/add") //
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
                 .post(Entity.entity(a, APPLICATION_JSON), Action.class);
@@ -199,11 +199,21 @@ public class ServerUtils {
                 .request().delete(); //;
     }
 
-    public void editActivity(String id) {
-//        Action a = new Action();
-//        ClientBuilder.newClient(new ClientConfig()) //
-//                .target(SERVER).path("api/activities/delete/" + id) //
-//                .request().put(Entity.entity(a, APPLICATION_JSON), Action.class); //;
+    public void editActivity(String id, Action a) {
+        ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/activities/update/" + id) //
+                .request() //
+                .accept(APPLICATION_JSON) //
+                .put(Entity.entity(a, APPLICATION_JSON), Action.class); //;
+    }
+
+    public Action getActivityById(String id) {
+        return ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/activities/" + id) //
+                .request() //
+                .accept(APPLICATION_JSON) //
+                .get(new GenericType<>() {
+                });
     }
 
     public void alert() {

@@ -85,7 +85,6 @@ public class OverviewActionsActivityCtrl implements Initializable {
     public void editActivity(ActionEvent event) {
         String id = event.getSource().toString();
 //        table.edit(1, );
-        server.editActivity(id);
     }
 
     public void refresh() {
