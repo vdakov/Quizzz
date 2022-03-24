@@ -74,7 +74,7 @@ public class WaitingRoomController {
 
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         gameConfiguration.setRoomId(roomId);
-        gameConfiguration.setUserName(userName + "cata123");
+        gameConfiguration.setUserName(userName);
         gameConfiguration.setCurrentQuestionNumber(gameConfiguration.getCurrentQuestionNumber() + 1);
         gameConfiguration.setGameTypeMultiPlayer();
 
