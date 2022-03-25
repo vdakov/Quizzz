@@ -238,6 +238,11 @@ public class ServerUtils {
                 .accept(APPLICATION_JSON).get(String.class);
     }
 
+    /**
+     * HTTP request for receiving a byte array containing the image from the server
+     * @param imagePath the path on the server where the image is stored
+     * @return a byte array of images that is later converted to an image displayed in the actual game
+     */
     public byte[] getQuestionImage(String imagePath) {
 
         String base64 = ClientBuilder.newClient(new ClientConfig())
@@ -249,6 +254,11 @@ public class ServerUtils {
 
     }
 
+    /**
+     * PUT HTTP request that will later be used to send images to the server from the adming interface
+     * @param base64Image the base64 string of the image
+     * @param imageName the name as which the image will be saved as
+     */
     public void sendImage(String base64Image, String imageName) {
         ClientBuilder.newClient(new ClientConfig()) //
                 .target(SERVER).path("api/activities/receiveImage/" + imageName) //

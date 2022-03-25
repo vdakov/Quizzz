@@ -82,6 +82,14 @@ public class ActionController {
         service.delete(id);
     }
 
+    /**
+     * Sends the client in its body a base64-encoded image corresponding to the question they are on
+     *
+     * @param folderNum the folder where the image is stored
+     * @param imagePath the name of the actual image
+     * @return a base64-encoded image
+     * @throws IOException in case the location is not found
+     */
     @GetMapping(path = "/sendImage/{folderNum}/{imagePath}")
     public @ResponseBody
     String getImage(@PathVariable int folderNum, @PathVariable String imagePath) throws IOException {
@@ -90,6 +98,13 @@ public class ActionController {
         return base64String;
     }
 
+    /**
+     * Implementation for receiving an image from the client- groundwork for admin panel
+     *
+     * @param base64    the base64 encoded image the client sends
+     * @param imageName the name the image will be saved as
+     * @throws IOException
+     */
     @PutMapping(path = "/receiveImage/{imageName}")
     public void receiveImage(@RequestBody String base64, @PathVariable String imageName) throws IOException {
         ByteArrayInputStream bis = new ByteArrayInputStream(Base64.decodeBase64(base64));
