@@ -43,6 +43,9 @@ public class MainScreenActivityCtrl {
 
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         gameConfiguration.setGameTypeMultiPlayer();
+        String playerName = userName.getText();
+        gameConfiguration.setUserName(playerName);
+
         this.sceneCtrl.showServerBrowser();
     }
 

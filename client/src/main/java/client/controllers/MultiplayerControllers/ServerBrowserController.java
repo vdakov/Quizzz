@@ -7,10 +7,7 @@ import commons.GameContainer;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.util.ArrayList;
@@ -57,13 +54,37 @@ public class ServerBrowserController {
 
         this.currentGames = server.listOfCurrentGames("test");
 
-        this.listOfGameIds= new ArrayList<>();
-        for( GameContainer game : currentGames){
+        this.listOfGameIds = new ArrayList<>();
+        for (GameContainer game : currentGames) {
             this.listOfGameIds.add(game.getGameId());
         }
 
+
         this.gameTable.getColumns().add(gameIdColumn);
         this.gameTable.getColumns().add(numPlayerColumn);
+
+        gameTable.setRowFactory(event -> {
+            TableRow<GameContainer> row = new TableRow<>();
+
+            row.setOnMouseEntered(event1 -> {
+
+
+                if (row.isSelected()) {
+
+                    if (row.getItem().getGameId() != null) {
+                        String Id = row.getItem().getGameId();
+                        this.gameIdField.setText(Id);
+
+                    }
+
+
+                }
+
+
+            });
+
+            return row;
+        });
         this.gameTable.setItems(currentGames);
 
 
@@ -108,10 +129,9 @@ public class ServerBrowserController {
         this.sceneCtrl.showWaitingRoom(true, roomId, playerName);
 
 
-
     }
 
-    public void joinWaitingRoom(ActionEvent event){
+    public void joinWaitingRoom(ActionEvent event) {
         String playerName = "test";
         String gameId = this.gameIdField.getText();
 
