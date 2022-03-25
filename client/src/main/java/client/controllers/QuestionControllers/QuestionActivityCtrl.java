@@ -3,6 +3,7 @@ package client.controllers.QuestionControllers;
 import client.communication.ServerUtils;
 import client.controllers.SceneCtrl;
 import client.data.GameConfiguration;
+import commons.Leaderboard.LeaderboardEntry;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -10,9 +11,7 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Border;
@@ -70,7 +69,22 @@ public class QuestionActivityCtrl {
     @FXML
     protected String correctAnswer;
     @FXML
-    protected Button emoji;
+    protected ImageView emoji1;
+    @FXML
+    protected ImageView emoji2;
+    @FXML
+    protected ImageView emoji3;
+    @FXML
+    protected ImageView emoji4;
+    @FXML
+    protected ImageView emoji5;
+    @FXML
+    protected TableView tableview;
+    @FXML
+    protected TableColumn<String, ImageView> playersActivity;
+    @FXML
+    protected SplitPane splitPane;
+
 
     protected IntegerProperty timeSeconds =
             new SimpleIntegerProperty((int) startTime);
@@ -94,8 +108,8 @@ public class QuestionActivityCtrl {
         addedPoints.setText(" ");
         addedPointsInt = 0;
 
-        if (gameConfig.isSinglePlayer()) emoji.setVisible(false);
-        else emoji.setVisible(true);
+        if (gameConfig.isSinglePlayer()) splitPane.setVisible(true);
+             else splitPane.setVisible(false);
     }
 
 

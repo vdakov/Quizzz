@@ -64,8 +64,8 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         questionNumberLabel.setText("Question " + getQuestionNumber());
         points.setText(String.valueOf(getPointsInt()));
 
-        if (gameConfig.isSinglePlayer()) emoji.setVisible(false);
-        else emoji.setVisible(true);
+        if (gameConfig.isSinglePlayer()) splitPane.setVisible(true);
+        else splitPane.setVisible(false);
 
         initialize();
         startTimer();
