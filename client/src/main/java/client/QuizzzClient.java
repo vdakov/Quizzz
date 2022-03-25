@@ -15,7 +15,6 @@ import client.logic.ModuleConfig;
 import com.google.inject.Injector;
 import javafx.application.Application;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
@@ -63,20 +62,20 @@ public class QuizzzClient extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        //make a hashmap to easily look up any scene using its filename (without the .fxml extension)
-        HashMap<String, Pair<Object, Scene>> scenesMap = new HashMap<>();
+        //make a hashmap to easily look up any root (parent of scene) using its filename (without the .fxml extension)
+        HashMap<String, Pair<Object, Parent>> rootsMap = new HashMap<>();
 
         for (int i = 0; i < scenePairs.length; i++) {
             var scenePair = scenePairs[i];
 
             //Because the Controllers are not from the same class, they are stored as Objects and should be cast to the correct type when retrieving them
             Pair<Object, Parent> controllerParentPair = FXML_CONFIG.load(scenePair.getValue(), "scenes", scenePair.getKey());
-            Pair<Object, Scene> value = new Pair<>(controllerParentPair.getKey(), new Scene(controllerParentPair.getValue())); //Pair consisting of Controller and corresponding Scene
+            //Pair<Object, Scene> value = new Pair<>(controllerParentPair.getKey(), new Scene(controllerParentPair.getValue())); //Pair consisting of Controller and corresponding Scene
             String key = scenePair.getKey().replace("Scene.fxml", ""); //name of the scene
-            scenesMap.put(key, value);
+            rootsMap.put(key, controllerParentPair);
         }
 
         var sceneCtrl = INJECTOR.getInstance(SceneCtrl.class);
-        sceneCtrl.initialize(primaryStage, scenesMap);
+        sceneCtrl.initialize(primaryStage, rootsMap);
     }
 }
