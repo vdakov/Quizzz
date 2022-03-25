@@ -1,5 +1,7 @@
 package server.entities;
 
+import commons.GameContainer;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -10,12 +12,12 @@ public class GameCatalog {
     private static GameCatalog gameCatalog = null;
 
     private HashMap<String, SinglePlayerGame> singlePlayerGames;
-    private HashMap<String, MultiPlayerGame>  multiPlayerGames;
+    private HashMap<String, MultiPlayerGame> multiPlayerGames;
     private MultiPlayerGame multiplayerRandomRoom;
 
     public GameCatalog() {
-        this.singlePlayerGames     = new HashMap<>();
-        this.multiPlayerGames      = new HashMap<>();
+        this.singlePlayerGames = new HashMap<>();
+        this.multiPlayerGames = new HashMap<>();
         this.multiplayerRandomRoom = null;
     }
 
@@ -55,13 +57,42 @@ public class GameCatalog {
         this.multiplayerRandomRoom = multiplayerRandomRoom;
     }
 
-    public List<String> getListMultiplayerIds(){
-        ArrayList<String> gameIds= new ArrayList<>();
-        Iterator<String> iterator= multiPlayerGames.keySet().iterator();
-        while(iterator.hasNext()){
-            gameIds.add(iterator.next());
+    public List<GameContainer> getWaitingMultiplayerGames() {
+        this.cleanEmptyGames();
+        ArrayList<GameContainer> games = new ArrayList<>();
+        Iterator<String> iterator1 = multiPlayerGames.keySet().iterator();
+        Iterator<MultiPlayerGame> iterator2 = multiPlayerGames.values().iterator();
+        while (iterator1.hasNext()) {
+            int numPlayers = iterator2.next().getNumPlayers();
+            String currentGameId = iterator1.next();
+
+            if (!this.getMultiPlayerGame(currentGameId).isGameOngoing()) {
+                games.add(new GameContainer(currentGameId, numPlayers));
+            }
+
         }
-        return gameIds;
+
+        return games;
 
     }
+
+    /**
+     * Method that ensures there are no empty games in server browser
+     */
+    public void cleanEmptyGames() {
+
+        Iterator<MultiPlayerGame> gameIterator = multiPlayerGames.values().iterator();
+        ArrayList<MultiPlayerGame> emptyGames = new ArrayList<>();
+
+        while (gameIterator.hasNext()) {
+            MultiPlayerGame game = gameIterator.next();
+            if (game.getNumPlayers() == 0) {
+                emptyGames.add(game);
+            }
+        }
+        for (MultiPlayerGame game : emptyGames) {
+            this.multiPlayerGames.remove(game.getGameId());
+        }
+    }
+
 }

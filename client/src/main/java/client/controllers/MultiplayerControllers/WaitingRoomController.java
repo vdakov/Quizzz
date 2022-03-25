@@ -46,10 +46,8 @@ public class WaitingRoomController {
      * @param event the Action Event from the button
      */
     public void goBackToServerBrowser(ActionEvent event) {
-       // this.server.removePlayer(this.userName, this.gameId);
-        if (owner) {
-            this.owner = false;
-        }
+        this.server.removePlayer(this.userName, this.gameId);
+
         this.sceneCtrl.showServerBrowser();
     }
 
@@ -68,6 +66,7 @@ public class WaitingRoomController {
         this.gameId = roomId;
         this.ownerText.setText("");
         this.startButton.setDisable(true);
+        this.playerLabel.setText(server.getNumPlayers(roomId) + ""); // the only good way to convert to a string :)
 
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         gameConfiguration.setRoomId(roomId);

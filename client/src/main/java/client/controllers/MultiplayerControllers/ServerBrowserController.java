@@ -7,7 +7,6 @@ import commons.GameContainer;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -51,7 +50,7 @@ public class ServerBrowserController {
         numPlayerColumn.setCellValueFactory(new PropertyValueFactory<GameContainer, Integer>("numPlayers"));
 
 
-        //this.currentGames = server.listOfAllGameIds("test");
+        this.currentGames = server.listOfCurrentGames("test");
 
         this.gameTable.getColumns().add(gameIdColumn);
         this.gameTable.getColumns().add(numPlayerColumn);
@@ -63,6 +62,7 @@ public class ServerBrowserController {
     /**
      * Refresh method to update table on each player's whim;
      * Deletes the previous column values and initializes them again
+     *
      * @param event the refresh button Action event
      */
     public void refresh(ActionEvent event) {
@@ -73,6 +73,7 @@ public class ServerBrowserController {
 
     /**
      * Returns user to main menu
+     *
      * @param event the actionevent of the button
      */
     public void mainMenu(ActionEvent event) {
@@ -83,10 +84,11 @@ public class ServerBrowserController {
      * Allows user to join a game with an ID provided in the text field
      * If an invalid ID is given an alert is shown
      * Currently enters hardcoded username since there is no unique username in multiplayer game implementation
+     *
      * @param event
      */
     public void joinWaitingRoom(ActionEvent event) {
-          // we will connect to the initialised random room
+        // we will connect to the initialised random room
         String playerName = "test";
 
         String roomId = server.getRandomMultiPlayerRoomId(playerName);
@@ -111,6 +113,7 @@ public class ServerBrowserController {
 
     /**
      * Creates a new waiting room and identifies this player as the owner
+     *
      * @param event the ActionEvent of the button
      */
     public void createWaitingRoom(ActionEvent event) {

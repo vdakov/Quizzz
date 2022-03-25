@@ -38,4 +38,18 @@ public class MultiPlayerGame extends Game {
     public void updatePlayerScore(String userName, int addedScore) {
         playerScores.put(userName, getPlayerScore(userName) + addedScore);
     }
+
+    public int getNumPlayers() {
+        return playerScores.size();
+    }
+
+    public boolean isGameOngoing() {
+        return this.gameStatus == GameStatus.ONGOING;
+    }
+
+    public void removePlayer(String userName) {
+
+        playerScores.remove(userName);
+        System.out.println("Player " + userName + " has been removed from the game");
+    }
 }
