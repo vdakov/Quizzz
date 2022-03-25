@@ -59,5 +59,7 @@ public class SinglePlayerGameService {
     public String getAnswer(String userName, String gameId, int questionNumber) {
         return gameCatalog.getSinglePlayerGame(gameId).getQuestionAnswer(questionNumber);
     }
+
+
 }
 

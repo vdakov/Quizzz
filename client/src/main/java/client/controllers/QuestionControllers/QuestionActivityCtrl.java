@@ -21,7 +21,6 @@ import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
-
 import java.io.IOException;
 
 public class QuestionActivityCtrl {
@@ -52,6 +51,8 @@ public class QuestionActivityCtrl {
     protected Label secondOptionText;
     @FXML
     protected ImageView secondOptionImage;
+    @FXML
+    protected ImageView image;
     @FXML
     protected Label thirdOptionText;
     @FXML
@@ -84,7 +85,7 @@ public class QuestionActivityCtrl {
     /**
      * Initialises all the colors for the current scene
      */
-    public void initialize() {
+    public void initialize() throws IOException {
         firstOptionText.setBorder(Border.EMPTY);
         secondOptionText.setBorder(Border.EMPTY);
         thirdOptionText.setBorder(Border.EMPTY);
@@ -93,6 +94,7 @@ public class QuestionActivityCtrl {
 
         addedPoints.setText(" ");
         addedPointsInt = 0;
+
 
         if (gameConfig.isSinglePlayer()) emoji.setVisible(false);
         else emoji.setVisible(true);
@@ -167,7 +169,13 @@ public class QuestionActivityCtrl {
         timeline.getKeyFrames().add(
                 new KeyFrame(Duration.seconds(startTime + 1),      //the timeLine handles an animation which lasts start + 1 seconds
                         new KeyValue(timeSeconds, 0)));    //animation finishes when timeSeconds comes to 0
-        timeline.setOnFinished(event -> displayNextQuestion());       //proceeds to the next question if no answer was given in 10 sec
+        timeline.setOnFinished(event -> {
+            try {
+                displayNextQuestion();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });       //proceeds to the next question if no answer was given in 10 sec
         timeline.playFromStart();                                 //start the animation
     }
 
@@ -179,7 +187,7 @@ public class QuestionActivityCtrl {
         System.out.println("Time took to answer - " + timeSeconds);
     }
 
-    public void displayNextQuestion() {
+    public void displayNextQuestion() throws IOException {
         timeline.stop();
         if (gameConfig.getCurrentQuestionNumber() >= 20) finishGame();
         else sceneCtrl.showNextQuestion();

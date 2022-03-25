@@ -4,6 +4,12 @@ import client.communication.ServerUtils;
 import client.controllers.SceneCtrl;
 import com.google.inject.Inject;
 import commons.Questions.AlternativeQuestion;
+import javafx.embed.swing.SwingFXUtils;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 
 
 public class AlternativeQuestionActivityCtrl extends QuestionActivityCtrl {
@@ -23,10 +29,16 @@ public class AlternativeQuestionActivityCtrl extends QuestionActivityCtrl {
      *
      * @param alternativeQuestion the question that is set
      */
-    public void displayQuestion(AlternativeQuestion alternativeQuestion) {
+    public void displayQuestion(AlternativeQuestion alternativeQuestion) throws IOException {
         if (alternativeQuestion == null) {
             return;
         }
+
+        ByteArrayInputStream bis = new ByteArrayInputStream(server.getQuestionImage(alternativeQuestion.getQuestion().getRight()));
+        BufferedImage bImage = ImageIO.read(bis);
+
+        this.image.setImage(SwingFXUtils.toFXImage(bImage, null));
+
 
         sampleQuestion.setText(alternativeQuestion.getQuestion().getKey());
 

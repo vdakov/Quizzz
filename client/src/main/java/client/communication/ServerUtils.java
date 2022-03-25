@@ -22,13 +22,14 @@ import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.GenericType;
 import jakarta.ws.rs.core.Response;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.glassfish.jersey.client.ClientConfig;
-
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
+
 
 public class ServerUtils {
 
@@ -235,6 +236,26 @@ public class ServerUtils {
                 .target(SERVER).path("api/" + gameType + "/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getRoomId() + "/getScore")
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON).get(String.class);
+    }
+
+    public byte[] getQuestionImage(String imagePath) {
+
+        String base64 = ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER).path("api/activities/sendImage/" + imagePath.substring(0, 2) + imagePath.substring(2))
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON).get(String.class);
+
+        return Base64.decodeBase64(base64);
+
+    }
+
+    public void sendImage(String base64Image, String imageName) {
+        ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/activities/receiveImage/" + imageName) //
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .put(Entity.entity(base64Image, APPLICATION_JSON), String.class);
+
     }
 
 
