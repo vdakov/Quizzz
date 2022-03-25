@@ -1,6 +1,9 @@
 package server.entities;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 public class GameCatalog {
 
@@ -50,5 +53,15 @@ public class GameCatalog {
 
     public void setMultiplayerRandomRoom(MultiPlayerGame multiplayerRandomRoom) {
         this.multiplayerRandomRoom = multiplayerRandomRoom;
+    }
+
+    public List<String> getListMultiplayerIds(){
+        ArrayList<String> gameIds= new ArrayList<>();
+        Iterator<String> iterator= multiPlayerGames.keySet().iterator();
+        while(iterator.hasNext()){
+            gameIds.add(iterator.next());
+        }
+        return gameIds;
+
     }
 }

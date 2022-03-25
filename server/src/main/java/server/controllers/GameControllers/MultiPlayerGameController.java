@@ -7,6 +7,7 @@ import org.springframework.web.context.request.async.DeferredResult;
 import server.services.GameServices.MultiplayerGameService;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.function.Consumer;
 
 @RestController
@@ -81,5 +82,10 @@ public class MultiPlayerGameController {
     public String getAnswer(@PathVariable("userName") String userName, @PathVariable("gameId") String gameId,
                             @PathVariable("questionNumber") int questionNumber) {
         return multiplayerGameService.getAnswer(userName, gameId, questionNumber);
+    }
+
+    @GetMapping("/getGameIds")
+    public List<String> getGameIds(){
+        return multiplayerGameService.getGameIds();
     }
 }

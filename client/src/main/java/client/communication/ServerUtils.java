@@ -22,6 +22,7 @@ import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.GenericType;
 import jakarta.ws.rs.core.Response;
+import javafx.collections.ObservableList;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.glassfish.jersey.client.ClientConfig;
 import java.util.List;
@@ -267,6 +268,17 @@ public class ServerUtils {
                 .put(Entity.entity(base64Image, APPLICATION_JSON), String.class);
 
     }
+
+    public ObservableList<String> listOfAllGameIds(String userName){
+        return ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/multiPlayer/"+userName) //
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .get(new GenericType<>() {
+                });
+    }
+
+
 
 
 }

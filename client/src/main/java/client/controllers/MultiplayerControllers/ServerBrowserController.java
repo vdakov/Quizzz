@@ -7,6 +7,7 @@ import commons.GameContainer;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -50,7 +51,7 @@ public class ServerBrowserController {
         numPlayerColumn.setCellValueFactory(new PropertyValueFactory<GameContainer, Integer>("numPlayers"));
 
 
-        //this.currentGames = server.listOfCurrentGames();
+        //this.currentGames = server.listOfAllGameIds("test");
 
         this.gameTable.getColumns().add(gameIdColumn);
         this.gameTable.getColumns().add(numPlayerColumn);
@@ -95,14 +96,14 @@ public class ServerBrowserController {
         this.sceneCtrl.showWaitingRoom(true, roomId, playerName);
 
 //        String gameId = this.gameIdField.getText();
-//        if (!server.listOfAllGameIds().contains(gameId)) {
+//        if (!server.listOfAllGameIds("test").contains(gameId)) {
 //            Alert alert = new Alert(Alert.AlertType.WARNING);
 //            alert.setTitle("Warning");
 //            alert.setHeaderText("Invalid ID");
 //            alert.setContentText("Please enter a valid game ID!!!");
 //            alert.show();
 //        } else {
-//            server.joinExistingMultiplayerGame("johny", gameId);
+//            server.joinMultiPlayerRoom("johny", gameId);
 //            this.sceneCtrl.showWaitingRoom(false, gameId, "johny");
 //        }
 
@@ -113,7 +114,7 @@ public class ServerBrowserController {
      * @param event the ActionEvent of the button
      */
     public void createWaitingRoom(ActionEvent event) {
-        //String gameId = server.createNewMultiplayerGame("cata");
-        //this.sceneCtrl.showWaitingRoom(true, gameId, "cata");
+        String gameId = server.createNewMultiPlayerRoom("cata");
+        this.sceneCtrl.showWaitingRoom(true, gameId, "cata");
     }
 }
