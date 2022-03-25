@@ -7,10 +7,13 @@ import commons.GameContainer;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+
+import java.util.ArrayList;
 
 
 public class ServerBrowserController {
@@ -29,6 +32,8 @@ public class ServerBrowserController {
     private TextField gameIdField; // the textfield where the player inputs the gameID
 
     private ObservableList<GameContainer> currentGames; // the datatype for the list that fills the table
+
+    private ArrayList<String> listOfGameIds;
 
     @Inject
     public ServerBrowserController(ServerUtils server, SceneCtrl sceneCtrl) {
@@ -51,6 +56,11 @@ public class ServerBrowserController {
 
 
         this.currentGames = server.listOfCurrentGames("test");
+
+        this.listOfGameIds= new ArrayList<>();
+        for( GameContainer game : currentGames){
+            this.listOfGameIds.add(game.getGameId());
+        }
 
         this.gameTable.getColumns().add(gameIdColumn);
         this.gameTable.getColumns().add(numPlayerColumn);
@@ -87,28 +97,34 @@ public class ServerBrowserController {
      *
      * @param event
      */
-    public void joinWaitingRoom(ActionEvent event) {
+    public void joinRandomWaitingRoom(ActionEvent event) {
         // we will connect to the initialised random room
         String playerName = "test";
 
         String roomId = server.getRandomMultiPlayerRoomId(playerName);
-        System.out.println(roomId);
+
 
         server.joinMultiPlayerRoom(playerName, roomId);
         this.sceneCtrl.showWaitingRoom(true, roomId, playerName);
 
-//        String gameId = this.gameIdField.getText();
-//        if (!server.listOfAllGameIds("test").contains(gameId)) {
-//            Alert alert = new Alert(Alert.AlertType.WARNING);
-//            alert.setTitle("Warning");
-//            alert.setHeaderText("Invalid ID");
-//            alert.setContentText("Please enter a valid game ID!!!");
-//            alert.show();
-//        } else {
-//            server.joinMultiPlayerRoom("johny", gameId);
-//            this.sceneCtrl.showWaitingRoom(false, gameId, "johny");
-//        }
 
+
+    }
+
+    public void joinWaitingRoom(ActionEvent event){
+        String playerName = "test";
+        String gameId = this.gameIdField.getText();
+
+        if (!this.listOfGameIds.contains(gameId)) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText("Invalid ID");
+            alert.setContentText("Please enter a valid game ID!!!");
+            alert.show();
+        } else {
+            server.joinMultiPlayerRoom(playerName, gameId);
+            this.sceneCtrl.showWaitingRoom(false, gameId, playerName);
+        }
     }
 
     /**

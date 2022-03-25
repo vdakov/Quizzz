@@ -37,7 +37,7 @@
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
             </columnResizePolicy>
         </TableView>
-        <Button fx:id="joinWaitingRoom" mnemonicParsing="false" onAction="#joinWaitingRoom" prefHeight="70.0" prefWidth="300.0" text="Join Random Server" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+        <Button fx:id="joinRandomWaitingRoom" mnemonicParsing="false" onAction="#joinWaitingRoom" prefHeight="70.0" prefWidth="300.0" text="Join Random Server" GridPane.halignment="CENTER" GridPane.rowIndex="1">
             <font>
                 <Font size="24.0" />
             </font>
@@ -82,7 +82,7 @@
                 <Insets bottom="320.0" />
             </GridPane.margin>
         </Text>
-        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Join private server" wrappingWidth="299.80342864990234" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Join Server/ Private Server" wrappingWidth="299.80342864990234" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
             <font>
                 <Font size="24.0" />
             </font>
@@ -107,5 +107,10 @@
                 <Insets left="25.0" />
             </GridPane.margin>
         </Button>
+      <Button mnemonicParsing="false" onAction="#joinWaitingRoom" prefHeight="54.0" prefWidth="86.0" text="JOIN" GridPane.rowIndex="2">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Button>
     </children>
 </GridPane>
