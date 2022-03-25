@@ -1,11 +1,16 @@
 package server.controllers.GameControllers;
 
+import commons.Chat.ChatEntry;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.async.DeferredResult;
 import server.services.GameServices.MultiplayerGameService;
 
+import javax.swing.text.html.ImageView;
 import java.util.HashMap;
 import java.util.function.Consumer;
 
@@ -81,5 +86,12 @@ public class MultiPlayerGameController {
     public String getAnswer(@PathVariable("userName") String userName, @PathVariable("gameId") String gameId,
                             @PathVariable("questionNumber") int questionNumber) {
         return multiplayerGameService.getAnswer(userName, gameId, questionNumber);
+    }
+
+
+    @MessageMapping("/chat.sendMessage")
+    @SendTo("/topic/public")
+    public ChatEntry sendMessage(@Payload ChatEntry chatEntry) {
+        return chatEntry;
     }
 }
