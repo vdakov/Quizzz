@@ -3,7 +3,7 @@ package client.controllers.QuestionControllers;
 import client.communication.ServerUtils;
 import client.controllers.SceneCtrl;
 import client.data.GameConfiguration;
-import commons.Chat.ChatEntry;
+import client.Chat.ChatEntry;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -273,7 +273,8 @@ public class QuestionActivityCtrl {
 
     public void emoji1Display(ActionEvent event)
     {
-       Server.send("/app/emojis", new ChatEntry(gameConfig.getUserName(), new javax.swing.text.html.ImageView(emoji1)));
+       send("/app/emojis", new ChatEntry(gameConfig.getUserName(), emoji1));
     }
+
 
 }

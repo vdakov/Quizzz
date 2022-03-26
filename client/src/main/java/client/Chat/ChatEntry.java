@@ -1,6 +1,6 @@
-package commons.Chat;
+package client.Chat;
 
-import javax.swing.text.html.ImageView;
+import javafx.scene.image.ImageView;
 
 public class ChatEntry {
 
@@ -8,15 +8,16 @@ public class ChatEntry {
     private ImageView content;
     private String userName;
 
+
     public enum MessageType {
         EMOJI,
         JOKER
     }
 
-    public ChatEntry(String userName, ImageView imageView)
+    public ChatEntry(String userName, ImageView content)
     {
         this.userName = userName;
-        this.imageView = imageView;
+        this.content = content;
     }
 
     public MessageType getType() {
