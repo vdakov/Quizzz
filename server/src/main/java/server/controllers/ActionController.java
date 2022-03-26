@@ -92,7 +92,7 @@ public class ActionController {
      */
     @GetMapping(path = "/sendImage/{folderNum}/{imagePath}")
     public @ResponseBody
-    String getImage(@PathVariable int folderNum, @PathVariable String imagePath) throws IOException {
+    String getImage(@PathVariable String folderNum, @PathVariable String imagePath) throws IOException {
         byte[] array = FileUtils.readFileToByteArray(new File("server/src/main/resources/" + folderNum + "/" + imagePath));
         String base64String = Base64.encodeBase64String(array);
         return base64String;

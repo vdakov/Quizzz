@@ -78,14 +78,14 @@ public class SceneCtrl {
     }
 
     public void showOpenQuestionScene(OpenQuestion openQuestion) throws IOException {
-        var pair = scenes.get("OpenQuestion");
+        var pair = sceneRoots.get("OpenQuestion");
         OpenQuestionActivityCtrl ctrl = (OpenQuestionActivityCtrl) pair.getKey();
         ctrl.displayQuestion(openQuestion);
         scene.setRoot(pair.getValue());
     }
 
     public void showKnowledgeQuestionScene(KnowledgeQuestion knowledgeQuestion) throws IOException {
-        var pair = scenes.get("KnowledgeQuestion");
+        var pair = sceneRoots.get("KnowledgeQuestion");
         KnowledgeQuestionActivityCtrl ctrl = (KnowledgeQuestionActivityCtrl) pair.getKey();
 
         ctrl.displayQuestion(knowledgeQuestion);
@@ -93,14 +93,14 @@ public class SceneCtrl {
     }
 
     public void showComparisonQuestionScene(ComparisonQuestion comparisonQuestion) throws IOException {
-        var pair = scenes.get("ComparisonQuestion");
+        var pair = sceneRoots.get("ComparisonQuestion");
         ComparisonQuestionActivityCtrl ctrl = (ComparisonQuestionActivityCtrl) pair.getKey();
         ctrl.displayQuestion(comparisonQuestion);
         scene.setRoot(pair.getValue());
     }
 
     public void showAlternativeQuestionScene(AlternativeQuestion alternativeQuestion) throws IOException {
-        var pair = scenes.get("AlternativeQuestion");
+        var pair = sceneRoots.get("AlternativeQuestion");
         AlternativeQuestionActivityCtrl ctrl = (AlternativeQuestionActivityCtrl) pair.getKey();
         ctrl.displayQuestion(alternativeQuestion);
         scene.setRoot(pair.getValue());
