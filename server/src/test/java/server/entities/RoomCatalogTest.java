@@ -2,7 +2,7 @@ package server.entities;
 
 import org.junit.jupiter.api.Test;
 
-class GameCatalogTest {
+class RoomCatalogTest {
 
     @Test
     void cleanEmptyGames() {

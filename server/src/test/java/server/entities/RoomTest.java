@@ -8,12 +8,12 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 
-class GameTest {
+class RoomTest {
 
     private List<Pair<Question, String>> testList;
-    private Game test;
+    private Room test;
 
-    GameTest() throws NotEnoughActivitiesException {
+    RoomTest() throws NotEnoughActivitiesException {
 //        ActionCatalog testCatalog= new ActionCatalog();
 //        testCatalog.addAction(new Action("id","none","title",100,"me"));
 //        testCatalog.addAction(new Action("id","none","title",100,"me"));

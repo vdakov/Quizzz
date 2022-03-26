@@ -5,8 +5,11 @@ import commons.Exceptions.NotEnoughActivitiesException;
 import commons.Questions.Question;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Service;
-import server.entities.GameCatalog;
-import server.entities.MultiPlayerGame;
+import server.controllers.GameControllers.GameRoomController;
+import server.controllers.GameControllers.MultiplayerGameRoomController;
+import server.entities.MultiplayerRoom;
+import server.entities.Room;
+import server.entities.RoomCatalog;
 import server.repositories.ActivityRepository;
 import server.services.QuestionGenerator.QuestionGenerator;
 
@@ -16,77 +19,202 @@ import java.util.Random;
 @Service
 public class MultiplayerGameService {
 
-    private ActivityRepository activityRepository;
-    private GameCatalog        gameCatalog;
+    private final ActivityRepository activityRepository;
+    private final RoomCatalog        roomCatalog;
 
+    /**
+     * Constructor for the multiplayer game service
+     *
+     * @param activityRepository the database where all activities are stored
+     */
     public MultiplayerGameService(ActivityRepository activityRepository) {
         this.activityRepository = activityRepository;
-        gameCatalog = GameCatalog.getGameCatalog();
+        roomCatalog             = RoomCatalog.getRoomCatalog();
 
-        createNewMultiplayerRandomGame();
+        createNewMultiPlayerGame("GROUP30ooPP");
     }
 
-    public void createNewMultiplayerRandomGame() {
-        String gameId = Util.getAlphaNumericString(10);
-        ActionCatalog actionCatalog = new ActionCatalog(activityRepository.findAll());
-
-        List<Pair<Question, String>> questionList = null;
-        try {
-            questionList = QuestionGenerator.generateQuestions(actionCatalog, 20, 2, 7, new Random());
-        } catch (NotEnoughActivitiesException e) {
-            System.out.println("Not enough activities");
-            return;
-        }
-        MultiPlayerGame multiPlayerRandomGame = new MultiPlayerGame(gameId, "GROUP30ooPP", questionList);
-        gameCatalog.setMultiplayerRandomRoom(multiPlayerRandomGame);
-    }
-
+    /**
+     * Returns the id of the multiplayer random game room
+     *
+     * @return the id of the multiplayer random game room
+     */
     public String getMultiPlayerRandomGame() {
-        return gameCatalog.getMultiplayerRandomRoom().getGameId();
+        try {
+            return roomCatalog.getMultiplayerRandomRoom().getRoomId();
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+            return null;
+        }
     }
 
-    public String createNewMultiPlayerGame(String userName) {
-        String gameId = Util.getAlphaNumericString(10);
-        ActionCatalog actionCatalog = new ActionCatalog(activityRepository.findAll());
-
-        List<Pair<Question, String>> questionList = null;
+    /**
+     * Creates a new multiplayer game with the room creator username given as parameter
+     *
+     * @param username the name of player that wants to create a room
+     * @return the id of the newly generated room
+     */
+    public String createNewMultiPlayerGame(String username) {
         try {
-            questionList = QuestionGenerator.generateQuestions(actionCatalog, 20, 2, 7, new Random());
+            String roomId               = Util.getAlphaNumericString(10);
+            ActionCatalog actionCatalog = new ActionCatalog(activityRepository.findAll());
+
+            List<Pair<Question, String>> questionList = QuestionGenerator.generateQuestions(actionCatalog, 20, 2, 7, new Random());
+            MultiplayerRoom newGame = new MultiplayerRoom(roomId, username, questionList);
+
+            if (username.equals("GROUP30ooPP")) {
+                roomCatalog.setMultiplayerRandomRoom(newGame);
+            } else {
+                roomCatalog.addMultiplayerRoom(newGame);
+            }
+
+            return roomCatalog.getMultiPlayerRoom(roomId).getRoomId();
         } catch (NotEnoughActivitiesException e) {
             System.out.println("Not enough activities");
             return null;
-        }
-        MultiPlayerGame multiPlayerGame = new MultiPlayerGame(gameId, userName, questionList);
-        gameCatalog.addMultiPlayerGame(multiPlayerGame);
-        return gameId;
-    }
-
-    public void joinMultiPlayerGame(String userName, String roomId) {
-        System.out.println("RoomId:    " + gameCatalog.getMultiPlayerGame(roomId));
-        gameCatalog.getMultiPlayerGame(roomId).addUser(userName);
-    }
-
-    public String getMultiPlayerQuestion(String gameId, int number) {
-        Question question = gameCatalog.getMultiPlayerGame(gameId).getQuestion(number);
-        return (Util.getQuestionType(question) + ": " + question.toJsonString());
-    }
-
-    public void updateMultiPlayerScore(String userName, String gameId, int questionNumber, String userAnswer) {
-        if (userAnswer.equals(gameCatalog.getMultiPlayerGame(gameId).getQuestionAnswer(questionNumber))) {
-            MultiPlayerGame multiPlayerGame = gameCatalog.getMultiPlayerGame(gameId);
-            multiPlayerGame.updatePlayerScore(userName, 500);
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+            return null;
         }
     }
 
-    public int getMultiPlayerScore(String userName, String gameId) {
-        return gameCatalog.getMultiPlayerGame(gameId).getPlayerScore(userName);
+    /**
+     * Adds a player to a specified game
+     *
+     * @param username the name of the player that joins the game
+     * @param roomId   the id of the room
+     * @return whether the user was successfully added to the game
+     */
+    public Boolean joinMultiPlayerGame(String username, String roomId) {
+        try {
+            if (roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() != Room.RoomStatus.WAITING) {
+                return false;
+            }
+
+            roomCatalog.getMultiPlayerRoom(roomId).addPlayer(username);
+            return true;
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+            return null;
+        }
     }
 
-    public void startMultiPlayerGame(String gameId) {
-        gameCatalog.getMultiPlayerGame(gameId).setGameStatusOngoing();
+    /**
+     * Starts the multiplayer room with the given id
+     *
+     * @param username the user that starts the room
+     * @param roomId   the id of the room that is started
+     * @return whether the room was successfully started
+     */
+    public boolean startMultiPlayerGame(String username, String roomId) {
+        try {
+            if (roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() != Room.RoomStatus.WAITING ||
+                    roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) == null) {
+                return false;
+            }
+
+            roomCatalog.getMultiPlayerRoom(roomId).setRoomStatus(Room.RoomStatus.ONGOING);
+
+            // if the random room is starting, we have to generate another one
+            createNewMultiPlayerGame("GROUP30ooPP");
+
+            MultiplayerGameRoomController.getListeners().forEach((k, l) -> l.accept(roomId));
+
+            return roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() == Room.RoomStatus.ONGOING;
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+            return false;
+        }
     }
 
-    public String getAnswer(String userName, String gameId, int questionNumber) {
-        return gameCatalog.getMultiPlayerGame(gameId).getQuestionAnswer(questionNumber);
+    /**
+     * Returns the desired question for the specified game if the user is part of that game
+     *
+     * @param username         the user that requests the question
+     * @param roomId           the id of the room the user is in
+     * @param questionNumber   the question number needed by the user
+     * @return the desired question needed by the player or null if that is not possible
+     */
+    public Question getMultiPlayerQuestion(String username, String roomId, int questionNumber) {
+        try {
+            if (roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() != Room.RoomStatus.ONGOING ||
+                    roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) == null) {
+                return null;
+            }
+
+            return roomCatalog.getMultiPlayerRoom(roomId).getQuestion(questionNumber);
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+            return null;
+        }
+    }
+
+    /**
+     * Returns the answer to the desired questions for the specified game
+     *
+     * @param username     the user that requests the answer
+     * @param roomId       the id of the room the user is in
+     * @param answerNumber the answer number needed by the user
+     * @return the desired answer needed by the player or null if that is not possible
+     */
+    public String getMultiPlayerAnswer(String username, String roomId, int answerNumber) {
+        try {
+            if (roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() != Room.RoomStatus.ONGOING ||
+                    roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) == null) {
+                return null;
+            }
+
+            return roomCatalog.getMultiPlayerRoom(roomId).getAnswer(answerNumber);
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+            return null;
+        }
+    }
+
+    /**
+     * Returns the score of the user playing in the specified game or null if it does exist
+     *
+     * @param username the user that requests the score
+     * @param roomId   the id of the room the user is in
+     * @return the score of the player or null if that score does not exist
+     */
+    public Integer getMultiPlayerScore(String username, String roomId) {
+        try {
+            if (roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() != Room.RoomStatus.ONGOING ||
+                    roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) == null) {
+                return null;
+            }
+
+            return roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username);
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+            return null;
+        }
+    }
+
+    /**
+     * Updated the score of the player or returns null / false if some error occurs
+     *
+     * @param username       the user that needs the score update
+     * @param roomId         the id of the room the user is in
+     * @param questionNumber the question number answered by the user
+     * @param userAnswer     the answer user
+     */
+    public Boolean updateMultiPlayerScore(String username, String roomId, int questionNumber, String userAnswer) {
+        try {
+            if (roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() != Room.RoomStatus.ONGOING ||
+                    roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) == null) {
+                return null;
+            }
+
+            if (userAnswer.equals(getMultiPlayerAnswer(username, roomId, questionNumber))) {
+                roomCatalog.getMultiPlayerRoom(roomId).updatePlayerScore(username, 500);
+            }
+
+            return true;
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+            return null;
+        }
     }
 }
