@@ -13,6 +13,12 @@ public class ChatEntry {
         JOKER
     }
 
+    public ChatEntry(String userName, ImageView imageView)
+    {
+        this.userName = userName;
+        this.imageView = imageView;
+    }
+
     public MessageType getType() {
         return type;
     }

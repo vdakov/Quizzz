@@ -88,9 +88,10 @@ public class MultiPlayerGameController {
     }
 
 
-    @MessageMapping("/chat.sendMessage")
-    @SendTo("/topic/public")
-    public ChatEntry sendMessage(@Payload ChatEntry chatEntry) {
-        return chatEntry;
+    @MessageMapping("/emojis")  // /app/emojis
+    @SendTo("/topic/emojis")
+    public ChatEntry addMessage(ChatEntry chatEntry)
+    {
+            return chatEntry;
     }
 }

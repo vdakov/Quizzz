@@ -3,12 +3,14 @@ package client.controllers.QuestionControllers;
 import client.communication.ServerUtils;
 import client.controllers.SceneCtrl;
 import client.data.GameConfiguration;
+import commons.Chat.ChatEntry;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -19,8 +21,19 @@ import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
+import org.apache.catalina.Server;
+import org.springframework.messaging.converter.MappingJackson2MessageConverter;
+import org.springframework.messaging.simp.stomp.StompFrameHandler;
+import org.springframework.messaging.simp.stomp.StompHeaders;
+import org.springframework.messaging.simp.stomp.StompSession;
+import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
+import org.springframework.web.socket.client.standard.StandardWebSocketClient;
+import org.springframework.web.socket.messaging.WebSocketStompClient;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.concurrent.ExecutionException;
+import java.util.function.Consumer;
 
 public class QuestionActivityCtrl {
     // constructor needed variables
@@ -219,4 +232,48 @@ public class QuestionActivityCtrl {
     public int getQuestionNumber() {
         return gameConfig.getCurrentQuestionNumber();
     }
+
+    private StompSession session = connect("ws://localhost:8080/websocket");
+
+    private StompSession connect(String url)
+    {
+        var client = new StandardWebSocketClient();
+        var stomp = new WebSocketStompClient(client);
+
+        stomp.setMessageConverter(new MappingJackson2MessageConverter());
+        try{
+            return stomp.connect(url, new StompSessionHandlerAdapter() {} ).get();
+        }  catch (InterruptedException e){
+                Thread.currentThread().interrupt();
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+        throw new IllegalStateException();
+    }
+
+    public void registerForMessages(String destination, Consumer<ChatEntry> consumer)
+    {
+        session.subscribe(destination, new StompFrameHandler() {
+            @Override
+            public Type getPayloadType(StompHeaders headers) {
+                return ChatEntry.class;
+            }
+
+            @Override
+            public void handleFrame(StompHeaders headers, Object payload) {
+                consumer.accept((ChatEntry) payload );
+            }
+        });
+    }
+
+    public void send(String destination, Object o)
+    {
+        session.send(destination, o);
+    }
+
+    public void emoji1Display(ActionEvent event)
+    {
+       Server.send("/app/emojis", new ChatEntry(gameConfig.getUserName(), new javax.swing.text.html.ImageView(emoji1)));
+    }
+
 }
