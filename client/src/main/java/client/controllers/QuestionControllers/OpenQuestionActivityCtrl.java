@@ -63,6 +63,7 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         sampleQuestion.setText(openQuestion.getQuestion().getKey());
         questionNumberLabel.setText("Question " + getQuestionNumber());
         points.setText(String.valueOf(getPointsInt()));
+        gameConfig.setScore(getPointsInt());
 
         if (gameConfig.isSinglePlayer()) emoji.setVisible(false);
         else emoji.setVisible(true);

@@ -41,13 +41,21 @@ public class LeaderboardCtrl {
 
     public void initialize() {
         //set which field each column contains
-        placeCol.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getRank() + ""));
+        placeCol.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getRank() == -1 ? "..." : q.getValue().getRank() + ""));
         nameCol.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getUsername()));
-        pointsCol.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getScore() + ""));
+        pointsCol.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getScore() == -1 ? "..." : q.getValue().getScore() + ""));
     }
 
     public void refresh() {
         List<LeaderboardEntry> leaderboardEntries = server.getLeaderboard(GameConfiguration.getConfiguration().getRoomId());
+
+        GameConfiguration gameConfig = GameConfiguration.getConfiguration();
+        if (gameConfig.getRoomId() != null) {
+            LeaderboardEntry spacer = new LeaderboardEntry("...", "", -1, false);
+            spacer.setRank(-1);
+            leaderboardEntries.add(spacer);
+            leaderboardEntries.add(new LeaderboardEntry(gameConfig.getUserName(), gameConfig.getRoomId(), gameConfig.getScore(), gameConfig.isSinglePlayer()));
+        }
         leaderboardTable.setItems(FXCollections.observableList(leaderboardEntries));
     }
 
