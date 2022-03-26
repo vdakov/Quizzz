@@ -12,7 +12,7 @@ public class MainScreenActivityCtrl {
 
     private final ServerUtils server;
     private final SceneCtrl sceneCtrl;
-
+    private GameConfiguration gameConfig;
     @FXML
     private TextField userName;
 
@@ -20,28 +20,27 @@ public class MainScreenActivityCtrl {
     public MainScreenActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
         this.sceneCtrl = sceneCtrl;
         this.server = server;
+        gameConfig = GameConfiguration.getConfiguration();
     }
 
     public void enterSoloGame() throws IOException {
-        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
-
         String playerName = userName.getText();
         String roomId = server.createNewSinglePlayerRoom(playerName);
-        gameConfiguration.setRoomId(roomId);
-        gameConfiguration.setUserName(playerName);
-        gameConfiguration.setCurrentQuestionNumber(1);
-        gameConfiguration.setGameTypeSingleplayer();
+        gameConfig.setRoomId(roomId);
+        gameConfig.setUserName(playerName);
+        gameConfig.setCurrentQuestionNumber(1);
+        gameConfig.setGameTypeSingleplayer();
         sceneCtrl.showNextQuestion();
     }
 
     public void showLeaderboard() {
-        GameConfiguration.getConfiguration().setGameTypeSingleplayer();
+        gameConfig.setGameTypeSingleplayer(); //make sure you get to see the singleplayer version of the leaderboard
         sceneCtrl.showLeaderboard();
     }
 
     public void enterServerBrowser() {
-        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
-        gameConfiguration.setGameTypeMultiPlayer();
+
+        gameConfig.setGameTypeMultiPlayer();
         this.sceneCtrl.showServerBrowser();
     }
 }

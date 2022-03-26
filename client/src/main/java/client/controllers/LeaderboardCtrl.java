@@ -56,15 +56,13 @@ public class LeaderboardCtrl {
         playAgainButton.setVisible(gameConfig.isSinglePlayer() ? false : true);
 
         List<LeaderboardEntry> leaderboardEntries = server.getLeaderboard(GameConfiguration.getConfiguration().getRoomId());
-        List<LeaderboardEntry> top10 = leaderboardEntries.stream()
-                .filter(e -> e.getRank() <= 10)
-                .collect(Collectors.toList());
+        List<LeaderboardEntry> top10 = leaderboardEntries.subList(0, 10);
 
         if (gameConfig.getRoomId() != null) {
-            LeaderboardEntry spacer = new LeaderboardEntry("...", "", -1, false);
+            LeaderboardEntry spacer = new LeaderboardEntry("...", "", -1, false); //a spacer where all columns will be "..."
             spacer.setRank(-1);
             top10.add(spacer);
-            top10.add(leaderboardEntries.stream()
+            top10.add(leaderboardEntries.stream() //add the entry with the same roomId and username as the player
                     .filter(e -> e.getRoomId().equals(gameConfig.getRoomId()) && e.getUsername().equals(gameConfig.getUserName()))
                     .collect(Collectors.toList()).get(0));
         }

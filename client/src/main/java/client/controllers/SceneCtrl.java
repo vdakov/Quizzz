@@ -112,7 +112,7 @@ public class SceneCtrl {
 
         ctrl.initialize();
         ctrl.refresh();
-        primaryStage.setTitle("Singleplayer Leaderboard");
+        primaryStage.setTitle("Leaderboard");
         scene.setRoot(pair.getValue());
     }
 
