@@ -2,6 +2,7 @@ package server.services.GameServices;
 
 import commons.Actions.ActionCatalog;
 import commons.Exceptions.NotEnoughActivitiesException;
+import commons.GameContainer;
 import commons.Questions.Question;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Service;
@@ -88,5 +89,18 @@ public class MultiplayerGameService {
 
     public String getAnswer(String userName, String gameId, int questionNumber) {
         return gameCatalog.getMultiPlayerGame(gameId).getQuestionAnswer(questionNumber);
+    }
+
+    public List<GameContainer> getGameIds() {
+        this.gameCatalog.cleanEmptyGames();
+        return gameCatalog.getWaitingMultiplayerGames();
+    }
+
+    public MultiPlayerGame getGame(String gameId) {
+        return this.gameCatalog.getMultiPlayerGame(gameId);
+    }
+
+    public void removePlayer(String gameId, String userName) {
+        this.getGame(gameId).removePlayer(userName);
     }
 }

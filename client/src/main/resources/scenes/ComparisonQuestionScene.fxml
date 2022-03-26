@@ -90,7 +90,7 @@
                   <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
                </padding>
                 </Label>
-                <ImageView pickOnBounds="true" preserveRatio="true" />
+                <ImageView fx:id="firstOptionImage" pickOnBounds="true" />
             </children>
             <columnConstraints>
                 <ColumnConstraints percentWidth="100.0" />
@@ -113,7 +113,7 @@
                   <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
                </padding>
                 </Label>
-                <ImageView pickOnBounds="true" preserveRatio="true" />
+                <ImageView fx:id="secondOptionImage" pickOnBounds="true" />
             </children>
         </GridPane>
         <GridPane prefHeight="444.0" prefWidth="275.0" GridPane.columnIndex="5" GridPane.rowIndex="6">
@@ -133,7 +133,7 @@
                   <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
                </padding>
                 </Label>
-                <ImageView pickOnBounds="true" preserveRatio="true" />
+                <ImageView fx:id="thirdOptionImage" pickOnBounds="true" />
             </children>
         </GridPane>
         <Label fx:id="questionStatement" alignment="CENTER" prefHeight="17.0" prefWidth="869.0" style="-fx-background-color: #2d4b5a; -fx-background-radius: 50;" text="What requires most energy?" textFill="WHITESMOKE" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="5">

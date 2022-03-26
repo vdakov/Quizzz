@@ -94,11 +94,7 @@
         </Label>
         <AnchorPane prefHeight="344.0" prefWidth="558.0" style="-fx-border-color: #587882; -fx-border-width: 5; -fx-border-radius: 5;" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="4">
             <children>
-                <ImageView fx:id="imageSrc" fitHeight="268.0" fitWidth="294.0" layoutX="40.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@pictures/blank.jpg" />
-                    </image>
-                </ImageView>
+                <ImageView fx:id="image" fitHeight="268.0" fitWidth="294.0" layoutX="40.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true" />
                 <Label fx:id="sampleQuestion" alignment="CENTER" layoutX="337.0" layoutY="13.0" prefHeight="330.0" prefWidth="540.0" style="-fx-background-color: #2d4b5a; -fx-text-fill: #f5f5f5; -fx-background-radius: 50;" text="Question contents" textAlignment="CENTER" textFill="WHITESMOKE" wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="340.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                     <font>
                         <Font name="Chalkboard" size="16.0" />
