@@ -12,6 +12,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.text.Text;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class LeaderboardCtrl {
@@ -47,16 +48,28 @@ public class LeaderboardCtrl {
     }
 
     public void refresh() {
-        List<LeaderboardEntry> leaderboardEntries = server.getLeaderboard(GameConfiguration.getConfiguration().getRoomId());
-
         GameConfiguration gameConfig = GameConfiguration.getConfiguration();
+
+        List<LeaderboardEntry> leaderboardEntries = server.getLeaderboard(GameConfiguration.getConfiguration().getRoomId());
+        List<LeaderboardEntry> top10 = leaderboardEntries.stream()
+                .filter(e -> e.getRank() <= 10)
+                .collect(Collectors.toList());
+
         if (gameConfig.getRoomId() != null) {
             LeaderboardEntry spacer = new LeaderboardEntry("...", "", -1, false);
             spacer.setRank(-1);
-            leaderboardEntries.add(spacer);
-            leaderboardEntries.add(new LeaderboardEntry(gameConfig.getUserName(), gameConfig.getRoomId(), gameConfig.getScore(), gameConfig.isSinglePlayer()));
+            top10.add(spacer);
+            top10.add(leaderboardEntries.stream()
+                    .filter(e -> e.getRoomId().equals(gameConfig.getRoomId()) && e.getUsername().equals(gameConfig.getUserName()))
+                    .collect(Collectors.toList()).get(0));
         }
-        leaderboardTable.setItems(FXCollections.observableList(leaderboardEntries));
+        leaderboardTable.setItems(FXCollections.observableList(top10));
+
+        if (leaderboardEntries.size() >= 3) {
+            place1.setText(leaderboardEntries.get(0).getUsername());
+            place2.setText(leaderboardEntries.get(1).getUsername());
+            place3.setText(leaderboardEntries.get(2).getUsername());
+        }
     }
 
     public void exit() {

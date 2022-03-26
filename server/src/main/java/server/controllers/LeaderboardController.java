@@ -24,7 +24,6 @@ public class LeaderboardController {
     @GetMapping("/{roomId}")
     public List<LeaderboardEntry> getLeaderboard(@PathVariable String roomId) {
         List<LeaderboardEntry> temp = service.getByRoomId(roomId);
-        temp = temp.subList(0, Integer.min(10, temp.size()));
         for (int i = 0; i < temp.size(); i++) temp.get(i).setRank(i + 1); //assign ranks
         return temp;
     }

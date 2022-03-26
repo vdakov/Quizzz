@@ -44,7 +44,7 @@
                         <Insets left="400.0" />
                     </GridPane.margin>
                 </Rectangle>
-                <Text fx:id="place1" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Vasil" textAlignment="CENTER" wrappingWidth="202.462890625" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+                <Text fx:id="place1" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="202.462890625" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
                     <font>
                         <Font size="36.0" />
                     </font>
@@ -52,7 +52,7 @@
                         <Insets bottom="160.0" />
                     </GridPane.margin>
                 </Text>
-                <Text fx:id="place2" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Sam" textAlignment="CENTER" wrappingWidth="202.462890625" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+                <Text fx:id="place2" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="202.462890625" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
                     <font>
                         <Font size="36.0" />
                     </font>
@@ -60,7 +60,7 @@
                         <Insets bottom="100.0" right="400.0" />
                     </GridPane.margin>
                 </Text>
-                <Text fx:id="place3" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Delia" textAlignment="CENTER" wrappingWidth="200.462890625" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+                <Text fx:id="place3" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="200.462890625" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
                     <font>
                         <Font size="36.0" />
                     </font>
