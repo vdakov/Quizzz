@@ -4,13 +4,8 @@ import commons.Questions.Question;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.async.DeferredResult;
 import server.services.GameServices.MultiplayerGameService;
 import server.services.GameServices.SingleplayerGameService;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Consumer;
 
 @RestController
 @RequestMapping("api/{username}/{gameType}/{roomId}")
