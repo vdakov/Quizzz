@@ -17,6 +17,7 @@ package server.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 import java.util.Random;
 
@@ -26,5 +27,10 @@ public class Config {
     @Bean
     public Random getRandom() {
         return new Random();
+    }
+
+
+    public void addResourceHandlers(final ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/static/**").addResourceLocations("file:activity-bank-pictures/");
     }
 }

@@ -21,6 +21,7 @@ import javafx.stage.Stage;
 import javafx.util.Pair;
 
 import javax.inject.Inject;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -49,7 +50,7 @@ public class SceneCtrl {
         primaryStage.show();
     }
 
-    public void showNextQuestion() {
+    public void showNextQuestion() throws IOException {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         gameConfiguration.setCurrentQuestionNumber(gameConfiguration.getCurrentQuestionNumber() + 1);
         String response = serverUtils.getQuestion();
@@ -76,14 +77,14 @@ public class SceneCtrl {
         }
     }
 
-    public void showOpenQuestionScene(OpenQuestion openQuestion) {
+    public void showOpenQuestionScene(OpenQuestion openQuestion) throws IOException {
         var pair = sceneRoots.get("OpenQuestion");
         OpenQuestionActivityCtrl ctrl = (OpenQuestionActivityCtrl) pair.getKey();
         ctrl.displayQuestion(openQuestion);
         scene.setRoot(pair.getValue());
     }
 
-    public void showKnowledgeQuestionScene(KnowledgeQuestion knowledgeQuestion) {
+    public void showKnowledgeQuestionScene(KnowledgeQuestion knowledgeQuestion) throws IOException {
         var pair = sceneRoots.get("KnowledgeQuestion");
         KnowledgeQuestionActivityCtrl ctrl = (KnowledgeQuestionActivityCtrl) pair.getKey();
 
@@ -91,14 +92,14 @@ public class SceneCtrl {
         scene.setRoot(pair.getValue());
     }
 
-    public void showComparisonQuestionScene(ComparisonQuestion comparisonQuestion) {
+    public void showComparisonQuestionScene(ComparisonQuestion comparisonQuestion) throws IOException {
         var pair = sceneRoots.get("ComparisonQuestion");
         ComparisonQuestionActivityCtrl ctrl = (ComparisonQuestionActivityCtrl) pair.getKey();
         ctrl.displayQuestion(comparisonQuestion);
         scene.setRoot(pair.getValue());
     }
 
-    public void showAlternativeQuestionScene(AlternativeQuestion alternativeQuestion) {
+    public void showAlternativeQuestionScene(AlternativeQuestion alternativeQuestion) throws IOException {
         var pair = sceneRoots.get("AlternativeQuestion");
         AlternativeQuestionActivityCtrl ctrl = (AlternativeQuestionActivityCtrl) pair.getKey();
         ctrl.displayQuestion(alternativeQuestion);

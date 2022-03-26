@@ -4,8 +4,8 @@ import client.communication.ServerUtils;
 import client.data.GameConfiguration;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
-
 import javax.inject.Inject;
+
 import java.io.IOException;
 
 public class MainScreenActivityCtrl {
@@ -15,6 +15,7 @@ public class MainScreenActivityCtrl {
     private GameConfiguration gameConfig;
     @FXML
     private TextField userName;
+
 
     @Inject
     public MainScreenActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
@@ -38,9 +39,14 @@ public class MainScreenActivityCtrl {
         sceneCtrl.showLeaderboard();
     }
 
-    public void enterServerBrowser() {
 
+    public void enterServerBrowser() throws IOException {
         gameConfig.setGameTypeMultiPlayer();
+        String playerName = userName.getText();
+        gameConfig.setUserName(playerName);
+
         this.sceneCtrl.showServerBrowser();
     }
+
+
 }
