@@ -34,7 +34,7 @@ public class SceneCtrl {
     private GameConfiguration gameConfiguration;
 
     @Inject
-    public void initialiseServer(ServerUtils serverUtils) {
+    public void sceneCtrl(ServerUtils serverUtils) {
         this.serverUtils = serverUtils;
         this.gameConfiguration = GameConfiguration.getConfiguration();
     }

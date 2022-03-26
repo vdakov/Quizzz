@@ -56,7 +56,7 @@ public class LeaderboardCtrl {
         playAgainButton.setVisible(gameConfig.isSinglePlayer() ? false : true);
 
         List<LeaderboardEntry> leaderboardEntries = server.getLeaderboard(GameConfiguration.getConfiguration().getRoomId());
-        List<LeaderboardEntry> top10 = leaderboardEntries.subList(0, 10);
+        List<LeaderboardEntry> top10 = leaderboardEntries.subList(0, Integer.min(10, leaderboardEntries.size()));
 
         if (gameConfig.getRoomId() != null) {
             LeaderboardEntry spacer = new LeaderboardEntry("...", "", -1, false); //a spacer where all columns will be "..."
