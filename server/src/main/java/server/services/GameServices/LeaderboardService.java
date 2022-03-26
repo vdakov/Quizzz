@@ -26,7 +26,12 @@ public class LeaderboardService {
 
     public List<LeaderboardEntry> getByRoomId(String roomId) {
         System.out.println("Getting leaderboard for roomId " + roomId);
-        return repository.getLeaderboardEntriesByRoomIdOrderByScoreDesc(roomId);
+        List<LeaderboardEntry> entries = repository.getLeaderboardEntriesByRoomIdOrderByScoreDesc(roomId);
+
+        if (roomId.equals("null") || (entries.size() == 1 && entries.get(0).isSingleplayer())) //if this is a singleplayer entry, show every other singleplayer entry
+            return repository.getLeaderboardEntriesBySingleplayerIsTrueOrderByScoreDesc();
+        else
+            return entries;
     }
 
     @Transactional

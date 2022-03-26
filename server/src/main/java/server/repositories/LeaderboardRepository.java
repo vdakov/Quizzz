@@ -11,4 +11,6 @@ public interface LeaderboardRepository extends JpaRepository<LeaderboardEntry, I
     List<LeaderboardEntry> getLeaderboardEntriesByRoomIdOrderByScoreDesc(String roomId);
 
     long deleteLeaderboardEntriesByRoomId(String roomId);
+
+    List<LeaderboardEntry> getLeaderboardEntriesBySingleplayerIsTrueOrderByScoreDesc();
 }

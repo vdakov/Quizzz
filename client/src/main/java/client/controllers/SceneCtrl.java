@@ -107,10 +107,11 @@ public class SceneCtrl {
 
     public void showLeaderboard() {
         System.out.println("LEADERBOARD");
-        var pair = sceneRoots.get("SingleplayerLeaderboard");
+        var pair = sceneRoots.get("Leaderboard");
         var ctrl = (LeaderboardCtrl) pair.getKey();
 
         ctrl.initialize();
+        ctrl.refresh();
         primaryStage.setTitle("Singleplayer Leaderboard");
         scene.setRoot(pair.getValue());
     }

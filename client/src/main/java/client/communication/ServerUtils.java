@@ -176,11 +176,12 @@ public class ServerUtils {
                 .target(SERVER).path("api/leaderboard/") //
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
-                .post(Entity.entity(new LeaderboardEntry(name, roomId, points), APPLICATION_JSON), LeaderboardEntry.class);
+                .post(Entity.entity(new LeaderboardEntry(name, roomId, points, GameConfiguration.getConfiguration().isSinglePlayer()), APPLICATION_JSON), LeaderboardEntry.class);
     }
 
     /**
      * Deletes entries that belong to a room with this roomId
+     *
      * @param roomId the roomId of the entries to delete
      */
     public void deleteEntries(String roomId) {
