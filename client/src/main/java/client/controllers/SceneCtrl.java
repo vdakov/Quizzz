@@ -2,6 +2,9 @@ package client.controllers;
 
 
 import client.communication.ServerUtils;
+import client.controllers.AdminInterface.AddActionActivityCtrl;
+import client.controllers.AdminInterface.EditActionActivityCtrl;
+import client.controllers.AdminInterface.OverviewActionsActivityCtrl;
 import client.controllers.MultiplayerControllers.ServerBrowserController;
 import client.controllers.MultiplayerControllers.WaitingRoomController;
 import client.controllers.QuestionControllers.AlternativeQuestionActivityCtrl;
@@ -117,10 +120,30 @@ public class SceneCtrl {
         primaryStage.setScene(pair.getValue());
     }
 
+    public void showOverviewActionScene() {
+        var pair = scenes.get("OverviewActions");
+        var ctrl = (OverviewActionsActivityCtrl) pair.getKey();
+
+        ctrl.initialize();
+        primaryStage.setTitle("Overview Action");
+        primaryStage.setScene(pair.getValue());
+    }
+
     public void showAddActionScene() {
         var pair = scenes.get("AddAction");
+        var ctrl = (AddActionActivityCtrl) pair.getKey();
 
+        ctrl.initialize();
         primaryStage.setTitle("Add actions");
+        primaryStage.setScene(pair.getValue());
+    }
+
+    public void showEditActionScene() {
+        var pair = scenes.get("EditAction");
+        var ctrl = (EditActionActivityCtrl) pair.getKey();
+
+        ctrl.initialize();
+        primaryStage.setTitle("Edit actions");
         primaryStage.setScene(pair.getValue());
     }
 

@@ -33,9 +33,13 @@ public class EditActionActivityCtrl {
         this.server = server;
     }
 
+    public void initialize() {
+
+    }
+
     public void cancel() {
         clearFields();
-        sceneCtrl.showMainScreenScene();
+        sceneCtrl.showOverviewActionScene();
     }
 
     public void ok() {

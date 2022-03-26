@@ -43,4 +43,8 @@ public class MainScreenActivityCtrl {
         gameConfiguration.setGameTypeMultiPlayer();
         this.sceneCtrl.showServerBrowser();
     }
+
+    public void enterAdminInterface() {
+        sceneCtrl.showOverviewActionScene();
+    }
 }

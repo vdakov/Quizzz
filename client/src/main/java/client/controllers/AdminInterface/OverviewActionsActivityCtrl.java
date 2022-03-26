@@ -28,12 +28,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class OverviewActionsActivityCtrl implements Initializable {
+public class OverviewActionsActivityCtrl {
 
     private final ServerUtils server;
     private final SceneCtrl sceneCtrl;
@@ -58,6 +59,8 @@ public class OverviewActionsActivityCtrl implements Initializable {
     private Button editButton;
     @FXML
     private Button deleteButton;
+    @FXML
+    private TextField deletingID;
 
     @Inject
     public OverviewActionsActivityCtrl(ServerUtils server, SceneCtrl mainCtrl) {
@@ -65,16 +68,12 @@ public class OverviewActionsActivityCtrl implements Initializable {
         this.sceneCtrl = mainCtrl;
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+//    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize() {
         colId.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getId() + ""));
         colTitle.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getTitle()));
         colConsumption.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getConsumption() + ""));
         colSource.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getSource()));
-    }
-
-    public void userContribution() {
-
     }
 
     public void addActivity(ActionEvent event) {
@@ -83,13 +82,18 @@ public class OverviewActionsActivityCtrl implements Initializable {
     }
 
     public void deleteActivity(ActionEvent event) {
-        String id = event.getSource().toString();
-        server.deleteActivity(id);
+        String id = deletingID.getText();
+        try {
+            server.deleteActivity(id);
+        } catch (Exception e) {
+            System.out.println("The given ID is not founded");
+        }
     }
 
     public void editActivity(ActionEvent event) {
-        String id = event.getSource().toString();
-//        table.edit(1, );
+//        String id = event.getSource().toString();
+        sceneCtrl.showEditActionScene();
+        refresh();
     }
 
     public void refresh() {

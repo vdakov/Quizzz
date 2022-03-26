@@ -35,9 +35,13 @@ public class AddActionActivityCtrl {
 
     }
 
+    public void initialize() {
+
+    }
+
     public void cancel() {
         clearFields();
-        sceneCtrl.showMainScreenScene();
+        sceneCtrl.showOverviewActionScene();
     }
 
     public void ok() {
@@ -66,7 +70,7 @@ public class AddActionActivityCtrl {
     }
 
     private void clearFields() {
-        id.clear();
+//        id.clear();
         title.clear();
         source.clear();
         consumption.clear();
