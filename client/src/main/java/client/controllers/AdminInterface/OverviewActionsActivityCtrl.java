@@ -24,12 +24,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class OverviewActionsActivityCtrl {
 
@@ -85,7 +82,7 @@ public class OverviewActionsActivityCtrl {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirmation Delete Activity");
             alert.setHeaderText("Are you sure to delete activity");
-            alert.setContentText("ID: "+deletingAction.getId()+"\nTitle: "+deletingAction.getTitle()+"\nConsumption: "+deletingAction.getConsumption());
+            alert.setContentText("ID: " + deletingAction.getId() + "\nTitle: " + deletingAction.getTitle() + "\nConsumption: " + deletingAction.getConsumption());
             alert.showAndWait();
             server.deleteActivity(id);
         } catch (Exception e) {
