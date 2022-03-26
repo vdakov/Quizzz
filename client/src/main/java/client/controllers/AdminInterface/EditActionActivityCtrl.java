@@ -67,7 +67,7 @@ public class EditActionActivityCtrl {
         } catch (NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
         }
-        return new Action(null, null, title.getText(), Integer.parseInt(consumption.getText()), source.getText());
+        return new Action(null, null, title.getText(), Long.valueOf(consumption.getText()), source.getText());
     }
 
     private void clearFields() {
@@ -76,12 +76,6 @@ public class EditActionActivityCtrl {
         consumption.clear();
     }
 
-    public void showOriginalAction() {
-        Action editingAction = server.getActivityById(id);
-        title.setText(editingAction.getTitle());
-        source.setText(editingAction.getSource());
-        consumption.setText(String.valueOf(editingAction.getConsumption()));
-    }
 
     public void keyPressed(KeyEvent e) {
         switch (e.getCode()) {

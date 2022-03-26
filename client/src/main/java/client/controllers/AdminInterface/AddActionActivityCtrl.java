@@ -47,8 +47,8 @@ public class AddActionActivityCtrl {
     public void ok() {
         try {
             server.addActivity(getActivity());
-        } catch (WebApplicationException e) {
-
+        }
+        catch (WebApplicationException e) {
             var alert = new Alert(Alert.AlertType.ERROR);
             alert.initModality(Modality.APPLICATION_MODAL);
             alert.setContentText(e.getMessage());
@@ -66,7 +66,7 @@ public class AddActionActivityCtrl {
         } catch (NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
         }
-        return new Action(null, null, title.getText(), Integer.parseInt(consumption.getText()), source.getText());
+        return new Action(null, null, title.getText(), Long.valueOf(consumption.getText()), source.getText());
     }
 
     private void clearFields() {

@@ -100,7 +100,6 @@ public class OverviewActionsActivityCtrl {
         } catch (Exception e) {
             System.out.println("The given ID is not founded");
         }
-
         refresh();
     }
 
