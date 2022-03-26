@@ -240,10 +240,10 @@ public class QuestionActivityCtrl {
         var client = new StandardWebSocketClient();
         var stomp = new WebSocketStompClient(client);
 
-        stomp.setMessageConverter(new MappingJackson2MessageConverter());
-        try{
+        stomp.setMessageConverter(new MappingJackson2MessageConverter() );
+        try {
             return stomp.connect(url, new StompSessionHandlerAdapter() {} ).get();
-        }  catch (InterruptedException e){
+        }  catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
         } catch (ExecutionException e) {
             throw new RuntimeException(e);
