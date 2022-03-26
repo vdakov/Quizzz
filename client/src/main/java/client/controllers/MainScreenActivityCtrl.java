@@ -35,6 +35,7 @@ public class MainScreenActivityCtrl {
     }
 
     public void showLeaderboard() {
+        GameConfiguration.getConfiguration().setGameTypeSingleplayer();
         sceneCtrl.showLeaderboard();
     }
 

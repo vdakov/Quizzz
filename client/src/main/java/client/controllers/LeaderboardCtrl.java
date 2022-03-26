@@ -7,6 +7,7 @@ import commons.Leaderboard.LeaderboardEntry;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.text.Text;
@@ -30,14 +31,18 @@ public class LeaderboardCtrl {
     private TableColumn<LeaderboardEntry, String> nameCol;
     @FXML
     private TableColumn<LeaderboardEntry, String> pointsCol;
+    @FXML
+    private Button playAgainButton;
 
     private ServerUtils server;
     private SceneCtrl sceneCtrl;
+    private GameConfiguration gameConfig;
 
     @Inject
     public LeaderboardCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
         this.server = server;
         this.sceneCtrl = sceneCtrl;
+        gameConfig = GameConfiguration.getConfiguration();
     }
 
     public void initialize() {
@@ -48,7 +53,7 @@ public class LeaderboardCtrl {
     }
 
     public void refresh() {
-        GameConfiguration gameConfig = GameConfiguration.getConfiguration();
+        playAgainButton.setVisible(gameConfig.isSinglePlayer() ? false : true);
 
         List<LeaderboardEntry> leaderboardEntries = server.getLeaderboard(GameConfiguration.getConfiguration().getRoomId());
         List<LeaderboardEntry> top10 = leaderboardEntries.stream()
@@ -74,5 +79,9 @@ public class LeaderboardCtrl {
 
     public void exit() {
         sceneCtrl.showMainScreenScene();
+    }
+
+    public void playAgain() {
+        sceneCtrl.showWaitingRoom(true, gameConfig.getRoomId(), gameConfig.getUserName());
     }
 }
