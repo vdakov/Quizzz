@@ -46,7 +46,7 @@
                   <Font size="24.0" />
                </font>
             </TextField>
-            <Button mnemonicParsing="false" onAction="#showSingleplayerLeaderboard" prefHeight="60.0" prefWidth="450.0" style="-fx-background-color: #5bc0de;" text="Singleplayer Leaderboard" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+            <Button mnemonicParsing="false" onAction="#showLeaderboard" prefHeight="60.0" prefWidth="450.0" style="-fx-background-color: #5bc0de;" text="Singleplayer Leaderboard" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>

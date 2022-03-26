@@ -162,21 +162,32 @@ public class ServerUtils {
                 });
     }
 
-    public List<LeaderboardEntry> getSingleplayerLeaderboard() {
+    public List<LeaderboardEntry> getLeaderboard(String roomId) {
         return ClientBuilder.newClient(new ClientConfig()) //
-                .target(SERVER).path("api/leaderboard/singleplayer") //
+                .target(SERVER).path("api/leaderboard/" + roomId) //
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
                 .get(new GenericType<>() {
                 });
     }
 
-    public LeaderboardEntry addSingleplayerLeaderboardEntry(String name, int points) {
+    public LeaderboardEntry addLeaderboardEntry(String name, String roomId, int points) {
         return ClientBuilder.newClient(new ClientConfig()) //
-                .target(SERVER).path("api/leaderboard/singleplayer") //
+                .target(SERVER).path("api/leaderboard/") //
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
-                .post(Entity.entity(new LeaderboardEntry(name, points), APPLICATION_JSON), LeaderboardEntry.class);
+                .post(Entity.entity(new LeaderboardEntry(name, roomId, points), APPLICATION_JSON), LeaderboardEntry.class);
+    }
+
+    /**
+     * Deletes entries that belong to a room with this roomId
+     * @param roomId the roomId of the entries to delete
+     */
+    public void deleteEntries(String roomId) {
+        ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/leaderboard/remove/" + roomId) //
+                .request(APPLICATION_JSON) //
+                .delete();
     }
 
     public Action getRandomAction() {

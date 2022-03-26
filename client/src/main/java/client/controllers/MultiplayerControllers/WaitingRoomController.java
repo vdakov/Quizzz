@@ -44,7 +44,7 @@ public class WaitingRoomController {
      * @param event the Action Event from the button
      */
     public void goBackToServerBrowser(ActionEvent event) {
-       // this.server.removePlayer(this.userName, this.gameId);
+        // this.server.removePlayer(this.userName, this.gameId);
         if (owner) {
             this.owner = false;
         }
@@ -80,6 +80,7 @@ public class WaitingRoomController {
                 @Override
                 public void handle(ActionEvent event) {
                     server.startMultiPlayerRoom(userName, gameId);
+                    server.deleteEntries(gameId);
                 }
             });
             this.ownerText.setText("YOU ARE THE OWNER OF THIS ROOM");

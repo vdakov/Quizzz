@@ -22,22 +22,22 @@ public class MainScreenActivityCtrl {
         this.server = server;
     }
 
-    public void enterSoloGame () throws IOException {
+    public void enterSoloGame() throws IOException {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
 
         String playerName = userName.getText();
         String roomId = server.createNewSinglePlayerRoom(playerName);
         gameConfiguration.setRoomId(roomId);
         gameConfiguration.setUserName(playerName);
-        gameConfiguration.setCurrentQuestionNumber(gameConfiguration.getCurrentQuestionNumber() + 1);
+        gameConfiguration.setCurrentQuestionNumber(1);
         gameConfiguration.setGameTypeSingleplayer();
         sceneCtrl.showNextQuestion();
     }
 
-    public void showSingleplayerLeaderboard() {
-        sceneCtrl.showSingleplayerLeaderboard();
+    public void showLeaderboard() {
+        sceneCtrl.showLeaderboard();
     }
-    
+
     public void enterServerBrowser() {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         gameConfiguration.setGameTypeMultiPlayer();

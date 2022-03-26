@@ -1,6 +1,7 @@
 package client.controllers;
 
 import client.communication.ServerUtils;
+import client.data.GameConfiguration;
 import com.google.inject.Inject;
 import commons.Leaderboard.LeaderboardEntry;
 import javafx.beans.property.SimpleStringProperty;
@@ -13,7 +14,7 @@ import javafx.scene.text.Text;
 import java.util.List;
 
 
-public class SingleplayerLeaderboardCtrl {
+public class LeaderboardCtrl {
     @FXML
     private Text place1;
     @FXML
@@ -33,7 +34,7 @@ public class SingleplayerLeaderboardCtrl {
     private SceneCtrl sceneCtrl;
 
     @Inject
-    public SingleplayerLeaderboardCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
+    public LeaderboardCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
         this.server = server;
         this.sceneCtrl = sceneCtrl;
     }
@@ -48,7 +49,7 @@ public class SingleplayerLeaderboardCtrl {
     }
 
     public void refresh() {
-        List<LeaderboardEntry> leaderboardEntries = server.getSingleplayerLeaderboard();
+        List<LeaderboardEntry> leaderboardEntries = server.getLeaderboard(GameConfiguration.getConfiguration().getRoomId());
         leaderboardTable.setItems(FXCollections.observableList(leaderboardEntries));
     }
 
