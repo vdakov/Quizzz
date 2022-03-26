@@ -33,8 +33,11 @@ public class EditActionActivityCtrl {
         this.server = server;
     }
 
-    public void initialize() {
-
+    public void initialize(Action editingAction) {
+        this.id = editingAction.getId();
+        title.setText(editingAction.getTitle());
+        source.setText(editingAction.getSource());
+        consumption.setText(String.valueOf(editingAction.getConsumption()));
     }
 
     public void cancel() {

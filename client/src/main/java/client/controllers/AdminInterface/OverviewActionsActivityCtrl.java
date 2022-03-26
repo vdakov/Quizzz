@@ -55,6 +55,8 @@ public class OverviewActionsActivityCtrl {
     private Button deleteButton;
     @FXML
     private TextField deletingID;
+    @FXML
+    private TextField editingID;
 
     @Inject
     public OverviewActionsActivityCtrl(ServerUtils server, SceneCtrl mainCtrl) {
@@ -91,8 +93,14 @@ public class OverviewActionsActivityCtrl {
     }
 
     public void editActivity(ActionEvent event) {
-//        String id = event.getSource().toString();
-        sceneCtrl.showEditActionScene();
+        String id = editingID.getText();
+        try {
+            Action editingAction = server.getActivityById(id);
+            sceneCtrl.showEditActionScene(editingAction);
+        } catch (Exception e) {
+            System.out.println("The given ID is not founded");
+        }
+
         refresh();
     }
 

@@ -20,16 +20,21 @@
             </columns>
         </TableView>
         <Button fx:id="userContribution" layoutX="608.0" layoutY="54.0" mnemonicParsing="false" onAction="#addActivity" prefHeight="31.0" prefWidth="137.0" text="User Contribution" />
-        <Button fx:id="addButton" layoutX="608.0" layoutY="170.0" mnemonicParsing="false" onAction="#addActivity" prefHeight="31.0" prefWidth="137.0" text="Add Activity" />
+        <Button fx:id="addButton" layoutX="608.0" layoutY="126.0" mnemonicParsing="false" onAction="#addActivity" prefHeight="31.0" prefWidth="137.0" text="Add Activity" />
         <Button fx:id="refreshButton" layoutX="19.0" layoutY="356.0" mnemonicParsing="false" onAction="#refresh" prefHeight="31.0" prefWidth="83.0" text="Refresh" />
-        <Button fx:id="editButton" layoutX="608.0" layoutY="131.0" mnemonicParsing="false" onAction="#editActivity" prefHeight="31.0" prefWidth="137.0" text="Edit Activity" />
-        <Button fx:id="deleteButton" layoutX="608.0" layoutY="211.0" mnemonicParsing="false" onAction="#deleteActivity" prefHeight="31.0" prefWidth="137.0" text="Delete Activity" />
-        <TextField fx:id="deletingID" layoutX="608.0" layoutY="253.0" prefHeight="21.0" prefWidth="137.0" text="Please type in ID of deleting action">
+        <Button fx:id="editButton" layoutX="608.0" layoutY="170.0" mnemonicParsing="false" onAction="#editActivity" prefHeight="31.0" prefWidth="137.0" text="Edit Activity" />
+        <Button fx:id="deleteButton" layoutX="609.0" layoutY="240.0" mnemonicParsing="false" onAction="#deleteActivity" prefHeight="31.0" prefWidth="137.0" text="Delete Activity" />
+        <TextField fx:id="deletingID" layoutX="609.0" layoutY="282.0" prefHeight="21.0" prefWidth="137.0" text="Please type in ID of deleting action">
          <font>
             <Font size="9.0" />
          </font></TextField>
       <Label layoutX="613.0" layoutY="99.0" text="Admin" />
       <Label layoutX="607.0" layoutY="24.0" text="User" />
       <Button layoutX="607.0" layoutY="356.0" mnemonicParsing="false" onAction="#goToMainScreen" prefHeight="31.0" prefWidth="137.0" text="Go Back Home" />
+      <TextField fx:id="editingID" layoutX="609.0" layoutY="211.0" prefHeight="21.0" prefWidth="137.0" text="Please type in ID of editing action">
+         <font>
+            <Font size="9.0" />
+         </font>
+      </TextField>
     </children>
 </AnchorPane>

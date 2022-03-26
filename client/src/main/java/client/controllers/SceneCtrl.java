@@ -13,6 +13,7 @@ import client.controllers.QuestionControllers.KnowledgeQuestionActivityCtrl;
 import client.controllers.QuestionControllers.OpenQuestionActivityCtrl;
 import client.data.GameConfiguration;
 import client.logic.QuestionParsers;
+import commons.Actions.Action;
 import commons.Questions.AlternativeQuestion;
 import commons.Questions.ComparisonQuestion;
 import commons.Questions.KnowledgeQuestion;
@@ -138,11 +139,11 @@ public class SceneCtrl {
         primaryStage.setScene(pair.getValue());
     }
 
-    public void showEditActionScene() {
+    public void showEditActionScene(Action editingAction) {
         var pair = scenes.get("EditAction");
         var ctrl = (EditActionActivityCtrl) pair.getKey();
 
-        ctrl.initialize();
+        ctrl.initialize(editingAction);
         primaryStage.setTitle("Edit actions");
         primaryStage.setScene(pair.getValue());
     }
