@@ -19,6 +19,11 @@ public class ChatEntry {
         this.content = content;
     }
 
+    public ChatEntry(String userName)
+    {
+        this.userName = userName;
+    }
+
     public MessageType getType() {
         return type;
     }

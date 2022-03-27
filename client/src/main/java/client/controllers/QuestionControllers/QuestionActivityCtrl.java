@@ -4,7 +4,6 @@ import client.communication.ServerUtils;
 import client.controllers.SceneCtrl;
 import client.data.GameConfiguration;
 import client.Chat.ChatEntry;
-import commons.Leaderboard.LeaderboardEntry;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -13,9 +12,9 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.skin.SplitPaneSkin;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Border;
@@ -96,7 +95,7 @@ public class QuestionActivityCtrl {
     @FXML
     protected TableView tableview;
     @FXML
-    protected TableColumn<String, ImageView> playersActivity;
+    protected TableColumn<ChatEntry, String> playersActivity;
     @FXML
     protected SplitPane splitPane;
 
@@ -126,7 +125,7 @@ public class QuestionActivityCtrl {
         if (gameConfig.isSinglePlayer())
         {
             splitPane.setVisible(true);
-            playersActivity.setCellValueFactory(null);
+            playersActivity.setCellValueFactory(q -> new SimpleStringProperty(new ChatEntry(gameConfig.getUserName()) + ""));
         }
              else
              {
@@ -276,7 +275,7 @@ public class QuestionActivityCtrl {
         session.send(destination, o);
     }
 
-    public void emoji1Display(ActionEvent event)
+    public void emoji1Display(MouseEvent event)
     {
         server.addChatEntry(gameConfig.getUserName(), emoji1);
        send("/app/emojis", new ChatEntry(gameConfig.getUserName(), emoji1));
