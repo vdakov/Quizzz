@@ -64,12 +64,13 @@ public class OverviewActionsActivityCtrl {
         this.sceneCtrl = mainCtrl;
     }
 
-//    public void initialize(URL location, ResourceBundle resources) {
+    //    public void initialize(URL location, ResourceBundle resources) {
     public void initialize() {
         colId.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getId() + ""));
         colTitle.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getTitle()));
         colConsumption.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getConsumption() + ""));
         colSource.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getSource()));
+        this.refresh();
     }
 
     public void addActivity(ActionEvent event) {

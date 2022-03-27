@@ -5,9 +5,6 @@ import client.communication.ServerUtils;
 import client.controllers.AdminInterface.AddActionActivityCtrl;
 import client.controllers.AdminInterface.EditActionActivityCtrl;
 import client.controllers.AdminInterface.OverviewActionsActivityCtrl;
-import client.controllers.AdminInterface.AddActionActivityCtrl;
-import client.controllers.AdminInterface.EditActionActivityCtrl;
-import client.controllers.AdminInterface.OverviewActionsActivityCtrl;
 import client.controllers.MultiplayerControllers.ServerBrowserController;
 import client.controllers.MultiplayerControllers.WaitingRoomController;
 import client.controllers.QuestionControllers.AlternativeQuestionActivityCtrl;
@@ -148,7 +145,7 @@ public class SceneCtrl {
         scene.setRoot(pair.getValue());
     }
 
-    public void showEditActionScene(Action editingAction) {
+    public void showEditActionScene(Action editingAction) throws IOException {
         var pair = sceneRoots.get("EditAction");
         EditActionActivityCtrl ctrl = (EditActionActivityCtrl) pair.getKey();
 

@@ -44,26 +44,27 @@ public class ActionController {
 
 
     //allows the user to update all the fields of an activity except the ID, but only if the object with that ID already exists
-    @PutMapping(path = "/update/{id}")
-    public void update(@PathVariable("id") Long id,
-                       @RequestParam(required = false) String title,
-                       @RequestParam(required = false) int consumption,
-                       @RequestParam(required = false) String source) {
+    @PutMapping(path = "/update")
+    public void update(@RequestBody Action a) {
 
 
-        Action activity = service.getById(id.toString()); //.orElseThrow(() -> new IllegalStateException(("No such activity!!!")));
+        Action activity = service.getById(a.getId()); //.orElseThrow(() -> new IllegalStateException(("No such activity!!!")));
 
-        if (title != null && title.length() > 0) {
-            activity.setTitle(title);
+        if (a.getTitle() != null && a.getTitle().length() > 0) {
+            activity.setTitle(a.getTitle());
         }
 
-        if (consumption > 0) {
-            activity.setConsumption(consumption);
+        if (a.getConsumption() > 0) {
+            activity.setConsumption(a.getConsumption());
         }
 
-        /*if (source != null && source.length() > 0) {
-            activity.setSource(source);
-        }*/
+        if (a.getSource() != null && a.getSource().length() > 0) {
+            activity.setSource(a.getSource());
+        }
+
+        if (a.getImagePath() != null && a.getImagePath().length() > 0) {
+            activity.setImagePath(a.getImagePath());
+        }
 
         service.save(activity);
     }

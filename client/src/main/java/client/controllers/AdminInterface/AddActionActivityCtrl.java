@@ -14,8 +14,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
-
-
 import java.io.File;
 import java.io.IOException;
 
@@ -91,7 +89,7 @@ public class AddActionActivityCtrl {
         } catch (NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
         }
-        return new Action("contribution-" + title.getText(), "Contributions/" + this.imageNameField.getText(), title.getText(), Long.valueOf(consumption.getText()), source.getText());
+        return new Action("contribution-" + title.getText(), "Contributions/" + this.imageNameField.getText(), title.getText(), Long.parseLong(this.consumption.getText()), source.getText());
     }
 
     private void clearFields() {

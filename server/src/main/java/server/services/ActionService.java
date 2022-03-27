@@ -46,7 +46,7 @@ public class ActionService {
 
     //returns a single action deleted by id
     public Action getById(String id) {
-        Action activity = repository.findById(id).orElseThrow(() -> new IllegalStateException(("No such activity!!!")));
+        Action activity = getRepository().findById(id).orElseThrow(() -> new IllegalStateException(("No such activity!!!")));
 
         return activity;
 

@@ -217,7 +217,7 @@ public class ServerUtils {
 
     public void editActivity(String id, Action a) {
         ClientBuilder.newClient(new ClientConfig()) //
-                .target(SERVER).path("api/activities/update/" + id) //
+                .target(SERVER).path("api/activities/update") //
                 .request() //
                 .accept(APPLICATION_JSON) //
                 .put(Entity.entity(a, APPLICATION_JSON), Action.class); //;
