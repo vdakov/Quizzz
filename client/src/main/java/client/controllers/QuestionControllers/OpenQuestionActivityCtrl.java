@@ -12,6 +12,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
+import java.util.concurrent.ExecutionException;
+
 public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
     private int userAnswerInt;
     private int addedPointsInt;
@@ -35,7 +37,7 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
      * @param sceneCtrl the scene controller
      */
     @Inject
-    public OpenQuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
+    public OpenQuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) throws ExecutionException, InterruptedException {
         super(server, sceneCtrl);
     }
 

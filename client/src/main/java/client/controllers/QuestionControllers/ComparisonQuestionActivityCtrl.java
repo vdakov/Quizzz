@@ -5,6 +5,8 @@ import client.controllers.SceneCtrl;
 import com.google.inject.Inject;
 import commons.Questions.ComparisonQuestion;
 
+import java.util.concurrent.ExecutionException;
+
 public class ComparisonQuestionActivityCtrl extends QuestionActivityCtrl {
     /**
      * Creates the scene with the needed dependencies
@@ -13,7 +15,7 @@ public class ComparisonQuestionActivityCtrl extends QuestionActivityCtrl {
      * @param sceneCtrl the scene controller
      */
     @Inject
-    public ComparisonQuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
+    public ComparisonQuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) throws ExecutionException, InterruptedException {
         super(server, sceneCtrl);
     }
 

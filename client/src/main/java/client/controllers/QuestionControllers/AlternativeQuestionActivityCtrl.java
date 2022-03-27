@@ -5,6 +5,8 @@ import client.controllers.SceneCtrl;
 import com.google.inject.Inject;
 import commons.Questions.AlternativeQuestion;
 
+import java.util.concurrent.ExecutionException;
+
 
 public class AlternativeQuestionActivityCtrl extends QuestionActivityCtrl {
     /**
@@ -14,7 +16,7 @@ public class AlternativeQuestionActivityCtrl extends QuestionActivityCtrl {
      * @param sceneCtrl the scene controller
      */
     @Inject
-    public AlternativeQuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
+    public AlternativeQuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) throws ExecutionException, InterruptedException {
         super(server, sceneCtrl);
     }
 

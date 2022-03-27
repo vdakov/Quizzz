@@ -15,6 +15,7 @@
  */
 package client.communication;
 
+import client.Chat.ChatEntry;
 import client.data.GameConfiguration;
 import commons.Actions.Action;
 import commons.Leaderboard.LeaderboardEntry;
@@ -22,6 +23,7 @@ import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.GenericType;
 import jakarta.ws.rs.core.Response;
+import javafx.scene.image.ImageView;
 import org.glassfish.jersey.client.ClientConfig;
 
 import java.util.List;
@@ -177,6 +179,24 @@ public class ServerUtils {
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
                 .post(Entity.entity(new LeaderboardEntry(name, points), APPLICATION_JSON), LeaderboardEntry.class);
+    }
+
+    public List<ChatEntry> getPlayersActivity() {
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER).path("topic/emojis")
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .get(new GenericType<>() {
+                 });
+        }
+
+
+    public ChatEntry addChatEntry(String name, ImageView imageView) {
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER).path("topic/emojis")
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .post(Entity.entity(new ChatEntry(name, imageView), APPLICATION_JSON), ChatEntry.class);
     }
 
     public Action getRandomAction() {

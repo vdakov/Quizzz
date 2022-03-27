@@ -10,8 +10,7 @@ public class ChatEntry {
 
 
     public enum MessageType {
-        EMOJI,
-        JOKER
+        EMOJI
     }
 
     public ChatEntry(String userName, ImageView content)

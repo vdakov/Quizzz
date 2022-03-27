@@ -4,12 +4,15 @@ import client.communication.ServerUtils;
 import client.controllers.SceneCtrl;
 import client.data.GameConfiguration;
 import client.Chat.ChatEntry;
+import commons.Leaderboard.LeaderboardEntry;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -31,6 +34,7 @@ import org.springframework.web.socket.messaging.WebSocketStompClient;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 
@@ -101,7 +105,7 @@ public class QuestionActivityCtrl {
             new SimpleIntegerProperty((int) startTime);
     protected Timeline timeline;
 
-    public QuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
+    public QuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) throws ExecutionException, InterruptedException {
         this.server = server;
         this.sceneCtrl = sceneCtrl;
     }
@@ -119,8 +123,17 @@ public class QuestionActivityCtrl {
         addedPoints.setText(" ");
         addedPointsInt = 0;
 
-        if (gameConfig.isSinglePlayer()) splitPane.setVisible(true);
-             else splitPane.setVisible(false);
+        if (gameConfig.isSinglePlayer())
+        {
+            splitPane.setVisible(true);
+            playersActivity.setCellValueFactory(null);
+        }
+             else
+             {
+                 splitPane.setVisible(false);
+             }
+
+
     }
 
 
@@ -234,20 +247,13 @@ public class QuestionActivityCtrl {
 
     private StompSession session = connect("ws://localhost:8080/websocket");
 
-    private StompSession connect(String url)
-    {
+    private StompSession connect(String url) throws ExecutionException, InterruptedException {
         var client = new StandardWebSocketClient();
         var stomp = new WebSocketStompClient(client);
 
         stomp.setMessageConverter(new MappingJackson2MessageConverter() );
-        try {
             return stomp.connect(url, new StompSessionHandlerAdapter() {} ).get();
-        }  catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-        } catch (ExecutionException e) {
-            throw new RuntimeException(e);
-        }
-        throw new IllegalStateException();
+
     }
 
     public void registerForMessages(String destination, Consumer<ChatEntry> consumer)
@@ -272,8 +278,15 @@ public class QuestionActivityCtrl {
 
     public void emoji1Display(ActionEvent event)
     {
+        server.addChatEntry(gameConfig.getUserName(), emoji1);
        send("/app/emojis", new ChatEntry(gameConfig.getUserName(), emoji1));
+       refresh();
     }
 
 
+
+    public void refresh() {
+        List<ChatEntry> chatEntries = server.getPlayersActivity();
+        tableview.setItems(FXCollections.observableList(chatEntries));
+    }
 }
