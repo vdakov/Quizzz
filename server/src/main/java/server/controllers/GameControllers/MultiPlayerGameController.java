@@ -1,10 +1,7 @@
 package server.controllers.GameControllers;
 
-<<<<<<< server/src/main/java/server/controllers/GameControllers/MultiPlayerGameController.java
 import client.Chat.ChatEntry;
-=======
 import commons.GameContainer;
->>>>>>> server/src/main/java/server/controllers/GameControllers/MultiPlayerGameController.java
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -100,9 +97,9 @@ public class MultiPlayerGameController {
 
     @MessageMapping("/emojis")  // /app/emojis
     @SendTo("/topic/emojis")
-    public ChatEntry addMessage(ChatEntry chatEntry)
-    {
-            return chatEntry;
+    public ChatEntry addMessage(ChatEntry chatEntry) {
+        return chatEntry;
+    }
 
     @GetMapping("/getGames")
     public List<GameContainer> getGameIds() {
