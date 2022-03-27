@@ -127,7 +127,7 @@ public class ServerBrowserController {
     public void joinRandomWaitingRoom(ActionEvent event) {
         //Checking if username field was filled in
         String playerName = usernameField.getText();
-        if(playerName == ""){
+        if (playerName == "") {
             missingUsername.setText("Enter username!");
             return;
         }
@@ -135,7 +135,7 @@ public class ServerBrowserController {
         String roomId = server.getRandomMultiPlayerRoomId(playerName);
 
 
-        if(!server.joinMultiPlayerRoom(playerName, roomId)){
+        if (!server.joinMultiPlayerRoom(playerName, roomId)) {
             missingUsername.setText("The username is already taken!");
             return;
         }
@@ -147,7 +147,7 @@ public class ServerBrowserController {
     public void joinWaitingRoom(ActionEvent event) {
         //Checking if username field was filled in
         String playerName = usernameField.getText();
-        if(playerName == ""){
+        if (playerName == "") {
             missingUsername.setText("Enter username!");
             return;
         }
@@ -160,7 +160,7 @@ public class ServerBrowserController {
             alert.setContentText("Please enter a valid game ID!!!");
             alert.show();
         } else {
-            if(!server.joinMultiPlayerRoom(playerName, gameId)){
+            if (!server.joinMultiPlayerRoom(playerName, gameId)) {
                 missingUsername.setText("The username is already taken!");
                 return;
             }
@@ -176,7 +176,7 @@ public class ServerBrowserController {
     public void createWaitingRoom(ActionEvent event) {
         //Checking if username field was filled in
         String playerName = usernameField.getText();
-        if(playerName == ""){
+        if (playerName == "") {
             missingUsername.setText("Enter username!");
             return;
         }

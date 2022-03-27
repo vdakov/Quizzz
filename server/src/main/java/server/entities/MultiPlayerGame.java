@@ -54,7 +54,7 @@ public class MultiPlayerGame extends Game {
         System.out.println("Player " + userName + " has been removed from the game");
     }
 
-    public Set<String> getUsernames(){
+    public Set<String> getUsernames() {
         return playerScores.keySet();
     }
 }

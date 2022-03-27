@@ -64,7 +64,7 @@ public class MultiplayerGameService {
 
     public boolean joinMultiPlayerGame(String userName, String roomId) {
         System.out.println("RoomId:    " + gameCatalog.getMultiPlayerGame(roomId));
-        if(gameCatalog.checkUsernameExists(userName, roomId)){
+        if (gameCatalog.checkUsernameExists(userName, roomId)) {
             System.out.println("UserName exists!!!");
             return false;
         }
