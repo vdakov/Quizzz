@@ -1,13 +1,15 @@
 package server.controllers;
 
 import commons.Actions.Action;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.web.bind.annotation.*;
 import server.services.ActionService;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -93,7 +95,7 @@ public class ActionController {
     @GetMapping(path = "/sendImage/{folderNum}/{imagePath}")
     public @ResponseBody
     String getImage(@PathVariable String folderNum, @PathVariable String imagePath) throws IOException {
-        byte[] array = FileUtils.readFileToByteArray(new File("server/src/main/resources/" + folderNum + "/" + imagePath));
+        byte[] array = FileUtils.readFileToByteArray(new File("server/src/main/resources/activity-bank-pictures/" + folderNum + "/" + imagePath));
         String base64String = Base64.encodeBase64String(array);
         return base64String;
     }

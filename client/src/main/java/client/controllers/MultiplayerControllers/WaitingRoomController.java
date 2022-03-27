@@ -11,8 +11,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 
-import java.util.HashSet;
 import java.io.IOException;
+import java.util.HashSet;
 
 
 public class WaitingRoomController {
@@ -96,7 +96,7 @@ public class WaitingRoomController {
             this.startButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    server.startMultiPlayerRoom(userName, gameId);
+                    server.startRoom();
                 }
             });
             this.ownerText.setText("YOU ARE THE OWNER OF THIS ROOM");

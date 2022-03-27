@@ -4,8 +4,8 @@ import client.communication.ServerUtils;
 import client.data.GameConfiguration;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
-import javax.inject.Inject;
 
+import javax.inject.Inject;
 import java.io.IOException;
 
 public class MainScreenActivityCtrl {
@@ -27,12 +27,18 @@ public class MainScreenActivityCtrl {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
 
         String playerName = userName.getText();
-        String roomId = server.createNewSinglePlayerRoom(playerName);
-        gameConfiguration.setRoomId(roomId);
         gameConfiguration.setUserName(playerName);
         gameConfiguration.setCurrentQuestionNumber(gameConfiguration.getCurrentQuestionNumber() + 1);
         gameConfiguration.setGameTypeSingleplayer();
-        sceneCtrl.showNextQuestion();
+
+        String roomId = server.createNewRoom();
+        gameConfiguration.setRoomId(roomId);
+
+        if (roomId != null) {
+            if (server.startRoom() == true) {
+                sceneCtrl.showNextQuestion();
+            }
+        }
     }
 
     public void showSingleplayerLeaderboard() {

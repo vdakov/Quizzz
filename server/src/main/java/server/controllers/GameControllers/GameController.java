@@ -1,13 +1,17 @@
 package server.controllers.GameControllers;
 
+import commons.GameContainer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import server.entities.MultiplayerRoom;
 import server.services.GameServices.MultiplayerGameService;
 import server.services.GameServices.SingleplayerGameService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/{username}/{gameType}")
@@ -34,7 +38,7 @@ public class GameController {
      * @param gameType the type of the game
      * @return the response entity with the needed data or the error message
      */
-    @GetMapping("/createNewGame")
+    @GetMapping("/createNewRoom")
     public ResponseEntity<String> createNewGame(@PathVariable("username") String username, @PathVariable("gameType") String gameType) {
         if (gameType.equals("SINGLEPLAYER")) {
             try {
@@ -43,7 +47,7 @@ public class GameController {
                     return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
                 }
 
-                return ResponseEntity.status(HttpStatus.OK).body(roomId);
+                return ResponseEntity.ok(roomId);
             } catch (Exception e) {
                 return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
             }
@@ -63,5 +67,26 @@ public class GameController {
         }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
+    @GetMapping("/getGames")
+    public List<GameContainer> getGameIds() {
+        return multiplayerGameService.getGameIds();
+    }
+
+    @GetMapping("/removePlayer")
+    public void removePlayer(@PathVariable String userName, @PathVariable String roomId) {
+        System.out.println("Hello");
+        this.getGame(roomId).removePlayer(userName);
+    }
+
+    @GetMapping("/")
+    public MultiplayerRoom getGame(@PathVariable String roomId) {
+        return this.multiplayerGameService.getGame(roomId);
+    }
+
+    @GetMapping("/numPlayers")
+    public Integer getNumPlayers(@PathVariable String roomId) {
+        return (Integer) this.getGame(roomId).getNumPlayers();
     }
 }

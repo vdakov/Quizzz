@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import server.services.GameServices.MultiplayerGameService;
 import server.services.GameServices.SingleplayerGameService;
+import server.services.GameServices.Util;
 
 @RestController
 @RequestMapping("api/{username}/{gameType}/{roomId}")
@@ -33,8 +34,8 @@ public class GameRoomController {
      * @param roomId   the id of the game that is wanted to be started
      * @return whether the room was successfully started
      */
-    @GetMapping("/startGame")
-    public ResponseEntity<Object> startNewGame(@PathVariable("username") String username, @PathVariable("gameType") String gameType, @PathVariable("roomId") String roomId) {
+    @GetMapping("/startRoom")
+    public ResponseEntity startNewGame(@PathVariable("username") String username, @PathVariable("gameType") String gameType, @PathVariable("roomId") String roomId) {
         if (gameType.equals("SINGLEPLAYER")) {
             try {
                 return (singlePlayerGameService.startSinglePlayerGame(username, roomId)) ? ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -64,7 +65,7 @@ public class GameRoomController {
      * @return the desired question or an error message
      */
     @GetMapping("/{questionNumber}/getQuestion")
-    public ResponseEntity<Question> getQuestion(@PathVariable("username") String username, @PathVariable("gameType") String gameType,
+    public ResponseEntity<String> getQuestion(@PathVariable("username") String username, @PathVariable("gameType") String gameType,
                                                     @PathVariable("roomId") String roomId, @PathVariable("questionNumber") String questionNumber) {
         if (gameType.equals("SINGLEPLAYER")) {
             try {
@@ -75,7 +76,7 @@ public class GameRoomController {
                     return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
                 }
 
-                return ResponseEntity.status(HttpStatus.OK).body(question);
+                return ResponseEntity.status(HttpStatus.OK).body(Util.getQuestionType(question) + ": " + question.toJsonString());
             } catch (NumberFormatException e) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             } catch (Exception e) {
@@ -92,7 +93,7 @@ public class GameRoomController {
                     return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
                 }
 
-                return ResponseEntity.status(HttpStatus.OK).body(question);
+                return ResponseEntity.status(HttpStatus.OK).body(question.toJsonString());
             } catch (NumberFormatException e) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             } catch (Exception e) {

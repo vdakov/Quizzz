@@ -57,7 +57,9 @@ public class SceneCtrl {
         Scanner scanner = new Scanner(response).useDelimiter(": ");
         String questionType = scanner.next();
         //primaryStage.setTitle("Question #" + gameConfiguration.getCurrentQuestionNumber() + ": " + questionType);
-        System.out.println(questionType);
+
+        System.out.println("Type: " + questionType);
+
         switch (questionType) {
             case "OpenQuestion": {
                 this.showOpenQuestionScene(QuestionParsers.openQuestionParser(scanner.next()));
@@ -79,13 +81,16 @@ public class SceneCtrl {
     }
 
     public void showOpenQuestionScene(OpenQuestion openQuestion) throws IOException {
+        System.out.println("OPEN QUESTION");
         var pair = sceneRoots.get("OpenQuestion");
         OpenQuestionActivityCtrl ctrl = (OpenQuestionActivityCtrl) pair.getKey();
+
         ctrl.displayQuestion(openQuestion);
         scene.setRoot(pair.getValue());
     }
 
     public void showKnowledgeQuestionScene(KnowledgeQuestion knowledgeQuestion) throws IOException {
+        System.out.println("KNOWLEDGE QUESTION");
         var pair = sceneRoots.get("KnowledgeQuestion");
         KnowledgeQuestionActivityCtrl ctrl = (KnowledgeQuestionActivityCtrl) pair.getKey();
 
@@ -94,15 +99,19 @@ public class SceneCtrl {
     }
 
     public void showComparisonQuestionScene(ComparisonQuestion comparisonQuestion) throws IOException {
+        System.out.println("COMPARISON QUESTION");
         var pair = sceneRoots.get("ComparisonQuestion");
         ComparisonQuestionActivityCtrl ctrl = (ComparisonQuestionActivityCtrl) pair.getKey();
+
         ctrl.displayQuestion(comparisonQuestion);
         scene.setRoot(pair.getValue());
     }
 
     public void showAlternativeQuestionScene(AlternativeQuestion alternativeQuestion) throws IOException {
+        System.out.println("ALTERNATIVE QUESTION");
         var pair = sceneRoots.get("AlternativeQuestion");
         AlternativeQuestionActivityCtrl ctrl = (AlternativeQuestionActivityCtrl) pair.getKey();
+
         ctrl.displayQuestion(alternativeQuestion);
         scene.setRoot(pair.getValue());
     }

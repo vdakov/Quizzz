@@ -151,7 +151,7 @@ public class ServerBrowserController {
      * @param event the ActionEvent of the button
      */
     public void createWaitingRoom(ActionEvent event) {
-        String gameId = server.createNewMultiPlayerRoom("cata");
+        String gameId = server.createNewRoom();
         this.sceneCtrl.showWaitingRoom(true, gameId, "cata");
     }
 }

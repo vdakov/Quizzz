@@ -5,7 +5,7 @@ public class GameConfiguration {
 
     private static GameConfiguration gameConfiguration = null;
 
-    private enum GameType {
+    public enum GameType {
         UNDEFINED,
         SINGLEPLAYER,
         MULTIPLAYER
@@ -78,5 +78,7 @@ public class GameConfiguration {
         this.gameType = GameType.MULTIPLAYER;
     }
 
-
+    public String getGameTypeString() {
+        return gameType.toString();
+    }
 }
