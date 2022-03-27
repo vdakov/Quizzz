@@ -96,8 +96,6 @@ public class QuestionActivityCtrl {
     protected TableView tableview;
     @FXML
     protected TableColumn<ChatEntry, String> playersActivity;
-    @FXML
-    protected SplitPane splitPane;
 
 
     protected IntegerProperty timeSeconds =
@@ -124,12 +122,12 @@ public class QuestionActivityCtrl {
 
         if (gameConfig.isSinglePlayer())
         {
-            splitPane.setVisible(true);
+            tableview.setVisible(true);
             playersActivity.setCellValueFactory(q -> new SimpleStringProperty(new ChatEntry(gameConfig.getUserName()) + ""));
         }
              else
              {
-                 splitPane.setVisible(false);
+                 tableview.setVisible(false);
              }
 
 
