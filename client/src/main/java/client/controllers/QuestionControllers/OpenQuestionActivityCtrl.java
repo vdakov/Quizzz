@@ -4,6 +4,7 @@ import client.communication.ServerUtils;
 import client.controllers.SceneCtrl;
 import com.google.inject.Inject;
 import commons.Questions.OpenQuestion;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -13,6 +14,10 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 import java.util.concurrent.ExecutionException;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 
 public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
     private int userAnswerInt;
@@ -55,10 +60,10 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
 
     /**
      * Sets the text for the needed question given as parameter
-     *
+     * Displays the appropriate image for the question
      * @param openQuestion the question that is set
      */
-    public void displayQuestion(OpenQuestion openQuestion) {
+    public void displayQuestion(OpenQuestion openQuestion) throws IOException {
         if (openQuestion == null) {
             return;
         }
@@ -66,8 +71,19 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         questionNumberLabel.setText("Question " + getQuestionNumber());
         points.setText(String.valueOf(getPointsInt()));
 
+<<<<<<< client/src/main/java/client/controllers/QuestionControllers/OpenQuestionActivityCtrl.java
         if (gameConfig.isSinglePlayer()) tableview.setVisible(true);
         else tableview.setVisible(false);
+=======
+        ByteArrayInputStream bis = new ByteArrayInputStream(server.getQuestionImage(openQuestion.getQuestion().getRight()));
+        BufferedImage bImage = ImageIO.read(bis);
+
+
+        this.image.setImage(SwingFXUtils.toFXImage(bImage, null));
+
+        if (gameConfig.isSinglePlayer()) emoji.setVisible(false);
+        else emoji.setVisible(true);
+>>>>>>> client/src/main/java/client/controllers/QuestionControllers/OpenQuestionActivityCtrl.java
 
         initialize();
         startTimer();
