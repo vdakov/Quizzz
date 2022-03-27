@@ -1,5 +1,6 @@
 package server.controllers.GameControllers;
 
+import commons.GameContainer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,9 +8,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
+import server.entities.MultiplayerRoom;
 import server.services.GameServices.MultiplayerGameService;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -68,4 +71,26 @@ public class MultiplayerGameRoomController {
 
         return res;
     }
+
+    @GetMapping("/getGames")
+    public List<GameContainer> getGameIds() {
+        return multiplayerGameService.getGameIds();
+    }
+
+    @GetMapping("/{gameId}/removePlayer")
+    public void removePlayer(@PathVariable String userName, @PathVariable String gameId) {
+        System.out.println("Hello");
+        this.getGame(gameId).removePlayer(userName);
+    }
+
+    @GetMapping("/{gameId}")
+    public MultiplayerRoom getGame(@PathVariable String gameId) {
+        return this.multiplayerGameService.getGame(gameId);
+    }
+
+    @GetMapping("/{gameId}/numPlayers")
+    public Integer getNumPlayers(@PathVariable String gameId) {
+        return (Integer) this.getGame(gameId).getNumPlayers();
+    }
+
 }

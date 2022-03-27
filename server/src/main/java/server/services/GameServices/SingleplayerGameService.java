@@ -65,7 +65,7 @@ public class SingleplayerGameService {
     public boolean startSinglePlayerGame(String username, String roomId) {
         try {
             if (roomCatalog.getSinglePlayerRoom(roomId).getRoomStatus() != Room.RoomStatus.WAITING ||
-               !roomCatalog.getSinglePlayerRoom(roomId).getRoomCreator().equals(username)) {
+                    !roomCatalog.getSinglePlayerRoom(roomId).getRoomCreator().equals(username)) {
                 return false;
             }
 

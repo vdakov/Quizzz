@@ -1,6 +1,11 @@
 package server.entities;
 
+import commons.GameContainer;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 public class RoomCatalog {
 
@@ -108,4 +113,42 @@ public class RoomCatalog {
     public void setMultiplayerRandomRoom(MultiplayerRoom multiplayerRoom) {
         this.multiplayerRandomRoom = multiplayerRoom;
     }
+
+    public List<GameContainer> getWaitingMultiplayerGames() {
+        this.cleanEmptyGames();
+        ArrayList<GameContainer> games = new ArrayList<>();
+        Iterator<String> iterator1 = multiplayerRooms.keySet().iterator();
+        Iterator<MultiplayerRoom> iterator2 = multiplayerRooms.values().iterator();
+        while (iterator1.hasNext()) {
+            int numPlayers = iterator2.next().getNumPlayers();
+            String currentGameId = iterator1.next();
+
+            if (this.getMultiPlayerRoom(currentGameId).getRoomStatus() == Room.RoomStatus.WAITING) {
+                games.add(new GameContainer(currentGameId, numPlayers));
+            }
+
+        }
+
+        return games;
+    }
+
+    /**
+     * Method that ensures there are no empty games in server browser
+     */
+    public void cleanEmptyGames() {
+
+        Iterator<MultiplayerRoom> gameIterator = multiplayerRooms.values().iterator();
+        ArrayList<MultiplayerRoom> emptyGames = new ArrayList<>();
+
+        while (gameIterator.hasNext()) {
+            MultiplayerRoom game = gameIterator.next();
+            if (game.getNumPlayers() == 0) {
+                emptyGames.add(game);
+            }
+        }
+        for (MultiplayerRoom game : emptyGames) {
+            this.multiplayerRooms.remove(game.getRoomId());
+        }
+    }
+
 }

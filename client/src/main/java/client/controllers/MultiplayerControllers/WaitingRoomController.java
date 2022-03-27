@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 
 import java.util.HashSet;
+import java.io.IOException;
 
 
 public class WaitingRoomController {
@@ -49,10 +50,8 @@ public class WaitingRoomController {
      * @param event the Action Event from the button
      */
     public void goBackToServerBrowser(ActionEvent event) {
-       // this.server.removePlayer(this.userName, this.gameId);
-        if (owner) {
-            this.owner = false;
-        }
+        this.server.removePlayer(this.userName, this.gameId);
+
         this.sceneCtrl.showServerBrowser();
     }
 
@@ -71,6 +70,7 @@ public class WaitingRoomController {
         this.gameId = roomId;
         this.ownerText.setText("");
         this.startButton.setDisable(true);
+        this.playerLabel.setText(server.getNumPlayers(roomId) + ""); // the only good way to convert to a string :)
 
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         gameConfiguration.setRoomId(roomId);
@@ -81,18 +81,13 @@ public class WaitingRoomController {
         server.waitForMultiPlayerRoomStart(q -> {
             ongoingGames.add(q);
 
-            System.out.println("AM PRIMIT UPDATE");
-            ongoingGames.forEach(k -> {
-                System.out.println(k.toString());
-            });
-
-            System.out.println("Game configuration  " + gameConfiguration.getRoomId());
-
             if (ongoingGames.contains(gameConfiguration.getRoomId())) {
-                System.out.println("Am intrat si aici 1234");
                 //server.stop();
-                sceneCtrl.showNextQuestion();
-                System.out.println("Why nu mergi?");
+                try {
+                    sceneCtrl.showNextQuestion();
+                } catch (Exception e) {
+                    System.out.println("Exception occured");
+                }
             }
         });
 
@@ -114,7 +109,7 @@ public class WaitingRoomController {
     /**
      * Refresh method to update the number of current players
      */
-    public void refresh() {
+    public void refresh() throws IOException {
         this.initialize(this.owner, this.gameId, this.userName);
     }
 

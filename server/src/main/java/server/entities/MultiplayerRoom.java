@@ -60,4 +60,8 @@ public class MultiplayerRoom extends Room {
     public void updatePlayerScore(String username, int addedScore) {
         playerScores.put(username, getPlayerScore(username) + addedScore);
     }
+
+    public int getNumPlayers() {
+        return playerScores.size();
+    }
 }

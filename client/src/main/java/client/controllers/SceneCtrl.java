@@ -14,17 +14,21 @@ import commons.Questions.AlternativeQuestion;
 import commons.Questions.ComparisonQuestion;
 import commons.Questions.KnowledgeQuestion;
 import commons.Questions.OpenQuestion;
+import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
 import javax.inject.Inject;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;
 
 public class SceneCtrl {
     private Stage primaryStage;
-    private HashMap<String, Pair<Object, Scene>> scenes;
+    private Scene scene;
+    private HashMap<String, Pair<Object, Parent>> sceneRoots;
 
     private ServerUtils serverUtils;
     private GameConfiguration gameConfiguration;
@@ -36,16 +40,17 @@ public class SceneCtrl {
     }
 
 
-    public void initialize(Stage primaryStage, HashMap<String, Pair<Object, Scene>> scenes) {
+    public void initialize(Stage primaryStage, HashMap<String, Pair<Object, Parent>> sceneRoots) {
         this.primaryStage = primaryStage;
-        this.scenes = scenes;
+        this.sceneRoots = sceneRoots;
+        this.scene = new Scene(new Group(), 1080, 720);
+        this.primaryStage.setScene(this.scene);
 
         showMainScreenScene();
         primaryStage.show();
     }
 
-    public void showNextQuestion() {
-        System.out.println("Cumva am intrat aici");
+    public void showNextQuestion() throws IOException {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         gameConfiguration.setCurrentQuestionNumber(gameConfiguration.getCurrentQuestionNumber() + 1);
         String response = serverUtils.getQuestion();
@@ -73,79 +78,75 @@ public class SceneCtrl {
         }
     }
 
-    public void showOpenQuestionScene(OpenQuestion openQuestion) {
-        System.out.println("Open question in");
-        var pair = scenes.get("OpenQuestion");
+    public void showOpenQuestionScene(OpenQuestion openQuestion) throws IOException {
+        var pair = sceneRoots.get("OpenQuestion");
         OpenQuestionActivityCtrl ctrl = (OpenQuestionActivityCtrl) pair.getKey();
         ctrl.displayQuestion(openQuestion);
-        primaryStage.setScene(pair.getValue());
+        scene.setRoot(pair.getValue());
     }
 
-    public void showKnowledgeQuestionScene(KnowledgeQuestion knowledgeQuestion) {
-        System.out.println("Knowledge question in");
-        var pair = scenes.get("KnowledgeQuestion");
+    public void showKnowledgeQuestionScene(KnowledgeQuestion knowledgeQuestion) throws IOException {
+        var pair = sceneRoots.get("KnowledgeQuestion");
         KnowledgeQuestionActivityCtrl ctrl = (KnowledgeQuestionActivityCtrl) pair.getKey();
 
         ctrl.displayQuestion(knowledgeQuestion);
-        primaryStage.setScene(pair.getValue());
+        scene.setRoot(pair.getValue());
     }
 
-    public void showComparisonQuestionScene(ComparisonQuestion comparisonQuestion) {
-        System.out.println("Comparison question in");
-        var pair = scenes.get("ComparisonQuestion");
+    public void showComparisonQuestionScene(ComparisonQuestion comparisonQuestion) throws IOException {
+        var pair = sceneRoots.get("ComparisonQuestion");
         ComparisonQuestionActivityCtrl ctrl = (ComparisonQuestionActivityCtrl) pair.getKey();
         ctrl.displayQuestion(comparisonQuestion);
-        primaryStage.setScene(pair.getValue());
+        scene.setRoot(pair.getValue());
     }
 
-    public void showAlternativeQuestionScene(AlternativeQuestion alternativeQuestion) {
-        System.out.println("Alternative question in");
-        var pair = scenes.get("AlternativeQuestion");
+    public void showAlternativeQuestionScene(AlternativeQuestion alternativeQuestion) throws IOException {
+        var pair = sceneRoots.get("AlternativeQuestion");
         AlternativeQuestionActivityCtrl ctrl = (AlternativeQuestionActivityCtrl) pair.getKey();
         ctrl.displayQuestion(alternativeQuestion);
-        primaryStage.setScene(pair.getValue());
+        scene.setRoot(pair.getValue());
     }
 
     public void showSingleplayerLeaderboard() {
         System.out.println("LEADERBOARD");
-        var pair = scenes.get("SingleplayerLeaderboard");
+        var pair = sceneRoots.get("SingleplayerLeaderboard");
         var ctrl = (SingleplayerLeaderboardCtrl) pair.getKey();
 
         ctrl.initialize();
         primaryStage.setTitle("Singleplayer Leaderboard");
-        primaryStage.setScene(pair.getValue());
+        scene.setRoot(pair.getValue());
     }
 
     public void showMainScreenScene() {
-        var pair = scenes.get("MainScreen");
+        var pair = sceneRoots.get("MainScreen");
 
         primaryStage.setTitle("Main Screen");
-        primaryStage.setScene(pair.getValue());
+        scene.setRoot(pair.getValue());
     }
 
     public void showAddActionScene() {
-        var pair = scenes.get("AddAction");
+        var pair = sceneRoots.get("AddAction");
 
         primaryStage.setTitle("Add actions");
-        primaryStage.setScene(pair.getValue());
+        scene.setRoot(pair.getValue());
     }
 
     public void showServerBrowser() {
-        var pair = scenes.get("ServerBrowser");
+        var pair = sceneRoots.get("ServerBrowser");
         ServerBrowserController ctrl = (ServerBrowserController) pair.getKey();
 
 
         primaryStage.setTitle("Server Browser");
-        primaryStage.setScene(pair.getValue());
+        scene.setRoot(pair.getValue());
     }
 
     public void showWaitingRoom(boolean owner, String gameId, String userName) {
-        var pair = scenes.get("WaitingRoom");
+        var pair = sceneRoots.get("WaitingRoom");
         WaitingRoomController ctrl = (WaitingRoomController) pair.getKey();
 
         ctrl.initialize(owner, gameId, userName);
 
         primaryStage.setTitle("WaitingRoom");
-        primaryStage.setScene(pair.getValue());
+        scene.setRoot(pair.getValue());
     }
 }
