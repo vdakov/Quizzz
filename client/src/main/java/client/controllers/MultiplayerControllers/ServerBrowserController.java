@@ -160,7 +160,10 @@ public class ServerBrowserController {
             alert.setContentText("Please enter a valid game ID!!!");
             alert.show();
         } else {
-            server.joinMultiPlayerRoom(playerName, gameId);
+            if(!server.joinMultiPlayerRoom(playerName, gameId)){
+                missingUsername.setText("The username is already taken!");
+                return;
+            }
             this.sceneCtrl.showWaitingRoom(false, gameId, playerName);
         }
     }
@@ -171,7 +174,14 @@ public class ServerBrowserController {
      * @param event the ActionEvent of the button
      */
     public void createWaitingRoom(ActionEvent event) {
-        String gameId = server.createNewMultiPlayerRoom("cata");
+        //Checking if username field was filled in
+        String playerName = usernameField.getText();
+        if(playerName == ""){
+            missingUsername.setText("Enter username!");
+            return;
+        }
+        String gameId = server.createNewMultiPlayerRoom(playerName);
         this.sceneCtrl.showWaitingRoom(true, gameId, "cata");
     }
+
 }
