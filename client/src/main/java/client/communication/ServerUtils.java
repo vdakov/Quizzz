@@ -63,12 +63,11 @@ public class ServerUtils {
                 });
     }
 
-    public void joinMultiPlayerRoom(String userName, String roomId) {
-        ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER).path("api/multiPlayer/" + userName + "/" + roomId + "/joinGame")
-                .request(APPLICATION_JSON)
-                .accept(APPLICATION_JSON).get(new GenericType<>() {
-                });
+    public boolean joinMultiPlayerRoom(String userName, String roomId) {
+        return ClientBuilder.newClient(new ClientConfig())
+                    .target(SERVER).path("api/multiPlayer/" + userName + "/" + roomId + "/joinGame")
+                    .request(APPLICATION_JSON)
+                    .accept(APPLICATION_JSON).get(Boolean.class);
     }
 
     /**

@@ -95,4 +95,7 @@ public class GameCatalog {
         }
     }
 
+    public boolean checkUsernameExists(String userName, String roomId ) {
+        return getMultiPlayerGame(roomId).getUsernames().contains(userName);
+    }
 }

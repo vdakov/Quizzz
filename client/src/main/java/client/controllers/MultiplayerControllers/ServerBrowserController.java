@@ -135,7 +135,10 @@ public class ServerBrowserController {
         String roomId = server.getRandomMultiPlayerRoomId(playerName);
 
 
-        server.joinMultiPlayerRoom(playerName, roomId);
+        if(!server.joinMultiPlayerRoom(playerName, roomId)){
+            missingUsername.setText("The username is already taken!");
+            return;
+        }
         this.sceneCtrl.showWaitingRoom(true, roomId, playerName);
 
 

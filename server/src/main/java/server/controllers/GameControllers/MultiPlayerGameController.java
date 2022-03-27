@@ -35,7 +35,7 @@ public class MultiPlayerGameController {
     public boolean joinMultiplayerGame(@PathVariable("userName") String userName, @PathVariable("roomId") String roomId) {
         multiplayerGameService.joinMultiPlayerGame(userName, roomId);
         System.out.println(userName + " JOINED GAME " + roomId);
-        return true;
+        return multiplayerGameService.joinMultiPlayerGame(userName, roomId);
     }
 
     @GetMapping("/{gameId}/startGame")

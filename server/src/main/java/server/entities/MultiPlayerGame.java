@@ -5,6 +5,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 public class MultiPlayerGame extends Game {
 
@@ -51,5 +52,9 @@ public class MultiPlayerGame extends Game {
 
         playerScores.remove(userName);
         System.out.println("Player " + userName + " has been removed from the game");
+    }
+
+    public Set<String> getUsernames(){
+        return playerScores.keySet();
     }
 }
