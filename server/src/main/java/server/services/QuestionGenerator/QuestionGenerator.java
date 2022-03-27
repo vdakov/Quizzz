@@ -62,11 +62,11 @@ public class QuestionGenerator {
         List<Integer> questionDistribution = generateRandomQuestionDistribution(4, questionsNumber, lowerBoundAppearances, upperBoundAppearances, random);
 
         // add open questions
-        questionWithAnswerList.addAll(openQuestionsGenerator       (questionDistribution.get(0), actionCatalog, random));
+        questionWithAnswerList.addAll(openQuestionsGenerator(questionDistribution.get(0), actionCatalog, random));
         // add knowledge questions
-        questionWithAnswerList.addAll(knowledgeQuestionsGenerator  (questionDistribution.get(0), actionCatalog, random));
+        questionWithAnswerList.addAll(knowledgeQuestionsGenerator(questionDistribution.get(1), actionCatalog, random));
         // add comparison questions
-        questionWithAnswerList.addAll(comparisonQuestionsGenerator (questionDistribution.get(2), actionCatalog, random));
+        questionWithAnswerList.addAll(comparisonQuestionsGenerator(questionDistribution.get(2), actionCatalog, random));
         // add alternative questions
         questionWithAnswerList.addAll(alternativeQuestionsGenerator(questionDistribution.get(3), actionCatalog, random));
 

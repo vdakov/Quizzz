@@ -25,12 +25,12 @@ public class SinglePlayerGameService {
     }
 
     public String createNewSinglePlayerGame(String userName) {
-        String gameId               = Util.getAlphaNumericString(10);
+        String gameId = Util.getAlphaNumericString(10);
         ActionCatalog actionCatalog = new ActionCatalog(activityRepository.findAll());
 
         List<Pair<Question, String>> questionList = null;
         try {
-            questionList = QuestionGenerator.generateQuestions(actionCatalog, 20, 2, 7, new Random());
+            questionList = QuestionGenerator.generateQuestions(actionCatalog, 21, 2, 7, new Random());
         } catch (NotEnoughActivitiesException e) {
             System.out.println("Not enough activities");
             return "GAME GENERATION FAILED";
@@ -59,5 +59,7 @@ public class SinglePlayerGameService {
     public String getAnswer(String userName, String gameId, int questionNumber) {
         return gameCatalog.getSinglePlayerGame(gameId).getQuestionAnswer(questionNumber);
     }
+
+
 }
 

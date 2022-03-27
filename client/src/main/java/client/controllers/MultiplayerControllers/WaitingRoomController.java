@@ -11,6 +11,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 
+import java.io.IOException;
+
 
 public class WaitingRoomController {
 
@@ -44,10 +46,8 @@ public class WaitingRoomController {
      * @param event the Action Event from the button
      */
     public void goBackToServerBrowser(ActionEvent event) {
-       // this.server.removePlayer(this.userName, this.gameId);
-        if (owner) {
-            this.owner = false;
-        }
+        this.server.removePlayer(this.userName, this.gameId);
+
         this.sceneCtrl.showServerBrowser();
     }
 
@@ -66,6 +66,7 @@ public class WaitingRoomController {
         this.gameId = roomId;
         this.ownerText.setText("");
         this.startButton.setDisable(true);
+        this.playerLabel.setText(server.getNumPlayers(roomId) + ""); // the only good way to convert to a string :)
 
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         gameConfiguration.setRoomId(roomId);
@@ -92,7 +93,7 @@ public class WaitingRoomController {
     /**
      * Refresh method to update the number of current players
      */
-    public void refresh() {
+    public void refresh() throws IOException {
         this.initialize(this.owner, this.gameId, this.userName);
         if (server.isGameStarted()) {
             sceneCtrl.showNextQuestion();
