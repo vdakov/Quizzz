@@ -71,19 +71,15 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         questionNumberLabel.setText("Question " + getQuestionNumber());
         points.setText(String.valueOf(getPointsInt()));
 
-<<<<<<< client/src/main/java/client/controllers/QuestionControllers/OpenQuestionActivityCtrl.java
-        if (gameConfig.isSinglePlayer()) tableview.setVisible(true);
-        else tableview.setVisible(false);
-=======
+
         ByteArrayInputStream bis = new ByteArrayInputStream(server.getQuestionImage(openQuestion.getQuestion().getRight()));
         BufferedImage bImage = ImageIO.read(bis);
 
 
         this.image.setImage(SwingFXUtils.toFXImage(bImage, null));
 
-        if (gameConfig.isSinglePlayer()) emoji.setVisible(false);
-        else emoji.setVisible(true);
->>>>>>> client/src/main/java/client/controllers/QuestionControllers/OpenQuestionActivityCtrl.java
+        if (gameConfig.isSinglePlayer()) tableview.setVisible(false);
+        else tableview.setVisible(true);
 
         initialize();
         startTimer();
