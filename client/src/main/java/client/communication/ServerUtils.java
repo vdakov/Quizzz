@@ -205,8 +205,9 @@ public class ServerUtils {
                 .target(SERVER).path("api/activities/add") //
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
-                .post(Entity.entity(a, APPLICATION_JSON), Action.class);
+                .put(Entity.entity(a, APPLICATION_JSON), Action.class);
     }
+
 
     public void deleteActivity(String id) {
         ClientBuilder.newClient(new ClientConfig()) //
@@ -269,7 +270,7 @@ public class ServerUtils {
     public byte[] getQuestionImage(String imagePath) {
 
         String base64 = ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER).path("api/activities/sendImage/" + imagePath.substring(0, 2) + imagePath.substring(2))
+                .target(SERVER).path("api/activities/sendImage/" + imagePath)
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON).get(String.class);
 

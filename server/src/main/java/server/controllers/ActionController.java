@@ -78,7 +78,7 @@ public class ActionController {
 
     //Allows the user to delete an item from the repository if it exists through and HTTP DELETE Request
     @DeleteMapping(path = "/delete/{id}")
-    public void update(@PathVariable("id") String id) {
+    public void delete(@PathVariable("id") String id) {
         service.delete(id);
     }
 
@@ -117,14 +117,12 @@ public class ActionController {
     }
 
     //allows the user to add a new activity to the repository and stores it in it permanently through an HTTP POST Request
-    @PostMapping(path = {"", "/add"})
+    @PutMapping(path = {"/add"})
     public void add(@RequestBody Action a) {
         try {
-
-            long temp = a.getConsumption() + 1;
             if (a.getTitle() != null) service.save(a);
         } catch (Exception e) {
-            throw new IllegalStateException("POST Request Failed");
+            throw new IllegalStateException("PUT Request Failed");
         }
     }
 

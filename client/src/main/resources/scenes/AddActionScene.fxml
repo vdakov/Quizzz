@@ -5,18 +5,19 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="256.0" prefWidth="485.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.AdminInterface.AddActionActivityCtrl">
+<AnchorPane prefHeight="256.0" prefWidth="485.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.AdminInterface.AddActionActivityCtrl">
     <children>
+      <Button fx:id="fileButton" layoutX="346.0" layoutY="162.0" mnemonicParsing="false" onAction="#chooseFile" text="Choose file" />
         <Button layoutX="353.0" layoutY="211.0" mnemonicParsing="false" onAction="#ok" text="Ok" />
         <Button layoutX="411.0" layoutY="211.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
-        <TextField fx:id="imgSource" layoutX="111.0" layoutY="161.0" prefHeight="31.0" prefWidth="354.0" text="Please type in the image source" />
-        <TextField fx:id="title" layoutX="111.0" layoutY="57.0" prefHeight="31.0" prefWidth="354.0" text="Please type in the title" />
-        <TextField fx:id="consumption" layoutX="111.0" layoutY="90.0" prefHeight="31.0" prefWidth="354.0" text="Please type in the consumption" />
+        <TextField fx:id="title" layoutX="111.0" layoutY="57.0" prefHeight="31.0" prefWidth="354.0" promptText="Enter Title" />
+        <TextField fx:id="consumption" layoutX="111.0" layoutY="90.0" prefHeight="31.0" prefWidth="354.0" promptText="Enter Consumption (Wh)" />
         <Label layoutX="14.0" layoutY="62.0" text="Title" />
         <Label layoutX="15.0" layoutY="95.0" text="Consumption" />
         <Label layoutX="15.0" layoutY="166.0" text="imgSource" />
         <Label layoutX="14.0" layoutY="130.0" text="Source" />
-        <TextField fx:id="source" layoutX="111.0" layoutY="125.0" prefHeight="31.0" prefWidth="354.0" text="Please type in the source" />
+        <TextField fx:id="source" layoutX="111.0" layoutY="125.0" prefHeight="31.0" prefWidth="354.0" promptText="Enter Source" />
         <Label layoutX="213.0" layoutY="22.0" text="Add Action" />
+      <TextField fx:id="imageNameField" layoutX="111.0" layoutY="159.0" prefHeight="31.0" prefWidth="221.0" promptText="Enter Image Name" />
     </children>
 </AnchorPane>

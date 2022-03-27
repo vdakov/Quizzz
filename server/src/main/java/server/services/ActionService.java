@@ -44,7 +44,7 @@ public class ActionService {
         getRepository().deleteById(id);
     }
 
-    //returns a single action delted by id
+    //returns a single action deleted by id
     public Action getById(String id) {
         Action activity = repository.findById(id).orElseThrow(() -> new IllegalStateException(("No such activity!!!")));
 
@@ -54,26 +54,5 @@ public class ActionService {
         //this is sydney's code about the same thing, I do not know why it does not work even though by all acounts it should so I just changed it
     }
 
-//    public void update(@PathVariable("id") String id,
-//                       @RequestParam(required = false) String image_path,
-//                       @RequestParam(required = false) String title,
-//                       @RequestParam(required = false) int consumption,
-//                       @RequestParam(required = false) String source){
-//
-//        Action activity = repository.findById(id).orElseThrow(() -> new IllegalStateException(("No such activity!!!")));
-//
-//        if (title != null && title.length() > 0) {
-//            activity.setTitle(title);
-//        }
-//
-//        if (consumption > 0) {
-//            activity.setConsumption(consumption);
-//        }
-//
-//        if (source != null && source.length() > 0) {
-//            activity.setSource(source);
-//        }
-//
-//        repository.save(activity);
-//    }
+
 }

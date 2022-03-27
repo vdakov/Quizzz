@@ -69,7 +69,7 @@
                 <Font size="24.0" />
             </font>
         </TextField>
-        <TextField fx:id="gameIdField" maxWidth="300.0" prefHeight="70.0" prefWidth="300.0" promptText="Enter game ID..." GridPane.halignment="CENTER" GridPane.rowIndex="2">
+        <TextField fx:id="gameIdField" maxWidth="300.0" prefHeight="70.0" prefWidth="300.0" promptText="Enter game ID..." translateX="57.0" GridPane.halignment="CENTER" GridPane.rowIndex="2">
             <font>
                 <Font size="24.0" />
             </font>
@@ -107,7 +107,7 @@
                 <Insets left="25.0" />
             </GridPane.margin>
         </Button>
-      <Button mnemonicParsing="false" onAction="#joinWaitingRoom" prefHeight="54.0" prefWidth="86.0" text="JOIN" GridPane.rowIndex="2">
+      <Button mnemonicParsing="false" onAction="#joinWaitingRoom" prefHeight="69.0" prefWidth="86.0" text="JOIN" translateX="-135.0" GridPane.halignment="CENTER" GridPane.rowIndex="2">
          <font>
             <Font size="23.0" />
          </font>
