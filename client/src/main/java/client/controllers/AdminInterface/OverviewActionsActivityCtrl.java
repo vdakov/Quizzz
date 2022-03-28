@@ -64,7 +64,7 @@ public class OverviewActionsActivityCtrl {
         this.sceneCtrl = mainCtrl;
     }
 
-    //    public void initialize(URL location, ResourceBundle resources) {
+//    public void initialize(URL location, ResourceBundle resources) {
     public void initialize() {
         colId.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getId() + ""));
         colTitle.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getTitle()));
@@ -73,6 +73,10 @@ public class OverviewActionsActivityCtrl {
         this.refresh();
     }
 
+    /**
+     *
+     * @param event
+     */
     public void addActivity(ActionEvent event) {
         sceneCtrl.showAddActionScene();
         refresh();
