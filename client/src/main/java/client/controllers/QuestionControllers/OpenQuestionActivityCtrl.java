@@ -70,6 +70,7 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         sampleQuestion.setText(openQuestion.getQuestion().getKey());
         questionNumberLabel.setText("Question " + getQuestionNumber());
         points.setText(String.valueOf(getPointsInt()));
+        gameConfig.setScore(getPointsInt());
 
 
         ByteArrayInputStream bis = new ByteArrayInputStream(server.getQuestionImage(openQuestion.getQuestion().getRight()));

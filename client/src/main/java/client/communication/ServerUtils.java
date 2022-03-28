@@ -65,12 +65,11 @@ public class ServerUtils {
                 });
     }
 
-    public void joinMultiPlayerRoom(String userName, String roomId) {
-        ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER).path("api/multiPlayer/" + userName + "/" + roomId + "/joinGame")
-                .request(APPLICATION_JSON)
-                .accept(APPLICATION_JSON).get(new GenericType<>() {
-                });
+    public boolean joinMultiPlayerRoom(String userName, String roomId) {
+        return ClientBuilder.newClient(new ClientConfig())
+                    .target(SERVER).path("api/multiPlayer/" + userName + "/" + roomId + "/joinGame")
+                    .request(APPLICATION_JSON)
+                    .accept(APPLICATION_JSON).get(Boolean.class);
     }
 
     /**
@@ -170,21 +169,33 @@ public class ServerUtils {
                 });
     }
 
-    public List<LeaderboardEntry> getSingleplayerLeaderboard() {
+    public List<LeaderboardEntry> getLeaderboard(String roomId) {
         return ClientBuilder.newClient(new ClientConfig()) //
-                .target(SERVER).path("api/leaderboard/singleplayer") //
+                .target(SERVER).path("api/leaderboard/" + roomId) //
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
                 .get(new GenericType<>() {
                 });
     }
 
-    public LeaderboardEntry addSingleplayerLeaderboardEntry(String name, int points) {
+    public LeaderboardEntry addLeaderboardEntry(String name, String roomId, int points) {
         return ClientBuilder.newClient(new ClientConfig()) //
-                .target(SERVER).path("api/leaderboard/singleplayer") //
+                .target(SERVER).path("api/leaderboard/") //
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
-                .post(Entity.entity(new LeaderboardEntry(name, points), APPLICATION_JSON), LeaderboardEntry.class);
+                .post(Entity.entity(new LeaderboardEntry(name, roomId, points, GameConfiguration.getConfiguration().isSinglePlayer()), APPLICATION_JSON), LeaderboardEntry.class);
+    }
+
+    /**
+     * Deletes entries that belong to a room with this roomId
+     *
+     * @param roomId the roomId of the entries to delete
+     */
+    public void deleteEntries(String roomId) {
+        ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/leaderboard/remove/" + roomId) //
+                .request(APPLICATION_JSON) //
+                .delete();
     }
 
     public List<ChatEntry> getPlayersActivity() {
@@ -222,16 +233,34 @@ public class ServerUtils {
      */
     public Action addActivity(Action a) {
         return ClientBuilder.newClient(new ClientConfig()) //
-                .target(SERVER).path("api/activities") //
+                .target(SERVER).path("api/activities/add") //
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
-                .post(Entity.entity(a, APPLICATION_JSON), Action.class);
+                .put(Entity.entity(a, APPLICATION_JSON), Action.class);
     }
+
 
     public void deleteActivity(String id) {
         ClientBuilder.newClient(new ClientConfig()) //
                 .target(SERVER).path("api/activities/delete/" + id) //
                 .request().delete(); //;
+    }
+
+    public void editActivity(String id, Action a) {
+        ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/activities/update") //
+                .request() //
+                .accept(APPLICATION_JSON) //
+                .put(Entity.entity(a, APPLICATION_JSON), Action.class); //;
+    }
+
+    public Action getActivityById(String id) {
+        return ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/activities/" + id) //
+                .request() //
+                .accept(APPLICATION_JSON) //
+                .get(new GenericType<>() {
+                });
     }
 
     public void alert() {
@@ -272,7 +301,7 @@ public class ServerUtils {
     public byte[] getQuestionImage(String imagePath) {
 
         String base64 = ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER).path("api/activities/sendImage/" + imagePath.substring(0, 2) + imagePath.substring(2))
+                .target(SERVER).path("api/activities/sendImage/" + imagePath)
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON).get(String.class);
 
