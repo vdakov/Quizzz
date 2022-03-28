@@ -116,6 +116,7 @@ public class QuestionActivityCtrl {
         userAnswer = current.getText();
         answered = true;
 
+        System.out.println("Tried to update answer");
         server.updateScore(userAnswer);
 
         answerUpdate();

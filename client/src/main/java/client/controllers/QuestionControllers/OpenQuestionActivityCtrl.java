@@ -91,11 +91,12 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         answered = true;
 
         try {
-            userAnswerInt = Integer.parseInt(answerTextfield.getText());
+            //userAnswerInt = Integer.parseInt(answerTextfield.getText());
+            server.updateScore(answerTextfield.getText());
             System.out.println(1);
         } catch (NumberFormatException e) {
             answerTextfield.setText("-99999");
-            server.updateScore(answerTextfield.getText());
+            //server.updateScore(answerTextfield.getText());
             userAnswerInt = Integer.parseInt(answerTextfield.getText());
         } catch (NullPointerException e) {
             if (answerTextfield.getText() == (null) || answerTextfield.getText().trim().isEmpty()) {

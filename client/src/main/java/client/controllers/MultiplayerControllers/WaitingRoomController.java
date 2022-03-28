@@ -70,12 +70,10 @@ public class WaitingRoomController {
         this.gameId = roomId;
         this.ownerText.setText("");
         this.startButton.setDisable(true);
-        this.playerLabel.setText(server.getNumPlayers(roomId) + ""); // the only good way to convert to a string :)
+        //this.playerLabel.setText(Integer.toString(server.getNumPlayers()));
 
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         gameConfiguration.setRoomId(roomId);
-        gameConfiguration.setUserName(userName);
-        gameConfiguration.setCurrentQuestionNumber(gameConfiguration.getCurrentQuestionNumber() + 1);
         gameConfiguration.setGameTypeMultiPlayer();
 
         server.waitForMultiPlayerRoomStart(q -> {

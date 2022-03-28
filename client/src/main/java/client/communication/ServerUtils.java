@@ -95,6 +95,7 @@ public class ServerUtils {
                     return true;
                 }
                 case 417: {
+                    System.out.println("Aici");
                     System.out.println("Expectation failed");
                     return  false;
                     // something failed, show an apology message ?
@@ -112,12 +113,36 @@ public class ServerUtils {
         return null;
     }
 
-    public void joinMultiPlayerRoom(String userName, String roomId) {
-        ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER).path("api/multiPlayer/" + userName + "/" + roomId + "/joinGame")
-                .request(APPLICATION_JSON)
-                .accept(APPLICATION_JSON).get(new GenericType<>() {
-                });
+    public Boolean joinMultiPlayerRoom(String userName, String roomId) {
+        try {
+            GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+
+            Response response = ClientBuilder.newClient(new ClientConfig())
+                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" + gameConfiguration.getRoomId() + "/joinGame")
+                    .request(APPLICATION_JSON)
+                    .accept(APPLICATION_JSON).get(Response.class);
+
+            switch (response.getStatus()) {
+                case 200: {
+                    return true;
+                }
+                case 417: {
+                    System.out.println("Aici");
+                    System.out.println("Expectation failed");
+                    return  false;
+                    // something failed, show an apology message ?
+                }
+                case 400: {
+                    System.out.println("The request was invalid");
+                    return false;
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+        }
+
+        return null;
     }
 
     /**
@@ -127,6 +152,8 @@ public class ServerUtils {
      * @return the roomId of the random multiPlayer room
      */
     public String getRandomMultiPlayerRoomId(String userName) {
+
+
         return ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("api/multiPlayer/" + userName + "/getRandomRoomCode")
                 .request(APPLICATION_JSON)
@@ -140,24 +167,24 @@ public class ServerUtils {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         EXEC.submit(() -> {
             while (!Thread.interrupted()) {
-                System.out.println(gameConfiguration.getUserName() + "  " + gameConfiguration.getRoomId());
+                System.out.println("My request:   " + "api/" + gameConfiguration.getUserName() + "/MULTIPLAYER/"
+                        + gameConfiguration.getRoomId() + "/waitForGameToStart");
                 var res = ClientBuilder.newClient(new ClientConfig())
-                        .target(SERVER).path("api/multiPlayer/" + gameConfiguration.getUserName()
-                                + "/" + gameConfiguration.getRoomId() + "/waitForGameToStart")
+                        .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/MULTIPLAYER/"
+                                + gameConfiguration.getRoomId() + "/waitForGameToStart")
                         .request(APPLICATION_JSON)
                         .accept(APPLICATION_JSON).get(Response.class);
-
-                System.out.println("I got a response");
 
                 System.out.println(res.getStatus());
 
                 if (res.getStatus() == 204) {
-                    return;
+                    continue;
                 }
 
                 String gameInProgress = res.readEntity(String.class);
                 System.out.println("Game accepted: " + gameInProgress);
                 startedGame.accept(gameInProgress);
+                this.stop();
             }
         });
     }
@@ -169,6 +196,9 @@ public class ServerUtils {
     public String getQuestion() {
         try {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+
+            System.out.println("Get question request:  " + "api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" + gameConfiguration.getRoomId() + "/" +
+                    gameConfiguration.getCurrentQuestionNumber() + "/getQuestion");
 
             Response response = ClientBuilder.newClient(new ClientConfig())
                     .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" + gameConfiguration.getRoomId() + "/" +
@@ -202,11 +232,13 @@ public class ServerUtils {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
 
             Response response = ClientBuilder.newClient(new ClientConfig()) //
-                    .target(SERVER).path("api/" +  gameConfiguration.getUserName() + gameConfiguration.getGameTypeString() + "/" + gameConfiguration.getRoomId() + "/" +
-                            gameConfiguration.getCurrentQuestionNumber() + "/updateAnswer")
+                    .target(SERVER).path("api/" +  gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" + gameConfiguration.getRoomId() + "/" +
+                            gameConfiguration.getCurrentQuestionNumber() + "/postAnswer")
                     .request(APPLICATION_JSON)
                     .accept(APPLICATION_JSON)
                     .post(Entity.text(answer));
+
+            System.out.println("Response status: " + response.getStatus());
 
             switch (response.getStatus()) {
                 case 200: {
@@ -356,7 +388,8 @@ public class ServerUtils {
                 }
                 case 400: {
                     System.out.println("The request was invalid");
-                    return null;
+                    return "0";
+                    //return null;
                 }
             }
         } catch (Exception e) {
@@ -404,6 +437,8 @@ public class ServerUtils {
      * @return the list of current games
      */
     public ObservableList<GameContainer> listOfCurrentGames(String username) {
+
+        System.out.println();
         ArrayList<GameContainer> games = ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("api/" + username +  "/MULTIPLAYER" + "/getGames")
                 .request(APPLICATION_JSON)
@@ -420,9 +455,11 @@ public class ServerUtils {
                 .request().get();
     }
 
-    public int getNumPlayers(String gameId) {
+    public int getNumPlayers() {
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();;
+        System.out.println("api/" + gameConfiguration.getUserName() + "/MULTIPLAYER/" + gameConfiguration.getRoomId() + "/numPlayers");
         return ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER).path("api/MULTIPLAYER/" + "a/" + gameId + "/numPlayers")
+                .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/MULTIPLAYER/" + gameConfiguration.getRoomId() + "/numPlayers")
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON)
                 .get(new GenericType<>() {

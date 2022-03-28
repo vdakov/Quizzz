@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
+import server.entities.MultiplayerRoom;
 import server.services.GameServices.MultiplayerGameService;
 
 import java.util.HashMap;
@@ -50,8 +51,9 @@ public class MultiplayerGameRoomController {
         return listeners;
     }
 
-    @GetMapping("/{gameId}/waitForGameToStart")
-    public DeferredResult<ResponseEntity<String>> waitForGameToStart(@PathVariable("gameId") String gameId) {
+    @GetMapping("/waitForGameToStart")
+    public DeferredResult<ResponseEntity<String>> waitForGameToStart(@PathVariable("roomId") String roomId) {
+        System.out.println("Am intrat aici");
         var noContent = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         var res = new DeferredResult<ResponseEntity<String>>(50000L, noContent);
 
@@ -67,5 +69,21 @@ public class MultiplayerGameRoomController {
         System.out.println("Listeners size: " + listeners.size());
 
         return res;
+    }
+
+    @GetMapping("/removePlayer")
+    public void removePlayer(@PathVariable String userName, @PathVariable String roomId) {
+        System.out.println("Hello");
+        this.getGame(roomId).removePlayer(userName);
+    }
+
+    @GetMapping("/")
+    public MultiplayerRoom getGame(@PathVariable String roomId) {
+        return this.multiplayerGameService.getGame(roomId);
+    }
+
+    @GetMapping("/numPlayers")
+    public Integer getNumPlayers(@PathVariable String roomId) {
+        return (Integer) this.multiplayerGameService.getGame(roomId).getNumPlayers();
     }
 }

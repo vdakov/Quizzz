@@ -48,6 +48,8 @@ public class MultiplayerRoom extends Room {
      * @return the score of th
      */
     public Integer getPlayerScore(String username) {
+        System.out.println(playerScores.toString());
+
         return playerScores.get(username);
     }
 

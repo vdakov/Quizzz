@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import server.entities.MultiplayerRoom;
 import server.services.GameServices.MultiplayerGameService;
 import server.services.GameServices.SingleplayerGameService;
 
@@ -72,21 +71,5 @@ public class GameController {
     @GetMapping("/getGames")
     public List<GameContainer> getGameIds() {
         return multiplayerGameService.getGameIds();
-    }
-
-    @GetMapping("/removePlayer")
-    public void removePlayer(@PathVariable String userName, @PathVariable String roomId) {
-        System.out.println("Hello");
-        this.getGame(roomId).removePlayer(userName);
-    }
-
-    @GetMapping("/")
-    public MultiplayerRoom getGame(@PathVariable String roomId) {
-        return this.multiplayerGameService.getGame(roomId);
-    }
-
-    @GetMapping("/numPlayers")
-    public Integer getNumPlayers(@PathVariable String roomId) {
-        return (Integer) this.getGame(roomId).getNumPlayers();
     }
 }

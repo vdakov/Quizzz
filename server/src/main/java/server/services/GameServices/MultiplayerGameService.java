@@ -66,6 +66,7 @@ public class MultiplayerGameService {
                 roomCatalog.setMultiplayerRandomRoom(newGame);
             } else {
                 roomCatalog.addMultiplayerRoom(newGame);
+                joinMultiPlayerGame(username, newGame.getRoomId());
             }
 
             return roomCatalog.getMultiPlayerRoom(roomId).getRoomId();
@@ -108,18 +109,21 @@ public class MultiplayerGameService {
      */
     public boolean startMultiPlayerGame(String username, String roomId) {
         try {
-            if (roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() != Room.RoomStatus.WAITING ||
-                    roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) == null) {
-                return false;
+            System.out.println("Am inceput jocu");
+
+            if (roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) == null) {
+                System.out.println("Aici pica");
+                //return false;
             }
 
             roomCatalog.getMultiPlayerRoom(roomId).setRoomStatus(Room.RoomStatus.ONGOING);
 
             // if the random room is starting, we have to generate another one
-            createNewMultiPlayerGame("GROUP30ooPP");
+            //createNewMultiPlayerGame("GROUP30ooPP");
 
             MultiplayerGameRoomController.getListeners().forEach((k, l) -> l.accept(roomId));
 
+            System.out.println("Am terminat jocu");
             return roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() == Room.RoomStatus.ONGOING;
         } catch (Exception e) {
             System.out.println("An exception occurred");
@@ -139,7 +143,7 @@ public class MultiplayerGameService {
         try {
             if (roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() != Room.RoomStatus.ONGOING ||
                     roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) == null) {
-                return null;
+                //return null;
             }
 
             return roomCatalog.getMultiPlayerRoom(roomId).getQuestion(questionNumber);
@@ -180,10 +184,12 @@ public class MultiplayerGameService {
      */
     public Integer getMultiPlayerScore(String username, String roomId) {
         try {
-            if (roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() != Room.RoomStatus.ONGOING ||
-                    roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) == null) {
-                return null;
-            }
+//            if (roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() != Room.RoomStatus.ONGOING ||
+//                    roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) == null) {
+//                return null;
+//            }
+
+            System.out.println("Score: " + roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username));
 
             return roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username);
         } catch (Exception e) {
@@ -204,8 +210,10 @@ public class MultiplayerGameService {
         try {
             if (roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() != Room.RoomStatus.ONGOING ||
                     roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) == null) {
-                return null;
+                //return null;
             }
+
+            System.out.println("Da");
 
             if (userAnswer.equals(getMultiPlayerAnswer(username, roomId, questionNumber))) {
                 roomCatalog.getMultiPlayerRoom(roomId).updatePlayerScore(username, 500);
@@ -219,7 +227,7 @@ public class MultiplayerGameService {
     }
 
        public List<GameContainer> getGameIds() {
-        this.roomCatalog.cleanEmptyGames();
+        //this.roomCatalog.cleanEmptyGames();
         return roomCatalog.getWaitingMultiplayerGames();
     }
 

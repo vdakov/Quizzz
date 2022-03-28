@@ -2,6 +2,7 @@ package client.controllers.MultiplayerControllers;
 
 import client.communication.ServerUtils;
 import client.controllers.SceneCtrl;
+import client.data.GameConfiguration;
 import com.google.inject.Inject;
 import commons.GameContainer;
 import javafx.collections.ObservableList;
@@ -151,7 +152,10 @@ public class ServerBrowserController {
      * @param event the ActionEvent of the button
      */
     public void createWaitingRoom(ActionEvent event) {
-        String gameId = server.createNewRoom();
-        this.sceneCtrl.showWaitingRoom(true, gameId, "cata");
+        String roomId = server.createNewRoom();
+        System.out.println("Room id:  " + roomId);
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+        gameConfiguration.setRoomId(roomId);
+        this.sceneCtrl.showWaitingRoom(true, roomId, "cata");
     }
 }
