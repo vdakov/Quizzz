@@ -138,8 +138,9 @@ public class ServerBrowserController {
         if (!server.joinMultiPlayerRoom(playerName, roomId)) {
             missingUsername.setText("The username is already taken!");
             return;
+        }else{
+            this.sceneCtrl.showWaitingRoom(false, roomId, playerName);
         }
-        this.sceneCtrl.showWaitingRoom(true, roomId, playerName);
 
 
     }
@@ -159,13 +160,15 @@ public class ServerBrowserController {
             alert.setHeaderText("Invalid ID");
             alert.setContentText("Please enter a valid game ID!!!");
             alert.show();
+            return;
         } else {
             if (!server.joinMultiPlayerRoom(playerName, gameId)) {
                 missingUsername.setText("The username is already taken!");
                 return;
             }
-            this.sceneCtrl.showWaitingRoom(false, gameId, playerName);
+
         }
+        this.sceneCtrl.showWaitingRoom(false, gameId, playerName);
     }
 
     /**
