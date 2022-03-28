@@ -37,7 +37,7 @@
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
             </columnResizePolicy>
         </TableView>
-        <Button fx:id="joinRandomWaitingRoom" mnemonicParsing="false" onAction="#joinWaitingRoom" prefHeight="70.0" prefWidth="300.0" text="Join Random Server" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+        <Button fx:id="joinRandomWaitingRoom" mnemonicParsing="false" onAction="#joinRandomWaitingRoom" prefHeight="70.0" prefWidth="300.0" text="Join Random Server" GridPane.halignment="CENTER" GridPane.rowIndex="1">
             <font>
                 <Font size="24.0" />
             </font>
