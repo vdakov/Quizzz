@@ -128,16 +128,16 @@ public class SceneCtrl {
     }
 
     public void showOverviewActionScene() {
-        var pair = scenes.get("OverviewActions");
+        var pair = sceneRoots.get("OverviewActions");
         var ctrl = (OverviewActionsActivityCtrl) pair.getKey();
 
         ctrl.initialize();
         primaryStage.setTitle("Overview Action");
-        primaryStage.setScene(pair.getValue());
+        scene.setRoot(pair.getValue());
     }
 
     public void showAddActionScene() {
-        var pair = scenes.get("AddAction");
+        var pair = sceneRoots.get("AddAction");
         var ctrl = (AddActionActivityCtrl) pair.getKey();
 
         ctrl.initialize();
@@ -146,12 +146,12 @@ public class SceneCtrl {
     }
 
     public void showEditActionScene(Action editingAction) {
-        var pair = scenes.get("EditAction");
+        var pair = sceneRoots.get("EditAction");
         var ctrl = (EditActionActivityCtrl) pair.getKey();
 
         ctrl.initialize(editingAction);
         primaryStage.setTitle("Edit actions");
-        primaryStage.setScene(pair.getValue());
+        scene.setRoot(pair.getValue());
     }
 
     public void showServerBrowser() {

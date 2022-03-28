@@ -90,7 +90,7 @@
             <Image url="@pictures/multi.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="60.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP">
+      <ImageView onMouseClicked="#enterAdminInterface" fitHeight="60.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP">
          <image>
             <Image url="@pictures/admin.png" />
          </image>
