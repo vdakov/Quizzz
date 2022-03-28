@@ -13,23 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package client.controllers;
+package client.controllers.AdminInterface;
 
 import client.communication.ServerUtils;
+import client.controllers.SceneCtrl;
 import com.google.inject.Inject;
 import commons.Actions.Action;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+import java.io.IOException;
 
-public class OverviewActionsActivityCtrl implements Initializable {
+public class OverviewActionsActivityCtrl {
 
     private final ServerUtils server;
     private final SceneCtrl sceneCtrl;
@@ -46,6 +45,18 @@ public class OverviewActionsActivityCtrl implements Initializable {
     private TableColumn<Action, String> colConsumption;
     @FXML
     private TableColumn<Action, String> colSource;
+    @FXML
+    private Button refreshButton;
+    @FXML
+    private Button addButton;
+    @FXML
+    private Button editButton;
+    @FXML
+    private Button deleteButton;
+    @FXML
+    private TextField deletingID;
+    @FXML
+    private TextField editingID;
 
     @Inject
     public OverviewActionsActivityCtrl(ServerUtils server, SceneCtrl mainCtrl) {
@@ -53,22 +64,58 @@ public class OverviewActionsActivityCtrl implements Initializable {
         this.sceneCtrl = mainCtrl;
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+//    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize() {
         colId.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getId() + ""));
         colTitle.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getTitle()));
         colConsumption.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getConsumption() + ""));
         colSource.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getSource()));
+        this.refresh();
     }
 
-    public void addActivity() {
-       // sceneCtrl.showAddActionScene();
+    /**
+     *
+     * @param event
+     */
+    public void addActivity(ActionEvent event) {
+        sceneCtrl.showAddActionScene();
+        refresh();
+    }
+
+    public void deleteActivity(ActionEvent event) {
+        String id = deletingID.getText();
+        try {
+            Action deletingAction = server.getActivityById(id);
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation Delete Activity");
+            alert.setHeaderText("Are you sure to delete activity");
+            alert.setContentText("ID: " + deletingAction.getId() + "\nTitle: " + deletingAction.getTitle() + "\nConsumption: " + deletingAction.getConsumption());
+            alert.showAndWait();
+            server.deleteActivity(id);
+        } catch (Exception e) {
+            System.out.println("The given ID is not founded");
+        }
+    }
+
+    public void editActivity(ActionEvent event) {
+        String id = editingID.getText();
+        try {
+            Action editingAction = server.getActivityById(id);
+            sceneCtrl.showEditActionScene(editingAction);
+        } catch (Exception e) {
+            System.out.println("The given ID is not founded");
+        }
+        refresh();
     }
 
     public void refresh() {
         var activities = server.getActivities();
         data = FXCollections.observableList(activities);
         table.setItems(data);
+    }
+
+    public void goToMainScreen() throws IOException {
+        sceneCtrl.showMainScreenScene();
     }
 
 }

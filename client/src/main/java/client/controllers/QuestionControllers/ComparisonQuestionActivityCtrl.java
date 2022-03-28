@@ -2,191 +2,72 @@ package client.controllers.QuestionControllers;
 
 import client.communication.ServerUtils;
 import client.controllers.SceneCtrl;
-import client.data.GameConfiguration;
 import com.google.inject.Inject;
 import commons.Questions.ComparisonQuestion;
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+import javafx.embed.swing.SwingFXUtils;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
-public class ComparisonQuestionActivityCtrl {
-
-    // constructor needed variables
-    private final ServerUtils server;
-    private final SceneCtrl sceneCtrl;
-
-    private int pointsInt;
-    private int addedPointsInt;
-    private String userAnswer;
-
-    // final needed labels for questions
-    @FXML
-    private Label labelGoBack;
-
-
-    @FXML
-    private Label questionStatement;
-
-    @FXML
-    private Label firstOptionText;
-    @FXML
-    private ImageView firstOptionImage;
-
-    @FXML
-    private Label secondOptionText;
-    @FXML
-    private ImageView secondOptionImage;
-
-    @FXML
-    private Label thirdOptionText;
-    @FXML
-    private ImageView thirdOptionImage;
-
-
-
-
-    private String correctAnswer;
-
-
-    @FXML
-    private Button goToMainScreen;
-    @FXML
-    private Label points;
-    @FXML
-    private Label addedPoints;
-    @FXML
-    private Label questionNumberLabel;
-
-    @FXML
-    private Rectangle firstOptionRectangle;
-    @FXML
-    private Rectangle secondOptionRectangle;
-    @FXML
-    private Rectangle thirdOptionRectangle;
-
-    //Constructor for the Question Controller
-
-
+public class ComparisonQuestionActivityCtrl extends QuestionActivityCtrl {
     /**
      * Creates the scene with the needed dependencies
+     *
      * @param server    initialised the communication with the server
      * @param sceneCtrl the scene controller
      */
     @Inject
     public ComparisonQuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
-        this.server = server;
-        this.sceneCtrl = sceneCtrl;
-    }
-
-    /**
-     * Initialises all the colors for the current scene
-     */
-    public void initialize() {
-
-        firstOptionRectangle.setStroke(Color.valueOf("#b38df7"));
-        secondOptionRectangle.setStroke(Color.valueOf("#ffd783"));
-        thirdOptionRectangle.setStroke(Color.valueOf("#ffa382"));
-
-        addedPoints.setText(" ");
-        addedPointsInt = 0;
+        super(server, sceneCtrl);
     }
 
     /**
      * Sets the text for the needed question given as parameter
+     * Displays the three corresponding images for each question and properly resizes them
      * @param comparisonQuestion the question that is set
      */
-    public void displayQuestion(ComparisonQuestion comparisonQuestion) {
+    public void displayQuestion(ComparisonQuestion comparisonQuestion) throws IOException {
         if (comparisonQuestion == null) {
             return;
         }
+        ByteArrayInputStream bis = new ByteArrayInputStream(server.getQuestionImage("30/beef.jpg"));
+        BufferedImage bImage = ImageIO.read(bis);
 
-        getQuestionStatement().setText(comparisonQuestion.getQuestion().getKey());
 
-        getQuestionFirstOption() .setText(comparisonQuestion.getOptions().get(0).getKey());
-        getQuestionSecondOption().setText(comparisonQuestion.getOptions().get(1).getKey());
-        getQuestionThirdOption() .setText(comparisonQuestion.getOptions().get(2).getKey());
+        questionStatement.setText(comparisonQuestion.getQuestion().getKey());
+
+        firstOptionText.setText(comparisonQuestion.getOptions().get(0).getKey());
+        secondOptionText.setText(comparisonQuestion.getOptions().get(1).getKey());
+        thirdOptionText.setText(comparisonQuestion.getOptions().get(2).getKey());
+
+        ByteArrayInputStream bis1 = new ByteArrayInputStream(server.getQuestionImage(comparisonQuestion.getOptions().get(0).getRight()));
+        BufferedImage bImage1 = ImageIO.read(bis1);
+
+        ByteArrayInputStream bis2 = new ByteArrayInputStream(server.getQuestionImage(comparisonQuestion.getOptions().get(1).getRight()));
+        BufferedImage bImage2 = ImageIO.read(bis2);
+
+        ByteArrayInputStream bis3 = new ByteArrayInputStream(server.getQuestionImage(comparisonQuestion.getOptions().get(2).getRight()));
+        BufferedImage bImage3 = ImageIO.read(bis3);
+
+        this.firstOptionImage.setImage(SwingFXUtils.toFXImage(bImage1, null));
+        this.firstOptionImage.setFitHeight(200);
+        this.firstOptionImage.setFitWidth(200);
+
+        this.secondOptionImage.setImage(SwingFXUtils.toFXImage(bImage2, null));
+        this.secondOptionImage.setFitHeight(200);
+        this.secondOptionImage.setFitWidth(200);
+
+        this.thirdOptionImage.setImage(SwingFXUtils.toFXImage(bImage3, null));
+        this.thirdOptionImage.setFitHeight(200);
+        this.thirdOptionImage.setFitWidth(200);
 
         questionNumberLabel.setText("Question " + getQuestionNumber());
         points.setText(String.valueOf(getPointsInt()));
+        gameConfig.setScore(getPointsInt());
+
         initialize();
-    }
-
-    public void answerQuestion(MouseEvent event) {
-        // answers the question and blocks the possibility to answer anymore
-        Label current = (Label) event.getSource();
-        userAnswer = current.getText();
-
-        server.updateScore(userAnswer);
-
-        answerUpdate();
-        pointsUpdate();
-    }
-
-    public void answerUpdate() {
-        // after the time ends the right answer is requested and then shown
-        firstOptionRectangle.setStroke(Color.valueOf("#ff0000"));
-        secondOptionRectangle.setStroke(Color.valueOf("#ff0000"));
-        thirdOptionRectangle.setStroke(Color.valueOf("#ff0000"));
-        if (getCorrectAnswer().equals(firstOptionText.getText())) {
-            firstOptionRectangle.setStroke(Color.valueOf("#92d36e"));
-        } else if (getCorrectAnswer().equals(secondOptionText.getText())) {
-            secondOptionRectangle.setStroke(Color.valueOf("#92d36e"));
-        } else {
-            thirdOptionRectangle.setStroke(Color.valueOf("#92d36e"));
-        }
-    }
-
-    public void pointsUpdate() {
-        // after the time ends the amount of won points is calculated and then shown to the player
-        addedPointsInt = 0;
-        if (userAnswer.equals(getCorrectAnswer())) {
-            addedPointsInt = 500;
-        }
-        addedPoints.setText("+" + String.valueOf(addedPointsInt));
-    }
-
-    public void goToMainScreen () throws IOException {
-        sceneCtrl.showMainScreenScene();
-    }
-
-    public void displayNextQuestion() {
-        sceneCtrl.showNextQuestion();
-    }
-
-
-    private Label getQuestionStatement() {
-        return questionStatement;
-    }
-
-    private Label getQuestionFirstOption() {
-        return firstOptionText;
-    }
-
-    private Label getQuestionSecondOption() {
-        return secondOptionText;
-    }
-
-    private Label getQuestionThirdOption() {
-        return thirdOptionText;
-    }
-
-    public String getCorrectAnswer() {
-        return server.getAnswer();
-    }
-
-    public int getPointsInt() {
-//        return server.getScore();
-        return Integer.parseInt(server.getScore());
-    }
-
-    public int getQuestionNumber() {
-        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
-        return gameConfiguration.getCurrentQuestionNumber();
+        startTimer();
     }
 }

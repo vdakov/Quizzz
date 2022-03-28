@@ -12,7 +12,7 @@ public class MainScreenActivityCtrl {
 
     private final ServerUtils server;
     private final SceneCtrl sceneCtrl;
-
+    private GameConfiguration gameConfig;
     @FXML
     private TextField userName;
 
@@ -20,27 +20,43 @@ public class MainScreenActivityCtrl {
     public MainScreenActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
         this.sceneCtrl = sceneCtrl;
         this.server = server;
+        gameConfig = GameConfiguration.getConfiguration();
     }
 
-    public void enterSoloGame () throws IOException {
+    public void enterSoloGame() throws IOException {
+        String playerName = userName.getText();
+
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
 
-        String playerName = userName.getText();
-        String roomId = server.createNewSinglePlayerRoom(playerName);
-        gameConfiguration.setRoomId(roomId);
         gameConfiguration.setUserName(playerName);
         gameConfiguration.setCurrentQuestionNumber(gameConfiguration.getCurrentQuestionNumber() + 1);
         gameConfiguration.setGameTypeSingleplayer();
-        sceneCtrl.showNextQuestion();
+
+        String roomId = server.createNewRoom();
+        gameConfiguration.setRoomId(roomId);
+
+        if (roomId != null) {
+            if (server.startRoom() == true) {
+                sceneCtrl.showNextQuestion();
+            }
+        }
     }
 
-    public void showSingleplayerLeaderboard() {
-        sceneCtrl.showSingleplayerLeaderboard();
+    public void showLeaderboard() {
+        gameConfig.setGameTypeSingleplayer(); //make sure you get to see the singleplayer version of the leaderboard
+        sceneCtrl.showLeaderboard();
     }
-    
-    public void enterServerBrowser() {
-        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
-        gameConfiguration.setGameTypeMultiPlayer();
+
+
+    public void enterServerBrowser() throws IOException {
+        gameConfig.setGameTypeMultiPlayer();
+        String playerName = userName.getText();
+        gameConfig.setUserName(playerName);
+
         this.sceneCtrl.showServerBrowser();
+    }
+
+    public void enterAdminInterface() {
+        sceneCtrl.showOverviewActionScene();
     }
 }

@@ -15,16 +15,26 @@ public class LeaderboardController {
         this.service = service;
     }
 
-    @GetMapping("/singleplayer")
-    public List<LeaderboardEntry> getSingleplayerLeaderboard() {
-        List<LeaderboardEntry> temp = service.list();
-
+    /**
+     * Gets the leaderboard for a specific room
+     *
+     * @param roomId the room to get its leaderboard from
+     * @return a list with the entries, already sorted and ranked
+     */
+    @GetMapping("/{roomId}")
+    public List<LeaderboardEntry> getLeaderboard(@PathVariable String roomId) {
+        List<LeaderboardEntry> temp = service.getByRoomId(roomId);
         for (int i = 0; i < temp.size(); i++) temp.get(i).setRank(i + 1); //assign ranks
         return temp;
     }
 
-    @PostMapping("/singleplayer")
-    public LeaderboardEntry addSingleplayerLeaderboardEntry(@RequestBody LeaderboardEntry e) {
-        return service.addSingleplayerLeaderboardEntry(e);
+    @PostMapping
+    public LeaderboardEntry addLeaderboardEntry(@RequestBody LeaderboardEntry e) {
+        return service.addLeaderboardEntry(e);
+    }
+
+    @DeleteMapping("/remove/{roomId}")
+    public void removeEntries(@PathVariable String roomId) {
+        service.removeEntries(roomId);
     }
 }

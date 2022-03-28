@@ -2,203 +2,55 @@ package client.controllers.QuestionControllers;
 
 import client.communication.ServerUtils;
 import client.controllers.SceneCtrl;
-import client.data.GameConfiguration;
 import com.google.inject.Inject;
 import commons.Questions.AlternativeQuestion;
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+import javafx.embed.swing.SwingFXUtils;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
-public class AlternativeQuestionActivityCtrl {
 
-    // constructor needed variables
-    private final ServerUtils server;
-    private final SceneCtrl   sceneCtrl;
-
-    private int pointsInt;
-    private int addedPointsInt;
-    private String userAnswer;
-    private int questionNumber;
-
-    // final needed labels for questions
-    @FXML
-    private Label labelGoBack;
-
-    @FXML
-    private Label questionStatement;
-    @FXML
-    private ImageView questionStatementImage;
-
-    @FXML
-    private Label firstOptionText;
-    @FXML
-    private ImageView firstOptionImage;
-
-    @FXML
-    private Label secondOptionText;
-    @FXML
-    private ImageView secondOptionImage;
-
-    @FXML
-    private Label thirdOptionText;
-    @FXML
-    private ImageView thirdOptionImage;
-
-    // current labels
-    @FXML
-    private Label sampleQuestion;
-    @FXML
-    private Button goToMainScreen;
-    @FXML
-    private Label points;
-    @FXML
-    private Label addedPoints;
-    @FXML
-    private Label questionNumberLabel;
-    @FXML
-    private String correctAnswer;
-
-    @FXML
-    private Rectangle firstOptionRectangle;
-    @FXML
-    private Rectangle secondOptionRectangle;
-    @FXML
-    private Rectangle thirdOptionRectangle;
-
+public class AlternativeQuestionActivityCtrl extends QuestionActivityCtrl {
     /**
      * Creates the scene with the needed dependencies
+     *
      * @param server    initialised the communication with the server
      * @param sceneCtrl the scene controller
      */
     @Inject
     public AlternativeQuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
-        this.server = server;
-        this.sceneCtrl = sceneCtrl;
-    }
-
-    /**
-     * Initialises all the colors for the current scene
-     */
-    public void initialize() {
-        firstOptionRectangle.setStroke(Color.valueOf("#b38df7"));
-        secondOptionRectangle.setStroke(Color.valueOf("#ffd783"));
-        thirdOptionRectangle.setStroke(Color.valueOf("#ffa382"));
-
-        addedPoints.setText(" ");
-        addedPointsInt = 0;
+        super(server, sceneCtrl);
     }
 
     /**
      * Sets the text for the needed question given as parameter
+     * Properly displays the corresponding images
      * @param alternativeQuestion the question that is set
      */
-    public void displayQuestion(AlternativeQuestion alternativeQuestion) {
+    public void displayQuestion(AlternativeQuestion alternativeQuestion) throws IOException {
         if (alternativeQuestion == null) {
             return;
         }
 
-        getQuestionStatement().setText(alternativeQuestion.getQuestion().getKey());
+        ByteArrayInputStream bis = new ByteArrayInputStream(server.getQuestionImage(alternativeQuestion.getQuestion().getRight()));
+        BufferedImage bImage = ImageIO.read(bis);
+
+        this.image.setImage(SwingFXUtils.toFXImage(bImage, null));
 
 
-        getQuestionFirstOption() .setText(alternativeQuestion.getOptions().get(0).getKey());
-        getQuestionSecondOption().setText(alternativeQuestion.getOptions().get(1).getKey());
-        getQuestionThirdOption() .setText(alternativeQuestion.getOptions().get(2).getKey());
+        sampleQuestion.setText(alternativeQuestion.getQuestion().getKey());
 
+        firstOptionText.setText(alternativeQuestion.getOptions().get(0).getKey());
+        secondOptionText.setText(alternativeQuestion.getOptions().get(1).getKey());
+        thirdOptionText.setText(alternativeQuestion.getOptions().get(2).getKey());
+        questionNumberLabel.setText("Question " + getQuestionNumber());
         points.setText(String.valueOf(getPointsInt()));
+        gameConfig.setScore(getPointsInt());
+
         initialize();
-    }
-
-    public void answerQuestion(MouseEvent event) {
-        // answers the question
-        Label current = (Label) event.getSource();
-        userAnswer = current.getText();
-
-        server.updateScore(userAnswer);
-
-        answerUpdate();
-        pointsUpdate();
-
-        //blocks the possibility to answer anymore
-    }
-
-    public void answerUpdate() {
-        // after the time ends the right answer is requested and then shown
-
-        //check whether the user's answer is correct and update the boolean value
-
-        firstOptionRectangle.setStroke(Color.valueOf("#ff0000"));
-        secondOptionRectangle.setStroke(Color.valueOf("#ff0000"));
-        thirdOptionRectangle.setStroke(Color.valueOf("#ff0000"));
-        if (getCorrectAnswer().equals(firstOptionText.getText())) {
-            firstOptionRectangle.setStroke(Color.valueOf("#92d36e"));
-        } else if (getCorrectAnswer().equals(secondOptionText.getText())) {
-            secondOptionRectangle.setStroke(Color.valueOf("#92d36e"));
-        } else {
-            thirdOptionRectangle.setStroke(Color.valueOf("#92d36e"));
-        }
-    }
-
-    public void pointsUpdate() {
-        // after the time ends the amount of won points is calculated and then shown to the player
-
-        addedPointsInt = 0;
-        if (userAnswer.equals(getCorrectAnswer())) {
-            addedPointsInt = 500;
-        }
-        addedPoints.setText("+" + String.valueOf(addedPointsInt));
-
-////        FadeTransition fadeout = new FadeTransition(Duration.seconds(1), addedPoints);
-////        fadeout.setFromValue(1);
-////        fadeout.setToValue(0);
-////        fadeout.play();
-//
-//        //after some effect
-//        pointsInt += addedPointsInt;
-//        addedPoints.setText(null);
-//        points.setText(String.valueOf(pointsInt));
-    }
-
-    public void displayNextQuestion() {
-        sceneCtrl.showNextQuestion();
-    }
-
-
-    public void goToMainScreen() throws IOException {
-        sceneCtrl.showMainScreenScene();
-    }
-
-    private Label getQuestionStatement() {
-        return sampleQuestion;
-    }
-
-    private Label getQuestionFirstOption() {
-        return firstOptionText;
-    }
-
-    private Label getQuestionSecondOption() {
-        return secondOptionText;
-    }
-
-    private Label getQuestionThirdOption() {
-        return thirdOptionText;
-    }
-
-    public String getCorrectAnswer() {
-        return server.getAnswer();
-    }
-
-    public int getPointsInt() {
-        return Integer.parseInt(server.getScore());
-    }
-
-    public int getQuestionNumber() {
-        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
-        return gameConfiguration.getCurrentQuestionNumber();
+        startTimer();
+        System.out.println("Timer started");
     }
 }

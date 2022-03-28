@@ -10,16 +10,16 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="718.0" prefWidth="1282.0" style="-fx-background-color: #3084f2;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.AdminInterface.AddActionActivityCtrl">
-   <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="635.4000244140625" minWidth="10.0" prefWidth="421.0" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="861.0" minWidth="10.0" prefWidth="861.0" />
-   </columnConstraints>
-   <rowConstraints>
-      <RowConstraints maxHeight="720.0" minHeight="10.0" prefHeight="720.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="186.79999999999995" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="76.60001220703128" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
-   </rowConstraints>
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="718.0" prefWidth="1282.0" style="-fx-background-color: #3084f2;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.AdminInterface.EditActionActivityCtrl">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="635.4000244140625" minWidth="10.0" prefWidth="421.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="861.0" minWidth="10.0" prefWidth="861.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="720.0" minHeight="10.0" prefHeight="720.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="186.79999999999995" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="76.60001220703128" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+  </rowConstraints>
    <children>
       <Button mnemonicParsing="false" onAction="#ok" text="OK" translateX="-45.0" translateY="127.0" GridPane.halignment="CENTER" />
       <Button mnemonicParsing="false" onAction="#cancel" text="CANCEL" translateX="19.0" translateY="127.0" GridPane.halignment="CENTER" />
@@ -31,14 +31,20 @@
       <Label text="Image" translateY="54.0" GridPane.halignment="CENTER" />
       <Label text="Source" translateY="2.0" GridPane.halignment="CENTER" />
       <TextField fx:id="source" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="354.0" promptText="Please type in the source" translateY="26.0" GridPane.halignment="CENTER" />
-      <Label text="ADD ACTION" translateY="-123.0" GridPane.halignment="CENTER">
+      <Label text="EDIT ACTION" translateY="-123.0" GridPane.halignment="CENTER">
          <font>
             <Font size="29.0" />
          </font>
       </Label>
       <Button mnemonicParsing="false" onAction="#chooseFile" prefHeight="28.0" prefWidth="102.0" text="Choose Image" translateX="132.0" translateY="81.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-      <ImageView fx:id="image" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Image:" translateY="-294.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+      <ImageView fx:id="currentImage" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" translateY="-206.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+      <ImageView fx:id="newImage" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" translateY="163.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="New Image:" translateY="49.0" wrappingWidth="135.38750839233398" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Text>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Current Image:" translateY="-294.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
