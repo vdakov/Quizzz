@@ -288,8 +288,6 @@ public class QuestionActivityCtrl {
        refresh();
     }
 
-
-
     public void refresh() {
         List<ChatEntry> chatEntries = server.getPlayersActivity();
         tableview.setItems(FXCollections.observableList(chatEntries));

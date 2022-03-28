@@ -4,14 +4,9 @@ import javafx.scene.image.ImageView;
 
 public class ChatEntry {
 
-    private MessageType type;
     private ImageView content;
     private String userName;
 
-
-    public enum MessageType {
-        EMOJI
-    }
 
     public ChatEntry(String userName, ImageView content)
     {
@@ -22,14 +17,6 @@ public class ChatEntry {
     public ChatEntry(String userName)
     {
         this.userName = userName;
-    }
-
-    public MessageType getType() {
-        return type;
-    }
-
-    public void setType(MessageType type) {
-        this.type = type;
     }
 
     public ImageView getContent() {

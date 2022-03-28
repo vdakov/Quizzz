@@ -189,7 +189,7 @@ public class ServerUtils {
 
     public List<ChatEntry> getPlayersActivity() {
         return ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER).path("app/emojis")
+                .target(SERVER).path("topic/emojis")
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON)
                 .get(new GenericType<>() {
@@ -199,7 +199,7 @@ public class ServerUtils {
 
     public ChatEntry addChatEntry(String name, ImageView imageView) {
         return ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER).path("app/emojis")
+                .target(SERVER).path("topic/emojis")
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON)
                 .post(Entity.entity(new ChatEntry(name, imageView), APPLICATION_JSON), ChatEntry.class);

@@ -93,14 +93,7 @@ public class MultiPlayerGameController {
         return multiplayerGameService.getAnswer(userName, gameId, questionNumber);
     }
 
-
-
-    @MessageMapping("/emojis")  // /app/emojis
-    @SendTo("/topic/emojis")
-    public ChatEntry addMessage(ChatEntry chatEntry) {
-        return chatEntry;
-    }
-
+        /*
     @GetMapping("/getGames")
     public List<GameContainer> getGameIds() {
         return multiplayerGameService.getGameIds();
@@ -122,4 +115,14 @@ public class MultiPlayerGameController {
         return (Integer) this.getGame(gameId).getNumPlayers();
 
     }
+
+     */
+
+
+    @MessageMapping("/emojis")  // /app/emojis
+    @SendTo("/topic/emojis")
+    public ChatEntry addMessage(ChatEntry chatEntry) {
+        return chatEntry;
+    }
+
 }
