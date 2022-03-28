@@ -39,7 +39,7 @@ public class AlternativeQuestionActivityCtrl extends QuestionActivityCtrl {
         ByteArrayInputStream bis = new ByteArrayInputStream(server.getQuestionImage(alternativeQuestion.getQuestion().getRight()));
         BufferedImage bImage = ImageIO.read(bis);
 
-        this.image.setImage(SwingFXUtils.toFXImage(bImage, null));
+        image.setImage(SwingFXUtils.toFXImage(bImage, null));
 
 
         sampleQuestion.setText(alternativeQuestion.getQuestion().getKey());
