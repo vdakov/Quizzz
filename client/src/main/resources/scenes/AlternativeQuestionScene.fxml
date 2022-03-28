@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #3084f2;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.QuestionControllers.AlternativeQuestionActivityCtrl">
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #3084f2;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.QuestionControllers.AlternativeQuestionActivityCtrl">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="10.0" percentWidth="5.0" prefWidth="30.0" />
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="133.66668605804443" minWidth="7.0" percentWidth="15.0" prefWidth="73.0" />
@@ -53,8 +54,6 @@
             </font>
         </Label>
         <Label fx:id="addedPoints" alignment="CENTER_RIGHT" prefHeight="33.0" prefWidth="182.0" text=" " textAlignment="RIGHT" textFill="#92d36e" GridPane.columnIndex="6" GridPane.rowIndex="2" />
-
-        <Button fx:id="emoji" mnemonicParsing="false" prefHeight="63.0" prefWidth="66.0" text="Emoji" GridPane.columnIndex="1" GridPane.rowIndex="7" />
         <Label fx:id="questionNumberLabel" alignment="CENTER" prefHeight="38.0" prefWidth="114.0" style="-fx-background-color: #2d4b5a; -fx-text-fill: #f6f6f6; -fx-background-radius: 40;" text="Question 1" textFill="WHITESMOKE" GridPane.columnIndex="3" GridPane.rowIndex="3">
             <font>
                 <Font name="Trebuchet MS" size="15.0" />
@@ -95,7 +94,11 @@
         </Label>
         <AnchorPane prefHeight="344.0" prefWidth="558.0" style="-fx-border-color: #587882; -fx-border-width: 5; -fx-border-radius: 5;" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="4">
             <children>
-                <ImageView fx:id="image" fitHeight="268.0" fitWidth="273.0" layoutX="40.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true" />
+                <ImageView fx:id="image" fitHeight="268.0" fitWidth="273.0" layoutX="40.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../pictures/blank.jpg" />
+                    </image>
+                </ImageView>
                 <Label alignment="CENTER" layoutX="337.0" layoutY="13.0" prefHeight="63.0" prefWidth="540.0" style="-fx-background-color: #2d4b5a; -fx-background-radius: 50;" text="Instead of ... you could do ... instead" textFill="WHITESMOKE" AnchorPane.bottomAnchor="280.0" AnchorPane.leftAnchor="340.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                     <font>
                         <Font size="24.0" />
@@ -123,7 +126,7 @@
                     <graphic>
                         <ImageView fitHeight="30.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@pictures/light-bulb.jpg" />
+                                <Image url="@../pictures/light-bulb.jpg" />
                             </image>
                         </ImageView>
                     </graphic>
@@ -132,7 +135,7 @@
                     <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@pictures/fire.png" />
+                                <Image url="@../pictures/fire.png" />
                             </image>
                         </ImageView>
                     </graphic>
@@ -141,7 +144,7 @@
                     <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@pictures/clock-joker.png" />
+                                <Image url="@../pictures/clock-joker.png" />
                             </image>
                         </ImageView>
                     </graphic>
@@ -153,6 +156,40 @@
             <Font size="81.0" />
          </font>
       </Text>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+         <children>
+            <TableView fx:id="tableview" layoutX="51.0" layoutY="6.0" prefHeight="348.0" prefWidth="141.0">
+              <columns>
+                <TableColumn fx:id="playersActivity" prefWidth="125.0" text="Players Activity" />
+              </columns>
+            </TableView>
+            <ImageView fx:id="emoji1" fitHeight="50.0" fitWidth="50.0" layoutY="39.0" onMouseClicked="#emoji1Display" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../pictures/emojis/tears-emoji-png.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="emoji2" fitHeight="50.0" fitWidth="50.0" layoutY="99.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../pictures/emojis/sunglasses-emoji.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="emoji3" fitHeight="50.0" fitWidth="50.0" layoutY="171.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../pictures/emojis/hearts-eyes-emoji.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="emoji5" fitHeight="50.0" fitWidth="50.0" layoutY="292.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../pictures/emojis/angry-emoji.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="emoji4" fitHeight="50.0" fitWidth="50.0" layoutY="234.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../pictures/emojis/fearful-emoji.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
 
 
     </children>

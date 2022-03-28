@@ -13,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
+import java.util.concurrent.ExecutionException;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -41,7 +42,7 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
      * @param sceneCtrl the scene controller
      */
     @Inject
-    public OpenQuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
+    public OpenQuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) throws ExecutionException, InterruptedException {
         super(server, sceneCtrl);
     }
 
@@ -71,14 +72,15 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         points.setText(String.valueOf(getPointsInt()));
         gameConfig.setScore(getPointsInt());
 
+
         ByteArrayInputStream bis = new ByteArrayInputStream(server.getQuestionImage(openQuestion.getQuestion().getRight()));
         BufferedImage bImage = ImageIO.read(bis);
 
 
         this.image.setImage(SwingFXUtils.toFXImage(bImage, null));
 
-        if (gameConfig.isSinglePlayer()) emoji.setVisible(false);
-        else emoji.setVisible(true);
+        if (gameConfig.isSinglePlayer()) tableview.setVisible(false);
+        else tableview.setVisible(true);
 
         initialize();
         startTimer();

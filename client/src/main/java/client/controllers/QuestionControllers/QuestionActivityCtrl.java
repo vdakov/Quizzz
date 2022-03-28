@@ -3,16 +3,17 @@ package client.controllers.QuestionControllers;
 import client.communication.ServerUtils;
 import client.controllers.SceneCtrl;
 import client.data.GameConfiguration;
+import client.Chat.ChatEntry;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Border;
@@ -22,8 +23,20 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
+import org.springframework.messaging.converter.MappingJackson2MessageConverter;
+import org.springframework.messaging.simp.stomp.StompFrameHandler;
+import org.springframework.messaging.simp.stomp.StompHeaders;
+import org.springframework.messaging.simp.stomp.StompSession;
+import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
+import org.springframework.web.socket.client.standard.StandardWebSocketClient;
+import org.springframework.web.socket.messaging.WebSocketStompClient;
+
 import javax.inject.Inject;
 import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.function.Consumer;
 
 public class QuestionActivityCtrl {
     // constructor needed variables
@@ -73,15 +86,26 @@ public class QuestionActivityCtrl {
     @FXML
     protected String correctAnswer;
     @FXML
-    protected Button emoji;
+    protected ImageView emoji1;
+    @FXML
+    protected ImageView emoji2;
+    @FXML
+    protected ImageView emoji3;
+    @FXML
+    protected ImageView emoji4;
+    @FXML
+    protected ImageView emoji5;
+    @FXML
+    protected TableView tableview;
+    @FXML
+    protected TableColumn<ChatEntry, String> playersActivity;
+
 
     protected IntegerProperty timeSeconds =
             new SimpleIntegerProperty((int) startTime);
     protected Timeline timeline;
 
-
-    @Inject
-    public QuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
+    public QuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) throws ExecutionException, InterruptedException {
         this.server = server;
         this.sceneCtrl = sceneCtrl;
     }
@@ -100,9 +124,17 @@ public class QuestionActivityCtrl {
         addedPoints.setText(" ");
         addedPointsInt = 0;
 
+        if (gameConfig.isSinglePlayer())
+        {
+            tableview.setVisible(true);
+            playersActivity.setCellValueFactory(q -> new SimpleStringProperty(new ChatEntry(gameConfig.getUserName()) + ""));
+        }
+             else
+             {
+                 tableview.setVisible(false);
+             }
 
-        if (gameConfig.isSinglePlayer()) emoji.setVisible(false);
-        else emoji.setVisible(true);
+
     }
 
 
@@ -219,5 +251,48 @@ public class QuestionActivityCtrl {
 
     public int getQuestionNumber() {
         return gameConfig.getCurrentQuestionNumber();
+    }
+
+    private StompSession session = connect("ws://localhost:8080/websocket");
+
+    private StompSession connect(String url) throws ExecutionException, InterruptedException {
+        var client = new StandardWebSocketClient();
+        var stomp = new WebSocketStompClient(client);
+
+        stomp.setMessageConverter(new MappingJackson2MessageConverter() );
+            return stomp.connect(url, new StompSessionHandlerAdapter() {} ).get();
+
+    }
+
+    public void registerForMessages(String destination, Consumer<ChatEntry> consumer)
+    {
+        session.subscribe(destination, new StompFrameHandler() {
+            @Override
+            public Type getPayloadType(StompHeaders headers) {
+                return ChatEntry.class;
+            }
+
+            @Override
+            public void handleFrame(StompHeaders headers, Object payload) {
+                consumer.accept((ChatEntry) payload );
+            }
+        });
+    }
+
+    public void send(String destination, Object o)
+    {
+        session.send(destination, o);
+    }
+
+    public void emoji1Display(MouseEvent event)
+    {
+        server.addChatEntry(gameConfig.getUserName(), emoji1);
+       send("/app/emojis", new ChatEntry(gameConfig.getUserName(), emoji1));
+       refresh();
+    }
+
+    public void refresh() {
+        List<ChatEntry> chatEntries = server.getPlayersActivity();
+        tableview.setItems(FXCollections.observableList(chatEntries));
     }
 }

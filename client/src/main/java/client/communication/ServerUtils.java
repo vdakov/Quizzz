@@ -15,6 +15,7 @@
  */
 package client.communication;
 
+import client.Chat.ChatEntry;
 import client.data.GameConfiguration;
 import commons.Actions.Action;
 import commons.GameContainer;
@@ -23,6 +24,7 @@ import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.GenericType;
 import jakarta.ws.rs.core.Response;
+import javafx.scene.image.ImageView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -312,6 +314,24 @@ public class ServerUtils {
                 .target(SERVER).path("api/leaderboard/remove/" + roomId) //
                 .request(APPLICATION_JSON) //
                 .delete();
+    }
+
+    public List<ChatEntry> getPlayersActivity() {
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER).path("topic/emojis")
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .get(new GenericType<>() {
+                 });
+        }
+
+
+    public ChatEntry addChatEntry(String name, ImageView imageView) {
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER).path("topic/emojis")
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .post(Entity.entity(new ChatEntry(name, imageView), APPLICATION_JSON), ChatEntry.class);
     }
 
     public Action getRandomAction() {
