@@ -195,13 +195,13 @@ public class QuestionActivityCtrl {
 
     public void displayNextQuestion() throws IOException {
         timeline.stop();
-        if (gameConfig.getCurrentQuestionNumber() >= 20) finishGame();
+        if (gameConfig.getCurrentQuestionNumber() >= 19) finishGame();
         else sceneCtrl.showNextQuestion();
     }
 
     public void finishGame() {
-        server.addSingleplayerLeaderboardEntry(GameConfiguration.getConfiguration().getUserName(), Integer.parseInt(server.getScore()));
-        sceneCtrl.showSingleplayerLeaderboard();
+        server.addLeaderboardEntry(gameConfig.getUserName(), gameConfig.getRoomId(), Integer.parseInt(server.getScore()));
+        sceneCtrl.showLeaderboard();
     }
 
     public void goToMainScreen() throws IOException {

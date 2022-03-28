@@ -65,6 +65,8 @@ public class ComparisonQuestionActivityCtrl extends QuestionActivityCtrl {
 
         questionNumberLabel.setText("Question " + getQuestionNumber());
         points.setText(String.valueOf(getPointsInt()));
+        gameConfig.setScore(getPointsInt());
+
         initialize();
         startTimer();
     }

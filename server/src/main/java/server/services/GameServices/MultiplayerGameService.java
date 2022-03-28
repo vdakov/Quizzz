@@ -226,7 +226,7 @@ public class MultiplayerGameService {
         }
     }
 
-       public List<GameContainer> getGameIds() {
+    public List<GameContainer> getGameIds() {
         //this.roomCatalog.cleanEmptyGames();
         return roomCatalog.getWaitingMultiplayerGames();
     }

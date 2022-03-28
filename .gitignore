@@ -10,7 +10,7 @@ build/
 **/*.swp
 
 ### Activity bank imports ###
-/server/src/main/resources/activity-bank-pictures/
+/server/src/main/resources/*
 
 ### STS ###
 .apt_generated

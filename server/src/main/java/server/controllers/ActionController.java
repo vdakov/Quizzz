@@ -46,26 +46,27 @@ public class ActionController {
 
 
     //allows the user to update all the fields of an activity except the ID, but only if the object with that ID already exists
-    @PutMapping(path = "/update/{id}")
-    public void update(@PathVariable("id") Long id,
-                       @RequestParam(required = false) String title,
-                       @RequestParam(required = false) int consumption,
-                       @RequestParam(required = false) String source) {
+    @PutMapping(path = "/update")
+    public void update(@RequestBody Action a) {
 
 
-        Action activity = service.getById(id.toString()); //.orElseThrow(() -> new IllegalStateException(("No such activity!!!")));
+        Action activity = service.getById(a.getId()); //.orElseThrow(() -> new IllegalStateException(("No such activity!!!")));
 
-        if (title != null && title.length() > 0) {
-            activity.setTitle(title);
+        if (a.getTitle() != null && a.getTitle().length() > 0) {
+            activity.setTitle(a.getTitle());
         }
 
-        if (consumption > 0) {
-            activity.setConsumption(consumption);
+        if (a.getConsumption() > 0) {
+            activity.setConsumption(a.getConsumption());
         }
 
-        /*if (source != null && source.length() > 0) {
-            activity.setSource(source);
-        }*/
+        if (a.getSource() != null && a.getSource().length() > 0) {
+            activity.setSource(a.getSource());
+        }
+
+        if (a.getImagePath() != null && a.getImagePath().length() > 0) {
+            activity.setImagePath(a.getImagePath());
+        }
 
         service.save(activity);
     }
@@ -80,7 +81,7 @@ public class ActionController {
 
     //Allows the user to delete an item from the repository if it exists through and HTTP DELETE Request
     @DeleteMapping(path = "/delete/{id}")
-    public void update(@PathVariable("id") String id) {
+    public void delete(@PathVariable("id") String id) {
         service.delete(id);
     }
 
@@ -119,14 +120,12 @@ public class ActionController {
     }
 
     //allows the user to add a new activity to the repository and stores it in it permanently through an HTTP POST Request
-    @PostMapping(path = {"", "/add"})
+    @PutMapping(path = {"/add"})
     public void add(@RequestBody Action a) {
         try {
-
-            long temp = a.getConsumption() + 1;
             if (a.getTitle() != null) service.save(a);
         } catch (Exception e) {
-            throw new IllegalStateException("POST Request Failed");
+            throw new IllegalStateException("PUT Request Failed");
         }
     }
 
