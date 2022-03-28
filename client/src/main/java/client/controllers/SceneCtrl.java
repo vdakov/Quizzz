@@ -2,6 +2,9 @@ package client.controllers;
 
 
 import client.communication.ServerUtils;
+import client.controllers.AdminInterface.AddActionActivityCtrl;
+import client.controllers.AdminInterface.EditActionActivityCtrl;
+import client.controllers.AdminInterface.OverviewActionsActivityCtrl;
 import client.controllers.MultiplayerControllers.ServerBrowserController;
 import client.controllers.MultiplayerControllers.WaitingRoomController;
 import client.controllers.QuestionControllers.AlternativeQuestionActivityCtrl;
@@ -10,6 +13,7 @@ import client.controllers.QuestionControllers.KnowledgeQuestionActivityCtrl;
 import client.controllers.QuestionControllers.OpenQuestionActivityCtrl;
 import client.data.GameConfiguration;
 import client.logic.QuestionParsers;
+import commons.Actions.Action;
 import commons.Questions.AlternativeQuestion;
 import commons.Questions.ComparisonQuestion;
 import commons.Questions.KnowledgeQuestion;
@@ -123,10 +127,30 @@ public class SceneCtrl {
         scene.setRoot(pair.getValue());
     }
 
+    public void showOverviewActionScene() {
+        var pair = sceneRoots.get("OverviewActions");
+        var ctrl = (OverviewActionsActivityCtrl) pair.getKey();
+
+        ctrl.initialize();
+        primaryStage.setTitle("Overview Action");
+        scene.setRoot(pair.getValue());
+    }
+
     public void showAddActionScene() {
         var pair = sceneRoots.get("AddAction");
+        var ctrl = (AddActionActivityCtrl) pair.getKey();
 
+        ctrl.initialize();
         primaryStage.setTitle("Add actions");
+        scene.setRoot(pair.getValue());
+    }
+
+    public void showEditActionScene(Action editingAction) {
+        var pair = sceneRoots.get("EditAction");
+        var ctrl = (EditActionActivityCtrl) pair.getKey();
+
+        ctrl.initialize(editingAction);
+        primaryStage.setTitle("Edit actions");
         scene.setRoot(pair.getValue());
     }
 

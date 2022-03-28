@@ -1,6 +1,8 @@
 package client;
 
-import client.controllers.AddActionActivityCtrl;
+import client.controllers.AdminInterface.AddActionActivityCtrl;
+import client.controllers.AdminInterface.EditActionActivityCtrl;
+import client.controllers.AdminInterface.OverviewActionsActivityCtrl;
 import client.controllers.MainScreenActivityCtrl;
 import client.controllers.MultiplayerControllers.ServerBrowserController;
 import client.controllers.MultiplayerControllers.WaitingRoomController;
@@ -50,14 +52,16 @@ public class QuizzzClient extends Application {
      */
     private final Pair<String, Class>[] scenePairs = new Pair[]{
             new Pair("MainScreenScene.fxml", MainScreenActivityCtrl.class),
-            new Pair("AddActionScene.fxml", AddActionActivityCtrl.class),
             new Pair("ComparisonQuestionScene.fxml", ComparisonQuestionActivityCtrl.class),
             new Pair("OpenQuestionScene.fxml", OpenQuestionActivityCtrl.class),
             new Pair("KnowledgeQuestionScene.fxml", KnowledgeQuestionActivityCtrl.class),
             new Pair("AlternativeQuestionScene.fxml", AlternativeQuestionActivityCtrl.class),
             new Pair("ServerBrowserScene.fxml", ServerBrowserController.class),
             new Pair("WaitingRoomScene.fxml", WaitingRoomController.class),
-            new Pair("SingleplayerLeaderboardScene.fxml", SingleplayerLeaderboardCtrl.class)
+            new Pair("SingleplayerLeaderboardScene.fxml", SingleplayerLeaderboardCtrl.class),
+            new Pair("OverviewActionsScene.fxml", OverviewActionsActivityCtrl.class),
+            new Pair("AddActionScene.fxml", AddActionActivityCtrl.class),
+            new Pair("EditActionScene.fxml", EditActionActivityCtrl.class)
     };
 
     @Override

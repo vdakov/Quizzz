@@ -49,5 +49,7 @@ public class MainScreenActivityCtrl {
         this.sceneCtrl.showServerBrowser();
     }
 
-
+    public void enterAdminInterface() {
+        sceneCtrl.showOverviewActionScene();
+    }
 }

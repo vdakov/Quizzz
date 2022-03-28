@@ -1,6 +1,6 @@
 package client.logic;
 
-import client.controllers.AddActionActivityCtrl;
+import client.controllers.AdminInterface.AddActionActivityCtrl;
 import client.controllers.MainScreenActivityCtrl;
 import client.controllers.QuestionControllers.AlternativeQuestionActivityCtrl;
 import client.controllers.QuestionControllers.ComparisonQuestionActivityCtrl;
