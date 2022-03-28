@@ -5,15 +5,19 @@ import client.controllers.SceneCtrl;
 import com.google.inject.Inject;
 import commons.Actions.Action;
 import jakarta.ws.rs.WebApplicationException;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
+
+import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
 
@@ -36,6 +40,9 @@ public class AddActionActivityCtrl {
 
     @FXML
     private TextField imageNameField;
+
+    @FXML
+    private ImageView image;
 
     private String base64Image;
 
@@ -97,6 +104,8 @@ public class AddActionActivityCtrl {
         title.clear();
         source.clear();
         consumption.clear();
+        imageNameField.clear();
+        this.image.setImage(null);
     }
 
     public void keyPressed(KeyEvent e) {
@@ -126,7 +135,7 @@ public class AddActionActivityCtrl {
             String filename = chosenImage.getName();
             this.imageNameField.setText(filename);
             this.base64Image = Base64.encodeBase64String(FileUtils.readFileToByteArray(chosenImage));
-
+            this.image.setImage(SwingFXUtils.toFXImage(ImageIO.read(chosenImage), null));
 
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
