@@ -47,6 +47,7 @@ public class AlternativeQuestionActivityCtrl extends QuestionActivityCtrl {
         thirdOptionText.setText(alternativeQuestion.getOptions().get(2).getKey());
         questionNumberLabel.setText("Question " + getQuestionNumber());
         points.setText(String.valueOf(getPointsInt()));
+        gameConfig.setScore(getPointsInt());
 
         initialize();
         startTimer();

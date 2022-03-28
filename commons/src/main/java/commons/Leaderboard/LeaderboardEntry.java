@@ -12,12 +12,23 @@ public class LeaderboardEntry {
     private int id;
     private int score;
     private String username;
+    private String roomId;
+    private boolean singleplayer;
     @Transient
     private int rank;
 
-    public LeaderboardEntry(String username, int score) {
+    /**
+     * Constructor for a leaderboard entry
+     *
+     * @param username the name of the player
+     * @param roomId   the room this player is in
+     * @param score    the score the player got
+     */
+    public LeaderboardEntry(String username, String roomId, int score, boolean singleplayer) {
         this.score = score;
         this.username = username;
+        this.roomId = roomId;
+        this.singleplayer = singleplayer;
     }
 
     private LeaderboardEntry() {
@@ -38,6 +49,14 @@ public class LeaderboardEntry {
 
     public String getUsername() {
         return username;
+    }
+
+    public String getRoomId() {
+        return roomId;
+    }
+
+    public boolean isSingleplayer() {
+        return singleplayer;
     }
 
     public int getId() {

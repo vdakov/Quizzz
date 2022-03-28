@@ -38,7 +38,7 @@ public class SceneCtrl {
     private GameConfiguration gameConfiguration;
 
     @Inject
-    public void initialiseServer(ServerUtils serverUtils) {
+    public void sceneCtrl(ServerUtils serverUtils) {
         this.serverUtils = serverUtils;
         this.gameConfiguration = GameConfiguration.getConfiguration();
     }
@@ -110,13 +110,14 @@ public class SceneCtrl {
         scene.setRoot(pair.getValue());
     }
 
-    public void showSingleplayerLeaderboard() {
+    public void showLeaderboard() {
         System.out.println("LEADERBOARD");
-        var pair = sceneRoots.get("SingleplayerLeaderboard");
-        var ctrl = (SingleplayerLeaderboardCtrl) pair.getKey();
+        var pair = sceneRoots.get("Leaderboard");
+        var ctrl = (LeaderboardCtrl) pair.getKey();
 
         ctrl.initialize();
-        primaryStage.setTitle("Singleplayer Leaderboard");
+        ctrl.refresh();
+        primaryStage.setTitle("Leaderboard");
         scene.setRoot(pair.getValue());
     }
 
