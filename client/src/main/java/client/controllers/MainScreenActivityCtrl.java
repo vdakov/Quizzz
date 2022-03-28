@@ -16,7 +16,6 @@ public class MainScreenActivityCtrl {
     @FXML
     private TextField userName;
 
-
     @Inject
     public MainScreenActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
         this.sceneCtrl = sceneCtrl;
@@ -48,6 +47,8 @@ public class MainScreenActivityCtrl {
 
         this.sceneCtrl.showServerBrowser();
     }
+
+
 
     public void enterAdminInterface() {
         sceneCtrl.showOverviewActionScene();

@@ -129,7 +129,7 @@ public class SceneCtrl {
 
     public void showOverviewActionScene() {
         var pair = sceneRoots.get("OverviewActions");
-        var ctrl = (OverviewActionsActivityCtrl) pair.getKey();
+        OverviewActionsActivityCtrl ctrl = (OverviewActionsActivityCtrl) pair.getKey();
 
         ctrl.initialize();
         primaryStage.setTitle("Overview Action");
@@ -138,16 +138,16 @@ public class SceneCtrl {
 
     public void showAddActionScene() {
         var pair = sceneRoots.get("AddAction");
-        var ctrl = (AddActionActivityCtrl) pair.getKey();
+        AddActionActivityCtrl ctrl = (AddActionActivityCtrl) pair.getKey();
 
         ctrl.initialize();
         primaryStage.setTitle("Add actions");
         scene.setRoot(pair.getValue());
     }
 
-    public void showEditActionScene(Action editingAction) {
+    public void showEditActionScene(Action editingAction) throws IOException {
         var pair = sceneRoots.get("EditAction");
-        var ctrl = (EditActionActivityCtrl) pair.getKey();
+        EditActionActivityCtrl ctrl = (EditActionActivityCtrl) pair.getKey();
 
         ctrl.initialize(editingAction);
         primaryStage.setTitle("Edit actions");
