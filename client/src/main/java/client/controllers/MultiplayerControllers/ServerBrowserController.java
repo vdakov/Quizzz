@@ -2,6 +2,7 @@ package client.controllers.MultiplayerControllers;
 
 import client.communication.ServerUtils;
 import client.controllers.SceneCtrl;
+import client.data.GameConfiguration;
 import com.google.inject.Inject;
 import commons.GameContainer;
 import javafx.collections.ObservableList;
@@ -117,13 +118,6 @@ public class ServerBrowserController {
         this.sceneCtrl.showMainScreenScene();
     }
 
-    /**
-     * Allows user to join a game with an ID provided in the text field
-     * If an invalid ID is given an alert is shown
-     * Currently enters hardcoded username since there is no unique username in multiplayer game implementation
-     *
-     * @param event
-     */
     public void joinRandomWaitingRoom(ActionEvent event) {
         //Checking if username field was filled in
         String playerName = usernameField.getText();
@@ -134,17 +128,23 @@ public class ServerBrowserController {
         // we will connect to the initialised random room
         String roomId = server.getRandomMultiPlayerRoomId(playerName);
 
-
+        server.joinMultiPlayerRoom(playerName, roomId);
+        this.sceneCtrl.showWaitingRoom(true, roomId, playerName);
         if (!server.joinMultiPlayerRoom(playerName, roomId)) {
             missingUsername.setText("The username is already taken!");
             return;
         } else {
             this.sceneCtrl.showWaitingRoom(false, roomId, playerName);
         }
-
-
     }
 
+    /**
+     * Allows user to join a game with an ID provided in the text field
+     * If an invalid ID is given an alert is shown
+     * Currently enters hardcoded username since there is no unique username in multiplayer game implementation
+     *
+     * @param event
+     */
     public void joinWaitingRoom(ActionEvent event) {
         //Checking if username field was filled in
         String playerName = usernameField.getText();
@@ -177,13 +177,19 @@ public class ServerBrowserController {
      * @param event the ActionEvent of the button
      */
     public void createWaitingRoom(ActionEvent event) {
+        String roomId = server.createNewRoom();
+        System.out.println("Room id:  " + roomId);
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+        gameConfiguration.setUserName(usernameField.getText());
+        gameConfiguration.setRoomId(roomId);
+        this.sceneCtrl.showWaitingRoom(true, roomId, "cata");
         //Checking if username field was filled in
         String playerName = usernameField.getText();
         if (playerName == "") {
             missingUsername.setText("Enter username!");
             return;
         }
-        String gameId = server.createNewMultiPlayerRoom(playerName);
+        String gameId = server.createNewRoom();
         this.sceneCtrl.showWaitingRoom(true, gameId, "cata");
     }
 

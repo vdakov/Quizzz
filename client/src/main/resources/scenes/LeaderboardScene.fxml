@@ -18,9 +18,9 @@
     <children>
         <GridPane alignment="CENTER" layoutX="-298.0" layoutY="155.0" prefHeight="683.0" prefWidth="1214.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="15.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="15.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="70.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="15.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="15.0" prefWidth="100.0" />
             </columnConstraints>
             <rowConstraints>
                 <RowConstraints minHeight="10.0" percentHeight="40.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -70,7 +70,7 @@
                         <Insets bottom="60.0" left="400.0" />
                     </GridPane.margin>
                 </Text>
-                <TableView fx:id="leaderboardTable" prefHeight="156.0" prefWidth="560.0" style="-fx-background-color: #d3c9fb;" stylesheets="@style.css" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+                <TableView fx:id="leaderboardTable" prefHeight="156.0" prefWidth="560.0" style="-fx-background-color: #d3c9fb;" stylesheets="@../style.css" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
                     <columns>
                         <TableColumn fx:id="placeCol" prefWidth="75.0" text="Place" />
                         <TableColumn fx:id="nameCol" prefWidth="170.0" text="Name" />
@@ -87,7 +87,7 @@
                     <graphic>
                         <ImageView fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@pictures/home.png" />
+                                <Image url="@../pictures/home.png" />
                             </image>
                         </ImageView>
                     </graphic>
@@ -95,11 +95,11 @@
                         <Insets left="25.0" top="25.0" />
                     </GridPane.margin>
                 </Button>
-            <Button fx:id="playAgainButton" mnemonicParsing="false" onAction="#playAgain" prefHeight="100.0" prefWidth="150.0" text="Play Again" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
-               <GridPane.margin>
-                  <Insets bottom="10.0" />
-               </GridPane.margin>
-            </Button>
+                <Button fx:id="playAgainButton" mnemonicParsing="false" onAction="#playAgain" prefHeight="100.0" prefWidth="150.0" text="Play Again" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                    <GridPane.margin>
+                        <Insets bottom="10.0" />
+                    </GridPane.margin>
+                </Button>
             </children>
         </GridPane>
     </children>

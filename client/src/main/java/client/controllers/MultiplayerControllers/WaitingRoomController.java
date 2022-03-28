@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
+import java.util.HashSet;
 
 
 public class WaitingRoomController {
@@ -34,10 +35,13 @@ public class WaitingRoomController {
     @FXML
     private Text gameID; // displays the gameID of the current waiting room
 
+    private final HashSet<String> ongoingGames;
+
     @Inject
     public WaitingRoomController(ServerUtils server, SceneCtrl sceneCtrl) {
         this.server = server;
         this.sceneCtrl = sceneCtrl;
+        this.ongoingGames = new HashSet<>();
     }
 
     /**
@@ -69,21 +73,31 @@ public class WaitingRoomController {
         this.gameId = roomId;
         this.ownerText.setText("");
         this.startButton.setDisable(true);
-        this.playerLabel.setText(server.getNumPlayers(roomId) + ""); // the only good way to convert to a string :)
+        //this.playerLabel.setText(Integer.toString(server.getNumPlayers()));
 
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         gameConfiguration.setRoomId(roomId);
-        gameConfiguration.setUserName(userName);
-        gameConfiguration.setCurrentQuestionNumber(gameConfiguration.getCurrentQuestionNumber() + 1);
         gameConfiguration.setGameTypeMultiPlayer();
 
-        server.waitForMultiPlayerRoomStart(userName, gameId);
+        server.waitForMultiPlayerRoomStart(q -> {
+            ongoingGames.add(q);
+
+            if (ongoingGames.contains(gameConfiguration.getRoomId())) {
+                //server.stop();
+                try {
+                    sceneCtrl.showNextQuestion();
+                } catch (Exception e) {
+                    System.out.println("Exception occured");
+                }
+            }
+        });
+
         if (owner) {
             this.owner = owner; //sets this if the owner leaves
             this.startButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    server.startMultiPlayerRoom(userName, gameId);
+                    server.startRoom();
                     server.deleteEntries(gameId);
                 }
             });
@@ -99,9 +113,6 @@ public class WaitingRoomController {
      */
     public void refresh() throws IOException {
         this.initialize(this.owner, this.gameId, this.userName);
-        if (server.isGameStarted()) {
-            sceneCtrl.showNextQuestion();
-        }
     }
 
 

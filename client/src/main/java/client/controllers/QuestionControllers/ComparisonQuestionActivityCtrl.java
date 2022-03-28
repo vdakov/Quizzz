@@ -25,7 +25,7 @@ public class ComparisonQuestionActivityCtrl extends QuestionActivityCtrl {
 
     /**
      * Sets the text for the needed question given as parameter
-     * Displays the three correspodnding images for each question and properly resizes them
+     * Displays the three corresponding images for each question and properly resizes them
      * @param comparisonQuestion the question that is set
      */
     public void displayQuestion(ComparisonQuestion comparisonQuestion) throws IOException {

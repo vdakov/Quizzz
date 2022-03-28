@@ -21,6 +21,8 @@ import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
+
+import javax.inject.Inject;
 import java.io.IOException;
 
 public class QuestionActivityCtrl {
@@ -77,10 +79,13 @@ public class QuestionActivityCtrl {
             new SimpleIntegerProperty((int) startTime);
     protected Timeline timeline;
 
+
+    @Inject
     public QuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
         this.server = server;
         this.sceneCtrl = sceneCtrl;
     }
+
 
     /**
      * Initialises all the colors for the current scene
@@ -111,6 +116,7 @@ public class QuestionActivityCtrl {
         userAnswer = current.getText();
         answered = true;
 
+        System.out.println("Tried to update answer");
         server.updateScore(userAnswer);
 
         answerUpdate();
@@ -189,7 +195,7 @@ public class QuestionActivityCtrl {
 
     public void displayNextQuestion() throws IOException {
         timeline.stop();
-        if (gameConfig.getCurrentQuestionNumber() >= 20) finishGame();
+        if (gameConfig.getCurrentQuestionNumber() >= 19) finishGame();
         else sceneCtrl.showNextQuestion();
     }
 

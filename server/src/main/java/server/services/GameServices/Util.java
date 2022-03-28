@@ -3,7 +3,7 @@ package server.services.GameServices;
 import commons.Questions.Question;
 
 public class Util {
-        static String getAlphaNumericString(int n) {
+        public static String getAlphaNumericString(int n) {
             String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                     + "0123456789"
                     + "abcdefghijklmnopqrstuvxyz";
@@ -21,7 +21,7 @@ public class Util {
             return sb.toString();
         }
 
-        static String getQuestionType(Question question) {
+        public static String getQuestionType(Question question) {
             return question.getClass().toString().substring(24);
         }
 }
