@@ -70,9 +70,7 @@ public class OverviewActionsActivityCtrl {
         colTitle.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getTitle()));
         colConsumption.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getConsumption() + ""));
         colSource.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getSource()));
-
-        deletingID.setText("Please type in ID of deleting action");
-        editingID.setText("Please type in ID of editing action");
+        this.refresh();
     }
 
     /**

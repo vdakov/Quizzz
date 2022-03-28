@@ -216,37 +216,24 @@ public class ServerUtils {
                 .target(SERVER).path("api/activities/add") //
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
-                .post(Entity.entity(a, APPLICATION_JSON), Action.class);
+                .put(Entity.entity(a, APPLICATION_JSON), Action.class);
     }
 
-    /**
-     * Remove the original activity by the id
-     * @param id
-     */
+
     public void deleteActivity(String id) {
         ClientBuilder.newClient(new ClientConfig()) //
                 .target(SERVER).path("api/activities/delete/" + id) //
                 .request().delete(); //;
     }
 
-    /**
-     * Updates the original activity with new data
-     * @param id
-     * @param a
-     */
     public void editActivity(String id, Action a) {
         ClientBuilder.newClient(new ClientConfig()) //
-                .target(SERVER).path("api/activities/update/" + id) //
+                .target(SERVER).path("api/activities/update") //
                 .request() //
                 .accept(APPLICATION_JSON) //
                 .put(Entity.entity(a, APPLICATION_JSON), Action.class); //;
     }
 
-    /**
-     * Get a single activity by id
-     * @param id
-     * @return the action containing the given id
-     */
     public Action getActivityById(String id) {
         return ClientBuilder.newClient(new ClientConfig()) //
                 .target(SERVER).path("api/activities/" + id) //
@@ -294,7 +281,7 @@ public class ServerUtils {
     public byte[] getQuestionImage(String imagePath) {
 
         String base64 = ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER).path("api/activities/sendImage/" + imagePath.substring(0, 2) + imagePath.substring(2))
+                .target(SERVER).path("api/activities/sendImage/" + imagePath)
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON).get(String.class);
 
