@@ -2,6 +2,7 @@ package server.services.GameServices;
 
 import commons.Actions.ActionCatalog;
 import commons.Exceptions.NotEnoughActivitiesException;
+import commons.GameContainer;
 import commons.Questions.Question;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ import java.util.Random;
 public class MultiplayerGameService {
 
     private ActivityRepository activityRepository;
-    private GameCatalog        gameCatalog;
+    private GameCatalog gameCatalog;
 
     public MultiplayerGameService(ActivityRepository activityRepository) {
         this.activityRepository = activityRepository;
@@ -32,7 +33,7 @@ public class MultiplayerGameService {
 
         List<Pair<Question, String>> questionList = null;
         try {
-            questionList = QuestionGenerator.generateQuestions(actionCatalog, 20, 2, 7, new Random());
+            questionList = QuestionGenerator.generateQuestions(actionCatalog, 21, 2, 7, new Random());
         } catch (NotEnoughActivitiesException e) {
             System.out.println("Not enough activities");
             return;
@@ -61,9 +62,14 @@ public class MultiplayerGameService {
         return gameId;
     }
 
-    public void joinMultiPlayerGame(String userName, String roomId) {
+    public boolean joinMultiPlayerGame(String userName, String roomId) {
         System.out.println("RoomId:    " + gameCatalog.getMultiPlayerGame(roomId));
+        if (gameCatalog.checkUsernameExists(userName, roomId)) {
+            System.out.println("UserName exists!!!");
+            return false;
+        }
         gameCatalog.getMultiPlayerGame(roomId).addUser(userName);
+        return true;
     }
 
     public String getMultiPlayerQuestion(String gameId, int number) {
@@ -88,5 +94,18 @@ public class MultiplayerGameService {
 
     public String getAnswer(String userName, String gameId, int questionNumber) {
         return gameCatalog.getMultiPlayerGame(gameId).getQuestionAnswer(questionNumber);
+    }
+
+    public List<GameContainer> getGameIds() {
+        this.gameCatalog.cleanEmptyGames();
+        return gameCatalog.getWaitingMultiplayerGames();
+    }
+
+    public MultiPlayerGame getGame(String gameId) {
+        return this.gameCatalog.getMultiPlayerGame(gameId);
+    }
+
+    public void removePlayer(String gameId, String userName) {
+        this.getGame(gameId).removePlayer(userName);
     }
 }

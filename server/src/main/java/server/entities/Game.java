@@ -7,8 +7,8 @@ import java.util.List;
 
 public class Game {
 
-    private String                       gameId;
-    private String                       roomCreator;
+    private String gameId;
+    private String roomCreator;
     private List<Pair<Question, String>> gameQuestionsWithAnswers;
 
 

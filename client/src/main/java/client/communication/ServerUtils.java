@@ -17,18 +17,24 @@ package client.communication;
 
 import client.data.GameConfiguration;
 import commons.Actions.Action;
+import commons.GameContainer;
 import commons.Leaderboard.LeaderboardEntry;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.GenericType;
 import jakarta.ws.rs.core.Response;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.glassfish.jersey.client.ClientConfig;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
+
 
 public class ServerUtils {
 
@@ -37,6 +43,7 @@ public class ServerUtils {
 
     /**
      * Creates a new SinglePlayer game with the room owner userName
+     *
      * @param userName the userName of the player that creates the room
      * @return the roomId for the recently created room
      */
@@ -44,25 +51,28 @@ public class ServerUtils {
         return ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("api/singlePlayer/" + userName + "/startNewGame")
                 .request(APPLICATION_JSON)
-                .accept(APPLICATION_JSON).get(new GenericType<>() {});
+                .accept(APPLICATION_JSON).get(new GenericType<>() {
+                });
     }
 
     public String createNewMultiPlayerRoom(String userName) {
         return ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("api/multiPlayer/" + userName + "/createNewGame")
                 .request(APPLICATION_JSON)
-                .accept(APPLICATION_JSON).get(new GenericType<>() {});
+                .accept(APPLICATION_JSON).get(new GenericType<>() {
+                });
     }
 
-    public void joinMultiPlayerRoom(String userName, String roomId) {
-        ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER).path("api/multiPlayer/" + userName + "/" + roomId + "/joinGame")
-                .request(APPLICATION_JSON)
-                .accept(APPLICATION_JSON).get(new GenericType<>() {});
+    public boolean joinMultiPlayerRoom(String userName, String roomId) {
+        return ClientBuilder.newClient(new ClientConfig())
+                    .target(SERVER).path("api/multiPlayer/" + userName + "/" + roomId + "/joinGame")
+                    .request(APPLICATION_JSON)
+                    .accept(APPLICATION_JSON).get(Boolean.class);
     }
 
     /**
      * Get the id for the multiplayer room composed of random players
+     *
      * @param userName the userName of the player requesting this information
      * @return the roomId of the random multiPlayer room
      */
@@ -70,11 +80,13 @@ public class ServerUtils {
         return ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("api/multiPlayer/" + userName + "/getRandomRoomCode")
                 .request(APPLICATION_JSON)
-                .accept(APPLICATION_JSON).get(new GenericType<>() {});
+                .accept(APPLICATION_JSON).get(new GenericType<>() {
+                });
     }
 
     /**
      * Starts a multiPlayer game
+     *
      * @param userName
      * @param roomId
      */
@@ -82,7 +94,8 @@ public class ServerUtils {
         ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("api/multiPlayer/" + userName + "/" + roomId + "/startGame")
                 .request(APPLICATION_JSON)
-                .accept(APPLICATION_JSON).get(new GenericType<>() {});
+                .accept(APPLICATION_JSON).get(new GenericType<>() {
+                });
     }
 
     private static final ExecutorService EXEC = Executors.newSingleThreadExecutor();
@@ -92,22 +105,22 @@ public class ServerUtils {
     public boolean isGameStarted() {
         return startedGame;
     }
+
     /**
-     *
      * @param userName
      * @param roomId
      * @return
      */
     public void waitForMultiPlayerRoomStart(String userName, String roomId) {
         EXEC.submit(() -> {
-           var res = ClientBuilder.newClient(new ClientConfig())
-                   .target(SERVER).path("api/multiPlayer/" + userName + "/" + roomId + "/waitForGameToStart")
-                   .request(APPLICATION_JSON)
-                   .accept(APPLICATION_JSON).get(Response.class);
+            var res = ClientBuilder.newClient(new ClientConfig())
+                    .target(SERVER).path("api/multiPlayer/" + userName + "/" + roomId + "/waitForGameToStart")
+                    .request(APPLICATION_JSON)
+                    .accept(APPLICATION_JSON).get(Response.class);
 
-           if (res.getStatus() == 204) {
-               return;
-           }
+            if (res.getStatus() == 204) {
+                return;
+            }
 
             startedGame = true;
         });
@@ -150,7 +163,8 @@ public class ServerUtils {
                 .target(SERVER).path("api/activities/list") //
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
-                .get(new GenericType<>() {});
+                .get(new GenericType<>() {
+                });
     }
 
     public List<LeaderboardEntry> getSingleplayerLeaderboard() {
@@ -257,6 +271,69 @@ public class ServerUtils {
                 .target(SERVER).path("api/" + gameType + "/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getRoomId() + "/getScore")
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON).get(String.class);
+    }
+
+    /**
+     * HTTP request for receiving a byte array containing the image from the server
+     *
+     * @param imagePath the path on the server where the image is stored
+     * @return a byte array of images that is later converted to an image displayed in the actual game
+     */
+    public byte[] getQuestionImage(String imagePath) {
+
+        String base64 = ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER).path("api/activities/sendImage/" + imagePath.substring(0, 2) + imagePath.substring(2))
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON).get(String.class);
+
+        return Base64.decodeBase64(base64);
+
+    }
+
+    /**
+     * PUT HTTP request that will later be used to send images to the server from the adming interface
+     *
+     * @param base64Image the base64 string of the image
+     * @param imageName   the name as which the image will be saved as
+     */
+    public void sendImage(String base64Image, String imageName) {
+        ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/activities/receiveImage/" + imageName) //
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .put(Entity.entity(base64Image, APPLICATION_JSON), String.class);
+
+    }
+
+    /**
+     * Gets a list of the current games to display them on the server browser
+     *
+     * @return the list of current games
+     */
+    public ObservableList<GameContainer> listOfCurrentGames(String username) {
+        ArrayList<GameContainer> games = ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER).path("api/multiPlayer/" + username + "/getGames")
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .get(new GenericType<>() {
+                });
+
+        return FXCollections.observableArrayList(games);
+    }
+
+    public void removePlayer(String userName, String gameID) {
+        ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER).path("api/multiPlayer/" + userName + "/" + gameID + "/" + "removePlayer")
+                .request().get();
+    }
+
+    public int getNumPlayers(String gameId) {
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER).path("api/multiPlayer/" + "a/" + gameId + "/numPlayers")
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .get(new GenericType<>() {
+                });
     }
 
 

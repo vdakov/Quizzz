@@ -1,12 +1,15 @@
 package server.controllers.GameControllers;
 
+import commons.GameContainer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.async.DeferredResult;
+import server.entities.MultiPlayerGame;
 import server.services.GameServices.MultiplayerGameService;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.function.Consumer;
 
 @RestController
@@ -21,14 +24,18 @@ public class MultiPlayerGameController {
 
     @GetMapping("/createNewGame")
     public String createNewMultiplayerGame(@PathVariable("userName") String userName) {
-        return multiplayerGameService.createNewMultiPlayerGame(userName);
+        String gameId = multiplayerGameService.createNewMultiPlayerGame(userName);
+        System.out.println("CREATED GAME WITH ID " + gameId);
+        this.joinMultiplayerGame(userName, gameId);
+        return gameId;
     }
 
     // maybe a post request
     @GetMapping("/{roomId}/joinGame")
     public boolean joinMultiplayerGame(@PathVariable("userName") String userName, @PathVariable("roomId") String roomId) {
-        multiplayerGameService.joinMultiPlayerGame(userName, roomId);
-        return true;
+        //  multiplayerGameService.joinMultiPlayerGame(userName, roomId);
+        System.out.println(userName + " JOINED GAME " + roomId);
+        return multiplayerGameService.joinMultiPlayerGame(userName, roomId);
     }
 
     @GetMapping("/{gameId}/startGame")
@@ -81,5 +88,26 @@ public class MultiPlayerGameController {
     public String getAnswer(@PathVariable("userName") String userName, @PathVariable("gameId") String gameId,
                             @PathVariable("questionNumber") int questionNumber) {
         return multiplayerGameService.getAnswer(userName, gameId, questionNumber);
+    }
+
+    @GetMapping("/getGames")
+    public List<GameContainer> getGameIds() {
+        return multiplayerGameService.getGameIds();
+    }
+
+    @GetMapping("/{gameId}/removePlayer")
+    public void removePlayer(@PathVariable String userName, @PathVariable String gameId) {
+        System.out.println("Hello");
+        this.getGame(gameId).removePlayer(userName);
+    }
+
+    @GetMapping("/{gameId}")
+    public MultiPlayerGame getGame(@PathVariable String gameId) {
+        return this.multiplayerGameService.getGame(gameId);
+    }
+
+    @GetMapping("/{gameId}/numPlayers")
+    public Integer getNumPlayers(@PathVariable String gameId) {
+        return (Integer) this.getGame(gameId).getNumPlayers();
     }
 }
