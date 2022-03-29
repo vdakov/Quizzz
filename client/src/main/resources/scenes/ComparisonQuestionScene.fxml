@@ -206,17 +206,17 @@
                               <Image url="@../pictures/emojis/sunglasses-emoji.png" />
                            </image>
                         </ImageView>
-                        <ImageView fx:id="emoji3" fitHeight="50.0" fitWidth="50.0" layoutX="3.0" layoutY="154.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="emoji3" fitHeight="50.0" fitWidth="50.0" layoutX="3.0" layoutY="154.0" onMouseClicked="#emoji3Display" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../pictures/emojis/hearts-eyes-emoji.png" />
                            </image>
                         </ImageView>
-                        <ImageView fx:id="emoji4" fitHeight="50.0" fitWidth="50.0" layoutX="3.0" layoutY="224.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="emoji4" fitHeight="50.0" fitWidth="50.0" layoutX="3.0" layoutY="224.0" onMouseClicked="#emoji4Display" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../pictures/emojis/fearful-emoji.png" />
                            </image>
                         </ImageView>
-                        <ImageView fx:id="emoji5" fitHeight="50.0" fitWidth="50.0" layoutX="3.0" layoutY="294.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="emoji5" fitHeight="50.0" fitWidth="50.0" layoutX="3.0" layoutY="294.0" onMouseClicked="#emoji5Display" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../pictures/emojis/angry-emoji.png" />
                            </image>
@@ -225,9 +225,9 @@
                   </AnchorPane>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="328.0" prefWidth="136.0">
                      <children>
-                        <TableView fx:id="tableview" layoutX="4.0" layoutY="4.0" prefHeight="348.0" prefWidth="128.0">
+                        <TableView fx:id="tableview" layoutX="4.0" layoutY="4.0" prefHeight="348.0" prefWidth="128.0" style="fx-font-size: 18;">
                            <columns>
-                              <TableColumn fx:id="playersActivity" prefWidth="125.0" text="Players Activity" />
+                              <TableColumn fx:id="playersActivity" prefWidth="125.0" text="Players Activity" style="fx-font-size: 18;" />
                            </columns>
                         </TableView>
                      </children>

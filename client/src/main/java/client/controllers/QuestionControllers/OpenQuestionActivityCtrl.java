@@ -4,6 +4,7 @@ import client.communication.ServerUtils;
 import client.controllers.SceneCtrl;
 import com.google.inject.Inject;
 import commons.Questions.OpenQuestion;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -56,6 +57,20 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         correctAnswerRectangle.setOpacity(0);
         answerTextfield.setText("");
         answered = false;
+
+        if (!gameConfig.isSinglePlayer())
+        {
+            tableview.setVisible(true);
+            playersActivity.setCellValueFactory(q -> new SimpleStringProperty(gameConfig.getUserName()));
+        }
+        else
+        {
+            tableview.setVisible(false);
+        }
+
+        server.registerForMessages("/topic/emojis", q -> {
+            refresh(q);
+        });
     }
 
     /**

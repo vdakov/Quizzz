@@ -7,9 +7,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -120,7 +118,7 @@ public class QuestionActivityCtrl {
         if (!gameConfig.isSinglePlayer())
         {
             tableview.setVisible(true);
-            playersActivity.setCellValueFactory(q -> new SimpleStringProperty(gameConfig.getUserName()));
+            playersActivity.setCellValueFactory(q -> new SimpleStringProperty(gameConfig.getUserName() + "  \uD83D\uDE02"));
         }
         else
         {
@@ -251,15 +249,9 @@ public class QuestionActivityCtrl {
     }
 
 
-
-
-
     public void emoji1Display(MouseEvent event)
     {
-        //server.addChatEntry(gameConfig.getUserName(), emoji1);
        server.send("/topic/emojis", "1");
-
-       //refresh();
     }
 
     public void emoji2Display(MouseEvent event)
@@ -269,6 +261,22 @@ public class QuestionActivityCtrl {
         //refresh();
     }
 
+    public void emoji3Display(MouseEvent event)
+    {
+        server.send("/topic/emojis", "3");
+    }
+
+    public void emoji4Display(MouseEvent event)
+    {
+        server.send("/topic/emojis", "4");
+    }
+
+    public void emoji5Display(MouseEvent event)
+    {
+        server.send("/topic/emojis", "5");
+    }
+
+
     public void refresh(String emojiType) {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         System.out.println("A mers");
@@ -277,7 +285,19 @@ public class QuestionActivityCtrl {
         System.out.println("Type: " + emojiType);
 
         if (emojiType.equals("1")) {
-            chatEntries.add(gameConfiguration.getUserName())   ;
+            chatEntries.add(gameConfiguration.getUserName() + "  \uD83D\uDE02");
+        }
+        if (emojiType.equals("2")) {
+            chatEntries.add(gameConfiguration.getUserName() + "25");
+        }
+        if (emojiType.equals("3")) {
+            chatEntries.add(gameConfiguration.getUserName() + "25");
+        }
+        if (emojiType.equals("4")) {
+            chatEntries.add(gameConfiguration.getUserName() + "25");
+        }
+        if (emojiType.equals("5")) {
+            chatEntries.add(gameConfiguration.getUserName() + "25");
         }
         chatEntries.addAll(tableview.getItems());
         tableview.setItems(FXCollections.observableList(chatEntries));

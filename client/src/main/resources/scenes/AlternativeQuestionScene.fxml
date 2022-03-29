@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
@@ -167,36 +168,48 @@
       </Text>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
          <children>
-            <TableView fx:id="tableview" layoutX="51.0" layoutY="6.0" prefHeight="348.0" prefWidth="141.0">
-              <columns>
-                <TableColumn fx:id="playersActivity" prefWidth="125.0" text="Players Activity" />
-              </columns>
-            </TableView>
-            <ImageView fx:id="emoji1" fitHeight="50.0" fitWidth="50.0" layoutY="39.0" onMouseClicked="#emoji1Display" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../pictures/emojis/tears-emoji-png.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="emoji2" fitHeight="50.0" fitWidth="50.0" layoutY="99.0" onMouseClicked="#emoji2Display" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../pictures/emojis/sunglasses-emoji.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="emoji3" fitHeight="50.0" fitWidth="50.0" layoutY="171.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../pictures/emojis/hearts-eyes-emoji.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="emoji5" fitHeight="50.0" fitWidth="50.0" layoutY="292.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../pictures/emojis/angry-emoji.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="emoji4" fitHeight="50.0" fitWidth="50.0" layoutY="234.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../pictures/emojis/fearful-emoji.png" />
-               </image>
-            </ImageView>
+            <SplitPane fx:id="splitPane" dividerPositions="0.29797979797979796" layoutY="-1.0" prefHeight="360.0" prefWidth="200.0">
+               <items>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: #fffee9;">
+                     <children>
+                        <ImageView fx:id="emoji1" fitHeight="50.0" fitWidth="50.0" layoutX="3.0" layoutY="30.0" onMouseClicked="#emoji1Display" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/emojis/tears-emoji-png.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="emoji2" fitHeight="50.0" fitWidth="50.0" layoutX="3.0" layoutY="92.0" onMouseClicked="#emoji2Display" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/emojis/sunglasses-emoji.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="emoji3" fitHeight="50.0" fitWidth="50.0" layoutX="3.0" layoutY="154.0" onMouseClicked="#emoji3Display" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/emojis/hearts-eyes-emoji.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="emoji4" fitHeight="50.0" fitWidth="50.0" layoutX="3.0" layoutY="224.0" onMouseClicked="#emoji4Display" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/emojis/fearful-emoji.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="emoji5" fitHeight="50.0" fitWidth="50.0" layoutX="3.0" layoutY="294.0" onMouseClicked="#emoji5Display" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/emojis/angry-emoji.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="328.0" prefWidth="136.0">
+                     <children>
+                        <TableView fx:id="tableview" layoutX="4.0" layoutY="4.0" prefHeight="348.0" prefWidth="128.0" style="fx-font-size: 18;">
+                           <columns>
+                              <TableColumn fx:id="playersActivity" prefWidth="125.0" style="fx-font-size: 18;" text="Players Activity" />
+                           </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+               </items>
+            </SplitPane>
          </children>
       </AnchorPane>
 
