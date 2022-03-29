@@ -201,9 +201,9 @@
                   </AnchorPane>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="328.0" prefWidth="136.0">
                      <children>
-                        <TableView fx:id="tableview" layoutX="4.0" layoutY="4.0" prefHeight="348.0" prefWidth="128.0" style="fx-font-size: 18;">
+                        <TableView fx:id="tableview" layoutX="4.0" layoutY="4.0" prefHeight="348.0" prefWidth="128.0" style="-fx-background-color: #ffffff; -fx-font-size: 16;">
                            <columns>
-                              <TableColumn fx:id="playersActivity" prefWidth="125.0" style="fx-font-size: 18;" text="Players Activity" />
+                              <TableColumn fx:id="playersActivity" prefWidth="125.0" style="-fx-background-color: #ffffff; -fx-font-size: 20;" text="Chat" />
                            </columns>
                         </TableView>
                      </children>

@@ -152,7 +152,7 @@
          <children>
             <SplitPane fx:id="splitPane" dividerPositions="0.29797979797979796" layoutY="-1.0" prefHeight="360.0" prefWidth="200.0">
                <items>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: #fffee9;">
                      <children>
                         <ImageView fx:id="emoji1" fitHeight="50.0" fitWidth="50.0" layoutX="3.0" layoutY="30.0" onMouseClicked="#emoji1Display" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -183,9 +183,9 @@
                   </AnchorPane>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="328.0" prefWidth="136.0">
                      <children>
-                        <TableView fx:id="tableview" layoutX="4.0" layoutY="4.0" prefHeight="348.0" prefWidth="128.0" style="fx-font-size: 18;">
+                        <TableView fx:id="tableview" layoutX="4.0" layoutY="4.0" prefHeight="348.0" prefWidth="128.0" style="-fx-background-color: #ffffff; -fx-font-size: 16;">
                            <columns>
-                              <TableColumn fx:id="playersActivity" prefWidth="125.0" text="Players Activity" style="fx-font-size: 18;" />
+                              <TableColumn fx:id="playersActivity" prefWidth="125.0" style="-fx-background-color: #ffffff; -fx-font-size: 20;" text="Chat" />
                            </columns>
                         </TableView>
                      </children>

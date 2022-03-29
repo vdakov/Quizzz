@@ -61,7 +61,7 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         if (!gameConfig.isSinglePlayer())
         {
             tableview.setVisible(true);
-            playersActivity.setCellValueFactory(q -> new SimpleStringProperty(gameConfig.getUserName()));
+            playersActivity.setCellValueFactory(q -> new SimpleStringProperty(q.getValue()));
         }
         else
         {

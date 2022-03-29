@@ -13,14 +13,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -90,7 +88,6 @@ public class QuestionActivityCtrl {
     protected TableColumn<String, String> playersActivity;
 
 
-
     protected IntegerProperty timeSeconds =
             new SimpleIntegerProperty((int) startTime);
     protected Timeline timeline;
@@ -118,7 +115,7 @@ public class QuestionActivityCtrl {
         if (!gameConfig.isSinglePlayer())
         {
             tableview.setVisible(true);
-            playersActivity.setCellValueFactory(q -> new SimpleStringProperty(gameConfig.getUserName() + "  \uD83D\uDE02"));
+            playersActivity.setCellValueFactory(q -> new SimpleStringProperty(q.getValue()));
         }
         else
         {
@@ -128,7 +125,6 @@ public class QuestionActivityCtrl {
         server.registerForMessages("/topic/emojis", q -> {
             refresh(q);
         });
-
 
     }
 
@@ -252,18 +248,20 @@ public class QuestionActivityCtrl {
     public void emoji1Display(MouseEvent event)
     {
        server.send("/topic/emojis", "1");
+       // tableview.setBackground(new Background(new BackgroundFill(Color.WHITE, null , null)));
     }
 
     public void emoji2Display(MouseEvent event)
     {
-        //server.addChatEntry(gameConfig.getUserName(), emoji1);
         server.send("/topic/emojis", "2");
+       // tableview.setBackground(new Background(new BackgroundFill(Color.WHITE, null , null)));
         //refresh();
     }
 
     public void emoji3Display(MouseEvent event)
     {
         server.send("/topic/emojis", "3");
+      //  tableview.setBackground(new Background(new BackgroundFill(Color.WHITE, null , null)));
     }
 
     public void emoji4Display(MouseEvent event)
@@ -285,21 +283,36 @@ public class QuestionActivityCtrl {
         System.out.println("Type: " + emojiType);
 
         if (emojiType.equals("1")) {
-            chatEntries.add(gameConfiguration.getUserName() + "  \uD83D\uDE02");
+            chatEntries.add(getTypeOfMessage("1"));
         }
         if (emojiType.equals("2")) {
-            chatEntries.add(gameConfiguration.getUserName() + "25");
+            chatEntries.add(getTypeOfMessage("2"));
         }
         if (emojiType.equals("3")) {
-            chatEntries.add(gameConfiguration.getUserName() + "25");
+            chatEntries.add(getTypeOfMessage("3"));
         }
         if (emojiType.equals("4")) {
-            chatEntries.add(gameConfiguration.getUserName() + "25");
+            chatEntries.add(getTypeOfMessage("4"));
         }
         if (emojiType.equals("5")) {
-            chatEntries.add(gameConfiguration.getUserName() + "25");
+            chatEntries.add(getTypeOfMessage("5"));
         }
         chatEntries.addAll(tableview.getItems());
         tableview.setItems(FXCollections.observableList(chatEntries));
+    }
+
+    public String getTypeOfMessage(String type)
+    {
+        if(type.equals("1"))
+            return gameConfig.getUserName() + "  \uD83D\uDE02";
+        if(type.equals("2"))
+            return gameConfig.getUserName() +"  \uD83D\uDE0E";
+        if(type.equals("3"))
+            return gameConfig.getUserName() + "  \uD83D\uDE0D";
+        if(type.equals("4"))
+            return gameConfig.getUserName() + "  \uD83D\uDE28";
+        if(type.equals("5"))
+            return gameConfig.getUserName() + "  \uD83D\uDE20";
+        return null;
     }
 }
