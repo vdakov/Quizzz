@@ -18,7 +18,7 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 
-import javax.annotation.Nullable;
+
 import javax.inject.Inject;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -303,15 +303,15 @@ public class QuestionActivityCtrl {
 
     public String getTypeOfMessage(String type)
     {
-        if(type.equals("1"))
+        if (type.equals("1"))
             return gameConfig.getUserName() + "  \uD83D\uDE02";
-        if(type.equals("2"))
-            return gameConfig.getUserName() +"  \uD83D\uDE0E";
-        if(type.equals("3"))
+        if (type.equals("2"))
+            return gameConfig.getUserName() + "  \uD83D\uDE0E";
+        if (type.equals("3"))
             return gameConfig.getUserName() + "  \uD83D\uDE0D";
-        if(type.equals("4"))
+        if (type.equals("4"))
             return gameConfig.getUserName() + "  \uD83D\uDE28";
-        if(type.equals("5"))
+        if (type.equals("5"))
             return gameConfig.getUserName() + "  \uD83D\uDE20";
         return null;
     }
