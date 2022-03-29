@@ -105,6 +105,7 @@ public class QuestionActivityCtrl {
             new SimpleIntegerProperty((int) startTime);
     protected Timeline timeline;
 
+    @Inject
     public QuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) throws ExecutionException, InterruptedException {
         this.server = server;
         this.sceneCtrl = sceneCtrl;
