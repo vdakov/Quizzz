@@ -34,6 +34,7 @@ import org.springframework.web.socket.messaging.WebSocketStompClient;
 import javax.inject.Inject;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
@@ -98,13 +99,15 @@ public class QuestionActivityCtrl {
     @FXML
     protected TableView tableview;
     @FXML
-    protected TableColumn<ChatEntry, String> playersActivity;
+    protected TableColumn<String, String> playersActivity;
+
 
 
     protected IntegerProperty timeSeconds =
             new SimpleIntegerProperty((int) startTime);
     protected Timeline timeline;
 
+    @Inject
     public QuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) throws ExecutionException, InterruptedException {
         this.server = server;
         this.sceneCtrl = sceneCtrl;
@@ -124,15 +127,19 @@ public class QuestionActivityCtrl {
         addedPoints.setText(" ");
         addedPointsInt = 0;
 
-        if (gameConfig.isSinglePlayer())
+        if (!gameConfig.isSinglePlayer())
         {
             tableview.setVisible(true);
-            playersActivity.setCellValueFactory(q -> new SimpleStringProperty(new ChatEntry(gameConfig.getUserName()) + ""));
+            playersActivity.setCellValueFactory(q -> new SimpleStringProperty(gameConfig.getUserName()));
         }
-             else
-             {
-                 tableview.setVisible(false);
-             }
+        else
+        {
+            tableview.setVisible(false);
+        }
+
+        server.registerForMessages("/topic/emojis", q -> {
+            refresh(q);
+        });
 
 
     }
@@ -253,46 +260,36 @@ public class QuestionActivityCtrl {
         return gameConfig.getCurrentQuestionNumber();
     }
 
-    private StompSession session = connect("ws://localhost:8080/websocket");
 
-    private StompSession connect(String url) throws ExecutionException, InterruptedException {
-        var client = new StandardWebSocketClient();
-        var stomp = new WebSocketStompClient(client);
 
-        stomp.setMessageConverter(new MappingJackson2MessageConverter() );
-            return stomp.connect(url, new StompSessionHandlerAdapter() {} ).get();
 
-    }
-
-    public void registerForMessages(String destination, Consumer<ChatEntry> consumer)
-    {
-        session.subscribe(destination, new StompFrameHandler() {
-            @Override
-            public Type getPayloadType(StompHeaders headers) {
-                return ChatEntry.class;
-            }
-
-            @Override
-            public void handleFrame(StompHeaders headers, Object payload) {
-                consumer.accept((ChatEntry) payload );
-            }
-        });
-    }
-
-    public void send(String destination, Object o)
-    {
-        session.send(destination, o);
-    }
 
     public void emoji1Display(MouseEvent event)
     {
-        server.addChatEntry(gameConfig.getUserName(), emoji1);
-       send("/app/emojis", new ChatEntry(gameConfig.getUserName(), emoji1));
-       refresh();
+        //server.addChatEntry(gameConfig.getUserName(), emoji1);
+       server.send("/topic/emojis", "1");
+
+       //refresh();
     }
 
-    public void refresh() {
-        List<ChatEntry> chatEntries = server.getPlayersActivity();
+    public void emoji2Display(MouseEvent event)
+    {
+        //server.addChatEntry(gameConfig.getUserName(), emoji1);
+        server.send("/topic/emojis", "2");
+        //refresh();
+    }
+
+    public void refresh(String emojiType) {
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+        System.out.println("A mers");
+        List<String> chatEntries= new ArrayList<>();
+
+        System.out.println("Type: " + emojiType);
+
+        if (emojiType.equals("1")) {
+            chatEntries.add(gameConfiguration.getUserName())   ;
+        }
+        chatEntries.addAll(tableview.getItems());
         tableview.setItems(FXCollections.observableList(chatEntries));
     }
 }

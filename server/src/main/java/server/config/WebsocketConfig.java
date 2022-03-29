@@ -16,10 +16,10 @@ public class WebsocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        RequestUpgradeStrategy upgradeStrategy = new TomcatRequestUpgradeStrategy();
-        registry.addEndpoint("/websocket")
-                .setHandshakeHandler(new DefaultHandshakeHandler(upgradeStrategy))
-                .setAllowedOrigins("*");
+      //  RequestUpgradeStrategy upgradeStrategy = new TomcatRequestUpgradeStrategy();
+        registry.addEndpoint("/websocket");
+       //         .setHandshakeHandler(new DefaultHandshakeHandler(upgradeStrategy))
+       //         .setAllowedOrigins("*");
     }
 
     @Override

@@ -29,9 +29,18 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.glassfish.jersey.client.ClientConfig;
+import org.springframework.messaging.converter.MappingJackson2MessageConverter;
+import org.springframework.messaging.simp.stomp.StompFrameHandler;
+import org.springframework.messaging.simp.stomp.StompHeaders;
+import org.springframework.messaging.simp.stomp.StompSession;
+import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
+import org.springframework.web.socket.client.standard.StandardWebSocketClient;
+import org.springframework.web.socket.messaging.WebSocketStompClient;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.Consumer;
@@ -42,6 +51,9 @@ import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 public class ServerUtils {
 
     private static final String SERVER = "http://localhost:8080/";
+
+    public ServerUtils() throws ExecutionException, InterruptedException {
+    }
 
     /**
      * Creates a new room based on the player's choices
@@ -316,22 +328,56 @@ public class ServerUtils {
                 .delete();
     }
 
-    public List<ChatEntry> getPlayersActivity() {
-        return ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER).path("topic/emojis")
-                .request(APPLICATION_JSON)
-                .accept(APPLICATION_JSON)
-                .get(new GenericType<>() {
-                 });
-        }
+//    public String getPlayersActivity() {
+//        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+//
+//        return ClientBuilder.newClient(new ClientConfig())
+//                .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" + gameConfiguration.getRoomId() + "/topic/emojis")
+//                .request(APPLICATION_JSON)
+//                .accept(APPLICATION_JSON)
+//                .get(String.class);
+//        }
 
 
-    public ChatEntry addChatEntry(String name, ImageView imageView) {
-        return ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER).path("topic/emojis")
-                .request(APPLICATION_JSON)
-                .accept(APPLICATION_JSON)
-                .post(Entity.entity(new ChatEntry(name, imageView), APPLICATION_JSON), ChatEntry.class);
+//    public void addChatEntry(String name, ImageView imageView) {
+//        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+//
+//        ClientBuilder.newClient(new ClientConfig())
+//                .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" + gameConfiguration.getRoomId() + "/topic/emojis")
+//                .request(APPLICATION_JSON)
+//                .accept(APPLICATION_JSON)
+//                .post(Entity.text("1"));
+//    }
+
+    private StompSession session = connect("ws://localhost:8080/websocket");
+
+    private StompSession connect(String url) throws ExecutionException, InterruptedException {
+        var client = new StandardWebSocketClient();
+        var stomp = new WebSocketStompClient(client);
+
+        stomp.setMessageConverter(new MappingJackson2MessageConverter() );
+        return stomp.connect(url, new StompSessionHandlerAdapter() {} ).get();
+
+    }
+
+    public void registerForMessages(String destination, Consumer<String> consumer)
+    {
+        session.subscribe(destination, new StompFrameHandler() {
+            @Override
+            public Type getPayloadType(StompHeaders headers) {
+                return String.class;
+            }
+
+            @Override
+            public void handleFrame(StompHeaders headers, Object payload) {
+                consumer.accept((String) payload );
+            }
+        });
+    }
+
+    public void send(String destination, Object o)
+    {
+        session.send(destination, o);
     }
 
     public Action getRandomAction() {

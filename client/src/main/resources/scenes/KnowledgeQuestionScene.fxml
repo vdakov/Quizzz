@@ -159,7 +159,7 @@
                               <Image url="@../pictures/emojis/tears-emoji-png.png" />
                            </image>
                         </ImageView>
-                        <ImageView fx:id="emoji2" fitHeight="50.0" fitWidth="50.0" layoutX="3.0" layoutY="92.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="emoji2" fitHeight="50.0" fitWidth="50.0" layoutX="3.0" layoutY="92.0" onMouseClicked="#emoji2Display" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../pictures/emojis/sunglasses-emoji.png" />
                            </image>

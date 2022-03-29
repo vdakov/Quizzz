@@ -1,7 +1,10 @@
 package server.controllers.GameControllers;
 
+import client.Chat.ChatEntry;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -86,4 +89,14 @@ public class MultiplayerGameRoomController {
     public Integer getNumPlayers(@PathVariable String roomId) {
         return (Integer) this.multiplayerGameService.getGame(roomId).getNumPlayers();
     }
+
+
+    @MessageMapping("/emojis")  // /app/emojis
+    @SendTo("/topic/emojis")
+    public String addMessage(String chatEntry) {
+        System.out.println("Am intrat ws");
+        return chatEntry;
+    }
+
+
 }
