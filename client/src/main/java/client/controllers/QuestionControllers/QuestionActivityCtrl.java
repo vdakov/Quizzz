@@ -3,7 +3,6 @@ package client.controllers.QuestionControllers;
 import client.communication.ServerUtils;
 import client.controllers.SceneCtrl;
 import client.data.GameConfiguration;
-import client.Chat.ChatEntry;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -23,21 +22,12 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
-import org.springframework.messaging.converter.MappingJackson2MessageConverter;
-import org.springframework.messaging.simp.stomp.StompFrameHandler;
-import org.springframework.messaging.simp.stomp.StompHeaders;
-import org.springframework.messaging.simp.stomp.StompSession;
-import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
-import org.springframework.web.socket.client.standard.StandardWebSocketClient;
-import org.springframework.web.socket.messaging.WebSocketStompClient;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-import java.util.function.Consumer;
 
 public class QuestionActivityCtrl {
     // constructor needed variables
@@ -282,7 +272,7 @@ public class QuestionActivityCtrl {
     public void refresh(String emojiType) {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         System.out.println("A mers");
-        List<String> chatEntries= new ArrayList<>();
+        List<String> chatEntries = new ArrayList<>();
 
         System.out.println("Type: " + emojiType);
 
