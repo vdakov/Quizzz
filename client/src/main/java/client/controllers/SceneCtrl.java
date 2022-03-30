@@ -235,6 +235,10 @@ public class SceneCtrl {
         });
     }
 
+    /**
+     * Showing confirmation alert for exiting the application
+     * @param stage
+     */
     public void exitConfirmation(Stage stage) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Exit Confirmation");
