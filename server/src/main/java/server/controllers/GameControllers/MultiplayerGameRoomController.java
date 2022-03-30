@@ -1,6 +1,5 @@
 package server.controllers.GameControllers;
 
-import client.Chat.ChatEntry;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -92,7 +91,7 @@ public class MultiplayerGameRoomController {
 
     @MessageMapping("/emojis")  // /app/emojis
     @SendTo("/topic/emojis")
-    public ChatEntry addMessage(ChatEntry chatEntry) {
+    public String addMessage(String chatEntry) {
         return chatEntry;
     }
 }
