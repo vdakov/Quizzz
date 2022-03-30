@@ -42,7 +42,7 @@ public class SingleplayerRoom extends Room {
     /**
      * Records hint joker used
      */
-    public void useHintJoker(){ hintJokerUsed = true; }
+    public void useHintJoker() { hintJokerUsed = true; }
 
     /**
      * Returns true if DoublePoint Joker was used this game
@@ -52,7 +52,7 @@ public class SingleplayerRoom extends Room {
     /**
      * Records doublePoint joker used
      */
-    public void useDoublePointJoker(){ doublePointJokerUsed = true; }
+    public void useDoublePointJoker() { doublePointJokerUsed = true; }
 
     /**
      * Sets the score for the player to the given score

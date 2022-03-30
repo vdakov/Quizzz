@@ -10,7 +10,6 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
@@ -112,7 +111,7 @@ public class QuestionActivityCtrl {
         else emoji.setVisible(true);
 
         hintJoker.setDisable(false);
-        if(getHintJokerUsed() != null){
+        if (getHintJokerUsed() != null) {
             hintJoker.setDisable(getHintJokerUsed());
         }
     }
@@ -221,9 +220,9 @@ public class QuestionActivityCtrl {
         sceneCtrl.showMainScreenScene();
     }
 
-    public void useHintJoker(){
+    public void useHintJoker() {
         //Joker that eliminates the wrong answer
-        if(server.getHintJokerUsed()){return; }
+        if (server.getHintJokerUsed()) { return; }
 
         //Make a list of possible answers
         List<Label> answerLabels = new ArrayList();
@@ -239,8 +238,8 @@ public class QuestionActivityCtrl {
         hintJoker.setDisable(true);
 
         //go until incorrect answer is found and eliminate it
-        for(Label answerLabel : answerLabels){
-            if(!answerLabel.getText().equals(correctAnswer)){
+        for (Label answerLabel : answerLabels) {
+            if (!answerLabel.getText().equals(correctAnswer)) {
                 answerLabel.setDisable(true);
                 return;
             }
