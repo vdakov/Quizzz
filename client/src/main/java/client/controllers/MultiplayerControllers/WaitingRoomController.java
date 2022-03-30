@@ -20,12 +20,6 @@ public class WaitingRoomController {
     private final ServerUtils server;
     private final SceneCtrl sceneCtrl;
 
-
-    private int numberOfPlayers; //stores the number of currentplayers
-    private String gameId; //stores the gameID of the current room
-    private boolean owner; //stores whether the current user is the owner or not
-    private String userName; //stores the current user's username
-
     @FXML
     private Text playerLabel; // displays the amount of players
     @FXML
@@ -50,34 +44,25 @@ public class WaitingRoomController {
      * @param event the Action Event from the button
      */
     public void goBackToServerBrowser(ActionEvent event) {
-        if (owner) {
-            this.owner = false;
-        }
-        this.server.removePlayer(this.userName, this.gameId);
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+        this.server.removePlayer(gameConfiguration.getUserName(), gameConfiguration.getRoomId());
 
         this.sceneCtrl.showServerBrowser();
     }
 
-
-    //GAME OWNER FUNCTIONALITY IS CURRENTLY NOT IMPLEMENTED_ WE NEED TO CHECK WHETHER WE NEED IT
-
     /**
      * Adjusts all of the text field to the current user
      *
-     * @param owner    boolean value for whether this players is the current owner of the game
-     * @param roomId   stores the gameId
-     * @param userName stores the current player's username
      */
-    public void initialize(boolean owner, String roomId, String userName) {
-        this.userName = userName;
-        this.gameId = roomId;
-        this.ownerText.setText("");
-        this.startButton.setDisable(true);
-        //this.playerLabel.setText(Integer.toString(server.getNumPlayers()));
-
+    public void initialize() {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
-        gameConfiguration.setRoomId(roomId);
-        gameConfiguration.setGameTypeMultiPlayer();
+
+        if (gameConfiguration.getRoomId() == null) {
+            return;
+        }
+
+        this.gameID.setText(gameConfiguration.getRoomId());
+        this.playerLabel.setText(Integer.toString(server.getNumPlayers()));
 
         server.waitForMultiPlayerRoomStart(q -> {
             ongoingGames.add(q);
@@ -87,32 +72,26 @@ public class WaitingRoomController {
                 try {
                     sceneCtrl.showNextQuestion();
                 } catch (Exception e) {
-                    System.out.println("Exception occured");
+                    e.printStackTrace();
+                    System.out.println("Exception occurred when trying to start the game by showing the next question");
                 }
             }
         });
 
-        if (owner) {
-            this.owner = owner; //sets this if the owner leaves
-            this.startButton.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
+        this.startButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
                 public void handle(ActionEvent event) {
                     server.startRoom();
-                    server.deleteEntries(gameId);
+                    server.deleteEntries(GameConfiguration.getConfiguration().getRoomId());
                 }
             });
-            this.ownerText.setText("YOU ARE THE OWNER OF THIS ROOM");
-            this.startButton.setDisable(false);
-        }
-        this.gameID.setText("GAME ID: " + gameId);
-
     }
 
     /**
      * Refresh method to update the number of current players
      */
     public void refresh() throws IOException {
-        this.initialize(this.owner, this.gameId, this.userName);
+        this.initialize();
     }
 
 

@@ -31,7 +31,7 @@ public class MultiplayerGameService {
         this.activityRepository = activityRepository;
         roomCatalog             = RoomCatalog.getRoomCatalog();
 
-        createNewMultiPlayerGame("GROUP30ooPP");
+        createNewMultiPlayerGame(null);
     }
 
     /**
@@ -39,8 +39,9 @@ public class MultiplayerGameService {
      *
      * @return the id of the multiplayer random game room
      */
-    public String getMultiPlayerRandomGame() {
+    public String getMultiPlayerRandomRoom() {
         try {
+            System.out.println("Result: " + roomCatalog.getMultiplayerRandomRoom().getRoomId());
             return roomCatalog.getMultiplayerRandomRoom().getRoomId();
         } catch (Exception e) {
             System.out.println("An exception occurred");
@@ -62,8 +63,9 @@ public class MultiplayerGameService {
             List<Pair<Question, String>> questionList = QuestionGenerator.generateQuestions(actionCatalog, 20, 2, 7, new Random());
             MultiplayerRoom newGame = new MultiplayerRoom(roomId, username, questionList);
 
-            if (username.equals("GROUP30ooPP")) {
+            if (username == null) {
                 roomCatalog.setMultiplayerRandomRoom(newGame);
+                System.out.println("Setat");
             } else {
                 roomCatalog.addMultiplayerRoom(newGame);
                 joinMultiPlayerGame(username, newGame.getRoomId());
@@ -88,14 +90,16 @@ public class MultiplayerGameService {
      */
     public Boolean joinMultiPlayerGame(String username, String roomId) {
         try {
-            if (roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() != Room.RoomStatus.WAITING) {
+            System.out.println("The room is:" + roomId);
+            if (roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() != Room.RoomStatus.WAITING ||
+                roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) != null) {
                 return false;
             }
 
             roomCatalog.getMultiPlayerRoom(roomId).addPlayer(username);
             return true;
         } catch (Exception e) {
-            System.out.println("An exception occurred");
+            System.out.println("An exception occurred when trying to join the game");
             return null;
         }
     }
@@ -109,24 +113,29 @@ public class MultiplayerGameService {
      */
     public boolean startMultiPlayerGame(String username, String roomId) {
         try {
-            System.out.println("Am inceput jocu");
-
             if (roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) == null) {
-                System.out.println("Aici pica");
-                //return false;
+                return false;
             }
 
             roomCatalog.getMultiPlayerRoom(roomId).setRoomStatus(Room.RoomStatus.ONGOING);
 
             // if the random room is starting, we have to generate another one
-            //createNewMultiPlayerGame("GROUP30ooPP");
+            if (roomId.equals(roomCatalog.getMultiplayerRandomRoom().getRoomId())) {
+                roomCatalog.addMultiplayerRoom(roomCatalog.getMultiplayerRandomRoom());
+                createNewMultiPlayerGame(null);
+            }
+
+            System.out.println("RoomId value: " + roomId);
+            System.out.println("Found id: " + roomCatalog.getMultiPlayerRoom(roomId));
 
             MultiplayerGameRoomController.getListeners().forEach((k, l) -> l.accept(roomId));
 
-            System.out.println("Am terminat jocu");
+            System.out.println("Room id" + roomId);
+
             return roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() == Room.RoomStatus.ONGOING;
         } catch (Exception e) {
-            System.out.println("An exception occurred");
+            e.printStackTrace();
+            System.out.println("An exception occurred when trying to start the game");
             return false;
         }
     }
@@ -148,7 +157,7 @@ public class MultiplayerGameService {
 
             return roomCatalog.getMultiPlayerRoom(roomId).getQuestion(questionNumber);
         } catch (Exception e) {
-            System.out.println("An exception occurred");
+            System.out.println("An exception occurred when getting a question");
             return null;
         }
     }

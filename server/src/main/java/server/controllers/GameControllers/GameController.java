@@ -68,6 +68,26 @@ public class GameController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
+    @GetMapping("/getRandomRoom")
+    public ResponseEntity<String> getRandomRoom(@PathVariable("username") String username, @PathVariable("gameType") String gameType) {
+        System.out.println("Am intrat aici");
+        if (gameType.equals("MULTIPLAYER")) {
+            try {
+                String roomId = multiplayerGameService.getMultiPlayerRandomRoom();
+                System.out.println("Aici pica");
+                if (roomId == null) {
+                    return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
+                }
+
+                return ResponseEntity.ok(roomId);
+            } catch (Exception e) {
+                System.out.println("An exception occurred when trying to join the room");
+            }
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
     @GetMapping("/getGames")
     public List<GameContainer> getGameIds() {
         return multiplayerGameService.getGameIds();

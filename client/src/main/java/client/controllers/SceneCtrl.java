@@ -134,6 +134,9 @@ public class SceneCtrl {
     public void showMainScreenScene() {
         var pair = sceneRoots.get("MainScreen");
 
+        MainScreenActivityCtrl ctrl = (MainScreenActivityCtrl) pair.getKey();
+        ctrl.initialise();
+
         primaryStage.setTitle("Main Screen");
         scene.setRoot(pair.getValue());
     }
@@ -168,17 +171,17 @@ public class SceneCtrl {
     public void showServerBrowser() {
         var pair = sceneRoots.get("ServerBrowser");
         ServerBrowserController ctrl = (ServerBrowserController) pair.getKey();
-
+        ctrl.initialize();
 
         primaryStage.setTitle("Server Browser");
         scene.setRoot(pair.getValue());
     }
 
-    public void showWaitingRoom(boolean owner, String gameId, String userName) {
+    public void showWaitingRoom() {
         var pair = sceneRoots.get("WaitingRoom");
         WaitingRoomController ctrl = (WaitingRoomController) pair.getKey();
 
-        ctrl.initialize(owner, gameId, userName);
+        ctrl.initialize();
 
         primaryStage.setTitle("WaitingRoom");
         scene.setRoot(pair.getValue());
