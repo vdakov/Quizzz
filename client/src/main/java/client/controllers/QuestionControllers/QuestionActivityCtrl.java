@@ -110,6 +110,11 @@ public class QuestionActivityCtrl {
 
         if (gameConfig.isSinglePlayer()) emoji.setVisible(false);
         else emoji.setVisible(true);
+
+        hintJoker.setDisable(false);
+        if(getHintJokerUsed() != null){
+            hintJoker.setDisable(getHintJokerUsed());
+        }
     }
 
 
@@ -218,6 +223,8 @@ public class QuestionActivityCtrl {
 
     public void useHintJoker(){
         //Joker that eliminates the wrong answer
+        if(server.getHintJokerUsed()){return; }
+
         //Make a list of possible answers
         List<Label> answerLabels = new ArrayList();
         answerLabels.add(firstOptionText);
@@ -228,6 +235,9 @@ public class QuestionActivityCtrl {
         Collections.shuffle(answerLabels);
         String correctAnswer = getCorrectAnswer();
 
+        server.useHintJoker();
+        hintJoker.setDisable(true);
+
         //go until incorrect answer is found and eliminate it
         for(Label answerLabel : answerLabels){
             if(!answerLabel.getText().equals(correctAnswer)){
@@ -235,8 +245,6 @@ public class QuestionActivityCtrl {
                 return;
             }
         }
-
-
     }
 
     public String getCorrectAnswer() {
@@ -245,6 +253,14 @@ public class QuestionActivityCtrl {
 
     public int getPointsInt() {
         return Integer.parseInt(server.getScore());
+    }
+
+    public Boolean getHintJokerUsed() {
+        return server.getHintJokerUsed();
+    }
+
+    public boolean getDoublePointJokerUsed() {
+        return server.getDoublePointJokerUsed();
     }
 
     public int getQuestionNumber() {

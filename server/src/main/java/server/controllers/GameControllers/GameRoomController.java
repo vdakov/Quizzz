@@ -187,6 +187,63 @@ public class GameRoomController {
     }
 
     /**
+     * Returns the score of the desired player or gives a corresponding error message
+     * @param username       the username of the player that requests his score
+     * @param gameType       the type of the game
+     * @param roomId         the id of the game that the player is in
+     * @return if hintJoker has been used this game
+     */
+    @GetMapping("/getHintJokerUsed")
+    public ResponseEntity<Boolean> getHintJokerUsed(@PathVariable("username") String username, @PathVariable("gameType") String gameType, @PathVariable("roomId") String roomId) {
+        if (gameType.equals("SINGLEPLAYER")) {
+            try {
+                Boolean hintJokerUsed = singlePlayerGameService.getHintJokerUsed(username, roomId);
+                return (hintJokerUsed != null) ? ResponseEntity.status(HttpStatus.OK).body(hintJokerUsed) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
+            }
+        }
+
+//        if (gameType.equals("MULTIPLAYER")) {
+//            try {
+//                Integer score = multiplayerGameService.getMultiPlayerScore(username, roomId);
+//                return (score != null) ? ResponseEntity.status(HttpStatus.OK).body(score) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+//            } catch (Exception e) {
+//                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
+//            }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
+    /**
+     * Returns the score of the desired player or gives a corresponding error message
+     * @param username       the username of the player that requests his score
+     * @param gameType       the type of the game
+     * @param roomId         the id of the game that the player is in
+     * @return if hintJoker has been used this game
+     */
+
+    @GetMapping("/getDoublePointJokerUsed")
+    public ResponseEntity<Boolean> getDoublePointJokerUsed(@PathVariable("username") String username, @PathVariable("gameType") String gameType, @PathVariable("roomId") String roomId) {
+        if (gameType.equals("SINGLEPLAYER")) {
+            try {
+                Boolean doublePointJokerUsed = singlePlayerGameService.getDoublePointJokerUsed(username, roomId);
+                return (doublePointJokerUsed != null) ? ResponseEntity.status(HttpStatus.OK).body(doublePointJokerUsed) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
+            }
+        }
+
+//        if (gameType.equals("MULTIPLAYER")) {
+//            try {
+//                Integer score = multiplayerGameService.getMultiPlayerScore(username, roomId);
+//                return (score != null) ? ResponseEntity.status(HttpStatus.OK).body(score) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+//            } catch (Exception e) {
+//                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
+//            }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
+    /**
      * Updates the score of the player according to the given and correct answer or gives a corresponding error message
      *
      * @param username the username of the player that gives the answer
@@ -226,6 +283,87 @@ public class GameRoomController {
                 return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
             }
         }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
+    /**
+     * Updates hintJokerUsed (sets to true) or gives a corresponding error message
+     *
+     * @param username the username of the player that gives the answer
+     * @param gameType the type of the game
+     * @param roomId the id of the game that the player is in
+     * @return whether the request was successful or not
+     */
+    @GetMapping("/useHintJoker")
+    public ResponseEntity<Object> useHintJoker(@PathVariable("username") String username, @PathVariable("gameType") String gameType,
+                                             @PathVariable("roomId") String roomId) {
+        System.out.println("Got post for hint joker");
+        if (gameType.equals("SINGLEPLAYER")) {
+            try {
+                return singlePlayerGameService.useHintJoker(username, roomId) ?
+                        ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            } catch (NumberFormatException e) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            }
+            catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
+            }
+        }
+
+//        if (gameType.equals("MULTIPLAYER")) {
+//            try {
+//                System.out.println("Am primit requestu");
+//                int questionNo = Integer.parseInt(questionNumber);
+//                return multiplayerGameService.updateMultiPlayerScore(username, roomId, questionNo, userAnswer) ?
+//                        ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+//            } catch (NumberFormatException e) {
+//                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+//            }
+//            catch (Exception e) {
+//                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
+//            }
+//        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
+    /**
+     * Updates doublePointJoker (sets to true) or gives a corresponding error message
+     *
+     * @param username the username of the player that gives the answer
+     * @param gameType the type of the game
+     * @param roomId the id of the game that the player is in
+     * @return whether the request was successful or not
+     */
+    @GetMapping("/useDoublePoint")
+    public ResponseEntity<Object> useDoublePointJoker(@PathVariable("username") String username, @PathVariable("gameType") String gameType,
+                                               @PathVariable("roomId") String roomId) {
+        if (gameType.equals("SINGLEPLAYER")) {
+            try {
+                return singlePlayerGameService.useDoublePointJoker(username, roomId) ?
+                        ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            } catch (NumberFormatException e) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            }
+            catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
+            }
+        }
+
+//        if (gameType.equals("MULTIPLAYER")) {
+//            try {
+//                System.out.println("Am primit requestu");
+//                int questionNo = Integer.parseInt(questionNumber);
+//                return multiplayerGameService.updateMultiPlayerScore(username, roomId, questionNo, userAnswer) ?
+//                        ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+//            } catch (NumberFormatException e) {
+//                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+//            }
+//            catch (Exception e) {
+//                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
+//            }
+//        }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }

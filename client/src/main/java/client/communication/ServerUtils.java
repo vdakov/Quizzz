@@ -271,6 +271,41 @@ public class ServerUtils {
 
     }
 
+    public void useHintJoker() {
+        try {
+            GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+
+            Response response = ClientBuilder.newClient(new ClientConfig()) //
+                    .target(SERVER).path("api/" +  gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" +
+                                gameConfiguration.getRoomId() + "/useHintJoker")
+                    .request(APPLICATION_JSON)
+                    .accept(APPLICATION_JSON)
+                    .get();
+
+            System.out.println("Response status: " + response.getStatus());
+
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+        }
+    }
+    public void useDoublePointJoker() {
+        try {
+            GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+
+            Response response = ClientBuilder.newClient(new ClientConfig()) //
+                    .target(SERVER).path("api/" +  gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" +
+                            gameConfiguration.getRoomId() + "/useDoublePointJoker")
+                    .request(APPLICATION_JSON)
+                    .accept(APPLICATION_JSON)
+                    .get();
+
+            System.out.println("Response status: " + response.getStatus());
+
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+        }
+    }
+
     /**
      * Gets the activities from the server
      *
@@ -424,6 +459,53 @@ public class ServerUtils {
                     System.out.println("The request was invalid");
                     return "0";
                     //return null;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+        }
+
+        return null;
+    }
+
+    public Boolean getHintJokerUsed() {
+        try {
+            GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+
+            Response response = ClientBuilder.newClient(new ClientConfig())
+                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" + gameConfiguration.getRoomId() + "/getHintJokerUsed")
+                    .request(APPLICATION_JSON)
+                    .accept(APPLICATION_JSON).get(Response.class);
+            Boolean temp = response.readEntity(Boolean.class);
+            return temp;
+
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+        }
+        return true;
+    }
+
+    public Boolean getDoublePointJokerUsed() {
+        try {
+            GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+
+            Response response = ClientBuilder.newClient(new ClientConfig())
+                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" + gameConfiguration.getRoomId() + "/getDoublePointJokerUsed")
+                    .request(APPLICATION_JSON)
+                    .accept(APPLICATION_JSON).get(Response.class);
+
+            switch (response.getStatus()) {
+                case 200: {
+                    return response.readEntity(Boolean.class);
+                }
+                case 417: {
+                    System.out.println("Expectation failed");
+                    return  null;
+                    // something failed, show an apology message ?
+                }
+                case 400: {
+                    System.out.println("The request was invalid");
+                    return null;
                 }
             }
         } catch (Exception e) {
