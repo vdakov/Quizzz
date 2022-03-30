@@ -10,20 +10,22 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 import javax.inject.Inject;
+import javax.swing.*;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class QuestionActivityCtrl {
     // constructor needed variables
@@ -74,6 +76,8 @@ public class QuestionActivityCtrl {
     protected String correctAnswer;
     @FXML
     protected Button emoji;
+    @FXML
+    protected Button hintJoker;
 
     protected IntegerProperty timeSeconds =
             new SimpleIntegerProperty((int) startTime);
@@ -92,8 +96,11 @@ public class QuestionActivityCtrl {
      */
     public void initialize() throws IOException {
         firstOptionText.setBorder(Border.EMPTY);
+        firstOptionText.setDisable(false);
         secondOptionText.setBorder(Border.EMPTY);
+        secondOptionText.setDisable(false);
         thirdOptionText.setBorder(Border.EMPTY);
+        thirdOptionText.setDisable(false);
 
         answered = false;
 
@@ -207,6 +214,29 @@ public class QuestionActivityCtrl {
     public void goToMainScreen() throws IOException {
         timeline.stop();
         sceneCtrl.showMainScreenScene();
+    }
+
+    public void useHintJoker(){
+        //Joker that eliminates the wrong answer
+        //Make a list of possible answers
+        List<Label> answerLabels = new ArrayList();
+        answerLabels.add(firstOptionText);
+        answerLabels.add(secondOptionText);
+        answerLabels.add(thirdOptionText);
+
+        //shuffle answers to choose randomly from them
+        Collections.shuffle(answerLabels);
+        String correctAnswer = getCorrectAnswer();
+
+        //go until incorrect answer is found and eliminate it
+        for(Label answerLabel : answerLabels){
+            if(!answerLabel.getText().equals(correctAnswer)){
+                answerLabel.setDisable(true);
+                return;
+            }
+        }
+
+
     }
 
     public String getCorrectAnswer() {
