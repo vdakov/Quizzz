@@ -18,10 +18,16 @@ import commons.Questions.AlternativeQuestion;
 import commons.Questions.ComparisonQuestion;
 import commons.Questions.KnowledgeQuestion;
 import commons.Questions.OpenQuestion;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Pair;
 
 import javax.inject.Inject;
@@ -136,6 +142,11 @@ public class SceneCtrl {
 
         primaryStage.setTitle("Main Screen");
         scene.setRoot(pair.getValue());
+
+        primaryStage.setOnCloseRequest(event -> {
+            event.consume();
+            exitConfirmation(primaryStage);
+        });
     }
 
     public void showOverviewActionScene() {
@@ -182,5 +193,16 @@ public class SceneCtrl {
 
         primaryStage.setTitle("WaitingRoom");
         scene.setRoot(pair.getValue());
+    }
+
+    public void exitConfirmation(Stage stage) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Exit Confirmation");
+        alert.setHeaderText("Are you sure to exit the application?");
+
+        if(alert.showAndWait().get() == ButtonType.OK) {
+            System.out.println("You successfully exit!");
+            stage.close();
+        }
     }
 }
