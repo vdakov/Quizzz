@@ -73,19 +73,21 @@ public class QuestionActivityCtrl {
     @FXML
     protected String correctAnswer;
     @FXML
-    protected ImageView emoji1;
+    protected Label emoji1;
     @FXML
-    protected ImageView emoji2;
+    protected Label emoji2;
     @FXML
-    protected ImageView emoji3;
+    protected Label emoji3;
     @FXML
-    protected ImageView emoji4;
+    protected Label emoji4;
     @FXML
-    protected ImageView emoji5;
+    protected Label emoji5;
     @FXML
     protected TableView tableview;
     @FXML
     protected TableColumn<String, String> playersActivity;
+    @FXML
+    protected SplitPane splitPane;
 
 
     protected IntegerProperty timeSeconds =
@@ -101,6 +103,7 @@ public class QuestionActivityCtrl {
 
     /**
      * Initialises all the colors for the current scene
+     * If the game is multiplayer it displays the option to use emojis and to post them in a chat
      */
     public void initialize() throws IOException {
         firstOptionText.setBorder(Border.EMPTY);
@@ -114,12 +117,12 @@ public class QuestionActivityCtrl {
 
         if (!gameConfig.isSinglePlayer())
         {
-            tableview.setVisible(true);
+            splitPane.setVisible(true);
             playersActivity.setCellValueFactory(q -> new SimpleStringProperty(q.getValue()));
         }
         else
         {
-            tableview.setVisible(false);
+            splitPane.setVisible(false);
         }
 
         server.registerForMessages("/topic/emojis", q -> {
@@ -167,6 +170,7 @@ public class QuestionActivityCtrl {
 
 
     }
+
 
     public void pointsUpdate() {
         // after the time ends the amount of won points is calculated and then shown to the player
@@ -216,52 +220,74 @@ public class QuestionActivityCtrl {
         System.out.println("Time took to answer - " + timeSeconds);
     }
 
+    /**
+     * Method that displays the next question or stops the game after the last question ends
+     * @throws IOException
+     */
     public void displayNextQuestion() throws IOException {
         timeline.stop();
         if (gameConfig.getCurrentQuestionNumber() >= 19) finishGame();
         else sceneCtrl.showNextQuestion();
     }
 
+    /**
+     * Method that adds the score of the player to the leaderboard when a game finishes
+     */
     public void finishGame() {
         server.addLeaderboardEntry(gameConfig.getUserName(), gameConfig.getRoomId(), Integer.parseInt(server.getScore()));
         sceneCtrl.showLeaderboard();
     }
 
+    /*
+        Method that ends the game and returns the player to the main screen of the app
+     */
     public void goToMainScreen() throws IOException {
         timeline.stop();
         sceneCtrl.showMainScreenScene();
     }
 
+    /**
+     * Getter for the correct answer
+     * @return the correct answer from the server
+     */
     public String getCorrectAnswer() {
         return server.getAnswer();
     }
 
+    /**
+     * Getter for the score
+     * @return the score from the server
+     */
     public int getPointsInt() {
         return Integer.parseInt(server.getScore());
     }
 
+    /**
+     * Getter for the question number
+     * @return the current question number
+     */
     public int getQuestionNumber() {
         return gameConfig.getCurrentQuestionNumber();
     }
 
+    /**
+     * Methods that will send to the server the type of emojy the player has selected
+     * @param event  the users clicks on the label
+     */
 
     public void emoji1Display(MouseEvent event)
     {
        server.send("/topic/emojis", "1");
-       // tableview.setBackground(new Background(new BackgroundFill(Color.WHITE, null , null)));
     }
 
     public void emoji2Display(MouseEvent event)
     {
         server.send("/topic/emojis", "2");
-       // tableview.setBackground(new Background(new BackgroundFill(Color.WHITE, null , null)));
-        //refresh();
     }
 
     public void emoji3Display(MouseEvent event)
     {
         server.send("/topic/emojis", "3");
-      //  tableview.setBackground(new Background(new BackgroundFill(Color.WHITE, null , null)));
     }
 
     public void emoji4Display(MouseEvent event)
@@ -274,45 +300,49 @@ public class QuestionActivityCtrl {
         server.send("/topic/emojis", "5");
     }
 
-
-    public void refresh(String emojiType) {
+    /**
+     * Method that refreshes the list of messages in the chat by adding a new message  whenever a user clicks on one of the objects.
+     * @param type the unique number assigned to an object
+     */
+    public void refresh(String type) {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
-        System.out.println("A mers");
         List<String> chatEntries = new ArrayList<>();
-
-        System.out.println("Type: " + emojiType);
-
-        if (emojiType.equals("1")) {
+        if (type.equals("1")) {                                     // happy emoji
             chatEntries.add(getTypeOfMessage("1"));
         }
-        if (emojiType.equals("2")) {
-            chatEntries.add(getTypeOfMessage("2"));
+        if (type.equals("2")) {
+            chatEntries.add(getTypeOfMessage("2"));                 //sad emoji
         }
-        if (emojiType.equals("3")) {
+        if (type.equals("3")) {                                     //no words emoji
             chatEntries.add(getTypeOfMessage("3"));
         }
-        if (emojiType.equals("4")) {
+        if (type.equals("4")) {                                     //snowman emoji
             chatEntries.add(getTypeOfMessage("4"));
         }
-        if (emojiType.equals("5")) {
+        if (type.equals("5")) {                                     //dead emoji
             chatEntries.add(getTypeOfMessage("5"));
         }
         chatEntries.addAll(tableview.getItems());
         tableview.setItems(FXCollections.observableList(chatEntries));
     }
 
+    /**
+     * Method that is going to return a message about what emojis were used by players
+     * @param type identifies the type of object with which the players have interacted. All objects have an unique number assigned to them
+     * @return a message in the form of a String
+     */
     public String getTypeOfMessage(String type)
     {
         if (type.equals("1"))
-            return gameConfig.getUserName() + "  \uD83D\uDE02";
+            return gameConfig.getUserName() + "  ☺";
         if (type.equals("2"))
-            return gameConfig.getUserName() + "  \uD83D\uDE0E";
+            return gameConfig.getUserName() + "  ☹";
         if (type.equals("3"))
-            return gameConfig.getUserName() + "  \uD83D\uDE0D";
+            return gameConfig.getUserName() + "  ⚇";
         if (type.equals("4"))
-            return gameConfig.getUserName() + "  \uD83D\uDE28";
+            return gameConfig.getUserName() + "  ☃";
         if (type.equals("5"))
-            return gameConfig.getUserName() + "  \uD83D\uDE20";
+            return gameConfig.getUserName() + "  ☠";
         return null;
     }
 }

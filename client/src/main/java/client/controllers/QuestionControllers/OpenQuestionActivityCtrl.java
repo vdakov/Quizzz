@@ -60,12 +60,12 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
 
         if (!gameConfig.isSinglePlayer())
         {
-            tableview.setVisible(true);
+            splitPane.setVisible(true);
             playersActivity.setCellValueFactory(q -> new SimpleStringProperty(q.getValue()));
         }
         else
         {
-            tableview.setVisible(false);
+            splitPane.setVisible(false);
         }
 
         server.registerForMessages("/topic/emojis", q -> {

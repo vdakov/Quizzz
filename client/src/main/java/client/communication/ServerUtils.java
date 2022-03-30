@@ -326,44 +326,36 @@ public class ServerUtils {
                 .delete();
     }
 
-//    public String getPlayersActivity() {
-//        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
-//
-//        return ClientBuilder.newClient(new ClientConfig())
-//                .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" + gameConfiguration.getRoomId() + "/topic/emojis")
-//                .request(APPLICATION_JSON)
-//                .accept(APPLICATION_JSON)
-//                .get(String.class);
-//        }
-
-
-//    public void addChatEntry(String name, ImageView imageView) {
-//        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
-//
-//        ClientBuilder.newClient(new ClientConfig())
-//                .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" + gameConfiguration.getRoomId() + "/topic/emojis")
-//                .request(APPLICATION_JSON)
-//                .accept(APPLICATION_JSON)
-//                .post(Entity.text("1"));
-//    }
+    // Where we connect to the websocket
 
     private StompSession session = connect("ws://localhost:8080/websocket");
 
+    /**
+     * Methods that creates the connection
+     * @param url where we get connected
+     * @return
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     private StompSession connect(String url) throws ExecutionException, InterruptedException {
         var client = new StandardWebSocketClient();
         var stomp = new WebSocketStompClient(client);
 
         stomp.setMessageConverter(new MappingJackson2MessageConverter() );
         return stomp.connect(url, new StompSessionHandlerAdapter() {} ).get();
-
     }
 
+    /**
+     * We are subscribed for a whenever there is a message on the destination path
+     * @param destination  /topic/emojis
+     * @param consumer that is informed whenever a new message is received
+     */
     public void registerForMessages(String destination, Consumer<String> consumer)
     {
         session.subscribe(destination, new StompFrameHandler() {
             @Override
             public Type getPayloadType(StompHeaders headers) {
-                return String.class;
+                return String.class;                                    // the type of message we expect to receive
             }
 
             @Override
@@ -373,6 +365,11 @@ public class ServerUtils {
         });
     }
 
+    /**
+     *Method that sends the message
+     * @param destination /topic/emojis
+     * @param o the payload
+     */
     public void send(String destination, Object o)
     {
         session.send(destination, o);
