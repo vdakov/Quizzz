@@ -97,6 +97,11 @@ public class SceneCtrl {
 
         ctrl.displayQuestion(openQuestion);
         scene.setRoot(pair.getValue());
+
+        primaryStage.setOnCloseRequest(event -> {
+            event.consume();
+            exitConfirmation(primaryStage);
+        });
     }
 
     public void showKnowledgeQuestionScene(KnowledgeQuestion knowledgeQuestion) throws IOException {
@@ -106,6 +111,11 @@ public class SceneCtrl {
 
         ctrl.displayQuestion(knowledgeQuestion);
         scene.setRoot(pair.getValue());
+
+        primaryStage.setOnCloseRequest(event -> {
+            event.consume();
+            exitConfirmation(primaryStage);
+        });
     }
 
     public void showComparisonQuestionScene(ComparisonQuestion comparisonQuestion) throws IOException {
@@ -115,6 +125,11 @@ public class SceneCtrl {
 
         ctrl.displayQuestion(comparisonQuestion);
         scene.setRoot(pair.getValue());
+
+        primaryStage.setOnCloseRequest(event -> {
+            event.consume();
+            exitConfirmation(primaryStage);
+        });
     }
 
     public void showAlternativeQuestionScene(AlternativeQuestion alternativeQuestion) throws IOException {
@@ -124,6 +139,11 @@ public class SceneCtrl {
 
         ctrl.displayQuestion(alternativeQuestion);
         scene.setRoot(pair.getValue());
+
+        primaryStage.setOnCloseRequest(event -> {
+            event.consume();
+            exitConfirmation(primaryStage);
+        });
     }
 
     public void showLeaderboard() {
@@ -135,6 +155,11 @@ public class SceneCtrl {
         ctrl.refresh();
         primaryStage.setTitle("Leaderboard");
         scene.setRoot(pair.getValue());
+
+        primaryStage.setOnCloseRequest(event -> {
+            event.consume();
+            exitConfirmation(primaryStage);
+        });
     }
 
     public void showMainScreenScene() {
@@ -156,6 +181,11 @@ public class SceneCtrl {
         ctrl.initialize();
         primaryStage.setTitle("Overview Action");
         scene.setRoot(pair.getValue());
+
+        primaryStage.setOnCloseRequest(event -> {
+            event.consume();
+            exitConfirmation(primaryStage);
+        });
     }
 
     public void showAddActionScene() {
@@ -183,6 +213,11 @@ public class SceneCtrl {
 
         primaryStage.setTitle("Server Browser");
         scene.setRoot(pair.getValue());
+
+        primaryStage.setOnCloseRequest(event -> {
+            event.consume();
+            exitConfirmation(primaryStage);
+        });
     }
 
     public void showWaitingRoom(boolean owner, String gameId, String userName) {
@@ -193,6 +228,11 @@ public class SceneCtrl {
 
         primaryStage.setTitle("WaitingRoom");
         scene.setRoot(pair.getValue());
+
+        primaryStage.setOnCloseRequest(event -> {
+            event.consume();
+            exitConfirmation(primaryStage);
+        });
     }
 
     public void exitConfirmation(Stage stage) {
