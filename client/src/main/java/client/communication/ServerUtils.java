@@ -244,7 +244,7 @@ public class ServerUtils {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
 
             Response response = ClientBuilder.newClient(new ClientConfig()) //
-                    .target(SERVER).path("api/" +  gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" + gameConfiguration.getRoomId() + "/" +
+                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" + gameConfiguration.getRoomId() + "/" +
                             gameConfiguration.getCurrentQuestionNumber() + "/postAnswer")
                     .request(APPLICATION_JSON)
                     .accept(APPLICATION_JSON)
@@ -292,7 +292,7 @@ public class ServerUtils {
                 });
     }
 
-    public LeaderboardEntry addLeaderboardEntry(String name, String roomId, int points) {
+    public LeaderboardEntry addOrUpdateLeaderboardEntry(String name, String roomId, int points) {
         return ClientBuilder.newClient(new ClientConfig()) //
                 .target(SERVER).path("api/leaderboard/") //
                 .request(APPLICATION_JSON) //
@@ -318,8 +318,8 @@ public class ServerUtils {
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON)
                 .get(new GenericType<>() {
-                 });
-        }
+                });
+    }
 
 
     public ChatEntry addChatEntry(String name, ImageView imageView) {
@@ -486,7 +486,7 @@ public class ServerUtils {
     public ObservableList<GameContainer> listOfCurrentGames(String username) {
 
         ArrayList<GameContainer> games = ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER).path("api/" + username +  "/MULTIPLAYER" + "/getGames")
+                .target(SERVER).path("api/" + username + "/MULTIPLAYER" + "/getGames")
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON)
                 .get(new GenericType<>() {
