@@ -29,8 +29,8 @@ public class LeaderboardController {
     }
 
     @PostMapping
-    public LeaderboardEntry addLeaderboardEntry(@RequestBody LeaderboardEntry e) {
-        return service.addLeaderboardEntry(e);
+    public LeaderboardEntry addOrUpdateLeaderboardEntry(@RequestBody LeaderboardEntry e) {
+        return service.addOrUpdateLeaderboardEntry(e);
     }
 
     @DeleteMapping("/remove/{roomId}")

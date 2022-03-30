@@ -65,7 +65,7 @@ public class ServerUtils {
                 }
                 case 417: {
                     System.out.println("Expectation failed");
-                    return  null;
+                    return null;
                     // something failed, show an apology message ?
                 }
                 case 400: {
@@ -101,7 +101,7 @@ public class ServerUtils {
                 case 417: {
                     System.out.println("Aici");
                     System.out.println("Expectation failed");
-                    return  false;
+                    return false;
                     // something failed, show an apology message ?
                 }
                 case 400: {
@@ -218,7 +218,7 @@ public class ServerUtils {
                 }
                 case 417: {
                     System.out.println("Expectation failed when getting the question");
-                    return  null;
+                    return null;
                     // something failed, show an apology message ?
                 }
                 case 400: {
@@ -238,7 +238,7 @@ public class ServerUtils {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
 
             Response response = ClientBuilder.newClient(new ClientConfig()) //
-                    .target(SERVER).path("api/" +  gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" + gameConfiguration.getRoomId() + "/" +
+                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" + gameConfiguration.getRoomId() + "/" +
                             gameConfiguration.getCurrentQuestionNumber() + "/postAnswer")
                     .request(APPLICATION_JSON)
                     .accept(APPLICATION_JSON)
@@ -296,7 +296,7 @@ public class ServerUtils {
                 });
     }
 
-    public LeaderboardEntry addLeaderboardEntry(String name, String roomId, int points) {
+    public LeaderboardEntry addOrUpdateLeaderboardEntry(String name, String roomId, int points) {
         return ClientBuilder.newClient(new ClientConfig()) //
                 .target(SERVER).path("api/leaderboard/") //
                 .request(APPLICATION_JSON) //
@@ -322,8 +322,8 @@ public class ServerUtils {
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON)
                 .get(new GenericType<>() {
-                 });
-        }
+                });
+    }
 
 
     public ChatEntry addChatEntry(String name, ImageView imageView) {
@@ -437,7 +437,7 @@ public class ServerUtils {
                 }
                 case 417: {
                     System.out.println("Expectation failed");
-                    return  null;
+                    return null;
                     // something failed, show an apology message ?
                 }
                 case 400: {
@@ -494,7 +494,7 @@ public class ServerUtils {
 
         System.out.println();
         ArrayList<GameContainer> games = ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER).path("api/" + username +  "/MULTIPLAYER" + "/getGames")
+                .target(SERVER).path("api/" + username + "/MULTIPLAYER" + "/getGames")
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON)
                 .get(new GenericType<>() {
@@ -510,7 +510,8 @@ public class ServerUtils {
     }
 
     public int getNumPlayers() {
-        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();;
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+        ;
         System.out.println("api/" + gameConfiguration.getUserName() + "/MULTIPLAYER/" + gameConfiguration.getRoomId() + "/numPlayers");
         return ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/MULTIPLAYER/" + gameConfiguration.getRoomId() + "/numPlayers")

@@ -228,13 +228,10 @@ public class QuestionActivityCtrl {
 
     public void displayNextQuestion() throws IOException {
         timeline.stop();
-        if (gameConfig.getCurrentQuestionNumber() >= 19) finishGame();
-        else sceneCtrl.showNextQuestion();
-    }
-
-    public void finishGame() {
-        server.addLeaderboardEntry(gameConfig.getUserName(), gameConfig.getRoomId(), Integer.parseInt(server.getScore()));
-        sceneCtrl.showLeaderboard();
+        if (gameConfig.getCurrentQuestionNumber() % 10 == 0) {
+            server.addOrUpdateLeaderboardEntry(gameConfig.getUserName(), gameConfig.getRoomId(), Integer.parseInt(server.getScore()));
+            sceneCtrl.showLeaderboard();
+        } else sceneCtrl.showNextQuestion();
     }
 
     public void goToMainScreen() throws IOException {
