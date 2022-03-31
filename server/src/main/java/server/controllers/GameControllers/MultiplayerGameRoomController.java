@@ -53,27 +53,22 @@ public class MultiplayerGameRoomController {
 
     @GetMapping("/waitForGameToStart")
     public DeferredResult<ResponseEntity<String>> waitForGameToStart(@PathVariable("roomId") String roomId) {
-        System.out.println("Am intrat aici");
         var noContent = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         var res = new DeferredResult<ResponseEntity<String>>(50000L, noContent);
 
         var key = new Object();
         listeners.put(key, q -> {
-            System.out.println("AM reusit sa dau update");
             res.setResult(ResponseEntity.ok(q));
         });
-//        res.onCompletion(() -> {
-//            listeners.remove(key);
-//        });
-
-        System.out.println("Listeners size: " + listeners.size());
+        res.onCompletion(() -> {
+            listeners.remove(key);
+        });
 
         return res;
     }
 
     @GetMapping("/removePlayer")
     public void removePlayer(@PathVariable String userName, @PathVariable String roomId) {
-        System.out.println("Hello");
         this.getGame(roomId).removePlayer(userName);
     }
 

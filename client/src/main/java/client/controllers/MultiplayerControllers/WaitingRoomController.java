@@ -72,7 +72,6 @@ public class WaitingRoomController {
                 try {
                     sceneCtrl.showNextQuestion();
                 } catch (Exception e) {
-                    e.printStackTrace();
                     System.out.println("Exception occurred when trying to start the game by showing the next question");
                 }
             }

@@ -62,8 +62,6 @@ public class SceneCtrl {
         String questionType = scanner.next();
         //primaryStage.setTitle("Question #" + gameConfiguration.getCurrentQuestionNumber() + ": " + questionType);
 
-        System.out.println("Type: " + questionType);
-
         switch (questionType) {
             case "OpenQuestion": {
                 this.showOpenQuestionScene(QuestionParsers.openQuestionParser(scanner.next()));

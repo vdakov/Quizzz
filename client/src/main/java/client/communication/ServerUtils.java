@@ -60,17 +60,17 @@ public class ServerUtils {
                     return response.readEntity(String.class);
                 }
                 case 417: {
-                    System.out.println("Expectation failed");
+                    System.out.println("Expectation failed when creating a new room");
                     return  null;
                     // something failed, show an apology message ?
                 }
                 case 400: {
-                    System.out.println("The request was invalid");
+                    System.out.println("The request was invalid when creating a new room");
                     return null;
                 }
             }
         } catch (Exception e) {
-            System.out.println("An exception occurred");
+            System.out.println("An exception occurred when trying to create a new room");
         }
 
         return null;
@@ -95,19 +95,18 @@ public class ServerUtils {
                     return true;
                 }
                 case 417: {
-                    System.out.println("Aici");
-                    System.out.println("Expectation failed");
+                    System.out.println("Expectation failed when trying to start the room");
                     return  false;
                     // something failed, show an apology message ?
                 }
                 case 400: {
-                    System.out.println("The request was invalid");
+                    System.out.println("The request was invalid when trying to start the room");
                     return false;
                 }
             }
 
         } catch (Exception e) {
-            System.out.println("An exception occurred");
+            System.out.println("An exception occurred when trying to start the room");
         }
 
         return null;
@@ -127,18 +126,18 @@ public class ServerUtils {
                     return true;
                 }
                 case 417: {
-                    System.out.println("Expectation failed");
+                    System.out.println("Expectation failed when trying to join a room");
                     return false;
                     // something failed, show an apology message ?
                 }
                 case 400: {
-                    System.out.println("The request was invalid");
+                    System.out.println("The request was invalid when trying to join a room");
                     return false;
                 }
             }
 
         } catch (Exception e) {
-            System.out.println("An exception occurred");
+            System.out.println("An exception occurred when trying to join a room");
         }
 
         return false;
@@ -153,8 +152,6 @@ public class ServerUtils {
         try {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
 
-            System.out.println("Request string: " + "api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/getRandomRoom");
-
             Response response = ClientBuilder.newClient(new ClientConfig())
                     .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/getRandomRoom")
                     .request(APPLICATION_JSON)
@@ -165,17 +162,17 @@ public class ServerUtils {
                     return response.readEntity(String.class);
                 }
                 case 417: {
-                    System.out.println("Expectation failed");
+                    System.out.println("Expectation failed when trying to get the random room");
                     return  null;
                     // something failed, show an apology message ?
                 }
                 case 400: {
-                    System.out.println("The request was invalid");
+                    System.out.println("The request was invalid when trying to get the random room");
                     return null;
                 }
             }
         } catch (Exception e) {
-            System.out.println("An exception occurred");
+            System.out.println("An exception occurred when trying to get the random room");
         }
 
         return null;
@@ -224,7 +221,7 @@ public class ServerUtils {
                     return response.readEntity(String.class);
                 }
                 case 417: {
-                    System.out.println("Expectation failed when getting the question");
+                    System.out.println("Expectation failed when trying to get the question");
                     return  null;
                     // something failed, show an apology message ?
                 }
@@ -234,7 +231,7 @@ public class ServerUtils {
                 }
             }
         } catch (Exception e) {
-            System.out.println("An exception occurred");
+            System.out.println("An exception occurred when trying to get the question");
         }
 
         return null;
@@ -253,29 +250,21 @@ public class ServerUtils {
 
             switch (response.getStatus()) {
                 case 200: {
-                    System.out.println("Score update succeeded");
                     break;
                 }
                 case 417: {
-                    System.out.println("Expectation failed when getting the question");
+                    System.out.println("Expectation failed when trying to update the score");
                     break;
                     // something failed, show an apology message ?
                 }
                 case 400: {
-                    System.out.println("The request was invalid when trying to get the question");
+                    System.out.println("The request was invalid when trying to update the score");
                     break;
                 }
             }
         } catch (Exception e) {
-            System.out.println("An exception occurred");
+            System.out.println("An exception occurred when trying to update the score");
         }
-
-
-        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
-
-        String gameType = (gameConfiguration.isSinglePlayer()) ? "singlePlayer" : "multiPlayer";
-
-
     }
 
     /**
@@ -390,17 +379,17 @@ public class ServerUtils {
                     return response.readEntity(String.class);
                 }
                 case 417: {
-                    System.out.println("Expectation failed");
+                    System.out.println("Expectation failed when trying to get the answer");
                     return null;
                     // something failed, show an apology message ?
                 }
                 case 400: {
-                    System.out.println("The request was invalid");
+                    System.out.println("The request was invalid when trying to get the answer");
                     return null;
                 }
             }
         } catch (Exception e) {
-            System.out.println("An exception occurred");
+            System.out.println("An exception occurred when trying to get the answer");
         }
 
         return null;
@@ -420,18 +409,18 @@ public class ServerUtils {
                     return response.readEntity(String.class);
                 }
                 case 417: {
-                    System.out.println("Expectation failed");
+                    System.out.println("Expectation failed when trying to get the player's score");
                     return  null;
                     // something failed, show an apology message ?
                 }
                 case 400: {
-                    System.out.println("The request was invalid");
+                    System.out.println("The request was invalid when trying to get the player's score");
                     return "0";
                     //return null;
                 }
             }
         } catch (Exception e) {
-            System.out.println("An exception occurred");
+            System.out.println("An exception occurred when trying to get the player's score");
         }
 
         return null;

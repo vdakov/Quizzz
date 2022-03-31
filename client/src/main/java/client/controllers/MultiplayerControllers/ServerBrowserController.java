@@ -134,7 +134,6 @@ public class ServerBrowserController {
 
         String roomId = server.getRandomMultiPlayerRoomId();
 
-        System.out.println("Id for the random room: " + roomId);
         gameConfiguration.setRoomId(roomId);
 
         if (!server.joinMultiPlayerRoom()) {
@@ -174,7 +173,6 @@ public class ServerBrowserController {
         }
 
         gameConfiguration.setRoomId(roomId);
-        System.out.println("The room id: " + roomId);
 
         if (!server.joinMultiPlayerRoom()) {
                 missingUsername.setText("The username is already taken!");
@@ -202,8 +200,6 @@ public class ServerBrowserController {
 
         String roomId = server.createNewRoom();
         gameConfiguration.setRoomId(roomId);
-
-        System.out.println("Room id: " + roomId);
 
         if (roomId != null) {
             this.sceneCtrl.showWaitingRoom();

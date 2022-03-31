@@ -65,7 +65,6 @@ public class MultiplayerGameService {
 
             if (username == null) {
                 roomCatalog.setMultiplayerRandomRoom(newGame);
-                System.out.println("Setat");
             } else {
                 roomCatalog.addMultiplayerRoom(newGame);
                 joinMultiPlayerGame(username, newGame.getRoomId());
@@ -90,7 +89,6 @@ public class MultiplayerGameService {
      */
     public Boolean joinMultiPlayerGame(String username, String roomId) {
         try {
-            System.out.println("The room is:" + roomId);
             if (roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() != Room.RoomStatus.WAITING ||
                 roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) != null) {
                 return false;
@@ -125,16 +123,11 @@ public class MultiplayerGameService {
                 createNewMultiPlayerGame(null);
             }
 
-            System.out.println("RoomId value: " + roomId);
-            System.out.println("Found id: " + roomCatalog.getMultiPlayerRoom(roomId));
-
             MultiplayerGameRoomController.getListeners().forEach((k, l) -> l.accept(roomId));
 
-            System.out.println("Room id" + roomId);
 
             return roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() == Room.RoomStatus.ONGOING;
         } catch (Exception e) {
-            e.printStackTrace();
             System.out.println("An exception occurred when trying to start the game");
             return false;
         }
@@ -198,8 +191,6 @@ public class MultiplayerGameService {
 //                return null;
 //            }
 
-            System.out.println("Score: " + roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username));
-
             return roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username);
         } catch (Exception e) {
             System.out.println("An exception occurred");
@@ -221,8 +212,6 @@ public class MultiplayerGameService {
                     roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) == null) {
                 //return null;
             }
-
-            System.out.println("Da");
 
             if (userAnswer.equals(getMultiPlayerAnswer(username, roomId, questionNumber))) {
                 roomCatalog.getMultiPlayerRoom(roomId).updatePlayerScore(username, 500);

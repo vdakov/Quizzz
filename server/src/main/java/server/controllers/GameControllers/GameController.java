@@ -70,11 +70,9 @@ public class GameController {
 
     @GetMapping("/getRandomRoom")
     public ResponseEntity<String> getRandomRoom(@PathVariable("username") String username, @PathVariable("gameType") String gameType) {
-        System.out.println("Am intrat aici");
         if (gameType.equals("MULTIPLAYER")) {
             try {
                 String roomId = multiplayerGameService.getMultiPlayerRandomRoom();
-                System.out.println("Aici pica");
                 if (roomId == null) {
                     return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
                 }
