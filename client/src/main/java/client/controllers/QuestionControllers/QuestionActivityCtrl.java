@@ -334,15 +334,15 @@ public class QuestionActivityCtrl {
     public String getTypeOfMessage(String type)
     {
         if (type.equals("1"))
-            return gameConfig.getUserName() + "  ☺";
+            return gameConfig.getUserName() + "  \u263A";
         if (type.equals("2"))
-            return gameConfig.getUserName() + "  ☹";
+            return gameConfig.getUserName() + "  \u2639";
         if (type.equals("3"))
-            return gameConfig.getUserName() + "  ⚇";
+            return gameConfig.getUserName() + "  \u2687";
         if (type.equals("4"))
-            return gameConfig.getUserName() + "  ☃";
+            return gameConfig.getUserName() + "  \u2603";
         if (type.equals("5"))
-            return gameConfig.getUserName() + "  ☠";
+            return gameConfig.getUserName() + "  \u2620";
         return null;
     }
 }

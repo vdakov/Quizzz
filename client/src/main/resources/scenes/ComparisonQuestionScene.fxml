@@ -19,8 +19,8 @@
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #3084f2;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.QuestionControllers.ComparisonQuestionActivityCtrl">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="10.0" percentWidth="5.0" prefWidth="30.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="133.66668605804443" minWidth="7.0" percentWidth="15.0" prefWidth="73.0" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="133.66668605804443" minWidth="10.0" percentWidth="5.0" prefWidth="100.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="133.66668605804443" minWidth="7.0" percentWidth="18.0" prefWidth="73.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="133.66668605804443" minWidth="10.0" percentWidth="2.0" prefWidth="100.0" />
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="411.0" minWidth="3.0" percentWidth="20.0" prefWidth="292.2222595214844" />
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="411.0" minWidth="10.0" percentWidth="20.0" prefWidth="294.888936360677" />
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="411.0" minWidth="3.0" percentWidth="20.0" prefWidth="279.7777303059895" />
@@ -192,31 +192,31 @@
       </Text>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
          <children>
-            <SplitPane fx:id="splitPane" dividerPositions="0.29797979797979796" layoutY="-1.0" prefHeight="360.0" prefWidth="200.0">
+            <SplitPane fx:id="splitPane" dividerPositions="0.29797979797979796" layoutY="-1.0" prefHeight="432.0" prefWidth="230.0">
                <items>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: #fffee9;">
                      <children>
-                        <Label fx:id="emoji5" layoutX="9.0" layoutY="282.0" onMouseClicked="#emoji5Display" text="☠">
+                        <Label fx:id="emoji5" layoutX="3.0" layoutY="272.0" onMouseClicked="#emoji5Display" text="☠">
                            <font>
                               <Font size="50.0" />
                            </font>
                         </Label>
-                        <Label fx:id="emoji4" layoutX="9.0" layoutY="219.0" onMouseClicked="#emoji4Display" prefHeight="63.0" prefWidth="37.5" text="☃">
+                        <Label fx:id="emoji4" layoutX="3.0" layoutY="198.0" onMouseClicked="#emoji4Display" prefHeight="74.0" prefWidth="50.0" text="☃">
                            <font>
                               <Font size="50.0" />
                            </font>
                         </Label>
-                        <Label fx:id="emoji3" layoutX="9.0" layoutY="156.0" onMouseClicked="#emoji3Display" prefHeight="63.0" prefWidth="37.5" text="⚇">
+                        <Label fx:id="emoji3" layoutX="3.0" layoutY="138.0" onMouseClicked="#emoji3Display" prefHeight="74.0" prefWidth="50.0" text="⚇">
                            <font>
-                              <Font size="50.0" />
+                              <Font size="55.0" />
                            </font>
                         </Label>
-                        <Label fx:id="emoji2" layoutX="9.0" layoutY="85.0" onMouseClicked="#emoji2Display" prefHeight="63.0" prefWidth="37.5" text="☹">
+                        <Label fx:id="emoji2" layoutX="9.0" layoutY="64.0" onMouseClicked="#emoji2Display" prefHeight="63.0" prefWidth="50.0" text="☹">
                            <font>
-                              <Font size="50.0" />
+                              <Font size="71.0" />
                            </font>
                         </Label>
-                        <Label fx:id="emoji1" layoutX="9.0" layoutY="19.0" onMouseClicked="#emoji1Display" prefHeight="63.0" prefWidth="37.5" text="☺">
+                        <Label fx:id="emoji1" layoutX="1.0" layoutY="10.0" onMouseClicked="#emoji1Display" prefHeight="74.0" prefWidth="66.0" text="☺">
                            <font>
                               <Font size="50.0" />
                            </font>
@@ -225,7 +225,7 @@
                   </AnchorPane>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="328.0" prefWidth="136.0">
                      <children>
-                        <TableView fx:id="tableview" layoutX="4.0" layoutY="4.0" prefHeight="348.0" prefWidth="128.0" style="-fx-background-color: #ffffff; -fx-font-size: 14;">
+                        <TableView fx:id="tableview" layoutX="4.0" layoutY="4.0" prefHeight="346.0" prefWidth="147.0" style="-fx-background-color: #ffffff; -fx-font-size: 14;">
                            <columns>
                               <TableColumn fx:id="playersActivity" prefWidth="125.0" style="-fx-background-color: #fffee9; -fx-font-size: 20;" text="Chat" />
                            </columns>
