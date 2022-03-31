@@ -18,16 +18,12 @@ import commons.Questions.AlternativeQuestion;
 import commons.Questions.ComparisonQuestion;
 import commons.Questions.KnowledgeQuestion;
 import commons.Questions.OpenQuestion;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import javafx.util.Pair;
 
 import javax.inject.Inject;
@@ -244,7 +240,7 @@ public class SceneCtrl {
         alert.setTitle("Exit Confirmation");
         alert.setHeaderText("Are you sure to exit the application?");
 
-        if(alert.showAndWait().get() == ButtonType.OK) {
+        if (alert.showAndWait().get() == ButtonType.OK) {
             System.out.println("You successfully exit!");
             stage.close();
         }
