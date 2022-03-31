@@ -5,8 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import commons.Actions.Action;
 import org.apache.commons.io.FileUtils;
 import org.apache.tomcat.util.codec.binary.Base64;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.*;
 import server.services.ActionService;
 
