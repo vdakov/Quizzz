@@ -67,10 +67,6 @@ public class OverviewActionsActivityCtrl {
     //    public void initialize(URL location, ResourceBundle resources) {
     public void initialize() {
         colId.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getId() + ""));
-
-        colId.setSortType(TableColumn.SortType.ASCENDING);
-
-
         colTitle.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getTitle()));
         colConsumption.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getConsumption() + ""));
         colSource.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getSource()));
@@ -119,6 +115,9 @@ public class OverviewActionsActivityCtrl {
         var activities = server.getActivities();
         data = FXCollections.observableList(activities);
         table.setItems(data);
+        colId.setSortType(TableColumn.SortType.ASCENDING);
+        table.getSortOrder().add(colId);
+        table.sort();
     }
 
     public void goToMainScreen() throws IOException {
