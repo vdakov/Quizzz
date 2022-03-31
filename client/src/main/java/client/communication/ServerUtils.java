@@ -288,6 +288,10 @@ public class ServerUtils {
             System.out.println("An exception occurred");
         }
     }
+
+    /**
+     *
+     */
     public void useDoublePointJoker() {
         try {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();

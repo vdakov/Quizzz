@@ -52,7 +52,9 @@ public class SingleplayerRoom extends Room {
     /**
      * Records doublePoint joker used
      */
-    public void useDoublePointJoker() { doublePointJokerUsed = true; }
+    public void useDoublePointJoker() {
+        System.out.println("-----used double point joker3");
+        doublePointJokerUsed = true; }
 
     /**
      * Sets the score for the player to the given score

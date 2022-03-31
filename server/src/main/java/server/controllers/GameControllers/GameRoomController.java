@@ -378,6 +378,7 @@ public class GameRoomController {
     @GetMapping("/useDoublePoint")
     public ResponseEntity<Object> useDoublePointJoker(@PathVariable("username") String username, @PathVariable("gameType") String gameType,
                                                @PathVariable("roomId") String roomId) {
+        System.out.println("-----used double point joker1");
         if (gameType.equals("SINGLEPLAYER")) {
             try {
                 return singlePlayerGameService.useDoublePointJoker(username, roomId) ?

@@ -152,6 +152,12 @@ public class SingleplayerGameService {
         }
     }
 
+    /**
+     * Checks whether the hint joker is used or not
+     * @param username  the user who used the hint joker
+     * @param roomId    the id of the room the user is in
+     * @return returns true when the hint joker is used
+     */
     public Boolean getHintJokerUsed(String username, String roomId) {
         try {
             if (!username.equals(roomCatalog.getSinglePlayerRoom(roomId).getRoomCreator())) {
@@ -165,6 +171,12 @@ public class SingleplayerGameService {
         }
     }
 
+    /**
+     * Checks whether the double point joker is used or not
+     * @param username the user who used the double point joker
+     * @param roomId the id of the room the user is in
+     * @return returns true when the double point joker is used
+     */
     public Boolean getDoublePointJokerUsed(String username, String roomId) {
         try {
             if (!username.equals(roomCatalog.getSinglePlayerRoom(roomId).getRoomCreator())) {
@@ -223,6 +235,7 @@ public class SingleplayerGameService {
                 return false;
             }
 
+            System.out.println("-----used double point joker2");
             roomCatalog.getSinglePlayerRoom(roomId).useDoublePointJoker();
 
             return true;
