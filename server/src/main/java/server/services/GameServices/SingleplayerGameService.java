@@ -139,6 +139,19 @@ public class SingleplayerGameService {
             return null;
         }
     }
+
+    /**
+     * Calculated the points added on this round
+     * @return the points earned in this round
+     */
+    public Integer calculatePointsAdded(String username, String roomId) {
+        if (getDoublePointJokerUsed(username, roomId)) {
+            return 1000;
+        } else {
+            return 500;
+        }
+    }
+
     public Boolean getHintJokerUsed(String username, String roomId) {
         try {
             if (!username.equals(roomCatalog.getSinglePlayerRoom(roomId).getRoomCreator())) {
@@ -180,7 +193,7 @@ public class SingleplayerGameService {
             }
 
             if (userAnswer.equals(getSinglePlayerAnswer(username, roomId, questionNumber))) {
-                roomCatalog.getSinglePlayerRoom(roomId).updatePlayerScore(500);
+                roomCatalog.getSinglePlayerRoom(roomId).updatePlayerScore(this.calculatePointsAdded(username, roomId));
             }
 
             return true;

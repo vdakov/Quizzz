@@ -77,6 +77,8 @@ public class QuestionActivityCtrl {
     protected Button emoji;
     @FXML
     protected Button hintJoker;
+    @FXML
+    protected Button doublePointJoker;
 
     protected IntegerProperty timeSeconds =
             new SimpleIntegerProperty((int) startTime);
@@ -244,6 +246,12 @@ public class QuestionActivityCtrl {
                 return;
             }
         }
+    }
+
+    public void useDoublePointJoker() {
+        if (server.getDoublePointJokerUsed()) {return;}
+        addedPointsInt *= 2;
+
     }
 
     public String getCorrectAnswer() {
