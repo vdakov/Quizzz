@@ -14,7 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
-import java.util.ArrayList;
+
 import java.util.concurrent.ExecutionException;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
