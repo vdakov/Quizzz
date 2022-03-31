@@ -485,6 +485,37 @@ public class ServerUtils {
         return null;
     }
 
+    public String getAddedPoints() {
+        try {
+            GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+
+            Response response = ClientBuilder.newClient(new ClientConfig())
+                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" + gameConfiguration.getRoomId() + "/getAddedPoints")
+                    .request(APPLICATION_JSON)
+                    .accept(APPLICATION_JSON).get(Response.class);
+
+            switch (response.getStatus()) {
+                case 200: {
+                    return response.readEntity(String.class);
+                }
+                case 417: {
+                    System.out.println("Expectation failed");
+                    return  null;
+                    // something failed, show an apology message ?
+                }
+                case 400: {
+                    System.out.println("The request was invalid");
+                    return "0";
+                    //return null;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+        }
+
+        return null;
+    }
+
     public Boolean getHintJokerUsed() {
         try {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();

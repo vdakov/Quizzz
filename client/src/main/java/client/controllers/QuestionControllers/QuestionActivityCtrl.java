@@ -163,7 +163,7 @@ public class QuestionActivityCtrl {
 
         addedPointsInt = 0;
         if (userAnswer.equals(getCorrectAnswer())) {
-            addedPointsInt = 500;
+            addedPointsInt = getAddedPointsInt();
         }
         addedPoints.setText("+" + String.valueOf(addedPointsInt));
 
@@ -250,8 +250,9 @@ public class QuestionActivityCtrl {
 
     public void useDoublePointJoker() {
         if (server.getDoublePointJokerUsed()) {return;}
-        addedPointsInt *= 2;
 
+        server.useDoublePointJoker();
+        doublePointJoker.setDisable(true);
     }
 
     public String getCorrectAnswer() {
@@ -272,5 +273,9 @@ public class QuestionActivityCtrl {
 
     public int getQuestionNumber() {
         return gameConfig.getCurrentQuestionNumber();
+    }
+
+    public int getAddedPointsInt() {
+        return Integer.parseInt(server.getAddedPoints());
     }
 }

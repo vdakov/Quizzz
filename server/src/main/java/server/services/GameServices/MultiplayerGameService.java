@@ -199,6 +199,18 @@ public class MultiplayerGameService {
     }
 
     /**
+     * Calculated the points added on this round
+     * @return the points earned in this round
+     */
+    public Integer calculatePointsAdded(String username, String roomId) {
+        if (getDoublePointJokerUsed(username, roomId)) {
+            return 1000;
+        } else {
+            return 500;
+        }
+    }
+
+    /**
      * Returns whether the hint joker was used by this player in this game or null if it doesnt exist
      *
      * @param username the user that requests the score
