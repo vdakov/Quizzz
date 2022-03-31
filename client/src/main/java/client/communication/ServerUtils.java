@@ -305,6 +305,23 @@ public class ServerUtils {
             System.out.println("An exception occurred");
         }
     }
+    public void useTimeJoker() {
+        try {
+            GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+
+            Response response = ClientBuilder.newClient(new ClientConfig()) //
+                    .target(SERVER).path("api/" +  gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" +
+                            gameConfiguration.getRoomId() + "/useTimeJoker")
+                    .request(APPLICATION_JSON)
+                    .accept(APPLICATION_JSON)
+                    .get();
+
+            System.out.println("Response status: " + response.getStatus());
+
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+        }
+    }
 
     /**
      * Gets the activities from the server
@@ -476,8 +493,7 @@ public class ServerUtils {
                     .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" + gameConfiguration.getRoomId() + "/getHintJokerUsed")
                     .request(APPLICATION_JSON)
                     .accept(APPLICATION_JSON).get(Response.class);
-            Boolean temp = response.readEntity(Boolean.class);
-            return temp;
+            return response.readEntity(Boolean.class);
 
         } catch (Exception e) {
             System.out.println("An exception occurred");
@@ -493,26 +509,28 @@ public class ServerUtils {
                     .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" + gameConfiguration.getRoomId() + "/getDoublePointJokerUsed")
                     .request(APPLICATION_JSON)
                     .accept(APPLICATION_JSON).get(Response.class);
+            return response.readEntity(Boolean.class);
 
-            switch (response.getStatus()) {
-                case 200: {
-                    return response.readEntity(Boolean.class);
-                }
-                case 417: {
-                    System.out.println("Expectation failed");
-                    return  null;
-                    // something failed, show an apology message ?
-                }
-                case 400: {
-                    System.out.println("The request was invalid");
-                    return null;
-                }
-            }
         } catch (Exception e) {
             System.out.println("An exception occurred");
         }
+        return true;
+    }
 
-        return null;
+    public Boolean getTimeJokerUsed() {
+        try {
+            GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+
+            Response response = ClientBuilder.newClient(new ClientConfig())
+                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" + gameConfiguration.getRoomId() + "/getTimeJokerUsed")
+                    .request(APPLICATION_JSON)
+                    .accept(APPLICATION_JSON).get(Response.class);
+            return response.readEntity(Boolean.class);
+
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+        }
+        return true;
     }
 
     /**
