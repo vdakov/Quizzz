@@ -350,17 +350,17 @@ public class ServerUtils {
      * @param destination  /topic/emojis
      * @param consumer that is informed whenever a new message is received
      */
-    public void registerForMessages(String destination, Consumer<String> consumer)
+    public void registerForMessages(String destination, Consumer<List<String>> consumer)
     {
         session.subscribe(destination, new StompFrameHandler() {
             @Override
             public Type getPayloadType(StompHeaders headers) {
-                return String.class;                                    // the type of message we expect to receive
+                return List.class;                                    // the type of message we expect to receive
             }
 
             @Override
             public void handleFrame(StompHeaders headers, Object payload) {
-                consumer.accept((String) payload );
+                consumer.accept((List<String>) payload );
             }
         });
     }

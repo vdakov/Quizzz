@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -69,7 +70,7 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         }
 
         server.registerForMessages("/topic/emojis", q -> {
-            refresh(q);
+            refresh(q.get(0), q.get(1), q.get(1));
         });
     }
 
@@ -94,8 +95,8 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
 
         this.image.setImage(SwingFXUtils.toFXImage(bImage, null));
 
-        if (gameConfig.isSinglePlayer()) tableview.setVisible(false);
-        else tableview.setVisible(true);
+        if (gameConfig.isSinglePlayer()) splitPane.setVisible(false);
+        else splitPane.setVisible(true);
 
         initialize();
         startTimer();

@@ -90,6 +90,7 @@ public class QuestionActivityCtrl {
     protected SplitPane splitPane;
 
 
+
     protected IntegerProperty timeSeconds =
             new SimpleIntegerProperty((int) startTime);
     protected Timeline timeline;
@@ -126,7 +127,7 @@ public class QuestionActivityCtrl {
         }
 
         server.registerForMessages("/topic/emojis", q -> {
-            refresh(q);
+            refresh(q.get(0), q.get(1), q.get(1));
         });
 
     }
@@ -277,53 +278,76 @@ public class QuestionActivityCtrl {
 
     public void emoji1Display(MouseEvent event)
     {
-       server.send("/topic/emojis", "1");
+        List<String> payload = new ArrayList<>();
+        payload.add("1");
+        payload.add(gameConfig.getUserName());
+        payload.add(gameConfig.getRoomId());
+        server.send("/topic/emojis", payload);
     }
 
     public void emoji2Display(MouseEvent event)
     {
-        server.send("/topic/emojis", "2");
+        List<String> payload = new ArrayList<>();
+        payload.add("2");
+        payload.add(gameConfig.getUserName());
+        payload.add(gameConfig.getRoomId());
+        server.send("/topic/emojis", payload);
     }
 
     public void emoji3Display(MouseEvent event)
     {
-        server.send("/topic/emojis", "3");
+        List<String> payload = new ArrayList<>();
+        payload.add("3");
+        payload.add(gameConfig.getUserName());
+        payload.add(gameConfig.getRoomId());
+        server.send("/topic/emojis", payload);
     }
 
     public void emoji4Display(MouseEvent event)
     {
-        server.send("/topic/emojis", "4");
+        List<String> payload = new ArrayList<>();
+        payload.add("4");
+        payload.add(gameConfig.getUserName());
+        payload.add(gameConfig.getRoomId());
+        server.send("/topic/emojis", payload);
     }
 
     public void emoji5Display(MouseEvent event)
     {
-        server.send("/topic/emojis", "5");
+        List<String> payload = new ArrayList<>();
+        payload.add("5");
+        payload.add(gameConfig.getUserName());
+        payload.add(gameConfig.getRoomId());
+        server.send("/topic/emojis", payload);
     }
 
     /**
      * Method that refreshes the list of messages in the chat by adding a new message  whenever a user clicks on one of the objects.
      * @param type the unique number assigned to an object
      */
-    public void refresh(String type) {
+    public void refresh(String type, String username, String roomId) {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         List<String> chatEntries = new ArrayList<>();
-        if (type.equals("1")) {                                     // happy emoji
-            chatEntries.add(getTypeOfMessage("1"));
-        }
-        if (type.equals("2")) {
-            chatEntries.add(getTypeOfMessage("2"));                 //sad emoji
-        }
-        if (type.equals("3")) {                                     //no words emoji
-            chatEntries.add(getTypeOfMessage("3"));
-        }
-        if (type.equals("4")) {                                     //snowman emoji
-            chatEntries.add(getTypeOfMessage("4"));
-        }
-        if (type.equals("5")) {                                     //dead emoji
-            chatEntries.add(getTypeOfMessage("5"));
-        }
-        chatEntries.addAll(tableview.getItems());
-        tableview.setItems(FXCollections.observableList(chatEntries));
+        System.out.println(username + "  " + roomId);
+
+            if (type.equals("1") && roomId.equals(gameConfiguration.getUserName())) {                                     // happy emoji
+                chatEntries.add(getTypeOfMessage("1", username));
+            }
+            if (type.equals("2")  && roomId.equals(gameConfiguration.getUserName())) {                                     //sad emoji
+                chatEntries.add(getTypeOfMessage("2", username));
+            }
+            if (type.equals("3") && roomId.equals(gameConfiguration.getUserName())) {                                     //no words emoji
+                chatEntries.add(getTypeOfMessage("3", username));
+            }
+            if (type.equals("4") && roomId.equals(gameConfiguration.getUserName())) {                                     //snowman emoji
+                chatEntries.add(getTypeOfMessage("4", username));
+            }
+            if (type.equals("5") && roomId.equals(gameConfiguration.getUserName())) {                                     //dead emoji
+                chatEntries.add(getTypeOfMessage("5", username));
+            }
+            chatEntries.addAll(tableview.getItems());
+            tableview.setItems(FXCollections.observableList(chatEntries));
+
     }
 
     /**
@@ -331,18 +355,18 @@ public class QuestionActivityCtrl {
      * @param type identifies the type of object with which the players have interacted. All objects have an unique number assigned to them
      * @return a message in the form of a String
      */
-    public String getTypeOfMessage(String type)
+    public String getTypeOfMessage(String type, String username)
     {
         if (type.equals("1"))
-            return gameConfig.getUserName() + "  \u263A";
+            return   "  \u263A" + " " + username;
         if (type.equals("2"))
-            return gameConfig.getUserName() + "  \u2639";
+            return  "  \u2639" + " " + username;
         if (type.equals("3"))
-            return gameConfig.getUserName() + "  \u2687";
+            return "  \u2687" + " " + username;
         if (type.equals("4"))
-            return gameConfig.getUserName() + "  \u2603";
+            return  "  \u2603" +  " " + username;
         if (type.equals("5"))
-            return gameConfig.getUserName() + "  \u2620";
+            return  "  \u2620" + " " + username;
         return null;
     }
 }
