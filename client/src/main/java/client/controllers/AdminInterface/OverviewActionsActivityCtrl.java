@@ -19,6 +19,7 @@ import client.communication.ServerUtils;
 import client.controllers.SceneCtrl;
 import com.google.inject.Inject;
 import commons.Actions.Action;
+import commons.GameContainer;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -70,6 +71,28 @@ public class OverviewActionsActivityCtrl {
         colTitle.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getTitle()));
         colConsumption.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getConsumption() + ""));
         colSource.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getSource()));
+
+        table.setRowFactory(event -> {
+            TableRow<Action> row = new TableRow<>();
+
+            row.setOnMouseClicked(event1 -> {
+
+
+                if (row.isSelected()) {
+
+                    if (row.getItem().getId() != null) {
+                        String Id = row.getItem().getId();
+                        this.deletingID.setText(Id);
+                        this.editingID.setText(Id);
+
+                    }
+
+
+                }
+            });
+
+            return row;
+        });
         this.refresh();
     }
 

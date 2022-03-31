@@ -67,13 +67,15 @@ public class ServerBrowserController {
 
         missingUsername.setText("");
 
+
         this.gameTable.getColumns().add(gameIdColumn);
         this.gameTable.getColumns().add(numPlayerColumn);
+
 
         gameTable.setRowFactory(event -> {
             TableRow<GameContainer> row = new TableRow<>();
 
-            row.setOnMouseEntered(event1 -> {
+            row.setOnMouseClicked(event1 -> {
 
 
                 if (row.isSelected()) {
