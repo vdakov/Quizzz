@@ -116,6 +116,7 @@ public class QuestionActivityCtrl {
         if (getHintJokerUsed() != null) {
             hintJoker.setDisable(getHintJokerUsed());
         }
+
     }
 
 
@@ -249,7 +250,7 @@ public class QuestionActivityCtrl {
     }
 
     public void useDoublePointJoker() {
-        if (server.getDoublePointJokerUsed()) {return;}
+        if (server.getDoublePointJokerUsed()) { return; }
 
         server.useDoublePointJoker();
         doublePointJoker.setDisable(true);
