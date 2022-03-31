@@ -64,9 +64,13 @@ public class OverviewActionsActivityCtrl {
         this.sceneCtrl = mainCtrl;
     }
 
-//    public void initialize(URL location, ResourceBundle resources) {
+    //    public void initialize(URL location, ResourceBundle resources) {
     public void initialize() {
         colId.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getId() + ""));
+
+        colId.setSortType(TableColumn.SortType.ASCENDING);
+
+
         colTitle.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getTitle()));
         colConsumption.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getConsumption() + ""));
         colSource.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getSource()));
@@ -74,7 +78,6 @@ public class OverviewActionsActivityCtrl {
     }
 
     /**
-     *
      * @param event
      */
     public void addActivity(ActionEvent event) {
@@ -97,13 +100,17 @@ public class OverviewActionsActivityCtrl {
         }
     }
 
-    public void editActivity(ActionEvent event) {
+    public void editActivity(ActionEvent event) throws IOException {
         String id = editingID.getText();
         try {
             Action editingAction = server.getActivityById(id);
             sceneCtrl.showEditActionScene(editingAction);
         } catch (Exception e) {
-            System.out.println("The given ID is not founded");
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("ID NOT FOUND");
+            alert.setHeaderText("ID NOT FOUND");
+            alert.setContentText("ID COULD NOT BE FOUND, PLEASE ENTER VALID ID !");
+            alert.showAndWait();
         }
         refresh();
     }
@@ -116,6 +123,10 @@ public class OverviewActionsActivityCtrl {
 
     public void goToMainScreen() throws IOException {
         sceneCtrl.showMainScreenScene();
+    }
+
+    public void restoreActivityBank(ActionEvent event) {
+        server.restoreActivityBank();
     }
 
 }

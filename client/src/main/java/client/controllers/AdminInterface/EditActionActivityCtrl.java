@@ -29,6 +29,7 @@ public class EditActionActivityCtrl {
     private final SceneCtrl sceneCtrl;
 
     private String id;
+    private String folder;
 
     @FXML
     private TextField title;
@@ -57,12 +58,15 @@ public class EditActionActivityCtrl {
     }
 
     public void initialize(Action editingAction) throws IOException {
+        System.out.println(editingAction.getImagePath());
         ByteArrayInputStream bis = new ByteArrayInputStream(server.getQuestionImage(editingAction.getImagePath()));
         BufferedImage bImage = ImageIO.read(bis);
         this.currentImage.setImage(SwingFXUtils.toFXImage(bImage, null));
 
         this.id = editingAction.getId();
+        this.folder = editingAction.getImagePath().substring(0, 2);
         System.out.println(id);
+        System.out.println(this.id);
         title.setText(editingAction.getTitle());
         source.setText(editingAction.getSource());
         this.imageNameField.setText(editingAction.getImagePath());
@@ -84,8 +88,8 @@ public class EditActionActivityCtrl {
         }
 
         try {
-            server.editActivity(id, getActivity());
-            server.sendImage(this.base64Image, this.imageNameField.getText());
+            server.editActivity(this.id, getActivity());
+            server.sendImageEdit(this.base64Image, this.imageNameField.getText(), this.folder);
         } catch (WebApplicationException e) {
 
             var alert = new Alert(Alert.AlertType.ERROR);
@@ -94,9 +98,7 @@ public class EditActionActivityCtrl {
             alert.showAndWait();
             return;
         }
-
-        clearFields();
-        //sceneCtrl.showOverviewActionsScene();
+        cancel();
     }
 
     private Action getActivity() {
@@ -105,7 +107,8 @@ public class EditActionActivityCtrl {
         } catch (NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
         }
-        return new Action(this.id, this.imageNameField.getText(), title.getText(), Long.parseLong(this.consumption.getText()), source.getText());
+        return new Action(this.id, this.folder + "/" + this.imageNameField.getText(),
+                title.getText(), Long.parseLong(this.consumption.getText()), source.getText());
     }
 
     private void clearFields() {
