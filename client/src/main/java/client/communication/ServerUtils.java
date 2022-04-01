@@ -316,7 +316,7 @@ public class ServerUtils {
 
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("An exception occurred"+e.getMessage());
+            System.out.println("An exception occurred" + e.getMessage());
         }
     }
 
