@@ -80,6 +80,6 @@ public class LeaderboardCtrl {
     }
 
     public void playAgain() {
-        sceneCtrl.showWaitingRoom(true, gameConfig.getRoomId(), gameConfig.getUserName());
+        sceneCtrl.showWaitingRoom();
     }
 }

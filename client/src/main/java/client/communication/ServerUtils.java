@@ -27,9 +27,18 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.glassfish.jersey.client.ClientConfig;
+import org.springframework.messaging.converter.MappingJackson2MessageConverter;
+import org.springframework.messaging.simp.stomp.StompFrameHandler;
+import org.springframework.messaging.simp.stomp.StompHeaders;
+import org.springframework.messaging.simp.stomp.StompSession;
+import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
+import org.springframework.web.socket.client.standard.StandardWebSocketClient;
+import org.springframework.web.socket.messaging.WebSocketStompClient;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.Consumer;
@@ -40,6 +49,9 @@ import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 public class ServerUtils {
 
     private static final String SERVER = "http://localhost:8080/";
+
+    public ServerUtils() throws ExecutionException, InterruptedException {
+    }
 
     /**
      * Creates a new room based on the player's choices
@@ -55,24 +67,23 @@ public class ServerUtils {
                     .request(APPLICATION_JSON)
                     .accept(APPLICATION_JSON).get(Response.class);
 
-            System.out.println(response.getStatus());
-
             switch (response.getStatus()) {
                 case 200: {
                     return response.readEntity(String.class);
                 }
                 case 417: {
-                    System.out.println("Expectation failed");
-                    return null;
+                    System.out.println("Expectation failed when creating a new room");
+                    return  null;
+
                     // something failed, show an apology message ?
                 }
                 case 400: {
-                    System.out.println("The request was invalid");
+                    System.out.println("The request was invalid when creating a new room");
                     return null;
                 }
             }
         } catch (Exception e) {
-            System.out.println("An exception occurred");
+            System.out.println("An exception occurred when trying to create a new room");
         }
 
         return null;
@@ -97,25 +108,25 @@ public class ServerUtils {
                     return true;
                 }
                 case 417: {
-                    System.out.println("Aici");
-                    System.out.println("Expectation failed");
-                    return false;
+                    System.out.println("Expectation failed when trying to start the room");
+                    return  false;
+
                     // something failed, show an apology message ?
                 }
                 case 400: {
-                    System.out.println("The request was invalid");
+                    System.out.println("The request was invalid when trying to start the room");
                     return false;
                 }
             }
 
         } catch (Exception e) {
-            System.out.println("An exception occurred");
+            System.out.println("An exception occurred when trying to start the room");
         }
 
         return null;
     }
 
-    public Boolean joinMultiPlayerRoom(String userName, String roomId) {
+    public Boolean joinMultiPlayerRoom() {
         try {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
 
@@ -124,26 +135,23 @@ public class ServerUtils {
                     .request(APPLICATION_JSON)
                     .accept(APPLICATION_JSON).get(Response.class);
 
-            System.out.println(response.getStatus());
-
             switch (response.getStatus()) {
                 case 200: {
                     return true;
                 }
                 case 417: {
-                    System.out.println("Aici");
-                    System.out.println("Expectation failed");
+                    System.out.println("Expectation failed when trying to join a room");
                     return false;
                     // something failed, show an apology message ?
                 }
                 case 400: {
-                    System.out.println("The request was invalid");
+                    System.out.println("The request was invalid when trying to join a room");
                     return false;
                 }
             }
 
         } catch (Exception e) {
-            System.out.println("An exception occurred");
+            System.out.println("An exception occurred when trying to join a room");
         }
 
         return false;
@@ -152,17 +160,36 @@ public class ServerUtils {
     /**
      * Get the id for the multiplayer room composed of random players
      *
-     * @param userName the userName of the player requesting this information
      * @return the roomId of the random multiPlayer room
      */
-    public String getRandomMultiPlayerRoomId(String userName) {
+    public String getRandomMultiPlayerRoomId() {
+        try {
+            GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
 
+            Response response = ClientBuilder.newClient(new ClientConfig())
+                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/getRandomRoom")
+                    .request(APPLICATION_JSON)
+                    .accept(APPLICATION_JSON).get(Response.class);
 
-        return ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER).path("api/multiPlayer/" + userName + "/getRandomRoomCode")
-                .request(APPLICATION_JSON)
-                .accept(APPLICATION_JSON).get(new GenericType<>() {
-                });
+            switch (response.getStatus()) {
+                case 200: {
+                    return response.readEntity(String.class);
+                }
+                case 417: {
+                    System.out.println("Expectation failed when trying to get the random room");
+                    return  null;
+                    // something failed, show an apology message ?
+                }
+                case 400: {
+                    System.out.println("The request was invalid when trying to get the random room");
+                    return null;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("An exception occurred when trying to get the random room");
+        }
+
+        return null;
     }
 
     private static final ExecutorService EXEC = Executors.newSingleThreadExecutor();
@@ -171,22 +198,18 @@ public class ServerUtils {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         EXEC.submit(() -> {
             while (!Thread.interrupted()) {
-                System.out.println("My request:   " + "api/" + gameConfiguration.getUserName() + "/MULTIPLAYER/"
-                        + gameConfiguration.getRoomId() + "/waitForGameToStart");
+
                 var res = ClientBuilder.newClient(new ClientConfig())
                         .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/MULTIPLAYER/"
                                 + gameConfiguration.getRoomId() + "/waitForGameToStart")
                         .request(APPLICATION_JSON)
                         .accept(APPLICATION_JSON).get(Response.class);
 
-                System.out.println(res.getStatus());
-
                 if (res.getStatus() == 204) {
                     continue;
                 }
 
                 String gameInProgress = res.readEntity(String.class);
-                System.out.println("Game accepted: " + gameInProgress);
                 startedGame.accept(gameInProgress);
                 this.stop();
             }
@@ -201,9 +224,6 @@ public class ServerUtils {
         try {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
 
-            System.out.println("Get question request:  " + "api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" + gameConfiguration.getRoomId() + "/" +
-                    gameConfiguration.getCurrentQuestionNumber() + "/getQuestion");
-
             Response response = ClientBuilder.newClient(new ClientConfig())
                     .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" + gameConfiguration.getRoomId() + "/" +
                             gameConfiguration.getCurrentQuestionNumber() + "/getQuestion")
@@ -215,6 +235,8 @@ public class ServerUtils {
                     return response.readEntity(String.class);
                 }
                 case 417: {
+                    System.out.println("Expectation failed when trying to get the question");
+                    return  null;
                     System.out.println("Expectation failed when getting the question");
                     return null;
                     // something failed, show an apology message ?
@@ -225,7 +247,7 @@ public class ServerUtils {
                 }
             }
         } catch (Exception e) {
-            System.out.println("An exception occurred");
+            System.out.println("An exception occurred when trying to get the question");
         }
 
         return null;
@@ -242,33 +264,23 @@ public class ServerUtils {
                     .accept(APPLICATION_JSON)
                     .post(Entity.text(answer));
 
-            System.out.println("Response status: " + response.getStatus());
-
             switch (response.getStatus()) {
                 case 200: {
-                    System.out.println("Score update succeeded");
                     break;
                 }
                 case 417: {
-                    System.out.println("Expectation failed when getting the question");
+                    System.out.println("Expectation failed when trying to update the score");
                     break;
                     // something failed, show an apology message ?
                 }
                 case 400: {
-                    System.out.println("The request was invalid when trying to get the question");
+                    System.out.println("The request was invalid when trying to update the score");
                     break;
                 }
             }
         } catch (Exception e) {
-            System.out.println("An exception occurred");
+            System.out.println("An exception occurred when trying to update the score");
         }
-
-
-        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
-
-        String gameType = (gameConfiguration.isSinglePlayer()) ? "singlePlayer" : "multiPlayer";
-
-
     }
 
     /**
@@ -312,6 +324,55 @@ public class ServerUtils {
                 .target(SERVER).path("api/leaderboard/remove/" + roomId) //
                 .request(APPLICATION_JSON) //
                 .delete();
+    }
+
+    // Where we connect to the websocket
+
+    private StompSession session = connect("ws://localhost:8080/websocket");
+
+    /**
+     * Methods that creates the connection
+     * @param url where we get connected
+     * @return
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
+    private StompSession connect(String url) throws ExecutionException, InterruptedException {
+        var client = new StandardWebSocketClient();
+        var stomp = new WebSocketStompClient(client);
+
+        stomp.setMessageConverter(new MappingJackson2MessageConverter() );
+        return stomp.connect(url, new StompSessionHandlerAdapter() {} ).get();
+    }
+
+    /**
+     * We are subscribed for a whenever there is a message on the destination path
+     * @param destination  /topic/emojis
+     * @param consumer that is informed whenever a new message is received
+     */
+    public void registerForMessages(String destination, Consumer<List<String>> consumer)
+    {
+        session.subscribe(destination, new StompFrameHandler() {
+            @Override
+            public Type getPayloadType(StompHeaders headers) {
+                return List.class;                                    // the type of message we expect to receive
+            }
+
+            @Override
+            public void handleFrame(StompHeaders headers, Object payload) {
+                consumer.accept((List<String>) payload );
+            }
+        });
+    }
+
+    /**
+     *Method that sends the message
+     * @param destination /topic/emojis
+     * @param o the payload
+     */
+    public void send(String destination, Object o)
+    {
+        session.send(destination, o);
     }
 
     public Action getRandomAction() {
@@ -416,25 +477,23 @@ public class ServerUtils {
                     .accept(APPLICATION_JSON).get(Response.class);
 
 
-            System.out.println(response.getStatus());
-
             switch (response.getStatus()) {
                 case 200: {
-                    System.out.println("Am intrat");
                     return response.readEntity(String.class);
                 }
                 case 417: {
+                    System.out.println("Expectation failed when trying to get the answer");
                     System.out.println("Could not get answer of question");
                     return null;
                     // something failed, show an apology message ?
                 }
                 case 400: {
-                    System.out.println("The request was invalid");
+                    System.out.println("The request was invalid when trying to get the answer");
                     return null;
                 }
             }
         } catch (Exception e) {
-            System.out.println("An exception occurred");
+            System.out.println("An exception occurred when trying to get the answer");
         }
 
         return null;
@@ -454,18 +513,20 @@ public class ServerUtils {
                     return response.readEntity(String.class);
                 }
                 case 417: {
+                    System.out.println("Expectation failed when trying to get the player's score");
+                    return  null;
                     System.out.println("Expectation failed");
                     return null;
                     // something failed, show an apology message ?
                 }
                 case 400: {
-                    System.out.println("The request was invalid");
+                    System.out.println("The request was invalid when trying to get the player's score");
                     return "0";
                     //return null;
                 }
             }
         } catch (Exception e) {
-            System.out.println("An exception occurred");
+            System.out.println("An exception occurred when trying to get the player's score");
         }
 
         return null;
@@ -526,7 +587,6 @@ public class ServerUtils {
      */
     public ObservableList<GameContainer> listOfCurrentGames(String username) {
 
-        System.out.println();
         ArrayList<GameContainer> games = ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("api/" + username + "/MULTIPLAYER" + "/getGames")
                 .request(APPLICATION_JSON)
@@ -544,6 +604,7 @@ public class ServerUtils {
     }
 
     public int getNumPlayers() {
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         ;
         System.out.println("api/" + gameConfiguration.getUserName() + "/MULTIPLAYER/" + gameConfiguration.getRoomId() + "/numPlayers");
