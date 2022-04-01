@@ -398,7 +398,6 @@ public class GameRoomController {
 //                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
 //            }
         }
-
         if (gameType.equals("MULTIPLAYER")) {
             multiplayerGameService.useDoublePointJoker(username, roomId, temp);
 //            try {
