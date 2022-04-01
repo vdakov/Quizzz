@@ -120,15 +120,17 @@ public class QuestionActivityCtrl {
         {
             splitPane.setVisible(true);
             playersActivity.setCellValueFactory(q -> new SimpleStringProperty(q.getValue()));
+                server.registerForMessages("/topic/emojis", q -> {
+                    refresh(q.get(0), q.get(1), q.get(2));
+                });
         }
         else
         {
             splitPane.setVisible(false);
         }
-
-        server.registerForMessages("/topic/emojis", q -> {
-            refresh(q.get(0), q.get(1), q.get(1));
-        });
+      //  server.registerForMessages("/topic/emojis", q -> {
+        //    refresh(q.get(0), q.get(1), q.get(2));
+      //  });
 
     }
 
@@ -289,7 +291,7 @@ public class QuestionActivityCtrl {
         List<String> payload = new ArrayList<>();
         payload.add("2");
         payload.add(gameConfig.getUserName());
-        payload.add(gameConfig.getRoomId());
+        payload.add(gameConfig.getRoomId()); ;
         server.send("/topic/emojis", payload);
     }
 
@@ -324,24 +326,23 @@ public class QuestionActivityCtrl {
      * Method that refreshes the list of messages in the chat by adding a new message  whenever a user clicks on one of the objects.
      * @param type the unique number assigned to an object
      */
+
     public void refresh(String type, String username, String roomId) {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         List<String> chatEntries = new ArrayList<>();
-        System.out.println(username + "  " + roomId);
-
-            if (type.equals("1") && roomId.equals(gameConfiguration.getUserName())) {                                     // happy emoji
+            if (type.equals("1") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName()) ) {                                     // happy emoji
                 chatEntries.add(getTypeOfMessage("1", username));
             }
-            if (type.equals("2")  && roomId.equals(gameConfiguration.getUserName())) {                                     //sad emoji
+            if (type.equals("2") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName()) ) {                                     //sad emoji
                 chatEntries.add(getTypeOfMessage("2", username));
             }
-            if (type.equals("3") && roomId.equals(gameConfiguration.getUserName())) {                                     //no words emoji
+            if (type.equals("3") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName()) ){                                     //no words emoji
                 chatEntries.add(getTypeOfMessage("3", username));
             }
-            if (type.equals("4") && roomId.equals(gameConfiguration.getUserName())) {                                     //snowman emoji
+            if (type.equals("4") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName()) ) {                                     //snowman emoji
                 chatEntries.add(getTypeOfMessage("4", username));
             }
-            if (type.equals("5") && roomId.equals(gameConfiguration.getUserName())) {                                     //dead emoji
+            if (type.equals("5") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName()) ) {                                     //dead emoji
                 chatEntries.add(getTypeOfMessage("5", username));
             }
             chatEntries.addAll(tableview.getItems());
