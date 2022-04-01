@@ -380,32 +380,30 @@ public class GameRoomController {
      * @return whether the request was successful or not
      */
     @GetMapping("/useDoublePoint")
-    public  ResponseEntity<Object> useDoublePointJoker(@PathVariable("username") String username, @PathVariable("gameType") String gameType,
+    public ResponseEntity<Object> useDoublePointJoker(@PathVariable("username") String username, @PathVariable("gameType") String gameType,
                                                @PathVariable("roomId") String roomId) {
         System.out.println("-----used double point joker1");
         if (gameType.equals("SINGLEPLAYER")) {
-            singlePlayerGameService.useDoublePointJoker(username, roomId);
-//            try {
-//                return singlePlayerGameService.useDoublePointJoker(username, roomId) ?
-//                        ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-//            } catch (NumberFormatException e) {
-//                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-//            }
-//            catch (Exception e) {
-//                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
-//            }
+            try {
+                return singlePlayerGameService.useDoublePointJoker(username, roomId) ?
+                        ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            } catch (NumberFormatException e) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            }
+            catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
+            }
         }
         if (gameType.equals("MULTIPLAYER")) {
-            multiplayerGameService.useDoublePointJoker(username, roomId);
-//            try {
-//                return multiplayerGameService.useDoublePointJoker(username, roomId) ?
-//                        ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-//            } catch (Exception e) {
-//                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
-//            }
+            try {
+                return multiplayerGameService.useDoublePointJoker(username, roomId) ?
+                        ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
+            }
         }
 
-//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
     /**
