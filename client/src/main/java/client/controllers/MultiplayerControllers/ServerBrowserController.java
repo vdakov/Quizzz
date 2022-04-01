@@ -131,6 +131,7 @@ public class ServerBrowserController {
 
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         gameConfiguration.setUserName(username);
+        gameConfiguration.setCurrentQuestionNumber(0);
 
         String roomId = server.getRandomMultiPlayerRoomId();
 
@@ -160,6 +161,7 @@ public class ServerBrowserController {
 
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         gameConfiguration.setUserName(username);
+        gameConfiguration.setCurrentQuestionNumber(0);
 
         String roomId = this.gameIdField.getText();
 
