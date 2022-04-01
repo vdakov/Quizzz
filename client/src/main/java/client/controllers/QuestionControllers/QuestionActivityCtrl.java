@@ -88,6 +88,12 @@ public class QuestionActivityCtrl {
     protected TableColumn<String, String> playersActivity;
     @FXML
     protected SplitPane splitPane;
+    @FXML
+    protected Button hint;
+    @FXML
+    protected Button pointsX2;
+    @FXML
+    protected Button time;
 
 
 
@@ -322,6 +328,33 @@ public class QuestionActivityCtrl {
         server.send("/topic/emojis", payload);
     }
 
+    public void hintActivate(MouseEvent event)
+    {
+        List<String> payload = new ArrayList<>();
+        payload.add("Hint");
+        payload.add(gameConfig.getUserName());
+        payload.add(gameConfig.getRoomId());
+        server.send("/topic/emojis", payload);
+    }
+
+    public void pointsX2Activate(MouseEvent event)
+    {
+        List<String> payload = new ArrayList<>();
+        payload.add("x2 Points");
+        payload.add(gameConfig.getUserName());
+        payload.add(gameConfig.getRoomId());
+        server.send("/topic/emojis", payload);
+    }
+
+    public void timeActivate(MouseEvent event)
+    {
+        List<String> payload = new ArrayList<>();
+        payload.add("Half Time");
+        payload.add(gameConfig.getUserName());
+        payload.add(gameConfig.getRoomId());
+        server.send("/topic/emojis", payload);
+    }
+
     /**
      * Method that refreshes the list of messages in the chat by adding a new message  whenever a user clicks on one of the objects.
      * @param type the unique number assigned to an object
@@ -330,21 +363,31 @@ public class QuestionActivityCtrl {
     public void refresh(String type, String username, String roomId) {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         List<String> chatEntries = new ArrayList<>();
-            if (type.equals("1") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName()) ) {                                     // happy emoji
+            if (type.equals("1") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName()) ) {           // happy emoji
                 chatEntries.add(getTypeOfMessage("1", username));
             }
-            if (type.equals("2") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName()) ) {                                     //sad emoji
+            if (type.equals("2") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName()) ) {           //sad emoji
                 chatEntries.add(getTypeOfMessage("2", username));
             }
-            if (type.equals("3") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName()) ) {                                     //no words emoji
+            if (type.equals("3") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName()) ) {           //no words emoji
                 chatEntries.add(getTypeOfMessage("3", username));
             }
-            if (type.equals("4") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName()) ) {                                     //snowman emoji
+            if (type.equals("4") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName()) ) {           //snowman emoji
                 chatEntries.add(getTypeOfMessage("4", username));
             }
-            if (type.equals("5") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName()) ) {                                     //dead emoji
+            if (type.equals("5") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName()) ) {           //dead emoji
                 chatEntries.add(getTypeOfMessage("5", username));
             }
+            if (type.equals("Hint") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName()) ) {        //Hint joker
+                 chatEntries.add(getTypeOfMessage("Hint", username));
+            }
+            if (type.equals("x2 Points") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName()) ) {   //x2 Points Joker
+                 chatEntries.add(getTypeOfMessage("x2 Points", username));
+            }
+            if (type.equals("Half Time") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName()) ) {   //Half Time Joker
+                chatEntries.add(getTypeOfMessage("Half Time", username));
+            }
+
             chatEntries.addAll(tableview.getItems());
             tableview.setItems(FXCollections.observableList(chatEntries));
 
@@ -357,16 +400,22 @@ public class QuestionActivityCtrl {
      */
     public String getTypeOfMessage(String type, String username)
     {
-        if (type.equals("1"))
-            return   "  \u263A" + " " + username;
-        if (type.equals("2"))
-            return  "  \u2639" + " " + username;
-        if (type.equals("3"))
-            return "  \u2687" + " " + username;
-        if (type.equals("4"))
-            return  "  \u2603" +  " " + username;
-        if (type.equals("5"))
-            return  "  \u2620" + " " + username;
+        if (type.equals("1"))                                           // happy emoji
+            return   " \u263A" + " " + username;
+        if (type.equals("2"))                                           //sad emoji
+            return  " \u2639" + " " + username;
+        if (type.equals("3"))                                           //no words emoji
+            return " \u2687" + " " + username;
+        if (type.equals("4"))                                           //snowman emoji
+            return  " \u2603" +  " " + username;
+        if (type.equals("5"))                                           //dead emoji
+            return  " \u2620" + " " + username;
+        if (type.equals("Hint"))                                        //Hint Joker
+            return  "Hint by" + " " + username;
+        if (type.equals("x2 Points"))                                  //x2 Points Joker
+            return  "x2 Points by" + " " + username;
+        if (type.equals("Half Time"))                                  //Half Time Joker
+            return  "Half Time by" + " " + username;
         return null;
     }
 }
