@@ -62,13 +62,8 @@ public class ServerUtils {
                     return response.readEntity(String.class);
                 }
                 case 417: {
-<<<<<<< HEAD
                     System.out.println("Expectation failed when creating a new room");
                     return  null;
-=======
-                    System.out.println("Expectation failed");
-                    return null;
->>>>>>> see-multiplayer-scores
                     // something failed, show an apology message ?
                 }
                 case 400: {
@@ -102,14 +97,8 @@ public class ServerUtils {
                     return true;
                 }
                 case 417: {
-<<<<<<< HEAD
                     System.out.println("Expectation failed when trying to start the room");
                     return  false;
-=======
-                    System.out.println("Aici");
-                    System.out.println("Expectation failed");
-                    return false;
->>>>>>> see-multiplayer-scores
                     // something failed, show an apology message ?
                 }
                 case 400: {
@@ -234,13 +223,8 @@ public class ServerUtils {
                     return response.readEntity(String.class);
                 }
                 case 417: {
-<<<<<<< HEAD
                     System.out.println("Expectation failed when trying to get the question");
                     return  null;
-=======
-                    System.out.println("Expectation failed when getting the question");
-                    return null;
->>>>>>> see-multiplayer-scores
                     // something failed, show an apology message ?
                 }
                 case 400: {
@@ -445,13 +429,8 @@ public class ServerUtils {
                     return response.readEntity(String.class);
                 }
                 case 417: {
-<<<<<<< HEAD
                     System.out.println("Expectation failed when trying to get the player's score");
                     return  null;
-=======
-                    System.out.println("Expectation failed");
-                    return null;
->>>>>>> see-multiplayer-scores
                     // something failed, show an apology message ?
                 }
                 case 400: {
@@ -524,11 +503,6 @@ public class ServerUtils {
 
     public int getNumPlayers() {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
-<<<<<<< HEAD
-=======
-        ;
-        System.out.println("api/" + gameConfiguration.getUserName() + "/MULTIPLAYER/" + gameConfiguration.getRoomId() + "/numPlayers");
->>>>>>> see-multiplayer-scores
         return ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/MULTIPLAYER/" + gameConfiguration.getRoomId() + "/numPlayers")
                 .request(APPLICATION_JSON)
