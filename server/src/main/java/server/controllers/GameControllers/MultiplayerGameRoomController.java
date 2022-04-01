@@ -1,5 +1,6 @@
 package server.controllers.GameControllers;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -47,26 +48,53 @@ public class MultiplayerGameRoomController {
         }
     }
 
-    private static Map<Object, Consumer<String>> listeners = new HashMap<>();
+    private static Map<Pair<Object, String>, Consumer<Boolean>> startingGameListeners = new HashMap<>();
 
-    public static Map<Object, Consumer<String>> getListeners() {
-        return listeners;
+    public static Map<Pair<Object, String>, Consumer<Boolean>> getListeners() {
+        return startingGameListeners;
     }
 
     @GetMapping("/waitForGameToStart")
-    public DeferredResult<ResponseEntity<String>> waitForGameToStart(@PathVariable("roomId") String roomId) {
+    public DeferredResult<ResponseEntity<Boolean>> waitForGameToStart(@PathVariable("roomId") String roomId) {
         var noContent = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        var res = new DeferredResult<ResponseEntity<String>>(50000L, noContent);
+        var res = new DeferredResult<ResponseEntity<Boolean>>(50000L, noContent);
 
-        var key = new Object();
-        listeners.put(key, q -> {
-            res.setResult(ResponseEntity.ok(q));
+        var key = Pair.of(new Object(), roomId);
+        startingGameListeners.put(key, q -> {
+            res.setResult(ResponseEntity.ok(true));
         });
         res.onCompletion(() -> {
-            listeners.remove(key);
+            startingGameListeners.remove(key);
         });
 
         return res;
+    }
+
+    private static Map<Object, Consumer<Pair<String, Integer>>> playerNumberListeners = new HashMap<>();
+
+    public static  Map<Object, Consumer<Pair<String, Integer>>> getPlayerNumberListeners() {
+        return playerNumberListeners;
+    }
+
+    @GetMapping("/getPlayerNumber")
+    public DeferredResult<ResponseEntity<Integer>> getPlayerNumber(@PathVariable("roomId") String roomId) {
+        var noContent = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        var res = new DeferredResult<ResponseEntity<Integer>>(50000L, noContent);
+
+        var key = new Object();
+        playerNumberListeners.put(key, q -> {
+            //res.setResult(ResponseEntity.ok(Pair.of(roomId, )));
+        });
+        res.onCompletion(() -> {
+            startingGameListeners.remove(key);
+        });
+
+        return res;
+    }
+
+    @GetMapping("/numPlayers")
+    public Integer getNumPlayers(@PathVariable String roomId) {
+        return (Integer) this.multiplayerGameService.getGame(roomId).getNumPlayers();
     }
 
     @GetMapping("/removePlayer")
@@ -77,11 +105,6 @@ public class MultiplayerGameRoomController {
     @GetMapping("/")
     public MultiplayerRoom getGame(@PathVariable String roomId) {
         return this.multiplayerGameService.getGame(roomId);
-    }
-
-    @GetMapping("/numPlayers")
-    public Integer getNumPlayers(@PathVariable String roomId) {
-        return (Integer) this.multiplayerGameService.getGame(roomId).getNumPlayers();
     }
 
     @MessageMapping("/emojis")  // /app/emojis

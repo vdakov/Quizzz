@@ -192,7 +192,7 @@ public class ServerUtils {
 
     private static final ExecutorService EXEC = Executors.newSingleThreadExecutor();
 
-    public void waitForMultiPlayerRoomStart(Consumer<String> startedGame) {
+    public void waitForMultiPlayerRoomStart(Consumer<Boolean> startedGame) {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         EXEC.submit(() -> {
             while (!Thread.interrupted()) {
@@ -207,9 +207,12 @@ public class ServerUtils {
                     continue;
                 }
 
-                String gameInProgress = res.readEntity(String.class);
-                startedGame.accept(gameInProgress);
-                this.stop();
+                Boolean gameInProgress = res.readEntity(Boolean.class);
+
+                if (gameInProgress) {
+                    startedGame.accept(true);
+                    this.stop();
+                }
             }
         });
     }

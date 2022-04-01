@@ -123,7 +123,11 @@ public class MultiplayerGameService {
                 createNewMultiPlayerGame(null);
             }
 
-            MultiplayerGameRoomController.getListeners().forEach((k, l) -> l.accept(roomId));
+            MultiplayerGameRoomController.getListeners().forEach((k, l) -> {
+                if (k.getValue().equals(roomId)) {
+                    l.accept(true);
+                }
+            });
 
 
             return roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() == Room.RoomStatus.ONGOING;

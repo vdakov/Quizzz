@@ -12,7 +12,6 @@ import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
-import java.util.HashSet;
 
 
 public class WaitingRoomController {
@@ -29,13 +28,10 @@ public class WaitingRoomController {
     @FXML
     private Text gameID; // displays the gameID of the current waiting room
 
-    private final HashSet<String> ongoingGames;
-
     @Inject
     public WaitingRoomController(ServerUtils server, SceneCtrl sceneCtrl) {
         this.server = server;
         this.sceneCtrl = sceneCtrl;
-        this.ongoingGames = new HashSet<>();
     }
 
     /**
@@ -65,15 +61,10 @@ public class WaitingRoomController {
         this.playerLabel.setText(Integer.toString(server.getNumPlayers()));
 
         server.waitForMultiPlayerRoomStart(q -> {
-            ongoingGames.add(q);
-
-            if (ongoingGames.contains(gameConfiguration.getRoomId())) {
-                //server.stop();
-                try {
-                    sceneCtrl.showNextQuestion();
-                } catch (Exception e) {
-                    System.out.println("Exception occurred when trying to start the game by showing the next question");
-                }
+            try {
+                sceneCtrl.showNextQuestion();
+            } catch (Exception e) {
+                System.out.println("Exception occurred when trying to start the game by showing the next question");
             }
         });
 
