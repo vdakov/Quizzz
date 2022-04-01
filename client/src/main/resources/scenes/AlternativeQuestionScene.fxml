@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #3084f2;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.QuestionControllers.AlternativeQuestionActivityCtrl">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #3084f2;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.QuestionControllers.AlternativeQuestionActivityCtrl">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="10.0" percentWidth="5.0" prefWidth="30.0" />
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="133.66668605804443" minWidth="7.0" percentWidth="15.0" prefWidth="73.0" />
@@ -158,36 +168,48 @@
       </Text>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
          <children>
-            <TableView fx:id="tableview" layoutX="51.0" layoutY="6.0" prefHeight="348.0" prefWidth="141.0">
-              <columns>
-                <TableColumn fx:id="playersActivity" prefWidth="125.0" text="Players Activity" />
-              </columns>
-            </TableView>
-            <ImageView fx:id="emoji1" fitHeight="50.0" fitWidth="50.0" layoutY="39.0" onMouseClicked="#emoji1Display" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../pictures/emojis/tears-emoji-png.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="emoji2" fitHeight="50.0" fitWidth="50.0" layoutY="99.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../pictures/emojis/sunglasses-emoji.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="emoji3" fitHeight="50.0" fitWidth="50.0" layoutY="171.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../pictures/emojis/hearts-eyes-emoji.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="emoji5" fitHeight="50.0" fitWidth="50.0" layoutY="292.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../pictures/emojis/angry-emoji.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="emoji4" fitHeight="50.0" fitWidth="50.0" layoutY="234.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../pictures/emojis/fearful-emoji.png" />
-               </image>
-            </ImageView>
+            <SplitPane fx:id="splitPane" dividerPositions="0.29797979797979796" layoutY="-1.0" prefHeight="360.0" prefWidth="200.0">
+               <items>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="358.0" prefWidth="50.0" style="-fx-background-color: #fffee9;">
+                     <children>
+                        <Label fx:id="emoji5" layoutY="283.0" onMouseClicked="#emoji5Display" prefHeight="75.0" prefWidth="55.0" text="☠">
+                           <font>
+                              <Font size="50.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="emoji4" layoutX="-3.0" layoutY="219.0" onMouseClicked="#emoji4Display" prefHeight="75.0" prefWidth="55.0" text="☃">
+                           <font>
+                              <Font size="50.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="emoji3" layoutY="156.0" onMouseClicked="#emoji3Display" prefHeight="75.0" prefWidth="55.0" text="⚇">
+                           <font>
+                              <Font size="50.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="emoji2" layoutY="81.0" onMouseClicked="#emoji2Display" prefHeight="75.0" prefWidth="55.0" text="☹">
+                           <font>
+                              <Font size="50.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="emoji1" layoutY="14.0" onMouseClicked="#emoji1Display" prefHeight="75.0" prefWidth="55.0" text="☺">
+                           <font>
+                              <Font size="50.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="328.0" prefWidth="136.0">
+                     <children>
+                        <TableView fx:id="tableview" layoutX="4.0" layoutY="5.0" prefHeight="348.0" prefWidth="128.0" style="-fx-background-color: #ffffff; -fx-font-size: 14;">
+                           <columns>
+                              <TableColumn fx:id="playersActivity" prefWidth="174.0" style="-fx-background-color: #fffee9; -fx-font-size: 18;" text="Chat" />
+                           </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+               </items>
+            </SplitPane>
          </children>
       </AnchorPane>
 

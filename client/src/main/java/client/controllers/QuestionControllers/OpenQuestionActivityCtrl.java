@@ -4,6 +4,7 @@ import client.communication.ServerUtils;
 import client.controllers.SceneCtrl;
 import com.google.inject.Inject;
 import commons.Questions.OpenQuestion;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+
 
 import java.util.concurrent.ExecutionException;
 import javax.imageio.ImageIO;
@@ -56,6 +58,20 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         correctAnswerRectangle.setOpacity(0);
         answerTextfield.setText("");
         answered = false;
+
+        if (!gameConfig.isSinglePlayer())
+        {
+            splitPane.setVisible(true);
+            playersActivity.setCellValueFactory(q -> new SimpleStringProperty(q.getValue()));
+        }
+        else
+        {
+            splitPane.setVisible(false);
+        }
+
+        server.registerForMessages("/topic/emojis", q -> {
+            refresh(q.get(0), q.get(1), q.get(1));
+        });
     }
 
     /**
@@ -79,8 +95,8 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
 
         this.image.setImage(SwingFXUtils.toFXImage(bImage, null));
 
-        if (gameConfig.isSinglePlayer()) tableview.setVisible(false);
-        else tableview.setVisible(true);
+        if (gameConfig.isSinglePlayer()) splitPane.setVisible(false);
+        else splitPane.setVisible(true);
 
         initialize();
         startTimer();
