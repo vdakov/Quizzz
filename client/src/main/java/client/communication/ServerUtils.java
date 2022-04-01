@@ -63,7 +63,7 @@ public class ServerUtils {
                 }
                 case 417: {
                     System.out.println("Expectation failed when creating a new room");
-                    return  null;
+                    return null;
                     // something failed, show an apology message ?
                 }
                 case 400: {
@@ -98,7 +98,7 @@ public class ServerUtils {
                 }
                 case 417: {
                     System.out.println("Expectation failed when trying to start the room");
-                    return  false;
+                    return false;
                     // something failed, show an apology message ?
                 }
                 case 400: {
@@ -165,7 +165,7 @@ public class ServerUtils {
                 }
                 case 417: {
                     System.out.println("Expectation failed when trying to get the random room");
-                    return  null;
+                    return null;
                     // something failed, show an apology message ?
                 }
                 case 400: {
@@ -180,11 +180,11 @@ public class ServerUtils {
         return null;
     }
 
-    private static final ExecutorService EXEC = Executors.newSingleThreadExecutor();
+    private static ExecutorService EXEC = Executors.newSingleThreadExecutor()
 
     public void waitForMultiPlayerRoomStart(Consumer<String> startedGame) {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
-        EXEC.submit(() -> {
+        EXEC.execute(() -> {
             while (!Thread.interrupted()) {
 
                 var res = ClientBuilder.newClient(new ClientConfig())
@@ -202,6 +202,42 @@ public class ServerUtils {
                 this.stop();
             }
         });
+    }
+
+    public void waitForFilledLeaderboard(Consumer<List<LeaderboardEntry>> l) {
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+        EXEC.execute(() -> {
+            while (!Thread.interrupted()) {
+
+                var res = ClientBuilder.newClient(new ClientConfig())
+                        .target(SERVER).path("api/leaderboard/" + gameConfiguration.getUserName()
+                                + gameConfiguration.getRoomId() + "/filledLeaderboard")
+                        .request(APPLICATION_JSON)
+                        .accept(APPLICATION_JSON).get(Response.class);
+
+                if (res.getStatus() == 204) {
+                    continue;
+                }
+
+                List leaderboard = res.readEntity(List.class);
+                l.accept(leaderboard);
+                this.stop();
+            }
+        });
+    }
+
+    public void checkLeaderboardFilled() {
+        try {
+            GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+
+            Response response = ClientBuilder.newClient(new ClientConfig()) //
+                    .target(SERVER).path("api/leaderboard/checkLeaderboardFilled/" + gameConfiguration.getRoomId())
+                    .request(APPLICATION_JSON)
+                    .accept(APPLICATION_JSON)
+                    .get();
+        } catch (Exception e) {
+            System.out.println("An exception occurred when trying to check if leaderboard is ready");
+        }
     }
 
     public void stop() {
@@ -224,7 +260,7 @@ public class ServerUtils {
                 }
                 case 417: {
                     System.out.println("Expectation failed when trying to get the question");
-                    return  null;
+                    return null;
                     // something failed, show an apology message ?
                 }
                 case 400: {
@@ -430,7 +466,7 @@ public class ServerUtils {
                 }
                 case 417: {
                     System.out.println("Expectation failed when trying to get the player's score");
-                    return  null;
+                    return null;
                     // something failed, show an apology message ?
                 }
                 case 400: {

@@ -77,7 +77,7 @@ public class ServerBrowserController {
         gameTable.setRowFactory(event -> {
             TableRow<GameContainer> row = new TableRow<>();
 
-            row.setOnMouseEntered(event1 -> {
+            row.setOnMouseClicked(event1 -> {
 
 
                 if (row.isSelected()) {
@@ -175,8 +175,8 @@ public class ServerBrowserController {
         gameConfiguration.setRoomId(roomId);
 
         if (!server.joinMultiPlayerRoom()) {
-                missingUsername.setText("The username is already taken!");
-                return;
+            missingUsername.setText("The username is already taken!");
+            return;
         }
         this.sceneCtrl.showWaitingRoom();
     }

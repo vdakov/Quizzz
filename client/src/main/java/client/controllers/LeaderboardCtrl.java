@@ -91,6 +91,8 @@ public class LeaderboardCtrl {
 
         getLeaderboard();
 
+        server.checkLeaderboardFilled();
+
         if (gameConfig.getCurrentQuestionNumber() == 10) {
             progressBarTime.setVisible(true);
             timeLabel.setVisible(true);
@@ -102,23 +104,33 @@ public class LeaderboardCtrl {
     }
 
     public void getLeaderboard() {
-        List<LeaderboardEntry> leaderboardEntries = server.getLeaderboard(GameConfiguration.getConfiguration().getRoomId());
-        List<LeaderboardEntry> top10 = leaderboardEntries.subList(0, Integer.min(10, leaderboardEntries.size()));
+        if (gameConfig.getCurrentQuestionNumber() >= 9) {
+            server.waitForFilledLeaderboard(q -> {
+                fillLeaderboard(q);
+            });
+            return;
+        } else {
+            fillLeaderboard(server.getLeaderboard(GameConfiguration.getConfiguration().getRoomId()));
+        }
+    }
+
+    public void fillLeaderboard(List<LeaderboardEntry> entries) {
+        List<LeaderboardEntry> top10 = entries.subList(0, Integer.min(10, entries.size()));
 
         if (gameConfig.getRoomId() != null) {
             LeaderboardEntry spacer = new LeaderboardEntry("...", "", -1, false); //a spacer where all columns will be "..."
             spacer.setRank(-1);
             top10.add(spacer);
-            top10.add(leaderboardEntries.stream() //add the entry with the same roomId and username as the player
+            top10.add(entries.stream() //add the entry with the same roomId and username as the player
                     .filter(e -> e.getRoomId().equals(gameConfig.getRoomId()) && e.getUsername().equals(gameConfig.getUserName()))
                     .collect(Collectors.toList()).get(0));
         }
         leaderboardTable.setItems(FXCollections.observableList(top10));
 
-        if (leaderboardEntries.size() >= 3) {
-            place1.setText(leaderboardEntries.get(0).getUsername());
-            place2.setText(leaderboardEntries.get(1).getUsername());
-            place3.setText(leaderboardEntries.get(2).getUsername());
+        if (entries.size() >= 3) {
+            place1.setText(entries.get(0).getUsername());
+            place2.setText(entries.get(1).getUsername());
+            place3.setText(entries.get(2).getUsername());
         }
     }
 

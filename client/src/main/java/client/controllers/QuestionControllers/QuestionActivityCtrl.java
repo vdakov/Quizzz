@@ -125,15 +125,12 @@ public class QuestionActivityCtrl {
         addedPoints.setText(" ");
         addedPointsInt = 0;
 
-        if (gameConfig.isSinglePlayer())
-        {
+        if (gameConfig.isSinglePlayer()) {
             tableview.setVisible(true);
             playersActivity.setCellValueFactory(q -> new SimpleStringProperty(new ChatEntry(gameConfig.getUserName()) + ""));
+        } else {
+            tableview.setVisible(false);
         }
-             else
-             {
-                 tableview.setVisible(false);
-             }
 
 
     }
@@ -227,8 +224,7 @@ public class QuestionActivityCtrl {
 
     public void displayNextQuestion() throws IOException {
         timeline.stop();
-        if (gameConfig.getCurrentQuestionNumber() % 10 == 0) {
-            server.addOrUpdateLeaderboardEntry(gameConfig.getUserName(), gameConfig.getRoomId(), Integer.parseInt(server.getScore()));
+        if (gameConfig.getCurrentQuestionNumber() == 9 || gameConfig.getCurrentQuestionNumber() == 19) {
             sceneCtrl.showLeaderboard();
         } else sceneCtrl.showNextQuestion();
     }
@@ -256,13 +252,13 @@ public class QuestionActivityCtrl {
         var client = new StandardWebSocketClient();
         var stomp = new WebSocketStompClient(client);
 
-        stomp.setMessageConverter(new MappingJackson2MessageConverter() );
-            return stomp.connect(url, new StompSessionHandlerAdapter() {} ).get();
+        stomp.setMessageConverter(new MappingJackson2MessageConverter());
+        return stomp.connect(url, new StompSessionHandlerAdapter() {
+        }).get();
 
     }
 
-    public void registerForMessages(String destination, Consumer<ChatEntry> consumer)
-    {
+    public void registerForMessages(String destination, Consumer<ChatEntry> consumer) {
         session.subscribe(destination, new StompFrameHandler() {
             @Override
             public Type getPayloadType(StompHeaders headers) {
@@ -271,21 +267,19 @@ public class QuestionActivityCtrl {
 
             @Override
             public void handleFrame(StompHeaders headers, Object payload) {
-                consumer.accept((ChatEntry) payload );
+                consumer.accept((ChatEntry) payload);
             }
         });
     }
 
-    public void send(String destination, Object o)
-    {
+    public void send(String destination, Object o) {
         session.send(destination, o);
     }
 
-    public void emoji1Display(MouseEvent event)
-    {
+    public void emoji1Display(MouseEvent event) {
         server.addChatEntry(gameConfig.getUserName(), emoji1);
-       send("/app/emojis", new ChatEntry(gameConfig.getUserName(), emoji1));
-       refresh();
+        send("/app/emojis", new ChatEntry(gameConfig.getUserName(), emoji1));
+        refresh();
     }
 
     public void refresh() {

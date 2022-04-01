@@ -1,18 +1,26 @@
 package server.controllers;
 
 import commons.Leaderboard.LeaderboardEntry;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.async.DeferredResult;
 import server.services.GameServices.LeaderboardService;
+import server.services.GameServices.MultiplayerGameService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.function.Consumer;
 
 @RestController
 @RequestMapping("api/leaderboard")
 public class LeaderboardController {
     private LeaderboardService service;
+    private MultiplayerGameService multiplayerGameService;
 
-    public LeaderboardController(LeaderboardService service) {
+    public LeaderboardController(LeaderboardService service, MultiplayerGameService multiplayerGameService) {
         this.service = service;
+        this.multiplayerGameService = multiplayerGameService;
     }
 
     /**
@@ -36,5 +44,33 @@ public class LeaderboardController {
     @DeleteMapping("/remove/{roomId}")
     public void removeEntries(@PathVariable String roomId) {
         service.removeEntries(roomId);
+    }
+
+    static private final HashMap<Object, Consumer<List<LeaderboardEntry>>> listeners = new HashMap<>();
+
+    @GetMapping("/{username}/{roomId}/filledLeaderboard")
+    public DeferredResult<ResponseEntity<List<LeaderboardEntry>>> waitForFilledLeaderboard(@PathVariable("username") String username, @PathVariable("roomId") String roomId) {
+        var noContent = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        var res = new DeferredResult<ResponseEntity<List<LeaderboardEntry>>>(50000L, noContent);
+
+        var key = new Object();
+        listeners.put(key, q -> {
+            res.setResult(ResponseEntity.ok(q));
+        });
+        res.onCompletion(() -> {
+            listeners.remove(key);
+        });
+
+        return res;
+    }
+
+    @GetMapping("/checkLeaderboardFilled/{roomId}")
+    public void checkLeaderboardFilled(@PathVariable("roomId") String roomId) {
+        listeners.forEach((k, v) -> {
+            var entries = service.getByRoomId(roomId);
+            if (entries.size() == multiplayerGameService.getGame(roomId).getNumPlayers()) {
+                v.accept(entries);
+            }
+        });
     }
 }
