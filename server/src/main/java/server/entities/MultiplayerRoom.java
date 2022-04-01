@@ -70,7 +70,7 @@ public class MultiplayerRoom extends Room {
     public Boolean getTimeJokerUsed(String username) { return playerTimeJokerUsed.get(username); }
 
     public void useHintJoker(String username) { playerHintJokerUsed.put(username, true); }
-    public void useDoublePointJoker(String username, Boolean temp) { playerDoublePointJokerUsed.put(username, temp); }
+    public void useDoublePointJoker(String username) { playerDoublePointJokerUsed.put(username, true); }
     public void useTimeJoker(String username) { playerTimeJokerUsed.put(username, true); }
 
     /**

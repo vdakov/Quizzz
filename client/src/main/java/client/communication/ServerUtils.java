@@ -305,15 +305,14 @@ public class ServerUtils {
             System.out.println("Helliii");
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
 
-           ClientBuilder.newClient(new ClientConfig()) //
+            Response response = ClientBuilder.newClient(new ClientConfig()) //
                     .target(SERVER).path("api/" +  gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" +
                             gameConfiguration.getRoomId() + "/useDoublePoint")
                     .request()
                     .accept(APPLICATION_JSON)
-                    .put(Entity.entity(true, APPLICATION_JSON), Boolean.class);
-//                    .get();
+                    .get();
 
-//            System.out.println("Response status: " + response.getStatus());
+            System.out.println("Response status: " + response.getStatus());
 
         } catch (Exception e) {
             e.printStackTrace();

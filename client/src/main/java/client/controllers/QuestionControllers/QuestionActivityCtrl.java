@@ -73,8 +73,6 @@ public class QuestionActivityCtrl {
     @FXML
     protected String correctAnswer;
     @FXML
-    protected Button emoji;
-    @FXML
     protected Button hintJoker;
     @FXML
     protected Button doublePointJoker;
@@ -135,8 +133,6 @@ public class QuestionActivityCtrl {
             splitPane.setVisible(false);
         }
 
-        if (gameConfig.isSinglePlayer()) emoji.setVisible(false);
-        else emoji.setVisible(true);
 
         hintJoker.setDisable(false);
         if (getHintJokerUsed() != null) {

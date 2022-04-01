@@ -229,7 +229,7 @@ public class SingleplayerGameService {
             return null;
         }
     }
-    public Boolean useDoublePointJoker(String username, String roomId, Boolean temp) {
+    public Boolean useDoublePointJoker(String username, String roomId) {
         try {
             if (!username.equals(roomCatalog.getSinglePlayerRoom(roomId).getRoomCreator())) {
                 return false;

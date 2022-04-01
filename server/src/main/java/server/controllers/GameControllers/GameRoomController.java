@@ -251,7 +251,6 @@ public class GameRoomController {
      * @param roomId         the id of the game that the player is in
      * @return if DoublePoint has been used this game
      */
-
     @GetMapping("/getDoublePointJokerUsed")
     public ResponseEntity<Boolean> getDoublePointJokerUsed(@PathVariable("username") String username, @PathVariable("gameType") String gameType, @PathVariable("roomId") String roomId) {
         if (gameType.equals("SINGLEPLAYER")) {
@@ -380,12 +379,12 @@ public class GameRoomController {
      * @param roomId the id of the game that the player is in
      * @return whether the request was successful or not
      */
-    @PutMapping("/useDoublePoint")
-    public void useDoublePointJoker(@PathVariable("username") String username, @PathVariable("gameType") String gameType,
-                                               @PathVariable("roomId") String roomId, @RequestBody Boolean temp) {
+    @GetMapping("/useDoublePoint")
+    public  ResponseEntity<Object> useDoublePointJoker(@PathVariable("username") String username, @PathVariable("gameType") String gameType,
+                                               @PathVariable("roomId") String roomId) {
         System.out.println("-----used double point joker1");
         if (gameType.equals("SINGLEPLAYER")) {
-            singlePlayerGameService.useDoublePointJoker(username, roomId, temp);
+            singlePlayerGameService.useDoublePointJoker(username, roomId);
 //            try {
 //                return singlePlayerGameService.useDoublePointJoker(username, roomId) ?
 //                        ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -397,7 +396,7 @@ public class GameRoomController {
 //            }
         }
         if (gameType.equals("MULTIPLAYER")) {
-            multiplayerGameService.useDoublePointJoker(username, roomId, temp);
+            multiplayerGameService.useDoublePointJoker(username, roomId);
 //            try {
 //                return multiplayerGameService.useDoublePointJoker(username, roomId) ?
 //                        ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
