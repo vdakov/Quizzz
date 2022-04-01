@@ -180,7 +180,7 @@ public class ServerUtils {
         return null;
     }
 
-    private static ExecutorService EXEC = Executors.newSingleThreadExecutor()
+    private static ExecutorService EXEC = Executors.newSingleThreadExecutor();
 
     public void waitForMultiPlayerRoomStart(Consumer<String> startedGame) {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
