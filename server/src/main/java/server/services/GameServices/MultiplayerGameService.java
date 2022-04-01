@@ -57,7 +57,7 @@ public class MultiplayerGameService {
      */
     public String createNewMultiPlayerGame(String username) {
         try {
-            String roomId               = Util.getAlphaNumericString(10);
+            String roomId               = Util.getAlphaNumericString(5);
             ActionCatalog actionCatalog = new ActionCatalog(activityRepository.findAll());
 
             List<Pair<Question, String>> questionList = QuestionGenerator.generateQuestions(actionCatalog, 20, 2, 7, new Random());
