@@ -336,7 +336,7 @@ public class QuestionActivityCtrl {
             if (type.equals("2") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName()) ) {                                     //sad emoji
                 chatEntries.add(getTypeOfMessage("2", username));
             }
-            if (type.equals("3") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName()) ){                                     //no words emoji
+            if (type.equals("3") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName()) ) {                                     //no words emoji
                 chatEntries.add(getTypeOfMessage("3", username));
             }
             if (type.equals("4") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName()) ) {                                     //snowman emoji
