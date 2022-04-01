@@ -307,7 +307,6 @@ public class GameRoomController {
     @PostMapping("/{questionNumber}/postAnswer")
     public ResponseEntity<Object> postAnswer(@PathVariable("username") String username, @PathVariable("gameType") String gameType,
                                                @PathVariable("roomId") String roomId, @PathVariable("questionNumber") String questionNumber, @RequestBody String userAnswer) {
-        System.out.println("Am primit requestu");
         if (gameType.equals("SINGLEPLAYER")) {
             try {
                 int questionNo = Integer.parseInt(questionNumber);
@@ -323,7 +322,6 @@ public class GameRoomController {
 
         if (gameType.equals("MULTIPLAYER")) {
             try {
-                System.out.println("Am primit requestu");
                 int questionNo = Integer.parseInt(questionNumber);
                 return multiplayerGameService.updateMultiPlayerScore(username, roomId, questionNo, userAnswer) ?
                         ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();

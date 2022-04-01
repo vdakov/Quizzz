@@ -7,12 +7,10 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.*;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -23,8 +21,9 @@ import javax.inject.Inject;
 import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.Collections;
+import java.util.concurrent.ExecutionException;
 
 public class QuestionActivityCtrl {
     // constructor needed variables
@@ -79,14 +78,31 @@ public class QuestionActivityCtrl {
     protected Button hintJoker;
     @FXML
     protected Button doublePointJoker;
+    @FXML
+    protected Label emoji1;
+    @FXML
+    protected Label emoji2;
+    @FXML
+    protected Label emoji3;
+    @FXML
+    protected Label emoji4;
+    @FXML
+    protected Label emoji5;
+    @FXML
+    protected TableView tableview;
+    @FXML
+    protected TableColumn<String, String> playersActivity;
+    @FXML
+    protected SplitPane splitPane;
+
+
 
     protected IntegerProperty timeSeconds =
             new SimpleIntegerProperty((int) startTime);
     protected Timeline timeline;
 
-
     @Inject
-    public QuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
+    public QuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) throws ExecutionException, InterruptedException {
         this.server = server;
         this.sceneCtrl = sceneCtrl;
     }
@@ -94,6 +110,7 @@ public class QuestionActivityCtrl {
 
     /**
      * Initialises all the colors for the current scene
+     * If the game is multiplayer it displays the option to use emojis and to post them in a chat
      */
     public void initialize() throws IOException {
         firstOptionText.setBorder(Border.EMPTY);
@@ -108,6 +125,15 @@ public class QuestionActivityCtrl {
         addedPoints.setText(" ");
         addedPointsInt = 0;
 
+        if (!gameConfig.isSinglePlayer())
+        {
+            splitPane.setVisible(true);
+            playersActivity.setCellValueFactory(q -> new SimpleStringProperty(q.getValue()));
+        }
+        else
+        {
+            splitPane.setVisible(false);
+        }
 
         if (gameConfig.isSinglePlayer()) emoji.setVisible(false);
         else emoji.setVisible(true);
@@ -116,6 +142,10 @@ public class QuestionActivityCtrl {
         if (getHintJokerUsed() != null) {
             hintJoker.setDisable(getHintJokerUsed());
         }
+
+        server.registerForMessages("/topic/emojis", q -> {
+            refresh(q.get(0), q.get(1), q.get(1));
+        });
 
     }
 
@@ -130,7 +160,6 @@ public class QuestionActivityCtrl {
         userAnswer = current.getText();
         answered = true;
 
-        System.out.println("Tried to update answer");
         server.updateScore(userAnswer);
 
         answerUpdate();
@@ -207,22 +236,36 @@ public class QuestionActivityCtrl {
         System.out.println("Time took to answer - " + timeSeconds);
     }
 
+    /**
+     * Method that displays the next question or stops the game after the last question ends
+     * @throws IOException
+     */
     public void displayNextQuestion() throws IOException {
         timeline.stop();
         if (gameConfig.getCurrentQuestionNumber() >= 19) finishGame();
         else sceneCtrl.showNextQuestion();
     }
 
+    /**
+     * Method that adds the score of the player to the leaderboard when a game finishes
+     */
     public void finishGame() {
         server.addLeaderboardEntry(gameConfig.getUserName(), gameConfig.getRoomId(), Integer.parseInt(server.getScore()));
         sceneCtrl.showLeaderboard();
     }
 
+    /*
+        Method that ends the game and returns the player to the main screen of the app
+     */
     public void goToMainScreen() throws IOException {
         timeline.stop();
         sceneCtrl.showMainScreenScene();
     }
 
+    /**
+     * Getter for the correct answer
+     * @return the correct answer from the server
+     */
     public void useHintJoker() {
         //Joker that eliminates the wrong answer
         if (server.getHintJokerUsed()) { return; }
@@ -260,10 +303,18 @@ public class QuestionActivityCtrl {
         return server.getAnswer();
     }
 
+    /**
+     * Getter for the score
+     * @return the score from the server
+     */
     public int getPointsInt() {
         return Integer.parseInt(server.getScore());
     }
 
+    /**
+     * Getter for the question number
+     * @return the current question number
+     */
     public Boolean getHintJokerUsed() {
         return server.getHintJokerUsed();
     }
@@ -274,6 +325,105 @@ public class QuestionActivityCtrl {
 
     public int getQuestionNumber() {
         return gameConfig.getCurrentQuestionNumber();
+    }
+
+    /**
+     * Methods that will send to the server the type of emojy the player has selected
+     * @param event  the users clicks on the label
+     */
+
+    public void emoji1Display(MouseEvent event)
+    {
+        List<String> payload = new ArrayList<>();
+        payload.add("1");
+        payload.add(gameConfig.getUserName());
+        payload.add(gameConfig.getRoomId());
+        server.send("/topic/emojis", payload);
+    }
+
+    public void emoji2Display(MouseEvent event)
+    {
+        List<String> payload = new ArrayList<>();
+        payload.add("2");
+        payload.add(gameConfig.getUserName());
+        payload.add(gameConfig.getRoomId());
+        server.send("/topic/emojis", payload);
+    }
+
+    public void emoji3Display(MouseEvent event)
+    {
+        List<String> payload = new ArrayList<>();
+        payload.add("3");
+        payload.add(gameConfig.getUserName());
+        payload.add(gameConfig.getRoomId());
+        server.send("/topic/emojis", payload);
+    }
+
+    public void emoji4Display(MouseEvent event)
+    {
+        List<String> payload = new ArrayList<>();
+        payload.add("4");
+        payload.add(gameConfig.getUserName());
+        payload.add(gameConfig.getRoomId());
+        server.send("/topic/emojis", payload);
+    }
+
+    public void emoji5Display(MouseEvent event)
+    {
+        List<String> payload = new ArrayList<>();
+        payload.add("5");
+        payload.add(gameConfig.getUserName());
+        payload.add(gameConfig.getRoomId());
+        server.send("/topic/emojis", payload);
+    }
+
+    /**
+     * Method that refreshes the list of messages in the chat by adding a new message  whenever a user clicks on one of the objects.
+     * @param type the unique number assigned to an object
+     */
+    public void refresh(String type, String username, String roomId) {
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+        List<String> chatEntries = new ArrayList<>();
+        System.out.println(username + "  " + roomId);
+
+            if (type.equals("1") && roomId.equals(gameConfiguration.getUserName())) {                                     // happy emoji
+                chatEntries.add(getTypeOfMessage("1", username));
+            }
+            if (type.equals("2")  && roomId.equals(gameConfiguration.getUserName())) {                                     //sad emoji
+                chatEntries.add(getTypeOfMessage("2", username));
+            }
+            if (type.equals("3") && roomId.equals(gameConfiguration.getUserName())) {                                     //no words emoji
+                chatEntries.add(getTypeOfMessage("3", username));
+            }
+            if (type.equals("4") && roomId.equals(gameConfiguration.getUserName())) {                                     //snowman emoji
+                chatEntries.add(getTypeOfMessage("4", username));
+            }
+            if (type.equals("5") && roomId.equals(gameConfiguration.getUserName())) {                                     //dead emoji
+                chatEntries.add(getTypeOfMessage("5", username));
+            }
+            chatEntries.addAll(tableview.getItems());
+            tableview.setItems(FXCollections.observableList(chatEntries));
+
+    }
+
+    /**
+     * Method that is going to return a message about what emojis were used by players
+     * @param type identifies the type of object with which the players have interacted. All objects have an unique number assigned to them
+     * @return a message in the form of a String
+     */
+    public String getTypeOfMessage(String type, String username)
+    {
+        if (type.equals("1"))
+            return   "  \u263A" + " " + username;
+        if (type.equals("2"))
+            return  "  \u2639" + " " + username;
+        if (type.equals("3"))
+            return "  \u2687" + " " + username;
+        if (type.equals("4"))
+            return  "  \u2603" +  " " + username;
+        if (type.equals("5"))
+            return  "  \u2620" + " " + username;
+        return null;
     }
 
     public int getAddedPointsInt() {

@@ -2,6 +2,8 @@ package server.controllers.GameControllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,27 +55,22 @@ public class MultiplayerGameRoomController {
 
     @GetMapping("/waitForGameToStart")
     public DeferredResult<ResponseEntity<String>> waitForGameToStart(@PathVariable("roomId") String roomId) {
-        System.out.println("Am intrat aici");
         var noContent = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         var res = new DeferredResult<ResponseEntity<String>>(50000L, noContent);
 
         var key = new Object();
         listeners.put(key, q -> {
-            System.out.println("AM reusit sa dau update");
             res.setResult(ResponseEntity.ok(q));
         });
-//        res.onCompletion(() -> {
-//            listeners.remove(key);
-//        });
-
-        System.out.println("Listeners size: " + listeners.size());
+        res.onCompletion(() -> {
+            listeners.remove(key);
+        });
 
         return res;
     }
 
     @GetMapping("/removePlayer")
     public void removePlayer(@PathVariable String userName, @PathVariable String roomId) {
-        System.out.println("Hello");
         this.getGame(roomId).removePlayer(userName);
     }
 
@@ -85,5 +82,11 @@ public class MultiplayerGameRoomController {
     @GetMapping("/numPlayers")
     public Integer getNumPlayers(@PathVariable String roomId) {
         return (Integer) this.multiplayerGameService.getGame(roomId).getNumPlayers();
+    }
+
+    @MessageMapping("/emojis")  // /app/emojis
+    @SendTo("/topic/emojis")
+    public String addMessage(String chatEntry) {
+        return chatEntry;
     }
 }
