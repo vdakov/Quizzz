@@ -70,9 +70,9 @@ public class MultiplayerGameRoomController {
         return res;
     }
 
-    private static Map<Object, Consumer<Pair<String, Integer>>> playerNumberListeners = new HashMap<>();
+    private static Map<Pair<Object, String>, Consumer<Integer>> playerNumberListeners = new HashMap<>();
 
-    public static  Map<Object, Consumer<Pair<String, Integer>>> getPlayerNumberListeners() {
+    public static Map<Pair<Object, String>, Consumer<Integer>> getPlayerNumberListeners() {
         return playerNumberListeners;
     }
 
@@ -81,12 +81,13 @@ public class MultiplayerGameRoomController {
         var noContent = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         var res = new DeferredResult<ResponseEntity<Integer>>(50000L, noContent);
 
-        var key = new Object();
+        var key = Pair.of(new Object(), roomId);
         playerNumberListeners.put(key, q -> {
-            //res.setResult(ResponseEntity.ok(Pair.of(roomId, )));
+            res.setResult(ResponseEntity.ok(q));
+            System.out.println("Am updatat resultu");
         });
         res.onCompletion(() -> {
-            startingGameListeners.remove(key);
+            playerNumberListeners.remove(key);
         });
 
         return res;

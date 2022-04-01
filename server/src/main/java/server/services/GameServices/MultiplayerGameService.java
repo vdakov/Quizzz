@@ -95,6 +95,12 @@ public class MultiplayerGameService {
             }
 
             roomCatalog.getMultiPlayerRoom(roomId).addPlayer(username);
+
+            MultiplayerGameRoomController.getPlayerNumberListeners().forEach((k, l) -> {
+                if (k.getValue().equals(roomId)) {
+                    l.accept(roomCatalog.getMultiPlayerRoom(roomId).getNumPlayers());
+                }
+            });
             return true;
         } catch (Exception e) {
             System.out.println("An exception occurred when trying to join the game");
@@ -238,6 +244,12 @@ public class MultiplayerGameService {
     }
 
     public void removePlayer(String gameId, String userName) {
+        MultiplayerGameRoomController.getPlayerNumberListeners().forEach((k, l) -> {
+            if (k.getValue().equals(gameId)) {
+                l.accept(roomCatalog.getMultiPlayerRoom(gameId).getNumPlayers());
+            }
+        });
+
         this.getGame(gameId).removePlayer(userName);
     }
 }

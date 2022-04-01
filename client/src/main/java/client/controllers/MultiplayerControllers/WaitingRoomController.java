@@ -58,13 +58,24 @@ public class WaitingRoomController {
         }
 
         this.gameID.setText(gameConfiguration.getRoomId());
-        this.playerLabel.setText(Integer.toString(server.getNumPlayers()));
+        this.playerLabel.setText(String.valueOf(server.getNumPlayers()));
+
+        server.stopWaitForRoomThread();
+        server.stopUpdatePlayerNumber();
 
         server.waitForMultiPlayerRoomStart(q -> {
             try {
                 sceneCtrl.showNextQuestion();
             } catch (Exception e) {
                 System.out.println("Exception occurred when trying to start the game by showing the next question");
+            }
+        });
+
+        server.updatePlayerNumber(q -> {
+            try {
+                this.playerLabel.setText(Integer.toString(q));
+            } catch (Exception e) {
+                System.out.println("Exception occurred when trying to show player number");
             }
         });
 

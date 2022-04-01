@@ -104,6 +104,7 @@ public class ServerUtils {
 
             switch (response.getStatus()) {
                 case 200: {
+                    stopWaitForRoomThread();
                     return true;
                 }
                 case 417: {
@@ -190,11 +191,11 @@ public class ServerUtils {
         return null;
     }
 
-    private static final ExecutorService EXEC = Executors.newSingleThreadExecutor();
+    private static final ExecutorService EXEC_WAIT_FOR_START = Executors.newSingleThreadExecutor();
 
     public void waitForMultiPlayerRoomStart(Consumer<Boolean> startedGame) {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
-        EXEC.submit(() -> {
+        EXEC_WAIT_FOR_START.submit(() -> {
             while (!Thread.interrupted()) {
 
                 var res = ClientBuilder.newClient(new ClientConfig())
@@ -211,14 +212,41 @@ public class ServerUtils {
 
                 if (gameInProgress) {
                     startedGame.accept(true);
-                    this.stop();
+                    this.stopWaitForRoomThread();
                 }
             }
         });
     }
 
-    public void stop() {
-        EXEC.shutdownNow();
+    public void stopWaitForRoomThread() {
+        EXEC_WAIT_FOR_START.shutdownNow();
+    }
+
+    private static final ExecutorService EXEC_GET_PLAYER_NUMBER = Executors.newSingleThreadExecutor();
+
+    public void updatePlayerNumber(Consumer<Integer> playerNumber) {
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+        EXEC_GET_PLAYER_NUMBER.submit(() -> {
+            while (!Thread.interrupted()) {
+
+                var res = ClientBuilder.newClient(new ClientConfig())
+                        .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/MULTIPLAYER/"
+                                + gameConfiguration.getRoomId() + "/getPlayerNumber")
+                        .request(APPLICATION_JSON)
+                        .accept(APPLICATION_JSON).get(Response.class);
+
+                if (res.getStatus() == 204) {
+                    continue;
+                }
+
+                Integer gameInProgress = res.readEntity(Integer.class);
+                playerNumber.accept(gameInProgress);
+            }
+        });
+    }
+
+    public void stopUpdatePlayerNumber() {
+        EXEC_GET_PLAYER_NUMBER.shutdownNow();
     }
 
     public String getQuestion() {
