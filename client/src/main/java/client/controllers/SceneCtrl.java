@@ -88,6 +88,7 @@ public class SceneCtrl {
         OpenQuestionActivityCtrl ctrl = (OpenQuestionActivityCtrl) pair.getKey();
 
         ctrl.displayQuestion(openQuestion);
+        primaryStage.setTitle("Question screen");
         scene.setRoot(pair.getValue());
     }
 
@@ -97,6 +98,7 @@ public class SceneCtrl {
         KnowledgeQuestionActivityCtrl ctrl = (KnowledgeQuestionActivityCtrl) pair.getKey();
 
         ctrl.displayQuestion(knowledgeQuestion);
+        primaryStage.setTitle("Question screen");
         scene.setRoot(pair.getValue());
     }
 
@@ -106,6 +108,7 @@ public class SceneCtrl {
         ComparisonQuestionActivityCtrl ctrl = (ComparisonQuestionActivityCtrl) pair.getKey();
 
         ctrl.displayQuestion(comparisonQuestion);
+        primaryStage.setTitle("Question screen");
         scene.setRoot(pair.getValue());
     }
 
@@ -115,6 +118,7 @@ public class SceneCtrl {
         AlternativeQuestionActivityCtrl ctrl = (AlternativeQuestionActivityCtrl) pair.getKey();
 
         ctrl.displayQuestion(alternativeQuestion);
+        primaryStage.setTitle("Question screen");
         scene.setRoot(pair.getValue());
     }
 

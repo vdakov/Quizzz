@@ -312,7 +312,7 @@ public class ServerUtils {
                     .accept(APPLICATION_JSON)
                     .get();
 
-            System.out.println("111111111Response status: " + response.getStatus());
+            System.out.println("Response status: " + response.getStatus());
 
         } catch (Exception e) {
             e.printStackTrace();
