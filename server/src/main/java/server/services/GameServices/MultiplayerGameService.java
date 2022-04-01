@@ -295,14 +295,14 @@ public class MultiplayerGameService {
      * @param username       the user that needs the score update
      * @param roomId         the id of the room the user is in
      */
-    public Boolean useDoublePointJoker(String username, String roomId) {
+    public Boolean useDoublePointJoker(String username, String roomId, Boolean temp) {
         try {
 //            if (roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() != Room.RoomStatus.ONGOING ||
 //                    roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) == null) {
 //                //return null;
 //            }
 
-            roomCatalog.getMultiPlayerRoom(roomId).useDoublePointJoker(username);
+            roomCatalog.getMultiPlayerRoom(roomId).useDoublePointJoker(username, temp);
             return true;
 
         } catch (Exception e) {

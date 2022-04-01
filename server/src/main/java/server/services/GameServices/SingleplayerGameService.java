@@ -141,7 +141,7 @@ public class SingleplayerGameService {
     }
 
     /**
-     * Calculated the points added on this round
+     * Calculated the points earned in this round
      * @return the points earned in this round
      */
     public Integer calculatePointsAdded(String username, String roomId) {
@@ -229,7 +229,7 @@ public class SingleplayerGameService {
             return null;
         }
     }
-    public Boolean useDoublePointJoker(String username, String roomId) {
+    public Boolean useDoublePointJoker(String username, String roomId, Boolean temp) {
         try {
             if (!username.equals(roomCatalog.getSinglePlayerRoom(roomId).getRoomCreator())) {
                 return false;

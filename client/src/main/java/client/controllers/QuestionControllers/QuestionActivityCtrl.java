@@ -277,6 +277,6 @@ public class QuestionActivityCtrl {
     }
 
     public int getAddedPointsInt() {
-        return Integer.parseInt(server.getAddedPoints());
+        return server.getAddedPoints();
     }
 }

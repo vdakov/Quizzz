@@ -294,21 +294,25 @@ public class ServerUtils {
      */
     public void useDoublePointJoker() {
         try {
+            System.out.println("Helliii");
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
 
-            Response response = ClientBuilder.newClient(new ClientConfig()) //
+           ClientBuilder.newClient(new ClientConfig()) //
                     .target(SERVER).path("api/" +  gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" +
-                            gameConfiguration.getRoomId() + "/useDoublePointJoker")
-                    .request(APPLICATION_JSON)
+                            gameConfiguration.getRoomId() + "/useDoublePoint")
+                    .request()
                     .accept(APPLICATION_JSON)
-                    .get();
+                    .put(Entity.entity(true, APPLICATION_JSON), Boolean.class);
+//                    .get();
 
-            System.out.println("Response status: " + response.getStatus());
+//            System.out.println("Response status: " + response.getStatus());
 
         } catch (Exception e) {
-            System.out.println("An exception occurred");
+            e.printStackTrace();
+            System.out.println("An exception occurred"+e.getMessage());
         }
     }
+
     public void useTimeJoker() {
         try {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
@@ -458,6 +462,10 @@ public class ServerUtils {
         return null;
     }
 
+    /**
+     * Gets the current score of the player
+     * @return current score of the player
+     */
     public String getScore() {
         try {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
@@ -489,7 +497,11 @@ public class ServerUtils {
         return null;
     }
 
-    public String getAddedPoints() {
+    /**
+     * Gets the point player earned for that specific question
+     * @return integer value of points earned
+     */
+    public Integer getAddedPoints() {
         try {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
 
@@ -500,7 +512,7 @@ public class ServerUtils {
 
             switch (response.getStatus()) {
                 case 200: {
-                    return response.readEntity(String.class);
+                    return response.readEntity(Integer.class);
                 }
                 case 417: {
                     System.out.println("Expectation failed");
@@ -509,7 +521,7 @@ public class ServerUtils {
                 }
                 case 400: {
                     System.out.println("The request was invalid");
-                    return "0";
+                    return 0;
                     //return null;
                 }
             }

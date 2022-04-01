@@ -186,6 +186,13 @@ public class GameRoomController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
+    /**
+     * Returns the points earned by the player for that specific game
+     * @param username  the username of the player that requests his score
+     * @param gameType  the type of the game
+     * @param roomId    the id of the game that the player is in
+     * @return the points earned in this round
+     */
     @GetMapping("/getAddedPoints")
     public ResponseEntity<Integer> getAddedPoints(@PathVariable("username") String username, @PathVariable("gameType") String gameType, @PathVariable("roomId") String roomId) {
         if (gameType.equals("SINGLEPLAYER")) {
@@ -375,32 +382,34 @@ public class GameRoomController {
      * @param roomId the id of the game that the player is in
      * @return whether the request was successful or not
      */
-    @GetMapping("/useDoublePoint")
-    public ResponseEntity<Object> useDoublePointJoker(@PathVariable("username") String username, @PathVariable("gameType") String gameType,
-                                               @PathVariable("roomId") String roomId) {
+    @PutMapping("/useDoublePoint")
+    public void useDoublePointJoker(@PathVariable("username") String username, @PathVariable("gameType") String gameType,
+                                               @PathVariable("roomId") String roomId, @RequestBody Boolean temp) {
         System.out.println("-----used double point joker1");
         if (gameType.equals("SINGLEPLAYER")) {
-            try {
-                return singlePlayerGameService.useDoublePointJoker(username, roomId) ?
-                        ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-            } catch (NumberFormatException e) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-            }
-            catch (Exception e) {
-                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
-            }
+            singlePlayerGameService.useDoublePointJoker(username, roomId, temp);
+//            try {
+//                return singlePlayerGameService.useDoublePointJoker(username, roomId) ?
+//                        ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+//            } catch (NumberFormatException e) {
+//                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+//            }
+//            catch (Exception e) {
+//                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
+//            }
         }
 
         if (gameType.equals("MULTIPLAYER")) {
-            try {
-                return multiplayerGameService.useDoublePointJoker(username, roomId) ?
-                        ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-            } catch (Exception e) {
-                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
-            }
+            multiplayerGameService.useDoublePointJoker(username, roomId, temp);
+//            try {
+//                return multiplayerGameService.useDoublePointJoker(username, roomId) ?
+//                        ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+//            } catch (Exception e) {
+//                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
+//            }
         }
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
     /**
