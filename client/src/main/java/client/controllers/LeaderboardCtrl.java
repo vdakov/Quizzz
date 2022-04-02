@@ -7,7 +7,6 @@ import commons.Leaderboard.LeaderboardEntry;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -18,6 +17,7 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,8 +40,6 @@ public class LeaderboardCtrl {
     private TableColumn<LeaderboardEntry, String> pointsCol;
     @FXML
     private Button playAgainButton;
-    @FXML
-    private ProgressBar progressBarTime;
     @FXML
     private Label timeLabel;
 
@@ -68,8 +66,6 @@ public class LeaderboardCtrl {
     private IntegerProperty timeSeconds = new SimpleIntegerProperty(10);
 
     public void startTimer() {
-        progressBarTime.progressProperty().bind(Bindings.divide(timeSeconds, 10));
-
         timeLabel.textProperty().bind(timeSeconds.asString());    //bind the progressbar value to the seconds left
         timeSeconds.set(10);
         timeline = new Timeline();
@@ -88,6 +84,8 @@ public class LeaderboardCtrl {
     }
 
     public void refresh() {
+        leaderboardTable.setItems(FXCollections.observableList(new ArrayList<>()));
+
         if (gameConfig.isSinglePlayer() || gameConfig.getCurrentQuestionNumber() == 9)
             playAgainButton.setVisible(false);
         else playAgainButton.setVisible(true);
@@ -104,7 +102,7 @@ public class LeaderboardCtrl {
     }
 
     public void getLeaderboard() {
-        if (gameConfig.getCurrentQuestionNumber() >= 9) {
+        if (gameConfig.isMultiPlayer()) {
             server.waitForFilledLeaderboard(q -> {
                 fillLeaderboard(q);
                 startTimer();

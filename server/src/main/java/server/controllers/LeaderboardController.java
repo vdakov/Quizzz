@@ -73,9 +73,13 @@ public class LeaderboardController {
         var entries = service.getByRoomId(roomId);
         if (entries.size() == multiplayerGameService.getGame(roomId).getNumPlayers()) {
             listeners.get(roomId).forEach(listener -> toAccept.add(listener));
+
+            for (Consumer c : toAccept) {
+                c.accept(entries);
+            }
+            listeners.remove(roomId);
+            service.removeEntries(roomId);
         }
-        for (Consumer c : toAccept) {
-            c.accept(entries);
-        }
+
     }
 }
