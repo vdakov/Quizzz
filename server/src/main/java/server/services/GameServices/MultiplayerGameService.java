@@ -17,8 +17,6 @@ import server.services.QuestionGenerator.QuestionGenerator;
 import java.util.List;
 import java.util.Random;
 
-import static server.controllers.GameControllers.GameController.getActiveRoomsListeners;
-
 @Service
 public class MultiplayerGameService {
 
