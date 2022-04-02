@@ -249,6 +249,33 @@ public class ServerUtils {
         EXEC_GET_PLAYER_NUMBER.shutdownNow();
     }
 
+    private static final ExecutorService EXEC_UPDATE_AVAILABLE_ROOMS = Executors.newSingleThreadExecutor();
+
+    public void updateAvailableRooms(Consumer<GameContainer> roomUpdate) {
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+        EXEC_UPDATE_AVAILABLE_ROOMS.submit(() -> {
+            while (!Thread.interrupted()) {
+
+                var res = ClientBuilder.newClient(new ClientConfig())
+                        .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/MULTIPLAYER/updateRooms")
+                        .request(APPLICATION_JSON)
+                        .accept(APPLICATION_JSON).get(Response.class);
+
+                if (res.getStatus() == 204) {
+                    continue;
+                }
+
+                GameContainer gameInProgress = res.readEntity(GameContainer.class);
+
+                roomUpdate.accept(gameInProgress);
+            }
+        });
+    }
+
+    public void stopUpdateAvailableRooms() {
+        EXEC_UPDATE_AVAILABLE_ROOMS.shutdownNow();
+    }
+
     public String getQuestion() {
         try {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();

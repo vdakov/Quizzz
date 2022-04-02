@@ -6,6 +6,7 @@ import commons.GameContainer;
 import commons.Questions.Question;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Service;
+import server.controllers.GameControllers.GameController;
 import server.controllers.GameControllers.MultiplayerGameRoomController;
 import server.entities.MultiplayerRoom;
 import server.entities.Room;
@@ -15,6 +16,8 @@ import server.services.QuestionGenerator.QuestionGenerator;
 
 import java.util.List;
 import java.util.Random;
+
+import static server.controllers.GameControllers.GameController.getActiveRoomsListeners;
 
 @Service
 public class MultiplayerGameService {
@@ -67,6 +70,7 @@ public class MultiplayerGameService {
                 roomCatalog.setMultiplayerRandomRoom(newGame);
             } else {
                 roomCatalog.addMultiplayerRoom(newGame);
+
                 joinMultiPlayerGame(username, newGame.getRoomId());
             }
 
@@ -101,6 +105,11 @@ public class MultiplayerGameService {
                     l.accept(roomCatalog.getMultiPlayerRoom(roomId).getNumPlayers());
                 }
             });
+
+            GameController.getActiveRoomsListeners().forEach((k, l) -> {
+                l.accept(new GameContainer(roomId, roomCatalog.getMultiPlayerRoom(roomId).getNumPlayers()));
+            });
+
             return true;
         } catch (Exception e) {
             System.out.println("An exception occurred when trying to join the game");

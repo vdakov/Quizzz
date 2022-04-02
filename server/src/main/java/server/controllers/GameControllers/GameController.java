@@ -1,16 +1,21 @@
 package server.controllers.GameControllers;
 
 import commons.GameContainer;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.async.DeferredResult;
 import server.services.GameServices.MultiplayerGameService;
 import server.services.GameServices.SingleplayerGameService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
 
 @RestController
 @RequestMapping("api/{username}/{gameType}")
@@ -89,5 +94,27 @@ public class GameController {
     @GetMapping("/getGames")
     public List<GameContainer> getGameIds() {
         return multiplayerGameService.getGameIds();
+    }
+
+    private static Map<Object, Consumer<GameContainer>> activeRoomsListeners = new HashMap<>();
+
+    public static Map<Object, Consumer<GameContainer>> getActiveRoomsListeners() {
+        return activeRoomsListeners;
+    }
+
+    @GetMapping("/updateRooms")
+    public DeferredResult<ResponseEntity<GameContainer>> updateRoomList() {
+        var noContent = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        var res = new DeferredResult<ResponseEntity<GameContainer>>(50000L, noContent);
+
+        var key = new Object();
+        activeRoomsListeners.put(key, q -> {
+            res.setResult(ResponseEntity.ok(q));
+        });
+        res.onCompletion(() -> {
+            activeRoomsListeners.remove(key);
+        });
+
+        return res;
     }
 }

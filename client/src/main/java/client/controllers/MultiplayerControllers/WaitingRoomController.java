@@ -60,9 +60,6 @@ public class WaitingRoomController {
         this.gameID.setText(gameConfiguration.getRoomId());
         this.playerLabel.setText(String.valueOf(server.getNumPlayers()));
 
-        server.stopWaitForRoomThread();
-        server.stopUpdatePlayerNumber();
-
         server.waitForMultiPlayerRoomStart(q -> {
             try {
                 sceneCtrl.showNextQuestion();

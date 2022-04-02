@@ -69,6 +69,14 @@ public class ServerBrowserController {
             this.listOfGameIds.add(game.getGameId());
         }
 
+        server.updateAvailableRooms(q -> {
+            try {
+                currentGames.add(q);
+            } catch (Exception e) {
+                System.out.println("An exception occurred when trying to live update room count");
+            }
+        });
+
         missingUsername.setText("");
 
         this.gameTable.getColumns().add(gameIdColumn);
@@ -110,6 +118,7 @@ public class ServerBrowserController {
     public void refresh(ActionEvent event) {
         this.gameTable.getColumns().remove(this.gameIdColumn);
         this.gameTable.getColumns().remove(this.numPlayerColumn);
+
         this.initialize();
     }
 
@@ -201,7 +210,7 @@ public class ServerBrowserController {
         gameConfiguration.setCurrentQuestionNumber(0);
 
         String roomId = server.createNewRoom();
-        gameConfiguration.setRoomId(roomId);
+        gameConfiguration.setRoomId(roomId); 
 
         if (roomId != null) {
             this.sceneCtrl.showWaitingRoom();
