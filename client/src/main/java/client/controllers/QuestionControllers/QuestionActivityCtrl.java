@@ -89,11 +89,11 @@ public class QuestionActivityCtrl {
     @FXML
     protected SplitPane splitPane;
     @FXML
-    protected Button hint;
+    protected Button hintJoker;
     @FXML
-    protected Button pointsX2;
+    protected Button pointsJoker;
     @FXML
-    protected Button time;
+    protected Button timeJoker;
 
 
 
@@ -328,7 +328,7 @@ public class QuestionActivityCtrl {
         server.send("/topic/emojis", payload);
     }
 
-    public void hintActivate(MouseEvent event)
+    public void hintJokerEvent(MouseEvent event)
     {
         List<String> payload = new ArrayList<>();
         payload.add("Hint");
@@ -337,7 +337,7 @@ public class QuestionActivityCtrl {
         server.send("/topic/emojis", payload);
     }
 
-    public void pointsX2Activate(MouseEvent event)
+    public void pointsJokerEvent(MouseEvent event)
     {
         List<String> payload = new ArrayList<>();
         payload.add("x2 Points");
@@ -346,7 +346,7 @@ public class QuestionActivityCtrl {
         server.send("/topic/emojis", payload);
     }
 
-    public void timeActivate(MouseEvent event)
+    public void timeJokerEvent(MouseEvent event)
     {
         List<String> payload = new ArrayList<>();
         payload.add("Half Time");

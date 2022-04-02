@@ -156,7 +156,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Button fx:id="hint" mnemonicParsing="false" onMouseClicked="#hintActivate" prefHeight="38.0" prefWidth="115.0" style="-fx-background-radius: 50; -fx-background-color: #2467bf;" text="Hint" textFill="WHITESMOKE" GridPane.columnIndex="1">
+                <Button fx:id="hintjoker" mnemonicParsing="false" onMouseClicked="#hintJokerEvent" prefHeight="38.0" prefWidth="115.0" style="-fx-background-radius: 50; -fx-background-color: #2467bf;" text="Hint" textFill="WHITESMOKE" GridPane.columnIndex="1">
                     <graphic>
                         <ImageView fitHeight="30.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -165,7 +165,7 @@
                         </ImageView>
                     </graphic>
                 </Button>
-                <Button fx:id="pointsX2" mnemonicParsing="false" onMouseClicked="#pointsX2Activate" style="-fx-background-radius: 50; -fx-background-color: #2467bf;" text="2X Point" textFill="WHITESMOKE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <Button fx:id="pointsJoker" mnemonicParsing="false" onMouseClicked="#pointsJokerEvent" style="-fx-background-radius: 50; -fx-background-color: #2467bf;" text="2X Point" textFill="WHITESMOKE" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -174,7 +174,7 @@
                         </ImageView>
                     </graphic>
                 </Button>
-                <Button fx:id="time" mnemonicParsing="false" onMouseClicked="#timeActivate" prefHeight="38.0" prefWidth="114.0" style="-fx-background-radius: 50; -fx-background-color: #2467bf;" text="--Time" textFill="WHITESMOKE" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                <Button fx:id="timeJoker" mnemonicParsing="false" onMouseClicked="#timeJokerEvent" prefHeight="38.0" prefWidth="114.0" style="-fx-background-radius: 50; -fx-background-color: #2467bf;" text="--Time" textFill="WHITESMOKE" GridPane.columnIndex="1" GridPane.rowIndex="2">
                     <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                             <image>
