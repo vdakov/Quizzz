@@ -400,7 +400,7 @@ public class QuestionActivityCtrl {
      */
     public String getTypeOfMessage(String type, String username)
     {
-        switch(type) {
+        switch (type) {
             case "1" :
                 //happy emoji
                 return   " \u263A" + " " + username;
