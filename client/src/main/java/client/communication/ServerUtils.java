@@ -609,4 +609,13 @@ public class ServerUtils {
                 .get(new GenericType<>() {
                 });
     }
+
+    public void changeRoomStatusAsFinished() {
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+        ClientBuilder.newClient(new ClientConfig())
+            .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/MULTIPLAYER/" + gameConfiguration.getRoomId() + "/changeStatus")
+            .request(APPLICATION_JSON)
+            .accept(APPLICATION_JSON)
+            .get();
+    }
 }

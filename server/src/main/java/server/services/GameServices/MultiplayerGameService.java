@@ -252,20 +252,30 @@ public class MultiplayerGameService {
 
     /**
      * Removing specific player
-     * @param gameId
-     * @param userName
+     * @param roomId    the id of the room the user is in
+     * @param userName  the user that needs the score update
      */
-    public void removePlayer(String gameId, String userName) {
+    public void removePlayer(String roomId, String userName) {
         MultiplayerGameRoomController.getPlayerNumberListeners().forEach((k, l) -> {
-            if (k.getValue().equals(gameId)) {
-                l.accept(roomCatalog.getMultiPlayerRoom(gameId).getNumPlayers());
+            if (k.getValue().equals(roomId)) {
+                l.accept(roomCatalog.getMultiPlayerRoom(roomId).getNumPlayers());
             }
         });
 
-        this.getGame(gameId).removePlayer(userName);
+        this.getGame(roomId).removePlayer(userName);
     }
 
     public void removeNotAnsweringPlayer(String username, String roomId, int questionNumber, String userAnswer){
         //if the player does not answer for three consequtive questions, then the player is removed from the game
+    }
+
+    /**
+     * Changes the room status as finished when there are no more players left in the game after the multiplayer leaderboard
+     * @param roomId    the id of the room the user is in
+     */
+    public void changeRoomStatusAsFinished(String roomId) {
+        if(roomCatalog.getMultiPlayerRoom(roomId).getNumPlayers() == 0) {
+            roomCatalog.getMultiPlayerRoom(roomId).setRoomStatus(Room.RoomStatus.FINISHED);
+        }
     }
 }

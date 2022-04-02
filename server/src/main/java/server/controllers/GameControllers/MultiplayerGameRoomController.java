@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
 import server.entities.MultiplayerRoom;
+import server.entities.Room;
 import server.services.GameServices.MultiplayerGameService;
 
 import java.util.HashMap;
@@ -117,5 +118,14 @@ public class MultiplayerGameRoomController {
     @SendTo("/topic/emojis")
     public String addMessage(String chatEntry) {
         return chatEntry;
+    }
+
+    /**
+     * Changes the room status as finished when there are no more players left in the game after the multiplayer leaderboard
+     * @param roomId    the id of the room the user is in
+     */
+    @GetMapping("/changeStatus")
+    public void changeRoomStatusAsFinished(String roomId) {
+        this.multiplayerGameService.changeRoomStatusAsFinished(roomId);
     }
 }
