@@ -118,8 +118,13 @@ public class RoomCatalog {
         this.multiplayerRandomRoom = multiplayerRoom;
     }
 
+    /**
+     * Gets the multiplayer games in waiting status
+     * @return all multiplayer games that are not empty and not finished
+     */
     public List<GameContainer> getWaitingMultiplayerGames() {
         this.cleanEmptyGames();
+        this.removeFinishedMultiplayerGames();
         ArrayList<GameContainer> games = new ArrayList<>();
         Iterator<String> iterator1 = multiplayerRooms.keySet().iterator();
         Iterator<MultiplayerRoom> iterator2 = multiplayerRooms.values().iterator();
@@ -152,6 +157,26 @@ public class RoomCatalog {
         }
 
         for (MultiplayerRoom game : emptyGames) {
+            this.multiplayerRooms.remove(game.getRoomId());
+        }
+    }
+
+    /**
+     * Removes all the finished multiplayer games from the multiplayer room list
+     */
+    public void removeFinishedMultiplayerGames() {
+
+        Iterator<MultiplayerRoom> gameIterator = multiplayerRooms.values().iterator();
+        ArrayList<MultiplayerRoom> finishedGames = new ArrayList<>();
+
+        while (gameIterator.hasNext()) {
+            MultiplayerRoom game = gameIterator.next();
+            if (game.getRoomStatus() == Room.RoomStatus.FINISHED) {
+                finishedGames.add(game);
+            }
+        }
+
+        for (MultiplayerRoom game : finishedGames) {
             this.multiplayerRooms.remove(game.getRoomId());
         }
     }
