@@ -250,6 +250,11 @@ public class MultiplayerGameService {
         return this.roomCatalog.getMultiPlayerRoom(gameId);
     }
 
+    /**
+     * Removing specific player
+     * @param gameId
+     * @param userName
+     */
     public void removePlayer(String gameId, String userName) {
         MultiplayerGameRoomController.getPlayerNumberListeners().forEach((k, l) -> {
             if (k.getValue().equals(gameId)) {
@@ -258,5 +263,9 @@ public class MultiplayerGameService {
         });
 
         this.getGame(gameId).removePlayer(userName);
+    }
+
+    public void removeNotAnsweringPlayer(String username, String roomId, int questionNumber, String userAnswer){
+        //if the player does not answer for three consequtive questions, then the player is removed from the game
     }
 }
