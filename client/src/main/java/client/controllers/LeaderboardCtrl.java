@@ -96,12 +96,9 @@ public class LeaderboardCtrl {
 
         server.checkLeaderboardFilled();
 
-        if (gameConfig.getCurrentQuestionNumber() == 10) {
-            progressBarTime.setVisible(true);
+        if (gameConfig.getCurrentQuestionNumber() == 9) {
             timeLabel.setVisible(true);
-            startTimer();
         } else {
-            progressBarTime.setVisible(false);
             timeLabel.setVisible(false);
         }
     }
@@ -110,6 +107,7 @@ public class LeaderboardCtrl {
         if (gameConfig.getCurrentQuestionNumber() >= 9) {
             server.waitForFilledLeaderboard(q -> {
                 fillLeaderboard(q);
+                startTimer();
             });
             return;
         } else {

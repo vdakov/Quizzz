@@ -1,7 +1,6 @@
 package server.controllers;
 
 import commons.Leaderboard.LeaderboardEntry;
-import org.springframework.data.util.Pair;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,20 +47,20 @@ public class LeaderboardController {
         service.removeEntries(roomId);
     }
 
-    static private final HashMap<Object, Consumer<List<LeaderboardEntry>>> listeners = new HashMap<>();
+    static private final HashMap<String, ArrayList<Consumer<List<LeaderboardEntry>>>> listeners = new HashMap<>();
 
-    @GetMapping("/filledLeaderboard")
-    public DeferredResult<ResponseEntity<List<LeaderboardEntry>>> waitForFilledLeaderboard() {
+    @GetMapping("/filledLeaderboard/{roomId}")
+    public DeferredResult<ResponseEntity<List<LeaderboardEntry>>> waitForFilledLeaderboard(@PathVariable("roomId") String roomId) {
         System.out.println("Waiting for leaderboard");
         var noContent = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         var res = new DeferredResult<ResponseEntity<List<LeaderboardEntry>>>(50000L, noContent);
+        Consumer<List<LeaderboardEntry>> listener = q -> res.setResult(ResponseEntity.ok(q));
 
-        var key = new Object();
-        listeners.put(key, q -> {
-            res.setResult(ResponseEntity.ok(q));
-        });
+        if (!listeners.containsKey(roomId)) listeners.put(roomId, new ArrayList<>());
+
+        listeners.get(roomId).add(listener);
         res.onCompletion(() -> {
-            listeners.remove(key);
+            listeners.get(roomId).remove(listener);
         });
 
         return res;
@@ -70,16 +69,13 @@ public class LeaderboardController {
     @GetMapping("/checkLeaderboardFilled/{roomId}")
     public void checkLeaderboardFilled(@PathVariable("roomId") String roomId) {
         System.out.println("Checking if filled");
-        ArrayList<Pair<Consumer, List<LeaderboardEntry>>> toAccept = new ArrayList<>();
-        listeners.forEach((k, v) -> {
-            var entries = service.getByRoomId(roomId);
-
-            if (entries.size() == multiplayerGameService.getGame(roomId).getNumPlayers()) {
-                toAccept.add(Pair.of(v, entries));
-            }
-        });
-        for (Pair p : toAccept) {
-            ((Consumer) p.getFirst()).accept(p.getSecond());
+        ArrayList<Consumer> toAccept = new ArrayList<>();
+        var entries = service.getByRoomId(roomId);
+        if (entries.size() == multiplayerGameService.getGame(roomId).getNumPlayers()) {
+            listeners.get(roomId).forEach(listener -> toAccept.add(listener));
+        }
+        for (Consumer c : toAccept) {
+            c.accept(entries);
         }
     }
 }

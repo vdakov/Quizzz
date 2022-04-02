@@ -213,7 +213,7 @@ public class ServerUtils {
             while (!Thread.interrupted()) {
 
                 var res = ClientBuilder.newClient(new ClientConfig())
-                        .target(SERVER).path("api/leaderboard/filledLeaderboard")
+                        .target(SERVER).path("api/leaderboard/filledLeaderboard/" + GameConfiguration.getConfiguration().getRoomId())
                         .request(APPLICATION_JSON)
                         .accept(APPLICATION_JSON).get(Response.class);
 
@@ -222,7 +222,6 @@ public class ServerUtils {
                 }
 
                 List<LeaderboardEntry> leaderboard = res.readEntity(List.class);
-                System.out.println(leaderboard.toString());
                 l.accept(leaderboard);
                 stop();
             }
