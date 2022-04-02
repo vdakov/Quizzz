@@ -76,6 +76,11 @@ public class MultiplayerGameRoomController {
         return playerNumberListeners;
     }
 
+    /**
+     * Get the number of players in the multiplayer game
+     * @param roomId    the id of the game that the user wants to join
+     * @return give the number of players using asynchronous operation
+     */
     @GetMapping("/getPlayerNumber")
     public DeferredResult<ResponseEntity<Integer>> getPlayerNumber(@PathVariable("roomId") String roomId) {
         var noContent = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -84,7 +89,7 @@ public class MultiplayerGameRoomController {
         var key = Pair.of(new Object(), roomId);
         playerNumberListeners.put(key, q -> {
             res.setResult(ResponseEntity.ok(q));
-            System.out.println("Am updatat resultu");
+            System.out.println("Am update result");
         });
         res.onCompletion(() -> {
             playerNumberListeners.remove(key);

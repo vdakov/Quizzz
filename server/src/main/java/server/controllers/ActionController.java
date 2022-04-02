@@ -29,15 +29,20 @@ public class ActionController {
         return service.list();
     }
 
-
-    //sends GET HTTP response to client through the ID of the JSON if it exists
+    /**
+     * Get the specific action containing given id
+     * @param id    the id of corresponding action
+     * @return the action containing given input id
+     */
     @GetMapping("/{id}")
     public Action getById(@PathVariable("id") String id) {
         return service.getById(id);
     }
 
-
-    //returns a random activity due to a GET request of the client
+    /**
+     * Get a random activity from the repository
+     * @return a random activity
+     */
     @GetMapping("/random")
     public Action getRandom() {
         List<Action> activities = (List<Action>) service.list();
@@ -45,7 +50,12 @@ public class ActionController {
     }
 
 
-    //allows the user to update all the fields of an activity except the ID, but only if the object with that ID already exists
+
+
+    /**
+     * Allows user to update all fields except ID, but only if the object with that ID already exists
+     * @param a the action needs to be updated
+     */
     @PutMapping(path = "/update")
     public void update(@RequestBody Action a) {
 
