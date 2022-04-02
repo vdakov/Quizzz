@@ -297,7 +297,7 @@ public class QuestionActivityCtrl {
         List<String> payload = new ArrayList<>();
         payload.add("2");
         payload.add(gameConfig.getUserName());
-        payload.add(gameConfig.getRoomId()); ;
+        payload.add(gameConfig.getRoomId());
         server.send("/topic/emojis", payload);
     }
 
@@ -400,22 +400,43 @@ public class QuestionActivityCtrl {
      */
     public String getTypeOfMessage(String type, String username)
     {
-        if (type.equals("1"))                                           // happy emoji
-            return   " \u263A" + " " + username;
-        if (type.equals("2"))                                           //sad emoji
-            return  " \u2639" + " " + username;
-        if (type.equals("3"))                                           //no words emoji
-            return " \u2687" + " " + username;
-        if (type.equals("4"))                                           //snowman emoji
-            return  " \u2603" +  " " + username;
-        if (type.equals("5"))                                           //dead emoji
-            return  " \u2620" + " " + username;
-        if (type.equals("Hint"))                                        //Hint Joker
-            return  "Hint by" + " " + username;
-        if (type.equals("x2 Points"))                                  //x2 Points Joker
-            return  "x2 Points by" + " " + username;
-        if (type.equals("Half Time"))                                  //Half Time Joker
-            return  "Half Time by" + " " + username;
-        return null;
+        switch(type) {
+            case "1" :
+                //happy emoji
+                return   " \u263A" + " " + username;
+
+            case "2" :
+                //sad emoji
+                return  " \u2639" + " " + username;
+
+            case "3" :
+                //no words emoji
+                return " \u2687" + " " + username;
+
+            case "4" :
+                //snowman emoji
+                return  " \u2603" +  " " + username;
+
+            case "5" :
+                //dead emoji
+                return  " \u2620" + " " + username;
+
+            case "Hint" :
+                //Hint Joker
+                return "Hint by" + " " + username;
+
+            case "x2 Points" :
+                //x2 Points Joker
+                return  "x2 Points by" + " " + username;
+
+            case "Half Time" :
+                //Half Time Joker
+                return  "Half Time by" + " " + username;
+
+            default:
+                return null;
+        }
+
+
     }
 }
