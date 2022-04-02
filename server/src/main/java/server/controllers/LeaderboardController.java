@@ -1,6 +1,7 @@
 package server.controllers;
 
 import commons.Leaderboard.LeaderboardEntry;
+import org.springframework.data.util.Pair;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -8,6 +9,7 @@ import org.springframework.web.context.request.async.DeferredResult;
 import server.services.GameServices.LeaderboardService;
 import server.services.GameServices.MultiplayerGameService;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.function.Consumer;
@@ -48,8 +50,9 @@ public class LeaderboardController {
 
     static private final HashMap<Object, Consumer<List<LeaderboardEntry>>> listeners = new HashMap<>();
 
-    @GetMapping("/{username}/{roomId}/filledLeaderboard")
-    public DeferredResult<ResponseEntity<List<LeaderboardEntry>>> waitForFilledLeaderboard(@PathVariable("username") String username, @PathVariable("roomId") String roomId) {
+    @GetMapping("/filledLeaderboard")
+    public DeferredResult<ResponseEntity<List<LeaderboardEntry>>> waitForFilledLeaderboard() {
+        System.out.println("Waiting for leaderboard");
         var noContent = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         var res = new DeferredResult<ResponseEntity<List<LeaderboardEntry>>>(50000L, noContent);
 
@@ -66,11 +69,17 @@ public class LeaderboardController {
 
     @GetMapping("/checkLeaderboardFilled/{roomId}")
     public void checkLeaderboardFilled(@PathVariable("roomId") String roomId) {
+        System.out.println("Checking if filled");
+        ArrayList<Pair<Consumer, List<LeaderboardEntry>>> toAccept = new ArrayList<>();
         listeners.forEach((k, v) -> {
             var entries = service.getByRoomId(roomId);
+
             if (entries.size() == multiplayerGameService.getGame(roomId).getNumPlayers()) {
-                v.accept(entries);
+                toAccept.add(Pair.of(v, entries));
             }
         });
+        for (Pair p : toAccept) {
+            ((Consumer) p.getFirst()).accept(p.getSecond());
+        }
     }
 }

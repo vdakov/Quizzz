@@ -184,7 +184,8 @@ public class ServerUtils {
 
     public void waitForMultiPlayerRoomStart(Consumer<String> startedGame) {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
-        EXEC.execute(() -> {
+        if (EXEC.isShutdown()) EXEC = Executors.newSingleThreadExecutor();
+        EXEC.submit(() -> {
             while (!Thread.interrupted()) {
 
                 var res = ClientBuilder.newClient(new ClientConfig())
@@ -199,19 +200,20 @@ public class ServerUtils {
 
                 String gameInProgress = res.readEntity(String.class);
                 startedGame.accept(gameInProgress);
-                this.stop();
+                stop();
             }
         });
     }
 
+    private ExecutorService EXEC2 = Executors.newSingleThreadExecutor();
+
     public void waitForFilledLeaderboard(Consumer<List<LeaderboardEntry>> l) {
-        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
-        EXEC.execute(() -> {
+        if (EXEC.isShutdown()) EXEC = Executors.newSingleThreadExecutor();
+        EXEC.submit(() -> {
             while (!Thread.interrupted()) {
 
                 var res = ClientBuilder.newClient(new ClientConfig())
-                        .target(SERVER).path("api/leaderboard/" + gameConfiguration.getUserName()
-                                + gameConfiguration.getRoomId() + "/filledLeaderboard")
+                        .target(SERVER).path("api/leaderboard/filledLeaderboard")
                         .request(APPLICATION_JSON)
                         .accept(APPLICATION_JSON).get(Response.class);
 
@@ -219,9 +221,10 @@ public class ServerUtils {
                     continue;
                 }
 
-                List leaderboard = res.readEntity(List.class);
+                List<LeaderboardEntry> leaderboard = res.readEntity(List.class);
+                System.out.println(leaderboard.toString());
                 l.accept(leaderboard);
-                this.stop();
+                stop();
             }
         });
     }

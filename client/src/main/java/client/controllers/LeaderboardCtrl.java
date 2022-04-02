@@ -18,6 +18,7 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -87,7 +88,9 @@ public class LeaderboardCtrl {
     }
 
     public void refresh() {
-        playAgainButton.setVisible(gameConfig.isSinglePlayer() ? false : true);
+        if (gameConfig.isSinglePlayer() || gameConfig.getCurrentQuestionNumber() == 9)
+            playAgainButton.setVisible(false);
+        else playAgainButton.setVisible(true);
 
         getLeaderboard();
 
@@ -115,7 +118,16 @@ public class LeaderboardCtrl {
     }
 
     public void fillLeaderboard(List<LeaderboardEntry> entries) {
-        List<LeaderboardEntry> top10 = entries.subList(0, Integer.min(10, entries.size()));
+        List top10 = entries.subList(0, Integer.min(10, entries.size()));
+
+        if (gameConfig.isMultiPlayer()) {
+            for (int i = 0; i < top10.size(); i++) {
+                LinkedHashMap e = (LinkedHashMap) top10.get(i);
+                LeaderboardEntry entry = new LeaderboardEntry((String) e.get("username"), (String) e.get("roomId"), (int) e.get("score"), (boolean) e.get("singleplayer"));
+                entry.setRank(i + 1);
+                top10.set(i, entry);
+            }
+        }
 
         if (gameConfig.getRoomId() != null) {
             LeaderboardEntry spacer = new LeaderboardEntry("...", "", -1, false); //a spacer where all columns will be "..."
@@ -127,7 +139,8 @@ public class LeaderboardCtrl {
         }
         leaderboardTable.setItems(FXCollections.observableList(top10));
 
-        if (entries.size() >= 3) {
+        if ((gameConfig.getRoomId() == null && entries.size() >= 3)
+                || (gameConfig.getRoomId() != null && entries.size() >= 5)) {
             place1.setText(entries.get(0).getUsername());
             place2.setText(entries.get(1).getUsername());
             place3.setText(entries.get(2).getUsername());
