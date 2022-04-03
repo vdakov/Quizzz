@@ -9,6 +9,9 @@ import java.util.List;
 public class MultiplayerRoom extends Room {
 
     private final HashMap<String, Integer> playerScores;
+    private final HashMap<String, Boolean> playerHintJokerUsed;
+    private final HashMap<String, Boolean> playerDoublePointJokerUsed;
+    private final HashMap<String, Boolean> playerTimeJokerUsed;
 
     /**
      * Constructor for a multiplayer room
@@ -21,6 +24,9 @@ public class MultiplayerRoom extends Room {
         super(roomId, roomCreator, roomQuestionsWithAnswers);
 
         this.playerScores = new HashMap<>();
+        this.playerHintJokerUsed = new HashMap<>();
+        this.playerDoublePointJokerUsed = new HashMap<>();
+        this.playerTimeJokerUsed = new HashMap<>();
     }
 
     /**
@@ -30,6 +36,9 @@ public class MultiplayerRoom extends Room {
      */
     public void addPlayer(String username) {
         playerScores.put(username, 0);
+        playerHintJokerUsed.put(username, false);
+        playerDoublePointJokerUsed.put(username, false);
+        playerTimeJokerUsed.put(username, false);
     }
 
     /**
@@ -39,6 +48,9 @@ public class MultiplayerRoom extends Room {
      */
     public void removePlayer(String username) {
         playerScores.remove(username);
+        playerHintJokerUsed.remove(username);
+        playerDoublePointJokerUsed.remove(username);
+        playerTimeJokerUsed.remove(username);
     }
 
     /**
@@ -52,6 +64,14 @@ public class MultiplayerRoom extends Room {
 
         return playerScores.get(username);
     }
+
+    public Boolean getHintJokerUsed(String username) { return playerHintJokerUsed.get(username); }
+    public Boolean getDoublePointJokerUsed(String username) { return playerDoublePointJokerUsed.get(username); }
+    public Boolean getTimeJokerUsed(String username) { return playerTimeJokerUsed.get(username); }
+
+    public void useHintJoker(String username) { playerHintJokerUsed.put(username, true); }
+    public void useDoublePointJoker(String username) { playerDoublePointJokerUsed.put(username, true); }
+    public void useTimeJoker(String username) { playerTimeJokerUsed.put(username, true); }
 
     /**
      * Updates the score of the player

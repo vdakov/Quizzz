@@ -24,20 +24,31 @@ public class ActionController {
         this.service = service;
     }
 
+    /**
+     * Get the specified list of activities
+     * @return iterable list of all activities currently in the repository
+     */
     @GetMapping("/list")
     public Iterable<Action> list() {
         return service.list();
     }
 
 
-    //sends GET HTTP response to client through the ID of the JSON if it exists
+    /**
+     * Get a specific action using the id of action
+     * @param id the unique id of the action
+     * @return the action that have same id as given input
+     */
     @GetMapping("/{id}")
     public Action getById(@PathVariable("id") String id) {
         return service.getById(id);
     }
 
 
-    //returns a random activity due to a GET request of the client
+    /**
+     * Gets a randomly selected activity from the list of actions
+     * @return random activity
+     */
     @GetMapping("/random")
     public Action getRandom() {
         List<Action> activities = (List<Action>) service.list();
@@ -45,7 +56,10 @@ public class ActionController {
     }
 
 
-    //allows the user to update all the fields of an activity except the ID, but only if the object with that ID already exists
+    /**
+     * allows the user to update all the fields of an activity except the ID, but only if the object with that ID already exists
+     * @param a action containing updated fields
+     */
     @PutMapping(path = "/update")
     public void update(@RequestBody Action a) {
 
@@ -79,7 +93,10 @@ public class ActionController {
     }
 
 
-    //Allows the user to delete an item from the repository if it exists through and HTTP DELETE Request
+    /**
+     * Allows the user to delete an item from the repository if it exists through and HTTP DELETE Request
+     * @param id id of deleting action
+     */
     @DeleteMapping(path = "/delete/{id}")
     public void delete(@PathVariable("id") String id) {
         service.delete(id);
@@ -119,7 +136,10 @@ public class ActionController {
 
     }
 
-    //allows the user to add a new activity to the repository and stores it in it permanently through an HTTP POST Request
+    /**
+     * allows the user to add a new activity to the repository and stores it in it permanently through an HTTP POST Request
+     * @param a new action that should be added to the repository
+     */
     @PutMapping(path = {"/add"})
     public void add(@RequestBody Action a) {
         try {
