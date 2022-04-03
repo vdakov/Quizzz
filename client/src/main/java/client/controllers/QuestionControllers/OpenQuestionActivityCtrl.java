@@ -70,7 +70,7 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         }
 
         server.registerForMessages("/topic/emojis", q -> {
-            refresh(q.get(0), q.get(1), q.get(1));
+            refresh(q.get(0), q.get(1), q.get(2));
         });
     }
 
