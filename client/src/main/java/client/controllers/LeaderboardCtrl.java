@@ -86,7 +86,7 @@ public class LeaderboardCtrl {
     public void refresh() {
         leaderboardTable.setItems(FXCollections.observableList(new ArrayList<>()));
 
-        if (gameConfig.isSinglePlayer() || gameConfig.getCurrentQuestionNumber() == 9)
+        if (gameConfig.getCurrentQuestionNumber() == 9)
             playAgainButton.setVisible(false);
         else playAgainButton.setVisible(true);
 

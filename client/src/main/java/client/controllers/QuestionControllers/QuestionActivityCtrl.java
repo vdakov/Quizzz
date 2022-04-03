@@ -224,7 +224,7 @@ public class QuestionActivityCtrl {
 
     public void displayNextQuestion() throws IOException {
         timeline.stop();
-        if (gameConfig.getCurrentQuestionNumber() == 9 || gameConfig.getCurrentQuestionNumber() == 19) {
+        if ((gameConfig.isMultiPlayer() && gameConfig.getCurrentQuestionNumber() == 9) || gameConfig.getCurrentQuestionNumber() == 19) {
             server.addOrUpdateLeaderboardEntry(gameConfig.getUserName(), gameConfig.getRoomId(), gameConfig.getScore());
             sceneCtrl.showLeaderboard();
         } else sceneCtrl.showNextQuestion();
