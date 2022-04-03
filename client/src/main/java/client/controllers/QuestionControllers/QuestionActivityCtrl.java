@@ -240,11 +240,11 @@ public class QuestionActivityCtrl {
     }
 
     public void startTimerClient() {
-        if(!gameConfig.isSinglePlayer()){
+        if (!gameConfig.isSinglePlayer()) {
             startTimeClient = server.getTimeClient();
             timeSecondsClient.set((int) startTimeClient);
         }
-        else{
+         else {
             timeSecondsClient.set((int) startTime);
         }
 
@@ -330,7 +330,7 @@ public class QuestionActivityCtrl {
         }
     }
 
-    public void useTimeJoker(){
+    public void useTimeJoker() {
         //Joker that reduces time for all other players
         if (server.getTimeJokerUsed()) { return; }
 

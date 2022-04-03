@@ -30,7 +30,7 @@ public class MultiplayerRoom extends Room {
         this.playerDoublePointJokerUsed = new HashMap<>();
         this.playerTimeJokerUsed = new HashMap<>();
         this.playerTime = new ArrayList<>();
-        for(int i = 0; i < 20; i++){
+        for (int i = 0; i < 20; i++) {
             HashMap<String, Integer> hashMap = new HashMap<>();
             playerTime.add(hashMap);
         }
@@ -46,7 +46,7 @@ public class MultiplayerRoom extends Room {
         playerHintJokerUsed.put(username, false);
         playerDoublePointJokerUsed.put(username, false);
         playerTimeJokerUsed.put(username, false);
-        for(int i = 0; i < 20; i++){
+        for (int i = 0; i < 20; i++) {
             playerTime.get(i).put(username, 10);
         }
 
@@ -62,7 +62,7 @@ public class MultiplayerRoom extends Room {
         playerHintJokerUsed.remove(username);
         playerDoublePointJokerUsed.remove(username);
         playerTimeJokerUsed.remove(username);
-        for(int i = 0; i < 20; i++){
+        for (int i = 0; i < 20; i++) {
             playerTime.get(i).remove(username);
         }
     }
@@ -91,11 +91,11 @@ public class MultiplayerRoom extends Room {
     public void useTimeJoker(String username, int number) {
         playerTimeJokerUsed.put(username, true);
 
-        if(number >= 20) { return; }
+        if (number >= 20) { return; }
 
-        HashMap<String, Integer> question = playerTime.get(number+1);
+        HashMap<String, Integer> question = playerTime.get(number + 1);
         for (String key : question.keySet()) {
-            if(key != username) {
+            if (key != username) {
                 question.put(key, 5);
             }
         }
