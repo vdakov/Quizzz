@@ -49,6 +49,10 @@ public class ServerBrowserController {
      * Sets the table names and values
      */
     public void initialize() {
+
+        this.gameTable.getColumns().remove(this.gameIdColumn);
+        this.gameTable.getColumns().remove(this.numPlayerColumn);
+
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
 
         if (gameConfiguration.getUserName() != null) {
