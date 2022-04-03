@@ -205,8 +205,6 @@ public class ServerUtils {
         });
     }
 
-    private ExecutorService EXEC2 = Executors.newSingleThreadExecutor();
-
     public void waitForFilledLeaderboard(Consumer<List<LeaderboardEntry>> l) {
         if (EXEC.isShutdown()) EXEC = Executors.newSingleThreadExecutor();
         EXEC.submit(() -> {
