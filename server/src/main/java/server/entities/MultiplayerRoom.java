@@ -3,6 +3,7 @@ package server.entities;
 import commons.Questions.Question;
 import org.apache.commons.lang3.tuple.Pair;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -12,6 +13,7 @@ public class MultiplayerRoom extends Room {
     private final HashMap<String, Boolean> playerHintJokerUsed;
     private final HashMap<String, Boolean> playerDoublePointJokerUsed;
     private final HashMap<String, Boolean> playerTimeJokerUsed;
+    private final List<HashMap<String, Integer>> playerTime;
 
     /**
      * Constructor for a multiplayer room
@@ -27,6 +29,11 @@ public class MultiplayerRoom extends Room {
         this.playerHintJokerUsed = new HashMap<>();
         this.playerDoublePointJokerUsed = new HashMap<>();
         this.playerTimeJokerUsed = new HashMap<>();
+        this.playerTime = new ArrayList<>();
+        for(int i = 0; i < 20; i++){
+            HashMap<String, Integer> hashMap = new HashMap<>();
+            playerTime.add(hashMap);
+        }
     }
 
     /**
@@ -39,6 +46,10 @@ public class MultiplayerRoom extends Room {
         playerHintJokerUsed.put(username, false);
         playerDoublePointJokerUsed.put(username, false);
         playerTimeJokerUsed.put(username, false);
+        for(int i = 0; i < 20; i++){
+            playerTime.get(i).put(username, 10);
+        }
+
     }
 
     /**
@@ -51,6 +62,9 @@ public class MultiplayerRoom extends Room {
         playerHintJokerUsed.remove(username);
         playerDoublePointJokerUsed.remove(username);
         playerTimeJokerUsed.remove(username);
+        for(int i = 0; i < 20; i++){
+            playerTime.get(i).remove(username);
+        }
     }
 
     /**
@@ -64,6 +78,9 @@ public class MultiplayerRoom extends Room {
 
         return playerScores.get(username);
     }
+
+    // get the time for a spwcific player for specific question
+    public Integer getTimeClient(String username, int number) { return playerTime.get(number).get(username); }
 
     public Boolean getHintJokerUsed(String username) { return playerHintJokerUsed.get(username); }
     public Boolean getDoublePointJokerUsed(String username) { return playerDoublePointJokerUsed.get(username); }

@@ -70,6 +70,7 @@ public class ComparisonQuestionActivityCtrl extends QuestionActivityCtrl {
         gameConfig.setScore(getPointsInt());
 
         initialize();
-        startTimer();
+        startTimerClient();
+        startTimerGlobal();
     }
 }

@@ -199,6 +199,25 @@ public class MultiplayerGameService {
     }
 
     /**
+     * Returns time the client has this round or null if it doesnt exist
+     *
+     * @param username the user that requests the score
+     * @param roomId   the id of the room the user is in
+     */
+    public Integer getTimeClient(String username, String roomId, int number) {
+        try {
+//            if (roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() != Room.RoomStatus.ONGOING ||
+//                    roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) == null) {
+//                return null;
+//            }
+            return roomCatalog.getMultiPlayerRoom(roomId).getTimeClient(username, number);
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+            return null;
+        }
+    }
+
+    /**
      * Returns whether the hint joker was used by this player in this game or null if it doesnt exist
      *
      * @param username the user that requests the score

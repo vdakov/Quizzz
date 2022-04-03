@@ -53,7 +53,8 @@ public class KnowledgeQuestionActivityCtrl extends QuestionActivityCtrl {
         gameConfig.setScore(getPointsInt());
 
         initialize();
-        startTimer();
+        startTimerClient();
+        startTimerGlobal();
     }
 }
 

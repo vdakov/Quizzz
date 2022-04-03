@@ -539,6 +539,23 @@ public class ServerUtils {
         return null;
     }
 
+    public Integer getTimeClient() {
+        try {
+            GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+
+            Response response = ClientBuilder.newClient(new ClientConfig())
+                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/"
+                            + gameConfiguration.getRoomId() + "/" + gameConfiguration.getCurrentQuestionNumber() + "/getTimeClient")
+                    .request(APPLICATION_JSON)
+                    .accept(APPLICATION_JSON).get(Response.class);
+            return response.readEntity(Integer.class);
+
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+        }
+        return 10;
+    }
+
     public Boolean getHintJokerUsed() {
         try {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();

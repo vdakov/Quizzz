@@ -33,6 +33,7 @@ public class QuestionActivityCtrl {
     protected final SceneCtrl sceneCtrl;
     protected final GameConfiguration gameConfig = GameConfiguration.getConfiguration();
     protected final double startTime = 10;
+    protected double startTimeClient = 10;
     protected int addedPointsInt;
     protected String userAnswer;
     protected boolean answered;
@@ -97,9 +98,13 @@ public class QuestionActivityCtrl {
     @FXML
     protected Button timeJoker;
 
-    protected IntegerProperty timeSeconds =
+    protected IntegerProperty timeSecondsGlobal =
             new SimpleIntegerProperty((int) startTime);
-    protected Timeline timeline;
+    protected Timeline timelineGlobal;
+
+    protected IntegerProperty timeSecondsClient =
+            new SimpleIntegerProperty((int) startTime);
+    protected Timeline timelineClient;
 
     @Inject
     public QuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) throws ExecutionException, InterruptedException {
@@ -132,10 +137,14 @@ public class QuestionActivityCtrl {
                 server.registerForMessages("/topic/emojis", q -> {
                     refresh(q.get(0), q.get(1), q.get(2));
                 });
+            timeJoker.setOpacity(1);
+            timeJoker.setDisable(false);
         }
         else
         {
             splitPane.setVisible(false);
+            timeJoker.setOpacity(0);
+            timeJoker.setDisable(true);
         }
       //  server.registerForMessages("/topic/emojis", q -> {
         //    refresh(q.get(0), q.get(1), q.get(2));
@@ -207,32 +216,58 @@ public class QuestionActivityCtrl {
 //        addedPoints.setText(null);
 //        points.setText(String.valueOf(pointsInt));
     }
-
-    public void startTimer() {
-        progressBarTime.progressProperty().bind(Bindings.divide(timeSeconds, startTime));
-
-        timeLabel.textProperty().bind(timeSeconds.asString());    //bind the progressbar value to the seconds left
-        timeSeconds.set((int) startTime);
-        timeline = new Timeline();
-        timeline.getKeyFrames().add(
+    //Always 10 seconds, to make the game synchronous
+    public void startTimerGlobal() {
+        timeSecondsGlobal.set((int) startTime);
+        timelineGlobal = new Timeline();
+        timelineGlobal.getKeyFrames().add(
                 new KeyFrame(Duration.seconds(startTime + 1),      //the timeLine handles an animation which lasts start + 1 seconds
-                        new KeyValue(timeSeconds, 0)));    //animation finishes when timeSeconds comes to 0
-        timeline.setOnFinished(event -> {
+                        new KeyValue(timeSecondsGlobal, 0)));    //animation finishes when timeSeconds comes to 0
+        timelineGlobal.setOnFinished(event -> {
             try {
                 displayNextQuestion();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });       //proceeds to the next question if no answer was given in 10 sec
-        timeline.playFromStart();                                 //start the animation
+        timelineGlobal.playFromStart();                                 //start the animation
     }
 
-    public void handleTimer(MouseEvent event) {
-        if (timeline != null) {
-            timeline.stop();        //if timeline exists stop it when any answer button is pressed
+    public void startTimerClient() {
+        if(!gameConfig.isSinglePlayer()){
+            startTimeClient = server.getTimeClient();
+            timeSecondsClient.set((int) startTimeClient);
         }
-        timeline.stop();
-        System.out.println("Time took to answer - " + timeSeconds);
+        else{
+            timeSecondsClient.set((int) startTime);
+        }
+
+        progressBarTime.progressProperty().bind(Bindings.divide(timeSecondsClient, startTimeClient));
+        timeLabel.textProperty().bind(timeSecondsClient.asString());    //bind the progressbar value to the seconds left
+
+        timelineClient = new Timeline();
+        timelineClient.getKeyFrames().add(
+                new KeyFrame(Duration.seconds(startTimeClient + 1),      //the timeLine handles an animation which lasts start + 1 seconds
+                        new KeyValue(timeSecondsClient, 0)));    //animation finishes when timeSeconds comes to 0
+        timelineClient.setOnFinished(event -> {
+            try {
+                disableAnswers();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });       //proceeds to the next question if no answer was given in 10 sec
+        timelineClient.playFromStart();                                 //start the animation
+    }
+
+    /**
+     * Method that stops the player from answering after client timer has ran out
+     * @throws IOException
+     */
+    public void disableAnswers() throws IOException {
+        timelineClient.stop();
+        firstOptionText.setDisable(true);
+        secondOptionText.setDisable(true);
+        thirdOptionText.setDisable(true);
     }
 
     /**
@@ -240,7 +275,8 @@ public class QuestionActivityCtrl {
      * @throws IOException
      */
     public void displayNextQuestion() throws IOException {
-        timeline.stop();
+        timelineGlobal.stop();
+        timelineClient.stop();
         if (gameConfig.getCurrentQuestionNumber() >= 19) finishGame();
         else sceneCtrl.showNextQuestion();
     }
@@ -257,7 +293,8 @@ public class QuestionActivityCtrl {
         Method that ends the game and returns the player to the main screen of the app
      */
     public void goToMainScreen() throws IOException {
-        timeline.stop();
+        timelineGlobal.stop();
+        timelineClient.stop();
         sceneCtrl.showMainScreenScene();
     }
 

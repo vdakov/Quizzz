@@ -55,6 +55,8 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
      * Initialises all the colors for the current scene
      */
     public void initialize() {
+        answerTextfield.setDisable(false);
+        answer.setDisable(false);
         answer.setStyle("-fx-background-color: #ffd783; -fx-border-color:  #ffd783; -fx-background-radius: 15; -fx-border-radius: 15;");
         userAnswerRectangle.setBorder(Border.EMPTY);
         answerTextfield.setText("");
@@ -107,7 +109,8 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         else splitPane.setVisible(true);
 
         initialize();
-        startTimer();
+        startTimerClient();
+        startTimerGlobal();
     }
 
     public void answerQuestion(ActionEvent event) {
@@ -190,5 +193,15 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
 
         server.useHintJoker();
         hintJoker.setDisable(true);
+    }
+
+    /**
+     * Method that stops the player from answering after client timer has ran out
+     * @throws IOException
+     */
+    public void disableAnswers() throws IOException {
+        timelineClient.stop();
+        answerTextfield.setDisable(true);
+        answer.setDisable(true);
     }
 }

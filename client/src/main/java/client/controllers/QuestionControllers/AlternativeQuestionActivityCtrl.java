@@ -52,7 +52,8 @@ public class AlternativeQuestionActivityCtrl extends QuestionActivityCtrl {
         gameConfig.setScore(getPointsInt());
 
         initialize();
-        startTimer();
+        startTimerClient();
+        startTimerGlobal();
         System.out.println("Timer started");
     }
 }

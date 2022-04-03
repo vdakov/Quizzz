@@ -190,6 +190,28 @@ public class GameRoomController {
      * @param username       the username of the player that requests his score
      * @param gameType       the type of the game
      * @param roomId         the id of the game that the player is in
+     * @return time the client has during this question round
+     */
+    @GetMapping("/{questionNumber}/getTimeClient")
+    public ResponseEntity<Integer> getTimeClient(@PathVariable("username") String username, @PathVariable("gameType") String gameType,
+                                                 @PathVariable("roomId") String roomId, @PathVariable("questionNumber") String questionNumber) {
+        if (gameType.equals("MULTIPLAYER")) {
+            try {
+                int number = Integer.parseInt(questionNumber);
+                Integer timeClient = multiplayerGameService.getTimeClient(username, roomId, number);
+                return (timeClient != null) ? ResponseEntity.status(HttpStatus.OK).body(timeClient) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
+            }
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
+    /**
+     * @param username       the username of the player that requests his score
+     * @param gameType       the type of the game
+     * @param roomId         the id of the game that the player is in
      * @return if hintJoker has been used this game
      */
     @GetMapping("/getHintJokerUsed")
