@@ -144,6 +144,7 @@ public class SceneCtrl {
         OverviewActionsActivityCtrl ctrl = (OverviewActionsActivityCtrl) pair.getKey();
 
         ctrl.initialize();
+        ctrl.refresh();
         primaryStage.setTitle("Overview Action");
         scene.setRoot(pair.getValue());
     }

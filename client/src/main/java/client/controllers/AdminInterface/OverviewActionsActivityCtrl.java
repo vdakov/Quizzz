@@ -113,6 +113,7 @@ public class OverviewActionsActivityCtrl {
             alert.setContentText("ID: " + deletingAction.getId() + "\nTitle: " + deletingAction.getTitle() + "\nConsumption: " + deletingAction.getConsumption());
             alert.showAndWait();
             server.deleteActivity(id);
+            refresh();
         } catch (Exception e) {
             System.out.println("The given ID is not founded");
         }
@@ -148,6 +149,7 @@ public class OverviewActionsActivityCtrl {
 
     public void restoreActivityBank(ActionEvent event) {
         server.restoreActivityBank();
+        refresh();
     }
 
 }
