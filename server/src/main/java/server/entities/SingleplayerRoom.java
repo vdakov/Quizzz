@@ -8,6 +8,8 @@ import java.util.List;
 public class SingleplayerRoom extends Room {
 
     private int playerScore;
+    private boolean hintJokerUsed;
+    private boolean doublePointJokerUsed;
 
     /**
      * Constructor for a singleplayer room
@@ -19,6 +21,8 @@ public class SingleplayerRoom extends Room {
     public SingleplayerRoom(String roomId, String roomCreator, List<Pair<Question, String>> roomQuestionsWithAnswers) {
         super(roomId, roomCreator, roomQuestionsWithAnswers);
         this.playerScore = 0;
+        hintJokerUsed = false;
+        doublePointJokerUsed = false;
     }
 
     /**
@@ -29,6 +33,26 @@ public class SingleplayerRoom extends Room {
     public int getPlayerScore() {
         return this.playerScore;
     }
+
+    /**
+     * Returns true if Hint Joker was used this game
+     */
+    public Boolean getHintJokerUsed() { return hintJokerUsed; }
+
+    /**
+     * Records hint joker used
+     */
+    public void useHintJoker() { hintJokerUsed = true; }
+
+    /**
+     * Returns true if DoublePoint Joker was used this game
+     */
+    public boolean getDoublePointJokerUsed() { return doublePointJokerUsed; }
+
+    /**
+     * Records doublePoint joker used
+     */
+    public void useDoublePointJoker() { doublePointJokerUsed = true; }
 
     /**
      * Sets the score for the player to the given score

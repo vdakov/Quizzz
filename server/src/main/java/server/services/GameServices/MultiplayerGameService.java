@@ -199,6 +199,129 @@ public class MultiplayerGameService {
     }
 
     /**
+     * Returns whether the hint joker was used by this player in this game or null if it doesnt exist
+     *
+     * @param username the user that requests the score
+     * @param roomId   the id of the room the user is in
+     */
+    public Boolean getHintJokerUsed(String username, String roomId) {
+        try {
+//            if (roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() != Room.RoomStatus.ONGOING ||
+//                    roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) == null) {
+//                return null;
+//            }
+            return roomCatalog.getMultiPlayerRoom(roomId).getHintJokerUsed(username);
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+            return null;
+        }
+    }
+
+    /**
+     * Returns whether the double point joker was used by this player in this game or null if it doesnt exist
+     *
+     * @param username the user that requests the score
+     * @param roomId   the id of the room the user is in
+     */
+    public Boolean getDoublePointJokerUsed(String username, String roomId) {
+        try {
+//            if (roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() != Room.RoomStatus.ONGOING ||
+//                    roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) == null) {
+//                return null;
+//            }
+            return roomCatalog.getMultiPlayerRoom(roomId).getDoublePointJokerUsed(username);
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+            return null;
+        }
+    }
+
+    /**
+     * Returns whether the time joker was used by this player in this game or null if it doesnt exist
+     *
+     * @param username the user that requests the score
+     * @param roomId   the id of the room the user is in
+     */
+    public Boolean getTimeJokerUsed(String username, String roomId) {
+        try {
+//            if (roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() != Room.RoomStatus.ONGOING ||
+//                    roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) == null) {
+//                return null;
+//            }
+            return roomCatalog.getMultiPlayerRoom(roomId).getTimeJokerUsed(username);
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+            return null;
+        }
+    }
+
+    /**
+     * "Uses" the hint joker, sets hintJokerUsed to true
+     *
+     * @param username       the user that needs the score update
+     * @param roomId         the id of the room the user is in
+     */
+    public Boolean useHintJoker(String username, String roomId) {
+        try {
+//            if (roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() != Room.RoomStatus.ONGOING ||
+//                    roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) == null) {
+//                //return null;
+//            }
+
+        roomCatalog.getMultiPlayerRoom(roomId).useHintJoker(username);
+        return true;
+
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+            return null;
+        }
+    }
+
+    /**
+     * "Uses" the double point joker, sets doublePointJokerUsed to true
+     *
+     * @param username       the user that needs the score update
+     * @param roomId         the id of the room the user is in
+     */
+    public Boolean useDoublePointJoker(String username, String roomId) {
+        try {
+//            if (roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() != Room.RoomStatus.ONGOING ||
+//                    roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) == null) {
+//                //return null;
+//            }
+
+            roomCatalog.getMultiPlayerRoom(roomId).useDoublePointJoker(username);
+            return true;
+
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+            return null;
+        }
+    }
+
+    /**
+     * "Uses" the time joker, sets timeJokerUSed to true
+     *
+     * @param username       the user that needs the score update
+     * @param roomId         the id of the room the user is in
+     */
+    public Boolean useTimeJoke(String username, String roomId) {
+        try {
+//            if (roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() != Room.RoomStatus.ONGOING ||
+//                    roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) == null) {
+//                //return null;
+//            }
+
+            roomCatalog.getMultiPlayerRoom(roomId).useTimeJoker(username);
+            return true;
+
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+            return null;
+        }
+    }
+
+    /**
      * Updated the score of the player or returns null / false if some error occurs
      *
      * @param username       the user that needs the score update
@@ -224,16 +347,30 @@ public class MultiplayerGameService {
         }
     }
 
+    /**
+     * Get all multiplayer games that is currently in waiting status
+     * @return list of all multiplayer games that is in waiting status
+     */
     public List<GameContainer> getGameIds() {
         //this.roomCatalog.cleanEmptyGames();
         return roomCatalog.getWaitingMultiplayerGames();
     }
 
-    public MultiplayerRoom getGame(String gameId) {
-        return this.roomCatalog.getMultiPlayerRoom(gameId);
+    /**
+     * Gets the multiplayer game room
+     * @param roomId the id of the room the user is in
+     * @return the multiplayer room with the given id or null if a room with that id does not exist
+     */
+    public MultiplayerRoom getGame(String roomId) {
+        return this.roomCatalog.getMultiPlayerRoom(roomId);
     }
 
-    public void removePlayer(String gameId, String userName) {
-        this.getGame(gameId).removePlayer(userName);
+    /**
+     * Removes the player with given name at given room
+     * @param roomId the id of the room the user is in
+     * @param userName the name of the removing player
+     */
+    public void removePlayer(String roomId, String userName) {
+        this.getGame(roomId).removePlayer(userName);
     }
 }
