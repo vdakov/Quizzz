@@ -118,6 +118,10 @@ public class RoomCatalog {
         this.multiplayerRandomRoom = multiplayerRoom;
     }
 
+    /**
+     * Get all multiplayer games that is currently in waiting status
+     * @return list of all multiplayer games that is in waiting status
+     */
     public List<GameContainer> getWaitingMultiplayerGames() {
         this.cleanEmptyGames();
         ArrayList<GameContainer> games = new ArrayList<>();
