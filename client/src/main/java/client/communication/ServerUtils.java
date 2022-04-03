@@ -279,6 +279,58 @@ public class ServerUtils {
         }
     }
 
+    public void useHintJoker() {
+        try {
+            GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+
+            Response response = ClientBuilder.newClient(new ClientConfig()) //
+                    .target(SERVER).path("api/" +  gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" +
+                                gameConfiguration.getRoomId() + "/useHintJoker")
+                    .request(APPLICATION_JSON)
+                    .accept(APPLICATION_JSON)
+                    .get();
+
+            System.out.println("Response status: " + response.getStatus());
+
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+        }
+    }
+    public void useDoublePointJoker() {
+        try {
+            GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+
+            Response response = ClientBuilder.newClient(new ClientConfig()) //
+                    .target(SERVER).path("api/" +  gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" +
+                            gameConfiguration.getRoomId() + "/useDoublePointJoker")
+                    .request(APPLICATION_JSON)
+                    .accept(APPLICATION_JSON)
+                    .get();
+
+            System.out.println("Response status: " + response.getStatus());
+
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+        }
+    }
+    public void useTimeJoker() {
+        try {
+            GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+
+            Response response = ClientBuilder.newClient(new ClientConfig()) //
+                    .target(SERVER).path("api/" +  gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" +
+                            gameConfiguration.getRoomId() + "/useTimeJoker")
+                    .request(APPLICATION_JSON)
+                    .accept(APPLICATION_JSON)
+                    .get();
+
+            System.out.println("Response status: " + response.getStatus());
+
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+        }
+    }
+
     /**
      * Gets the activities from the server
      *

@@ -20,6 +20,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.Random;
 
 public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
     private int userAnswerInt;
@@ -29,6 +30,8 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
     private Button answer;
     @FXML
     private Label correctAnswerLabel;
+    @FXML
+    private Label hintAnswerLabel;
     @FXML
     private TextField answerTextfield;
 
@@ -59,6 +62,11 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         answerTextfield.setText("");
         answered = false;
 
+        hintAnswerLabel.setOpacity(0);
+
+        if (getHintJokerUsed() != null) {
+            hintJoker.setDisable(getHintJokerUsed());
+        }
         if (!gameConfig.isSinglePlayer())
         {
             splitPane.setVisible(true);
@@ -165,5 +173,23 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
 //        addedPointsInt = 0;
 //        addedPoints.setText(null);
 //        points.setText(String.valueOf(pointsInt));
+    }
+
+    public void useHintJoker() {
+        //Joker that eliminates the wrong answer
+        if (getHintJokerUsed()) { return; }
+
+        Integer correctAnswer = Integer.parseInt(getCorrectAnswer());
+
+        Random random = new Random();
+        // creating a hint answer within the range -50% - 50% of the correct answer
+        double randomd = random.nextDouble();
+        int hintAnswer = (int) ((randomd - 0.5) * correctAnswer + correctAnswer);
+        hintAnswerLabel.setText("Hint answer: " + hintAnswer);
+        hintAnswerLabel.setOpacity(1);
+
+        server.useHintJoker();
+        hintJoker.setDisable(true);
+        gameConfig.setHintJokerUsed(true);
     }
 }

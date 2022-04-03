@@ -20,8 +20,10 @@ import javafx.util.Duration;
 
 
 import javax.inject.Inject;
+import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -95,8 +97,6 @@ public class QuestionActivityCtrl {
     @FXML
     protected Button timeJoker;
 
-
-
     protected IntegerProperty timeSeconds =
             new SimpleIntegerProperty((int) startTime);
     protected Timeline timeline;
@@ -114,8 +114,11 @@ public class QuestionActivityCtrl {
      */
     public void initialize() throws IOException {
         firstOptionText.setBorder(Border.EMPTY);
+        firstOptionText.setDisable(false);
         secondOptionText.setBorder(Border.EMPTY);
+        secondOptionText.setDisable(false);
         thirdOptionText.setBorder(Border.EMPTY);
+        thirdOptionText.setDisable(false);
 
         answered = false;
 
@@ -138,6 +141,10 @@ public class QuestionActivityCtrl {
         //    refresh(q.get(0), q.get(1), q.get(2));
       //  });
 
+        hintJoker.setDisable(false);
+        if (getHintJokerUsed() != null) {
+            hintJoker.setDisable(getHintJokerUsed());
+        }
     }
 
 
@@ -254,6 +261,33 @@ public class QuestionActivityCtrl {
         sceneCtrl.showMainScreenScene();
     }
 
+    public void useHintJoker() {
+        //Joker that eliminates the wrong answer
+        if (getHintJokerUsed()) { return; }
+
+        //Make a list of possible answers
+        List<Label> answerLabels = new ArrayList();
+        answerLabels.add(firstOptionText);
+        answerLabels.add(secondOptionText);
+        answerLabels.add(thirdOptionText);
+
+        //shuffle answers to choose randomly from them
+        Collections.shuffle(answerLabels);
+        String correctAnswer = getCorrectAnswer();
+
+        server.useHintJoker();
+        gameConfig.setHintJokerUsed(true);
+        hintJoker.setDisable(true);
+
+        //go until incorrect answer is found and eliminate it
+        for (Label answerLabel : answerLabels) {
+            if (!answerLabel.getText().equals(correctAnswer)) {
+                answerLabel.setDisable(true);
+                return;
+            }
+        }
+    }
+
     /**
      * Getter for the correct answer
      * @return the correct answer from the server
@@ -268,6 +302,18 @@ public class QuestionActivityCtrl {
      */
     public int getPointsInt() {
         return Integer.parseInt(server.getScore());
+    }
+
+    public Boolean getHintJokerUsed() {
+        return gameConfig.isHintJokerUsed();
+    }
+
+    public boolean getDoublePointJokerUsed() {
+        return gameConfig.isDoublePointJokerUsed();
+    }
+
+    public boolean getTimeJokerUsed() {
+        return gameConfig.isTimeJokerUsed();
     }
 
     /**
