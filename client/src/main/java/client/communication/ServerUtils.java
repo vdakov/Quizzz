@@ -237,8 +237,7 @@ public class ServerUtils {
                 case 417: {
                     System.out.println("Expectation failed when trying to get the question");
                     return  null;
-                    System.out.println("Expectation failed when getting the question");
-                    return null;
+
                     // something failed, show an apology message ?
                 }
                 case 400: {
@@ -515,8 +514,7 @@ public class ServerUtils {
                 case 417: {
                     System.out.println("Expectation failed when trying to get the player's score");
                     return  null;
-                    System.out.println("Expectation failed");
-                    return null;
+
                     // something failed, show an apology message ?
                 }
                 case 400: {
@@ -605,8 +603,8 @@ public class ServerUtils {
 
     public int getNumPlayers() {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
-        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
-        ;
+
+
         System.out.println("api/" + gameConfiguration.getUserName() + "/MULTIPLAYER/" + gameConfiguration.getRoomId() + "/numPlayers");
         return ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/MULTIPLAYER/" + gameConfiguration.getRoomId() + "/numPlayers")
