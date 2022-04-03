@@ -265,7 +265,7 @@ public class MultiplayerGameService {
         this.getGame(roomId).removePlayer(userName);
     }
 
-    public void removeNotAnsweringPlayer(String username, String roomId, int questionNumber, String userAnswer){
+    public void removeNotAnsweringPlayer(String username, String roomId, int questionNumber, String userAnswer) {
         //if the player does not answer for three consequtive questions, then the player is removed from the game
     }
 
@@ -274,7 +274,7 @@ public class MultiplayerGameService {
      * @param roomId    the id of the room the user is in
      */
     public void changeRoomStatusAsFinished(String roomId) {
-        if(roomCatalog.getMultiPlayerRoom(roomId).getNumPlayers() == 0) {
+        if (roomCatalog.getMultiPlayerRoom(roomId).getNumPlayers() == 0) {
             roomCatalog.getMultiPlayerRoom(roomId).setRoomStatus(Room.RoomStatus.FINISHED);
         }
     }

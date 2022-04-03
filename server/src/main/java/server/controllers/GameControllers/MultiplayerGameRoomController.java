@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
 import server.entities.MultiplayerRoom;
-import server.entities.Room;
 import server.services.GameServices.MultiplayerGameService;
 
 import java.util.HashMap;
