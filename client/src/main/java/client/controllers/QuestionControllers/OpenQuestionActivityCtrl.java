@@ -17,9 +17,6 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Random;
 
 public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
@@ -170,7 +167,7 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         Random random = new Random();
         // creating a hint answer within the range -50% - 50% of the correct answer
         double randomd = random.nextDouble();
-        int hintAnswer = (int)((randomd - 0.5) * correctAnswer + correctAnswer);
+        int hintAnswer = (int) ((randomd - 0.5) * correctAnswer + correctAnswer);
         hintAnswerLabel.setText("Hint answer: " + hintAnswer);
         hintAnswerLabel.setOpacity(1);
 
