@@ -4,6 +4,7 @@ import client.communication.ServerUtils;
 import client.controllers.SceneCtrl;
 import com.google.inject.Inject;
 import commons.Questions.OpenQuestion;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,6 +14,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
+
+import java.util.concurrent.ExecutionException;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -44,7 +47,7 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
      * @param sceneCtrl the scene controller
      */
     @Inject
-    public OpenQuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
+    public OpenQuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) throws ExecutionException, InterruptedException {
         super(server, sceneCtrl);
     }
 
@@ -64,6 +67,19 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         if (getHintJokerUsed() != null) {
             hintJoker.setDisable(getHintJokerUsed());
         }
+        if (!gameConfig.isSinglePlayer())
+        {
+            splitPane.setVisible(true);
+            playersActivity.setCellValueFactory(q -> new SimpleStringProperty(q.getValue()));
+        }
+        else
+        {
+            splitPane.setVisible(false);
+        }
+
+        server.registerForMessages("/topic/emojis", q -> {
+            refresh(q.get(0), q.get(1), q.get(2));
+        });
     }
 
     /**
@@ -80,14 +96,15 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         points.setText(String.valueOf(getPointsInt()));
         gameConfig.setScore(getPointsInt());
 
+
         ByteArrayInputStream bis = new ByteArrayInputStream(server.getQuestionImage(openQuestion.getQuestion().getRight()));
         BufferedImage bImage = ImageIO.read(bis);
 
 
         this.image.setImage(SwingFXUtils.toFXImage(bImage, null));
 
-        if (gameConfig.isSinglePlayer()) emoji.setVisible(false);
-        else emoji.setVisible(true);
+        if (gameConfig.isSinglePlayer()) splitPane.setVisible(false);
+        else splitPane.setVisible(true);
 
         initialize();
         startTimer();
