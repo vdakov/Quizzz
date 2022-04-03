@@ -177,7 +177,7 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
 
     public void useHintJoker() {
         //Joker that eliminates the wrong answer
-        if (server.getHintJokerUsed()) { return; }
+        if (getHintJokerUsed()) { return; }
 
         Integer correctAnswer = Integer.parseInt(getCorrectAnswer());
 
@@ -190,5 +190,6 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
 
         server.useHintJoker();
         hintJoker.setDisable(true);
+        gameConfig.setHintJokerUsed(true);
     }
 }

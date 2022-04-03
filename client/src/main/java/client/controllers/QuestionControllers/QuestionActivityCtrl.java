@@ -263,7 +263,7 @@ public class QuestionActivityCtrl {
 
     public void useHintJoker() {
         //Joker that eliminates the wrong answer
-        if (server.getHintJokerUsed()) { return; }
+        if (getHintJokerUsed()) { return; }
 
         //Make a list of possible answers
         List<Label> answerLabels = new ArrayList();
@@ -276,6 +276,7 @@ public class QuestionActivityCtrl {
         String correctAnswer = getCorrectAnswer();
 
         server.useHintJoker();
+        gameConfig.setHintJokerUsed(true);
         hintJoker.setDisable(true);
 
         //go until incorrect answer is found and eliminate it
@@ -304,11 +305,15 @@ public class QuestionActivityCtrl {
     }
 
     public Boolean getHintJokerUsed() {
-        return server.getHintJokerUsed();
+        return gameConfig.isHintJokerUsed();
     }
 
     public boolean getDoublePointJokerUsed() {
-        return server.getDoublePointJokerUsed();
+        return gameConfig.isDoublePointJokerUsed();
+    }
+
+    public boolean getTimeJokerUsed() {
+        return gameConfig.isTimeJokerUsed();
     }
 
     /**
