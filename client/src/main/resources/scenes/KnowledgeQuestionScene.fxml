@@ -114,7 +114,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Button fx:id="hintJoker" mnemonicParsing="false" onAction="#useHintJoker" prefHeight="38.0" prefWidth="115.0" style="-fx-background-radius: 50; -fx-background-color: #2467bf;" text="Hint" textFill="WHITESMOKE" GridPane.columnIndex="1">
+                <Button fx:id="hintJoker" mnemonicParsing="false" onAction="#useHintJoker" onMouseClicked="#hintJokerEvent" prefHeight="38.0" prefWidth="115.0" style="-fx-background-radius: 50; -fx-background-color: #2467bf;" text="Hint" textFill="WHITESMOKE" GridPane.columnIndex="1">
                     <graphic>
                         <ImageView fitHeight="30.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                             <image>
