@@ -154,6 +154,12 @@ public class QuestionActivityCtrl {
         if (getHintJokerUsed() != null) {
             hintJoker.setDisable(getHintJokerUsed());
         }
+        timeJoker.setDisable(false);
+        Boolean timeJokerUsed = getTimeJokerUsed();
+
+        if (timeJokerUsed != null) {
+            timeJoker.setDisable(timeJokerUsed);
+        }
     }
 
 
@@ -324,6 +330,14 @@ public class QuestionActivityCtrl {
         }
     }
 
+    public void useTimeJoker(){
+        //Joker that reduces time for all other players
+        if (server.getTimeJokerUsed()) { return; }
+
+        server.useTimeJoker();
+        timeJoker.setDisable(true);
+    }
+
     /**
      * Getter for the correct answer
      * @return the correct answer from the server
@@ -344,9 +358,14 @@ public class QuestionActivityCtrl {
         return server.getHintJokerUsed();
     }
 
-    public boolean getDoublePointJokerUsed() {
+    public Boolean getDoublePointJokerUsed() {
         return server.getDoublePointJokerUsed();
     }
+
+    public Boolean getTimeJokerUsed() {
+        return server.getTimeJokerUsed();
+    }
+
 
     /**
      * Getter for the question number

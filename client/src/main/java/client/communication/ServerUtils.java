@@ -319,12 +319,10 @@ public class ServerUtils {
 
             Response response = ClientBuilder.newClient(new ClientConfig()) //
                     .target(SERVER).path("api/" +  gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" +
-                            gameConfiguration.getRoomId() + "/useTimeJoker")
+                            gameConfiguration.getRoomId() + "/" + gameConfiguration.getCurrentQuestionNumber() + "/useTimeJoker")
                     .request(APPLICATION_JSON)
                     .accept(APPLICATION_JSON)
                     .get();
-
-            System.out.println("Response status: " + response.getStatus());
 
         } catch (Exception e) {
             System.out.println("An exception occurred");

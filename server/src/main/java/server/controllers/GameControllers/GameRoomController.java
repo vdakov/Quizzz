@@ -407,12 +407,13 @@ public class GameRoomController {
      * @param roomId the id of the game that the player is in
      * @return whether the request was successful or not
      */
-    @GetMapping("/useTimeJoker")
+    @GetMapping("/{questionNumber}/useTimeJoker")
     public ResponseEntity<Object> useTimeJoker(@PathVariable("username") String username, @PathVariable("gameType") String gameType,
-                                               @PathVariable("roomId") String roomId) {
+                                               @PathVariable("roomId") String roomId, @PathVariable("questionNumber") String questionNumber) {
         if (gameType.equals("MULTIPLAYER")) {
             try {
-                return multiplayerGameService.useTimeJoke(username, roomId) ?
+                int number = Integer.parseInt(questionNumber);
+                return multiplayerGameService.useTimeJoker(username, roomId, number) ?
                         ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             } catch (Exception e) {
                 return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();

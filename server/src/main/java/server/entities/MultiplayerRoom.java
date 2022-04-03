@@ -88,7 +88,18 @@ public class MultiplayerRoom extends Room {
 
     public void useHintJoker(String username) { playerHintJokerUsed.put(username, true); }
     public void useDoublePointJoker(String username) { playerDoublePointJokerUsed.put(username, true); }
-    public void useTimeJoker(String username) { playerTimeJokerUsed.put(username, true); }
+    public void useTimeJoker(String username, int number) {
+        playerTimeJokerUsed.put(username, true);
+
+        if(number >= 20) { return; }
+
+        HashMap<String, Integer> question = playerTime.get(number+1);
+        for (String key : question.keySet()) {
+            if(key != username) {
+                question.put(key, 5);
+            }
+        }
+    }
 
     /**
      * Updates the score of the player
