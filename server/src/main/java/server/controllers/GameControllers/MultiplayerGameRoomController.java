@@ -2,6 +2,8 @@ package server.controllers.GameControllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -69,8 +71,9 @@ public class MultiplayerGameRoomController {
 
     /**
      * Removes a player(user) from the current multiplayer score leaderboard
+     *
      * @param userName the name of the removing player
-     * @param roomId the id of the game that the user wants to join
+     * @param roomId   the id of the game that the user wants to join
      */
     @GetMapping("/removePlayer")
     public void removePlayer(@PathVariable String userName, @PathVariable String roomId) {
@@ -79,6 +82,7 @@ public class MultiplayerGameRoomController {
 
     /**
      * Gets the multiplayer game room
+     *
      * @param roomId the id of the game that the user wants to join
      * @return the multiplayer room with the given id or null if a room with that id does not exist
      */
@@ -89,6 +93,7 @@ public class MultiplayerGameRoomController {
 
     /**
      * Gets the number of players in the current multiplayer room
+     *
      * @param roomId the id of the game that the user wants to join
      * @return the number of players in terms of integer value
      */

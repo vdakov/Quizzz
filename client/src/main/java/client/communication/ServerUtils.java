@@ -320,8 +320,8 @@ public class ServerUtils {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
 
             Response response = ClientBuilder.newClient(new ClientConfig()) //
-                    .target(SERVER).path("api/" +  gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" +
-                                gameConfiguration.getRoomId() + "/useHintJoker")
+                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" +
+                            gameConfiguration.getRoomId() + "/useHintJoker")
                     .request(APPLICATION_JSON)
                     .accept(APPLICATION_JSON)
                     .get();
@@ -332,12 +332,13 @@ public class ServerUtils {
             System.out.println("An exception occurred");
         }
     }
+
     public void useDoublePointJoker() {
         try {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
 
             Response response = ClientBuilder.newClient(new ClientConfig()) //
-                    .target(SERVER).path("api/" +  gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" +
+                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" +
                             gameConfiguration.getRoomId() + "/useDoublePointJoker")
                     .request(APPLICATION_JSON)
                     .accept(APPLICATION_JSON)
@@ -349,12 +350,13 @@ public class ServerUtils {
             System.out.println("An exception occurred");
         }
     }
+
     public void useTimeJoker() {
         try {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
 
             Response response = ClientBuilder.newClient(new ClientConfig()) //
-                    .target(SERVER).path("api/" +  gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" +
+                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" +
                             gameConfiguration.getRoomId() + "/useTimeJoker")
                     .request(APPLICATION_JSON)
                     .accept(APPLICATION_JSON)
@@ -410,19 +412,11 @@ public class ServerUtils {
                 .delete();
     }
 
-    public List<ChatEntry> getPlayersActivity() {
-        return ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER).path("topic/emojis")
-                .request(APPLICATION_JSON)
-                .accept(APPLICATION_JSON)
-                .get(new GenericType<>() {
-                });
-    }
-
     private StompSession session = connect("ws://localhost:8080/websocket");
 
     /**
      * Methods that creates the connection
+     *
      * @param url where we get connected
      * @return
      * @throws ExecutionException
@@ -432,17 +426,18 @@ public class ServerUtils {
         var client = new StandardWebSocketClient();
         var stomp = new WebSocketStompClient(client);
 
-        stomp.setMessageConverter(new MappingJackson2MessageConverter() );
-        return stomp.connect(url, new StompSessionHandlerAdapter() {} ).get();
+        stomp.setMessageConverter(new MappingJackson2MessageConverter());
+        return stomp.connect(url, new StompSessionHandlerAdapter() {
+        }).get();
     }
 
     /**
      * We are subscribed for a whenever there is a message on the destination path
-     * @param destination  /topic/emojis
-     * @param consumer that is informed whenever a new message is received
+     *
+     * @param destination /topic/emojis
+     * @param consumer    that is informed whenever a new message is received
      */
-    public void registerForMessages(String destination, Consumer<List<String>> consumer)
-    {
+    public void registerForMessages(String destination, Consumer<List<String>> consumer) {
         session.subscribe(destination, new StompFrameHandler() {
             @Override
             public Type getPayloadType(StompHeaders headers) {
@@ -451,18 +446,18 @@ public class ServerUtils {
 
             @Override
             public void handleFrame(StompHeaders headers, Object payload) {
-                consumer.accept((List<String>) payload );
+                consumer.accept((List<String>) payload);
             }
         });
     }
 
     /**
-     *Method that sends the message
+     * Method that sends the message
+     *
      * @param destination /topic/emojis
-     * @param o the payload
+     * @param o           the payload
      */
-    public void send(String destination, Object o)
-    {
+    public void send(String destination, Object o) {
         session.send(destination, o);
     }
 
