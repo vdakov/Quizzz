@@ -181,8 +181,8 @@ public class ServerBrowserController {
         gameConfiguration.setRoomId(roomId);
 
         if (!server.joinMultiPlayerRoom()) {
-                missingUsername.setText("The username is already taken!");
-                return;
+            missingUsername.setText("The username is already taken!");
+            return;
         }
         this.sceneCtrl.showWaitingRoom();
     }

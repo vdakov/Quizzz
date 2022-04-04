@@ -241,16 +241,10 @@ public class QuestionActivityCtrl {
      */
     public void displayNextQuestion() throws IOException {
         timeline.stop();
-        if (gameConfig.getCurrentQuestionNumber() >= 19) finishGame();
-        else sceneCtrl.showNextQuestion();
-    }
-
-    /**
-     * Method that adds the score of the player to the leaderboard when a game finishes
-     */
-    public void finishGame() {
-        server.addLeaderboardEntry(gameConfig.getUserName(), gameConfig.getRoomId(), Integer.parseInt(server.getScore()));
-        sceneCtrl.showLeaderboard();
+        if ((gameConfig.isMultiPlayer() && gameConfig.getCurrentQuestionNumber() == 9) || gameConfig.getCurrentQuestionNumber() == 19) {
+            server.addOrUpdateLeaderboardEntry(gameConfig.getUserName(), gameConfig.getRoomId(), gameConfig.getScore());
+            sceneCtrl.showLeaderboard();
+        } else sceneCtrl.showNextQuestion();
     }
 
     /*
