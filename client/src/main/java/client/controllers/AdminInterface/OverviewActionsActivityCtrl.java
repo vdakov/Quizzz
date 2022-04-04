@@ -64,17 +64,38 @@ public class OverviewActionsActivityCtrl {
         this.sceneCtrl = mainCtrl;
     }
 
-//    public void initialize(URL location, ResourceBundle resources) {
+    //    public void initialize(URL location, ResourceBundle resources) {
     public void initialize() {
         colId.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getId() + ""));
         colTitle.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getTitle()));
         colConsumption.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getConsumption() + ""));
         colSource.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getSource()));
+
+        table.setRowFactory(event -> {
+            TableRow<Action> row = new TableRow<>();
+
+            row.setOnMouseClicked(event1 -> {
+
+
+                if (row.isSelected()) {
+
+                    if (row.getItem().getId() != null) {
+                        String Id = row.getItem().getId();
+                        this.deletingID.setText(Id);
+                        this.editingID.setText(Id);
+
+                    }
+
+
+                }
+            });
+
+            return row;
+        });
         this.refresh();
     }
 
     /**
-     *
      * @param event
      */
     public void addActivity(ActionEvent event) {
@@ -92,18 +113,23 @@ public class OverviewActionsActivityCtrl {
             alert.setContentText("ID: " + deletingAction.getId() + "\nTitle: " + deletingAction.getTitle() + "\nConsumption: " + deletingAction.getConsumption());
             alert.showAndWait();
             server.deleteActivity(id);
+            refresh();
         } catch (Exception e) {
             System.out.println("The given ID is not founded");
         }
     }
 
-    public void editActivity(ActionEvent event) {
+    public void editActivity(ActionEvent event) throws IOException {
         String id = editingID.getText();
         try {
             Action editingAction = server.getActivityById(id);
             sceneCtrl.showEditActionScene(editingAction);
         } catch (Exception e) {
-            System.out.println("The given ID is not founded");
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("ID NOT FOUND");
+            alert.setHeaderText("ID NOT FOUND");
+            alert.setContentText("ID COULD NOT BE FOUND, PLEASE ENTER VALID ID !");
+            alert.showAndWait();
         }
         refresh();
     }
@@ -112,10 +138,18 @@ public class OverviewActionsActivityCtrl {
         var activities = server.getActivities();
         data = FXCollections.observableList(activities);
         table.setItems(data);
+        colId.setSortType(TableColumn.SortType.ASCENDING);
+        table.getSortOrder().add(colId);
+        table.sort();
     }
 
     public void goToMainScreen() throws IOException {
         sceneCtrl.showMainScreenScene();
+    }
+
+    public void restoreActivityBank(ActionEvent event) {
+        server.restoreActivityBank();
+        refresh();
     }
 
 }

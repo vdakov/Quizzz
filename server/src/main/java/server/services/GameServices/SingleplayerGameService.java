@@ -139,6 +139,31 @@ public class SingleplayerGameService {
             return null;
         }
     }
+    public Boolean getHintJokerUsed(String username, String roomId) {
+        try {
+            if (!username.equals(roomCatalog.getSinglePlayerRoom(roomId).getRoomCreator())) {
+                return null;
+            }
+
+            return roomCatalog.getSinglePlayerRoom(roomId).getHintJokerUsed();
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+            return null;
+        }
+    }
+
+    public Boolean getDoublePointJokerUsed(String username, String roomId) {
+        try {
+            if (!username.equals(roomCatalog.getSinglePlayerRoom(roomId).getRoomCreator())) {
+                return null;
+            }
+
+            return roomCatalog.getSinglePlayerRoom(roomId).getDoublePointJokerUsed();
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+            return null;
+        }
+    }
 
     /**
      * Updated the score of the player or returns null / false if some error occurs
@@ -157,6 +182,35 @@ public class SingleplayerGameService {
             if (userAnswer.equals(getSinglePlayerAnswer(username, roomId, questionNumber))) {
                 roomCatalog.getSinglePlayerRoom(roomId).updatePlayerScore(500);
             }
+
+            return true;
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+            return null;
+        }
+    }
+    public Boolean useHintJoker(String username, String roomId) {
+        try {
+            if (!username.equals(roomCatalog.getSinglePlayerRoom(roomId).getRoomCreator())) {
+                return false;
+            }
+
+            roomCatalog.getSinglePlayerRoom(roomId).useHintJoker();
+            System.out.println("Hint Joker Used");
+
+            return true;
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+            return null;
+        }
+    }
+    public Boolean useDoublePointJoker(String username, String roomId) {
+        try {
+            if (!username.equals(roomCatalog.getSinglePlayerRoom(roomId).getRoomCreator())) {
+                return false;
+            }
+
+            roomCatalog.getSinglePlayerRoom(roomId).useDoublePointJoker();
 
             return true;
         } catch (Exception e) {

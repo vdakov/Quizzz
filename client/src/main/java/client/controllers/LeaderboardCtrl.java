@@ -4,14 +4,21 @@ import client.communication.ServerUtils;
 import client.data.GameConfiguration;
 import com.google.inject.Inject;
 import commons.Leaderboard.LeaderboardEntry;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,6 +40,8 @@ public class LeaderboardCtrl {
     private TableColumn<LeaderboardEntry, String> pointsCol;
     @FXML
     private Button playAgainButton;
+    @FXML
+    private Label timeLabel;
 
     private ServerUtils server;
     private SceneCtrl sceneCtrl;
@@ -52,26 +61,85 @@ public class LeaderboardCtrl {
         pointsCol.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getScore() == -1 ? "..." : q.getValue().getScore() + ""));
     }
 
-    public void refresh() {
-        playAgainButton.setVisible(gameConfig.isSinglePlayer() ? false : true);
 
-        List<LeaderboardEntry> leaderboardEntries = server.getLeaderboard(GameConfiguration.getConfiguration().getRoomId());
-        List<LeaderboardEntry> top10 = leaderboardEntries.subList(0, Integer.min(10, leaderboardEntries.size()));
+    private Timeline timeline;
+    private IntegerProperty timeSeconds = new SimpleIntegerProperty(10);
+
+    public void startTimer() {
+        timeLabel.textProperty().bind(timeSeconds.asString());    //bind the progressbar value to the seconds left
+        timeSeconds.set(10);
+        timeline = new Timeline();
+        timeline.getKeyFrames().add(
+                new KeyFrame(Duration.seconds(11),      //the timeLine handles an animation which lasts start + 1 seconds
+                        new KeyValue(timeSeconds, 0)));    //animation finishes when timeSeconds comes to 0
+        timeline.setOnFinished(event -> {
+            try {
+                timeline.stop();
+                sceneCtrl.showNextQuestion();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });       //proceeds to the next question if no answer was given in 10 sec
+        timeline.playFromStart();                                 //start the animation
+    }
+
+    public void refresh() {
+        leaderboardTable.setItems(FXCollections.observableList(new ArrayList<>()));
+
+        if (gameConfig.getCurrentQuestionNumber() == 9)
+            playAgainButton.setVisible(false);
+        else playAgainButton.setVisible(true);
+
+        getLeaderboard();
+
+        server.checkLeaderboardFilled();
+
+        if (gameConfig.getCurrentQuestionNumber() == 9) {
+            timeLabel.setVisible(true);
+        } else {
+            timeLabel.setVisible(false);
+        }
+    }
+
+    public void getLeaderboard() {
+        if (gameConfig.isMultiPlayer()) {
+            server.waitForFilledLeaderboard(q -> {
+                fillLeaderboard(q);
+                startTimer();
+            });
+            return;
+        } else {
+            fillLeaderboard(server.getLeaderboard(GameConfiguration.getConfiguration().getRoomId()));
+        }
+    }
+
+    public void fillLeaderboard(List<LeaderboardEntry> entries) {
+        List top10 = entries.subList(0, Integer.min(10, entries.size()));
+
+        if (gameConfig.isMultiPlayer()) {
+            for (int i = 0; i < top10.size(); i++) {
+                LinkedHashMap e = (LinkedHashMap) top10.get(i);
+                LeaderboardEntry entry = new LeaderboardEntry((String) e.get("username"), (String) e.get("roomId"), (int) e.get("score"), (boolean) e.get("singleplayer"));
+                entry.setRank(i + 1);
+                top10.set(i, entry);
+            }
+        }
 
         if (gameConfig.getRoomId() != null) {
             LeaderboardEntry spacer = new LeaderboardEntry("...", "", -1, false); //a spacer where all columns will be "..."
             spacer.setRank(-1);
             top10.add(spacer);
-            top10.add(leaderboardEntries.stream() //add the entry with the same roomId and username as the player
+            top10.add(entries.stream() //add the entry with the same roomId and username as the player
                     .filter(e -> e.getRoomId().equals(gameConfig.getRoomId()) && e.getUsername().equals(gameConfig.getUserName()))
                     .collect(Collectors.toList()).get(0));
         }
         leaderboardTable.setItems(FXCollections.observableList(top10));
 
-        if (leaderboardEntries.size() >= 3) {
-            place1.setText(leaderboardEntries.get(0).getUsername());
-            place2.setText(leaderboardEntries.get(1).getUsername());
-            place3.setText(leaderboardEntries.get(2).getUsername());
+        if ((gameConfig.getRoomId() == null && entries.size() >= 3)
+                || (gameConfig.getRoomId() != null && entries.size() >= 5)) {
+            place1.setText(entries.get(0).getUsername());
+            place2.setText(entries.get(1).getUsername());
+            place3.setText(entries.get(2).getUsername());
         }
     }
 
@@ -80,6 +148,6 @@ public class LeaderboardCtrl {
     }
 
     public void playAgain() {
-        sceneCtrl.showWaitingRoom(true, gameConfig.getRoomId(), gameConfig.getUserName());
+        sceneCtrl.showWaitingRoom();
     }
 }

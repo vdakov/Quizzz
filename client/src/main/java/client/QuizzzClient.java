@@ -42,6 +42,7 @@ public class QuizzzClient extends Application {
      */
     public static void main(String[] args) throws URISyntaxException, IOException {
         launch(QuizzzClient.class, args);
+
     }
 
     /**

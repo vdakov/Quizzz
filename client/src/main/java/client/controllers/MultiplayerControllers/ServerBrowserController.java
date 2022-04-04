@@ -50,6 +50,14 @@ public class ServerBrowserController {
      */
     public void initialize() {
 
+        this.gameTable.getColumns().remove(this.gameIdColumn);
+        this.gameTable.getColumns().remove(this.numPlayerColumn);
+
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+
+        if (gameConfiguration.getUserName() != null) {
+            usernameField.setText(gameConfiguration.getUserName());
+        }
 
         this.gameIdColumn = new TableColumn<GameContainer, String>("gameId");
         gameIdColumn.setCellValueFactory(new PropertyValueFactory<GameContainer, String>("gameId"));
@@ -67,13 +75,15 @@ public class ServerBrowserController {
 
         missingUsername.setText("");
 
+
         this.gameTable.getColumns().add(gameIdColumn);
         this.gameTable.getColumns().add(numPlayerColumn);
+
 
         gameTable.setRowFactory(event -> {
             TableRow<GameContainer> row = new TableRow<>();
 
-            row.setOnMouseEntered(event1 -> {
+            row.setOnMouseClicked(event1 -> {
 
 
                 if (row.isSelected()) {
@@ -119,23 +129,25 @@ public class ServerBrowserController {
     }
 
     public void joinRandomWaitingRoom(ActionEvent event) {
-        //Checking if username field was filled in
-        String playerName = usernameField.getText();
-        if (playerName == "") {
-            missingUsername.setText("Enter username!");
+        if (!checkUsername(usernameField.getText())) {
             return;
         }
-        // we will connect to the initialised random room
-        String roomId = server.getRandomMultiPlayerRoomId(playerName);
 
-        server.joinMultiPlayerRoom(playerName, roomId);
-        this.sceneCtrl.showWaitingRoom(true, roomId, playerName);
-        if (!server.joinMultiPlayerRoom(playerName, roomId)) {
+        String username = usernameField.getText();
+
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+        gameConfiguration.setUserName(username);
+
+        String roomId = server.getRandomMultiPlayerRoomId();
+
+        gameConfiguration.setRoomId(roomId);
+
+        if (!server.joinMultiPlayerRoom()) {
             missingUsername.setText("The username is already taken!");
             return;
-        } else {
-            this.sceneCtrl.showWaitingRoom(false, roomId, playerName);
         }
+
+        this.sceneCtrl.showWaitingRoom();
     }
 
     /**
@@ -146,29 +158,33 @@ public class ServerBrowserController {
      * @param event
      */
     public void joinWaitingRoom(ActionEvent event) {
-        //Checking if username field was filled in
-        String playerName = usernameField.getText();
-        if (playerName == "") {
-            missingUsername.setText("Enter username!");
+        if (!checkUsername(usernameField.getText())) {
             return;
         }
-        String gameId = this.gameIdField.getText();
 
-        if (!this.listOfGameIds.contains(gameId)) {
+        String username = usernameField.getText();
+
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+        gameConfiguration.setUserName(username);
+
+        String roomId = this.gameIdField.getText();
+
+        if (!this.listOfGameIds.contains(roomId)) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning");
             alert.setHeaderText("Invalid ID");
             alert.setContentText("Please enter a valid game ID!!!");
             alert.show();
             return;
-        } else {
-            if (!server.joinMultiPlayerRoom(playerName, gameId)) {
-                missingUsername.setText("The username is already taken!");
-                return;
-            }
-
         }
-        this.sceneCtrl.showWaitingRoom(false, gameId, playerName);
+
+        gameConfiguration.setRoomId(roomId);
+
+        if (!server.joinMultiPlayerRoom()) {
+            missingUsername.setText("The username is already taken!");
+            return;
+        }
+        this.sceneCtrl.showWaitingRoom();
     }
 
     /**
@@ -177,20 +193,36 @@ public class ServerBrowserController {
      * @param event the ActionEvent of the button
      */
     public void createWaitingRoom(ActionEvent event) {
-        String roomId = server.createNewRoom();
-        System.out.println("Room id:  " + roomId);
-        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
-        gameConfiguration.setUserName(usernameField.getText());
-        gameConfiguration.setRoomId(roomId);
-        this.sceneCtrl.showWaitingRoom(true, roomId, "cata");
-        //Checking if username field was filled in
-        String playerName = usernameField.getText();
-        if (playerName == "") {
-            missingUsername.setText("Enter username!");
+        if (!checkUsername(usernameField.getText())) {
             return;
         }
-        String gameId = server.createNewRoom();
-        this.sceneCtrl.showWaitingRoom(true, gameId, "cata");
+
+        String username = usernameField.getText();
+
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+
+        gameConfiguration.setUserName(username);
+        gameConfiguration.setCurrentQuestionNumber(0);
+
+        String roomId = server.createNewRoom();
+        gameConfiguration.setRoomId(roomId);
+
+        if (roomId != null) {
+            this.sceneCtrl.showWaitingRoom();
+        } else {
+            // error message
+        }
     }
 
+    public boolean checkUsername(String username) {
+        if (username.isBlank()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("A username needed");
+            alert.setHeaderText("Please write the username you want to play with");
+            alert.setContentText("Unfortunately, you cannot play a game without a username");
+            alert.showAndWait();
+            return false;
+        }
+        return true;
+    }
 }

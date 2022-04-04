@@ -90,10 +90,14 @@ public class RoomCatalog {
      * @return the multiplayer room with the given id or null if a room with that id does not exist
      */
     public MultiplayerRoom getMultiPlayerRoom(String roomId) {
+        System.out.println("Roomcatalog roomid: " + roomId);
+        System.out.println("RandomRoom id" + multiplayerRandomRoom.getRoomId());
         if (roomId.equals(multiplayerRandomRoom.getRoomId())) {
             return multiplayerRandomRoom;
         }
 
+        System.out.println("Desired room: " + roomId);
+        multiplayerRooms.forEach((q, k) -> System.out.println(q));
         return multiplayerRooms.get(roomId);
     }
 
@@ -114,6 +118,10 @@ public class RoomCatalog {
         this.multiplayerRandomRoom = multiplayerRoom;
     }
 
+    /**
+     * Get all multiplayer games that is currently in waiting status
+     * @return list of all multiplayer games that is in waiting status
+     */
     public List<GameContainer> getWaitingMultiplayerGames() {
         this.cleanEmptyGames();
         ArrayList<GameContainer> games = new ArrayList<>();
@@ -146,6 +154,7 @@ public class RoomCatalog {
                 emptyGames.add(game);
             }
         }
+
         for (MultiplayerRoom game : emptyGames) {
             this.multiplayerRooms.remove(game.getRoomId());
         }

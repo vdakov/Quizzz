@@ -11,6 +11,8 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
+import java.util.concurrent.ExecutionException;
+
 
 public class AlternativeQuestionActivityCtrl extends QuestionActivityCtrl {
     /**
@@ -20,7 +22,7 @@ public class AlternativeQuestionActivityCtrl extends QuestionActivityCtrl {
      * @param sceneCtrl the scene controller
      */
     @Inject
-    public AlternativeQuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
+    public AlternativeQuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) throws ExecutionException, InterruptedException {
         super(server, sceneCtrl);
     }
 
@@ -37,7 +39,7 @@ public class AlternativeQuestionActivityCtrl extends QuestionActivityCtrl {
         ByteArrayInputStream bis = new ByteArrayInputStream(server.getQuestionImage(alternativeQuestion.getQuestion().getRight()));
         BufferedImage bImage = ImageIO.read(bis);
 
-        this.image.setImage(SwingFXUtils.toFXImage(bImage, null));
+        image.setImage(SwingFXUtils.toFXImage(bImage, null));
 
 
         sampleQuestion.setText(alternativeQuestion.getQuestion().getKey());

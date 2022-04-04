@@ -4,6 +4,7 @@ import client.communication.ServerUtils;
 import client.controllers.SceneCtrl;
 import com.google.inject.Inject;
 import commons.Questions.OpenQuestion;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,10 +14,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
+
+import java.util.concurrent.ExecutionException;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.Random;
 
 public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
     private int userAnswerInt;
@@ -26,6 +30,8 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
     private Button answer;
     @FXML
     private Label correctAnswerLabel;
+    @FXML
+    private Label hintAnswerLabel;
     @FXML
     private TextField answerTextfield;
 
@@ -41,7 +47,7 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
      * @param sceneCtrl the scene controller
      */
     @Inject
-    public OpenQuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
+    public OpenQuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) throws ExecutionException, InterruptedException {
         super(server, sceneCtrl);
     }
 
@@ -55,6 +61,25 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         correctAnswerRectangle.setOpacity(0);
         answerTextfield.setText("");
         answered = false;
+
+        hintAnswerLabel.setOpacity(0);
+
+        if (getHintJokerUsed() != null) {
+            hintJoker.setDisable(getHintJokerUsed());
+        }
+        if (!gameConfig.isSinglePlayer())
+        {
+            splitPane.setVisible(true);
+            playersActivity.setCellValueFactory(q -> new SimpleStringProperty(q.getValue()));
+        }
+        else
+        {
+            splitPane.setVisible(false);
+        }
+
+        server.registerForMessages("/topic/emojis", q -> {
+            refresh(q.get(0), q.get(1), q.get(2));
+        });
     }
 
     /**
@@ -71,14 +96,15 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         points.setText(String.valueOf(getPointsInt()));
         gameConfig.setScore(getPointsInt());
 
+
         ByteArrayInputStream bis = new ByteArrayInputStream(server.getQuestionImage(openQuestion.getQuestion().getRight()));
         BufferedImage bImage = ImageIO.read(bis);
 
 
         this.image.setImage(SwingFXUtils.toFXImage(bImage, null));
 
-        if (gameConfig.isSinglePlayer()) emoji.setVisible(false);
-        else emoji.setVisible(true);
+        if (gameConfig.isSinglePlayer()) splitPane.setVisible(false);
+        else splitPane.setVisible(true);
 
         initialize();
         startTimer();
@@ -147,5 +173,23 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
 //        addedPointsInt = 0;
 //        addedPoints.setText(null);
 //        points.setText(String.valueOf(pointsInt));
+    }
+
+    public void useHintJoker() {
+        //Joker that eliminates the wrong answer
+        if (getHintJokerUsed()) { return; }
+
+        Integer correctAnswer = Integer.parseInt(getCorrectAnswer());
+
+        Random random = new Random();
+        // creating a hint answer within the range -50% - 50% of the correct answer
+        double randomd = random.nextDouble();
+        int hintAnswer = (int) ((randomd - 0.5) * correctAnswer + correctAnswer);
+        hintAnswerLabel.setText("Hint answer: " + hintAnswer);
+        hintAnswerLabel.setOpacity(1);
+
+        server.useHintJoker();
+        hintJoker.setDisable(true);
+        gameConfig.setHintJokerUsed(true);
     }
 }
