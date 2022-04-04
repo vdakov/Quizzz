@@ -125,6 +125,6 @@ public class MultiplayerGameRoomController {
      */
     @GetMapping("/changeStatus")
     public void changeRoomStatusAsFinished(String roomId) {
-        this.multiplayerGameService.changeRoomStatusAsFinished(roomId);
+        //this.multiplayerGameService.changeRoomStatusAsFinished(roomId);
     }
 }
