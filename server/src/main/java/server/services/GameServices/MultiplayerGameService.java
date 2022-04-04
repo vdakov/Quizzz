@@ -250,13 +250,22 @@ public class MultiplayerGameService {
         return this.roomCatalog.getMultiPlayerRoom(gameId);
     }
 
-    public void removePlayer(String gameId, String userName) {
-        MultiplayerGameRoomController.getPlayerNumberListeners().forEach((k, l) -> {
-            if (k.getValue().equals(gameId)) {
-                l.accept(roomCatalog.getMultiPlayerRoom(gameId).getNumPlayers());
-            }
-        });
+    public void removePlayer(String roomId, String userName) {
+        this.getGame(roomId).removePlayer(userName);
 
-        this.getGame(gameId).removePlayer(userName);
+        if (roomCatalog.getMultiPlayerRoom(roomId).getNumPlayers() == 0) {
+            roomCatalog.getMultiPlayerRoom(roomId).setRoomStatus(Room.RoomStatus.FINISHED);
+
+            GameController.getActiveRoomsListeners().forEach((k, l) -> {
+                l.accept(new GameContainer(roomId, roomCatalog.getMultiPlayerRoom(roomId).getNumPlayers()));
+            });
+
+        } else {
+            MultiplayerGameRoomController.getPlayerNumberListeners().forEach((k, l) -> {
+                if (k.getValue().equals(roomId)) {
+                    l.accept(roomCatalog.getMultiPlayerRoom(roomId).getNumPlayers());
+                }
+            });
+        }
     }
 }

@@ -191,9 +191,13 @@ public class ServerUtils {
         return null;
     }
 
-    private static final ExecutorService EXEC_WAIT_FOR_START = Executors.newSingleThreadExecutor();
+    private static ExecutorService EXEC_WAIT_FOR_START = Executors.newSingleThreadExecutor();
 
     public void waitForMultiPlayerRoomStart(Consumer<Boolean> startedGame) {
+        if (EXEC_WAIT_FOR_START.isShutdown()) {
+            EXEC_WAIT_FOR_START = Executors.newSingleThreadExecutor();
+        }
+
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         EXEC_WAIT_FOR_START.submit(() -> {
             while (!Thread.interrupted()) {
@@ -222,9 +226,13 @@ public class ServerUtils {
         EXEC_WAIT_FOR_START.shutdownNow();
     }
 
-    private static final ExecutorService EXEC_GET_PLAYER_NUMBER = Executors.newSingleThreadExecutor();
+    private static ExecutorService EXEC_GET_PLAYER_NUMBER = Executors.newSingleThreadExecutor();
 
     public void updatePlayerNumber(Consumer<Integer> playerNumber) {
+        if (EXEC_GET_PLAYER_NUMBER.isShutdown()) {
+            EXEC_GET_PLAYER_NUMBER = Executors.newSingleThreadExecutor();
+        }
+
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         EXEC_GET_PLAYER_NUMBER.submit(() -> {
             while (!Thread.interrupted()) {
@@ -249,15 +257,19 @@ public class ServerUtils {
         EXEC_GET_PLAYER_NUMBER.shutdownNow();
     }
 
-    private static final ExecutorService EXEC_UPDATE_AVAILABLE_ROOMS = Executors.newSingleThreadExecutor();
+    private static ExecutorService EXEC_UPDATE_AVAILABLE_ROOMS = Executors.newSingleThreadExecutor();
 
     public void updateAvailableRooms(Consumer<GameContainer> roomUpdate) {
+        if (EXEC_UPDATE_AVAILABLE_ROOMS.isShutdown()) {
+            EXEC_UPDATE_AVAILABLE_ROOMS = Executors.newSingleThreadExecutor();
+        }
+
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         EXEC_UPDATE_AVAILABLE_ROOMS.submit(() -> {
             while (!Thread.interrupted()) {
 
                 var res = ClientBuilder.newClient(new ClientConfig())
-                        .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/MULTIPLAYER/updateRooms")
+                        .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/MULTIPLAYER/x")
                         .request(APPLICATION_JSON)
                         .accept(APPLICATION_JSON).get(Response.class);
 

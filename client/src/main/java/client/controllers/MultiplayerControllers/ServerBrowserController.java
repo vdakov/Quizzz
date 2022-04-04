@@ -71,7 +71,11 @@ public class ServerBrowserController {
 
         server.updateAvailableRooms(q -> {
             try {
-                currentGames.add(q);
+                if (q.getNumPlayers() == 0) {
+                    currentGames.remove(q);
+                } else {
+                    currentGames.add(q);
+                }
             } catch (Exception e) {
                 System.out.println("An exception occurred when trying to live update room count");
             }
@@ -119,6 +123,8 @@ public class ServerBrowserController {
         this.gameTable.getColumns().remove(this.gameIdColumn);
         this.gameTable.getColumns().remove(this.numPlayerColumn);
 
+        server.stopUpdateAvailableRooms();
+
         this.initialize();
     }
 
@@ -128,6 +134,7 @@ public class ServerBrowserController {
      * @param event the actionevent of the button
      */
     public void mainMenu(ActionEvent event) {
+        server.stopUpdateAvailableRooms();
         this.sceneCtrl.showMainScreenScene();
     }
 
@@ -151,6 +158,7 @@ public class ServerBrowserController {
             return;
         }
 
+        server.stopUpdateAvailableRooms();
         this.sceneCtrl.showWaitingRoom();
     }
 
@@ -189,6 +197,8 @@ public class ServerBrowserController {
                 missingUsername.setText("The username is already taken!");
                 return;
         }
+
+        server.stopUpdateAvailableRooms();
         this.sceneCtrl.showWaitingRoom();
     }
 
@@ -213,6 +223,7 @@ public class ServerBrowserController {
         gameConfiguration.setRoomId(roomId); 
 
         if (roomId != null) {
+            server.stopUpdateAvailableRooms();
             this.sceneCtrl.showWaitingRoom();
         } else {
             // error message

@@ -24,8 +24,6 @@ public class WaitingRoomController {
     @FXML
     private Button startButton; // the button to start the game- only accessible to the owner
     @FXML
-    private Text ownerText; // the text displaying whether you are the owner of the room
-    @FXML
     private Text gameID; // displays the gameID of the current waiting room
 
     @Inject
@@ -42,6 +40,9 @@ public class WaitingRoomController {
     public void goBackToServerBrowser(ActionEvent event) {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         this.server.removePlayer(gameConfiguration.getUserName(), gameConfiguration.getRoomId());
+
+        server.stopWaitForRoomThread();
+        server.stopUpdatePlayerNumber();
 
         this.sceneCtrl.showServerBrowser();
     }
@@ -89,6 +90,9 @@ public class WaitingRoomController {
      * Refresh method to update the number of current players
      */
     public void refresh() throws IOException {
+        server.stopWaitForRoomThread();
+        server.stopUpdatePlayerNumber();
+
         this.initialize();
     }
 

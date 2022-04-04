@@ -100,7 +100,7 @@ public class MultiplayerGameRoomController {
 
     @GetMapping("/removePlayer")
     public void removePlayer(@PathVariable String userName, @PathVariable String roomId) {
-        this.getGame(roomId).removePlayer(userName);
+        this.multiplayerGameService.removePlayer(roomId, userName);
     }
 
     @GetMapping("/")
