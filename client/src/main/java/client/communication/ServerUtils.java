@@ -74,6 +74,7 @@ public class ServerUtils {
                 case 417: {
                     System.out.println("Expectation failed when creating a new room");
                     return  null;
+
                     // something failed, show an apology message ?
                 }
                 case 400: {
@@ -109,6 +110,7 @@ public class ServerUtils {
                 case 417: {
                     System.out.println("Expectation failed when trying to start the room");
                     return  false;
+
                     // something failed, show an apology message ?
                 }
                 case 400: {
@@ -235,6 +237,7 @@ public class ServerUtils {
                 case 417: {
                     System.out.println("Expectation failed when trying to get the question");
                     return  null;
+
                     // something failed, show an apology message ?
                 }
                 case 400: {
@@ -254,7 +257,7 @@ public class ServerUtils {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
 
             Response response = ClientBuilder.newClient(new ClientConfig()) //
-                    .target(SERVER).path("api/" +  gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" + gameConfiguration.getRoomId() + "/" +
+                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" + gameConfiguration.getRoomId() + "/" +
                             gameConfiguration.getCurrentQuestionNumber() + "/postAnswer")
                     .request(APPLICATION_JSON)
                     .accept(APPLICATION_JSON)
@@ -454,6 +457,7 @@ public class ServerUtils {
     }
 
     public void editActivity(String id, Action a) {
+        System.out.println(id);
         ClientBuilder.newClient(new ClientConfig()) //
                 .target(SERVER).path("api/activities/update") //
                 .request() //
@@ -462,18 +466,55 @@ public class ServerUtils {
     }
 
     public Action getActivityById(String id) {
-        return ClientBuilder.newClient(new ClientConfig()) //
-                .target(SERVER).path("api/activities/" + id) //
-                .request() //
-                .accept(APPLICATION_JSON) //
-                .get(new GenericType<>() {
-                });
+        try {
+            Response response = ClientBuilder.newClient(new ClientConfig()) //
+                    .target(SERVER).path("api/activities/" + id) //
+                    .request() //
+                    .accept(APPLICATION_JSON) //
+                    .get(new GenericType<>() {
+                    });
+
+            switch (response.getStatus()) {
+                case 200: {
+                    System.out.println("Am intrat");
+                    return response.readEntity(Action.class);
+                }
+                case 417: {
+                    System.out.println("Could not get activity by id");
+                    return null;
+                    // something failed, show an apology message ?
+                }
+                case 400: {
+                    System.out.println("The request was invalid");
+                    return null;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+        }
+        return null;
     }
 
     public void alert() {
-        ClientBuilder.newClient(new ClientConfig()) //
-                .target(SERVER).path("api/activities/alert") //
-                .request().get(); //;
+        try {
+            Response response = ClientBuilder.newClient(new ClientConfig()) //
+                    .target(SERVER).path("api/activities/alert") //
+                    .request().get(); //;
+
+            switch (response.getStatus()) {
+                case 200: {
+                    System.out.println("Am intrat");
+                }
+                case 417: {
+                    System.out.println("Expectation failed");
+                }
+                case 400: {
+                    System.out.println("The request was invalid");
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+        }
     }
 
     public String getAnswer() {
@@ -493,6 +534,7 @@ public class ServerUtils {
                 }
                 case 417: {
                     System.out.println("Expectation failed when trying to get the answer");
+                    System.out.println("Could not get answer of question");
                     return null;
                     // something failed, show an apology message ?
                 }
@@ -524,6 +566,7 @@ public class ServerUtils {
                 case 417: {
                     System.out.println("Expectation failed when trying to get the player's score");
                     return  null;
+
                     // something failed, show an apology message ?
                 }
                 case 400: {
@@ -572,6 +615,22 @@ public class ServerUtils {
     }
 
     /**
+     * PUT HTTP request that will later be used to send images to the server from the adming interface
+     *
+     * @param base64Image the base64 string of the image
+     * @param imageName   the name as which the image will be saved as
+     */
+    public void sendImageEdit(String base64Image, String imageName, String imageFolder) {
+        ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/activities/receiveImageEdit/" + imageName + "/" + imageFolder) //
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .put(Entity.entity(base64Image, APPLICATION_JSON), String.class);
+
+    }
+
+
+    /**
      * Gets a list of the current games to display them on the server browser
      *
      * @return the list of current games
@@ -579,7 +638,7 @@ public class ServerUtils {
     public ObservableList<GameContainer> listOfCurrentGames(String username) {
 
         ArrayList<GameContainer> games = ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER).path("api/" + username +  "/MULTIPLAYER" + "/getGames")
+                .target(SERVER).path("api/" + username + "/MULTIPLAYER" + "/getGames")
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON)
                 .get(new GenericType<>() {
@@ -596,11 +655,20 @@ public class ServerUtils {
 
     public int getNumPlayers() {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+
+
+        System.out.println("api/" + gameConfiguration.getUserName() + "/MULTIPLAYER/" + gameConfiguration.getRoomId() + "/numPlayers");
         return ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/MULTIPLAYER/" + gameConfiguration.getRoomId() + "/numPlayers")
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON)
                 .get(new GenericType<>() {
                 });
+    }
+
+    public void restoreActivityBank() {
+        ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER).path("api/activities/restoreActivityBank")
+                .request().get();
     }
 }

@@ -1,15 +1,14 @@
 package server.controllers;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import commons.Actions.Action;
 import org.apache.commons.io.FileUtils;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.web.bind.annotation.*;
 import server.services.ActionService;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 
 @RestController
@@ -66,22 +65,17 @@ public class ActionController {
 
         Action activity = service.getById(a.getId()); //.orElseThrow(() -> new IllegalStateException(("No such activity!!!")));
 
-        if (a.getTitle() != null && a.getTitle().length() > 0) {
-            activity.setTitle(a.getTitle());
-        }
+        activity.setId(a.getId());
 
-        if (a.getConsumption() > 0) {
-            activity.setConsumption(a.getConsumption());
-        }
+        activity.setTitle(a.getTitle());
 
-        if (a.getSource() != null && a.getSource().length() > 0) {
-            activity.setSource(a.getSource());
-        }
+        activity.setConsumption(a.getConsumption());
 
-        if (a.getImagePath() != null && a.getImagePath().length() > 0) {
-            activity.setImagePath(a.getImagePath());
-        }
+        activity.setSource(a.getSource());
 
+        activity.setImagePath(a.getImagePath());
+
+        System.out.println(activity.getId());
         service.save(activity);
     }
 
@@ -129,11 +123,25 @@ public class ActionController {
     public void receiveImage(@RequestBody String base64, @PathVariable String imageName) throws IOException {
         ByteArrayInputStream bis = new ByteArrayInputStream(Base64.decodeBase64(base64));
 
-        File savedImage = new File("server/src/main/resources/" + "Contributions/" + imageName);
+        File savedImage = new File("server/src/main/resources/activity-bank-pictures/" + "US/" + imageName);
         FileOutputStream outputStream = new FileOutputStream(savedImage);
         outputStream.write(bis.readAllBytes());
+    }
 
+    /**
+     * Implementation for receiving an image from the client from the edit activity screen
+     *
+     * @param base64    the base64 encoded image the client sends
+     * @param imageName the name the image will be saved as
+     * @throws IOException
+     */
+    @PutMapping(path = "/receiveImageEdit/{imageName}/{folderName}")
+    public void receiveImageEdit(@RequestBody String base64, @PathVariable String imageName, @PathVariable String folderName) throws IOException {
+        ByteArrayInputStream bis = new ByteArrayInputStream(Base64.decodeBase64(base64));
 
+        File savedImage = new File("server/src/main/resources/activity-bank-pictures/" + folderName + "/" + imageName);
+        FileOutputStream outputStream = new FileOutputStream(savedImage);
+        outputStream.write(bis.readAllBytes());
     }
 
     /**
@@ -146,6 +154,34 @@ public class ActionController {
             if (a.getTitle() != null) service.save(a);
         } catch (Exception e) {
             throw new IllegalStateException("PUT Request Failed");
+        }
+    }
+
+
+    @GetMapping(path = {"/restoreActivityBank"})
+    public void restoreActivityBank() {
+
+        ObjectMapper mapper = new ObjectMapper();
+        TypeReference<List<Action>> typeReference = new TypeReference<List<Action>>() {
+        }; //requires us to have a list of activities/actions
+        InputStream inputStream = TypeReference.class.getResourceAsStream("/activities.json"); //converts the JSON array to the reference type List<Action>
+
+
+        try {
+            List<Action> actions = mapper.readValue(inputStream, typeReference); //does the actual mapping to the list
+            // it won't save certain activities that do not match the current database, but this should be optimised
+            for (int i = 0; i < actions.size(); i++) {
+                if (actions.get(i).getConsumption() > Integer.MAX_VALUE || actions.get(i).getSource() == null || actions.get(i).getSource().length() > 255) {
+                    actions.remove(i);
+                    i--;
+                }
+            }
+
+            service.save(actions); //saves the actions to the repository
+            System.out.println("ACTIVITIES SAVED"); //confirmation message
+        } catch (IOException e) {
+            System.out.println(e);
+            System.out.println("ACTIVITIES NOT SAVED"); //failure message
         }
     }
 
