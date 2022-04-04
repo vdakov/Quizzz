@@ -241,8 +241,9 @@ public class QuestionActivityCtrl {
         sceneCtrl.showLeaderboard();
     }
 
-    /*
-        Method that ends the game and returns the player to the main screen of the app
+    /**
+     * Method that ends the game and returns the player to the main screen of the app
+     * @throws IOException
      */
     public void goToMainScreen() throws IOException {
         timeline.stop();

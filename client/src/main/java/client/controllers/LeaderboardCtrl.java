@@ -12,6 +12,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.text.Text;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,6 +34,8 @@ public class LeaderboardCtrl {
     private TableColumn<LeaderboardEntry, String> pointsCol;
     @FXML
     private Button playAgainButton;
+    @FXML
+    private Button goBackToMainScreen;
 
     private ServerUtils server;
     private SceneCtrl sceneCtrl;
@@ -81,5 +84,15 @@ public class LeaderboardCtrl {
 
     public void playAgain() {
         sceneCtrl.showWaitingRoom();
+    }
+
+    /**
+     * Method that ends the game and returns the player to the main screen of the app
+     * Also, checks whether all player have left the room and if then it changes the room status as finished
+     * @throws IOException
+     */
+    public void goToMainScreen() {
+        sceneCtrl.showMainScreenScene();
+        server.changeRoomStatusAsFinished();
     }
 }

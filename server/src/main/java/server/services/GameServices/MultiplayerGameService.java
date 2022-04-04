@@ -250,6 +250,11 @@ public class MultiplayerGameService {
         return this.roomCatalog.getMultiPlayerRoom(gameId);
     }
 
+    /**
+     * Removing specific player
+     * @param roomId    the id of the room the user is in
+     * @param userName  the user that needs the score update
+     */
     public void removePlayer(String roomId, String userName) {
         this.getGame(roomId).removePlayer(userName);
 
