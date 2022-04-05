@@ -28,7 +28,7 @@
                 <RowConstraints minHeight="10.0" percentHeight="60.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="LEADERBOARD" textAlignment="CENTER" wrappingWidth="602.13671875" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+                <Text fx:id="title" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="LEADERBOARD" textAlignment="CENTER" wrappingWidth="602.13671875" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="TOP">
                     <font>
                         <Font size="72.0" />
                     </font>
@@ -71,7 +71,7 @@
                         <Insets bottom="60.0" left="400.0" />
                     </GridPane.margin>
                 </Text>
-                <TableView fx:id="leaderboardTable" prefHeight="156.0" prefWidth="876.0" style="-fx-background-color: #d3c9fb;" stylesheets="@style.css" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+                <TableView fx:id="leaderboardTable" prefHeight="156.0" prefWidth="876.0" style="-fx-background-color: #d3c9fb;" stylesheets="@leaderboard.css" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
                     <columns>
                         <TableColumn fx:id="placeCol" prefWidth="75.0" text="Place" />
                         <TableColumn fx:id="nameCol" prefWidth="170.0" text="Name" />
