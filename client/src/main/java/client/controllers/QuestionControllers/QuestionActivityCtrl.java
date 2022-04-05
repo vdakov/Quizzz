@@ -333,7 +333,7 @@ public class QuestionActivityCtrl {
 
     public void useTimeJoker() {
         //Joker that reduces time for all other players
-        if (server.getTimeJokerUsed()) { return; }
+        if (getTimeJokerUsed()) { return; }
 
         server.useTimeJoker();
         timeJoker.setDisable(true);
