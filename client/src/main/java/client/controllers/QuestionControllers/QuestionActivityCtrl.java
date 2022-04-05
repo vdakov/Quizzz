@@ -242,7 +242,7 @@ public class QuestionActivityCtrl {
     public void displayNextQuestion() throws IOException {
         timeline.stop();
 
-        if(answered == false) {
+        if (answered == false) {
             gameConfig.setConsecutiveUnansweredQuestions(gameConfig.getConsecutiveUnansweredQuestions() + 1);
         } else {
             gameConfig.setConsecutiveUnansweredQuestions(0);
@@ -250,7 +250,7 @@ public class QuestionActivityCtrl {
 
         System.out.println("Question bugs: " + gameConfig.getConsecutiveUnansweredQuestions() + "     " + answered);
 
-        if(gameConfig.getConsecutiveUnansweredQuestions() >= 3 && gameConfig.getGameTypeString().equals("MULTIPLAYER")) {
+        if (gameConfig.getConsecutiveUnansweredQuestions() >= 3 && gameConfig.getGameTypeString().equals("MULTIPLAYER")) {
             this.server.removePlayer();
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
