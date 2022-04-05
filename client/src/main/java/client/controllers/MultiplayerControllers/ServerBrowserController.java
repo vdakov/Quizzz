@@ -77,8 +77,23 @@ public class ServerBrowserController {
             try {
                 System.out.println("Am intrat in camera");
                 if (q.getNumPlayers() == 0) {
-                    currentGames.remove(q);
+                    for(int i = 0; i < currentGames.size(); i++) {
+                        if(currentGames.get(i).getGameId().equals(q.getGameId())) {
+                            listOfGameIds.remove(q.getGameId());
+                            currentGames.remove(i);
+                            break;
+                        }
+                    }
                 } else {
+                    for(int i = 0; i < currentGames.size(); i++) {
+                        if(currentGames.get(i).getGameId().equals(q.getGameId())) {
+                            listOfGameIds.remove(q.getGameId());
+                            currentGames.remove(i);
+                            break;
+                        }
+                    }
+
+                    listOfGameIds.add(q.getGameId());
                     currentGames.add(q);
                 }
             } catch (Exception e) {
@@ -116,8 +131,6 @@ public class ServerBrowserController {
             return row;
         });
         this.gameTable.setItems(currentGames);
-
-
     }
 
     /**

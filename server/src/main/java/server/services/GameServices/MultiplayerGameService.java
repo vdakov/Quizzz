@@ -142,6 +142,9 @@ public class MultiplayerGameService {
                 }
             });
 
+            GameController.getActiveRoomsListeners().forEach((k, l) -> {
+                l.accept(new GameContainer(roomId, 0));
+            });
 
             return roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() == Room.RoomStatus.ONGOING;
         } catch (Exception e) {
@@ -393,11 +396,6 @@ public class MultiplayerGameService {
 
         if (roomCatalog.getMultiPlayerRoom(roomId).getNumPlayers() == 0) {
             roomCatalog.getMultiPlayerRoom(roomId).setRoomStatus(Room.RoomStatus.FINISHED);
-
-            GameController.getActiveRoomsListeners().forEach((k, l) -> {
-                l.accept(new GameContainer(roomId, roomCatalog.getMultiPlayerRoom(roomId).getNumPlayers()));
-            });
-
         } else {
             MultiplayerGameRoomController.getPlayerNumberListeners().forEach((k, l) -> {
                 if (k.getValue().equals(roomId)) {
@@ -405,5 +403,9 @@ public class MultiplayerGameService {
                 }
             });
         }
+
+        GameController.getActiveRoomsListeners().forEach((k, l) -> {
+            l.accept(new GameContainer(roomId, roomCatalog.getMultiPlayerRoom(roomId).getNumPlayers()));
+        });
     }
 }
