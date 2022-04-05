@@ -19,11 +19,11 @@
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #3084f2;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.QuestionControllers.ComparisonQuestionActivityCtrl">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="10.0" percentWidth="1.0" prefWidth="30.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="133.66668605804443" minWidth="7.0" percentWidth="15.0" prefWidth="73.0" />
+        <ColumnConstraints fx:id="chatColumn" hgrow="SOMETIMES" maxWidth="133.66668605804443" minWidth="7.0" percentWidth="15.0" prefWidth="73.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="133.66668605804443" minWidth="10.0" percentWidth="1.0" prefWidth="100.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="411.0" minWidth="3.0" percentWidth="23.333" prefWidth="292.2222595214844" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="411.0" minWidth="10.0" percentWidth="23.333" prefWidth="294.888936360677" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="411.0" minWidth="3.0" percentWidth="23.333" prefWidth="279.7777303059895" />
+        <ColumnConstraints fx:id="questionCol1" hgrow="SOMETIMES" maxWidth="411.0" minWidth="3.0" percentWidth="23.333" prefWidth="292.2222595214844" />
+        <ColumnConstraints fx:id="questionCol2" hgrow="SOMETIMES" maxWidth="411.0" minWidth="10.0" percentWidth="23.333" prefWidth="294.888936360677" />
+        <ColumnConstraints fx:id="questionCol3" hgrow="SOMETIMES" maxWidth="411.0" minWidth="3.0" percentWidth="23.333" prefWidth="279.7777303059895" />
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="110.0" minWidth="110.0" percentWidth="12.0" prefWidth="110.0" />
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="9.0" percentWidth="1.0" prefWidth="14.0" />
     </columnConstraints>
@@ -37,21 +37,6 @@
         <RowConstraints maxHeight="300.0" minHeight="0.0" percentHeight="15.0" prefHeight="140.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
-        <Button fx:id="goToMainScreen" mnemonicParsing="false" onAction="#goToMainScreen" prefHeight="34.0" prefWidth="76.0" style="-fx-background-color: transparent; -fx-border-color: transparent;">
-            <font>
-                <Font size="14.0" />
-            </font>
-            <GridPane.margin>
-                <Insets left="25.0" top="100.0" />
-            </GridPane.margin>
-         <graphic>
-                <ImageView fitWidth="50.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@pictures/home.png" />
-                    </image>
-                </ImageView>
-         </graphic>
-        </Button>
         <Label alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="117.0" text="Points:" textAlignment="RIGHT" GridPane.columnIndex="6">
             <font>
                 <Font name="Chalkboard" size="18.0" />
@@ -85,7 +70,7 @@
             </rowConstraints>
             <children>
 
-                            <Label fx:id="firstOptionText" alignment="CENTER" onMouseClicked="#answerQuestion" prefHeight="210.0" prefWidth="270.0" style="-fx-background-color: #b38df7; -fx-background-radius: 50;" text="1" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                            <Label fx:id="firstOptionText" alignment="CENTER" onMouseClicked="#answerQuestion" prefHeight="210.0" prefWidth="270.0" style="-fx-background-color: #b38df7; -fx-background-radius: 50;" text="1" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                     <font>
                         <Font size="18.0" />
                     </font>
@@ -93,7 +78,7 @@
                   <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
                </padding>
                 </Label>
-                <ImageView fx:id="firstOptionImage" pickOnBounds="true" />
+                <ImageView fx:id="firstOptionImage" pickOnBounds="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             </children>
             <columnConstraints>
                 <ColumnConstraints percentWidth="100.0" />
@@ -108,7 +93,7 @@
                 <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Label fx:id="secondOptionText" alignment="CENTER" onMouseClicked="#answerQuestion" prefHeight="210.0" prefWidth="270.0" style="-fx-background-color: #ffd783; -fx-background-radius: 50;" text="2" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                <Label fx:id="secondOptionText" alignment="CENTER" onMouseClicked="#answerQuestion" prefHeight="210.0" prefWidth="270.0" style="-fx-background-color: #ffd783; -fx-background-radius: 50;" text="2" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                     <font>
                         <Font size="18.0" />
                     </font>
@@ -116,7 +101,7 @@
                   <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
                </padding>
                 </Label>
-                <ImageView fx:id="secondOptionImage" pickOnBounds="true" />
+                <ImageView fx:id="secondOptionImage" pickOnBounds="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             </children>
         </GridPane>
         <GridPane prefHeight="444.0" prefWidth="275.0" GridPane.columnIndex="5" GridPane.rowIndex="5">
@@ -128,7 +113,7 @@
                 <ColumnConstraints maxWidth="289.0" minWidth="188.0" percentWidth="100.0" prefWidth="202.0" />
             </columnConstraints>
             <children>
-                <Label fx:id="thirdOptionText" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#answerQuestion" prefHeight="210.0" prefWidth="270.0" style="-fx-background-color: #ffa382; -fx-background-radius: 50;" text="3" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                <Label fx:id="thirdOptionText" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#answerQuestion" prefHeight="210.0" prefWidth="270.0" style="-fx-background-color: #ffa382; -fx-background-radius: 50;" text="3" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                     <font>
                         <Font size="18.0" />
                     </font>
@@ -136,7 +121,7 @@
                   <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
                </padding>
                 </Label>
-                <ImageView fx:id="thirdOptionImage" pickOnBounds="true" />
+                <ImageView fx:id="thirdOptionImage" pickOnBounds="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             </children>
         </GridPane>
         <Label fx:id="questionStatement" alignment="CENTER" prefHeight="17.0" prefWidth="869.0" style="-fx-background-color: #2d4b5a; -fx-background-radius: 50;" text="What requires most energy?" textFill="WHITESMOKE" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="4">
@@ -235,6 +220,18 @@
             </SplitPane>
          </children>
       </AnchorPane>
+      <Button fx:id="goToMainScreen" mnemonicParsing="false" onAction="#goToMainScreen" prefHeight="0.0" prefWidth="50.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" GridPane.rowIndex="2">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <graphic>
+            <ImageView fitWidth="50.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@pictures/home.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
 
 
     </children>
