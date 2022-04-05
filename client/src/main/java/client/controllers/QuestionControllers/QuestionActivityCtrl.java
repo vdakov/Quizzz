@@ -23,7 +23,6 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 import javax.inject.Inject;
-import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;

@@ -18,8 +18,8 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.concurrent.ExecutionException;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
 
 public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
     private int userAnswerInt;
