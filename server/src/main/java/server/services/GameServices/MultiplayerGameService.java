@@ -397,7 +397,7 @@ public class MultiplayerGameService {
      */
     public Boolean resetAddedPointAfterDoublePointJoker(String username, String roomId) {
         try {
-            if (!username.equals(roomCatalog.getSinglePlayerRoom(roomId).getRoomCreator())) {
+            if (!username.equals(roomCatalog.getMultiPlayerRoom(roomId).getRoomCreator())) {
                 return false;
             }
             roomCatalog.getMultiPlayerRoom(roomId).resetAddedPointAfterDoublePointJoker(username);

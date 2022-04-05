@@ -376,7 +376,7 @@ public class ServerUtils {
                     .accept(APPLICATION_JSON)
                     .get();
 
-            System.out.println("Response status: " + response.getStatus());
+            System.out.println("33Response status: " + response.getStatus());
 
         } catch (Exception e) {
             System.out.println("An exception occurred");

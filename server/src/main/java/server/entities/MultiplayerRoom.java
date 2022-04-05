@@ -75,7 +75,7 @@ public class MultiplayerRoom extends Room {
 
     public void useHintJoker(String username) { playerHintJokerUsed.put(username, true); }
     public void useDoublePointJoker(String username) {
-        playerAddedPoints.put(username, this.getAddedPoints(username) * 2);
+        playerAddedPoints.put(username, getAddedPoints(username) * 2);
         playerDoublePointJokerUsed.put(username, true);
     }
     public void useTimeJoker(String username) { playerTimeJokerUsed.put(username, true); }
