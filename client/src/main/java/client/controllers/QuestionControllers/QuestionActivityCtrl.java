@@ -149,7 +149,6 @@ public class QuestionActivityCtrl {
         }
     }
 
-
     public void answerQuestion(MouseEvent event) {
         // answers the question
         if (answered) {
@@ -159,7 +158,6 @@ public class QuestionActivityCtrl {
         Label current = (Label) event.getSource();
         userAnswer = current.getText();
         answered = true;
-
         server.updateScore(userAnswer);
 
         answerUpdate();
@@ -243,6 +241,28 @@ public class QuestionActivityCtrl {
      */
     public void displayNextQuestion() throws IOException {
         timeline.stop();
+
+        if(answered == false) {
+            gameConfig.setConsecutiveUnansweredQuestions(gameConfig.getConsecutiveUnansweredQuestions() + 1);
+        } else {
+            gameConfig.setConsecutiveUnansweredQuestions(0);
+        }
+
+        System.out.println("Question bugs: " + gameConfig.getConsecutiveUnansweredQuestions() + "     " + answered);
+
+        if(gameConfig.getConsecutiveUnansweredQuestions() >= 3 && gameConfig.getGameTypeString().equals("MULTIPLAYER")) {
+            this.server.removePlayer();
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("You have been removed from the room");
+            alert.setHeaderText("You have been remove from the room due to inactivity");
+            alert.setContentText("You have not answered 3 consecutive questions in a row, so you were left out of the game");
+            alert.show();
+
+            sceneCtrl.showServerBrowser();
+            return;
+        }
+
         if ((gameConfig.isMultiPlayer() && gameConfig.getCurrentQuestionNumber() == 9) || gameConfig.getCurrentQuestionNumber() == 19) {
             server.addOrUpdateLeaderboardEntry(gameConfig.getUserName(), gameConfig.getRoomId(), gameConfig.getScore());
             sceneCtrl.showLeaderboard();
