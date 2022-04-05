@@ -259,7 +259,7 @@ public class QuestionActivityCtrl {
      * Getter for the correct answer
      * @return the correct answer from the server
      */
-    public void useHintJoker() {
+    public void useHintJoker(MouseEvent event) {
         //Joker that eliminates the wrong answer
         if (getHintJokerUsed()) { return; }
 
@@ -284,9 +284,31 @@ public class QuestionActivityCtrl {
                 return;
             }
         }
+
+        hintJokerEvent();
     }
 
-    public void hintJokerEvent(MouseEvent event)
+    public void useDoublePointJoker(MouseEvent event) {
+        if (getDoublePointJokerUsed()) { return; }
+
+        server.useDoublePointJoker();
+        gameConfig.setDoublePointJokerUsed(true);
+        doublePointJoker.setDisable(true);
+
+        pointsJokerEvent();
+    }
+
+    public void useTimeJoker(MouseEvent event) {
+        if (getTimeJokerUsed()) { return; }
+
+        server.useTimeJoker();
+        gameConfig.setTimeJokerUsed(true);
+        timeJoker.setDisable(true);
+
+        timeJokerEvent();
+    }
+
+    public void hintJokerEvent()
     {
         List<String> payload = new ArrayList<>();
         payload.add("Hint");
@@ -295,7 +317,7 @@ public class QuestionActivityCtrl {
         server.send("/topic/emojis", payload);
     }
 
-    public void pointsJokerEvent(MouseEvent event)
+    public void pointsJokerEvent()
     {
         List<String> payload = new ArrayList<>();
         payload.add("x2 Points");
@@ -304,7 +326,7 @@ public class QuestionActivityCtrl {
         server.send("/topic/emojis", payload);
     }
 
-    public void timeJokerEvent(MouseEvent event)
+    public void timeJokerEvent()
     {
         List<String> payload = new ArrayList<>();
         payload.add("Half Time");
@@ -313,12 +335,7 @@ public class QuestionActivityCtrl {
         server.send("/topic/emojis", payload);
     }
 
-    public void useDoublePointJoker() {
-        if (server.getDoublePointJokerUsed()) { return; }
 
-        server.useDoublePointJoker();
-        doublePointJoker.setDisable(true);
-    }
 
     /**
      * Getter for the correct answer
@@ -342,6 +359,10 @@ public class QuestionActivityCtrl {
 
     public boolean getDoublePointJokerUsed() {
         return server.getDoublePointJokerUsed();
+    }
+
+    public boolean getTimeJokerUsed() {
+        return server.getTimeJokerUsed();
     }
 
 
