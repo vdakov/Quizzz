@@ -554,54 +554,6 @@ public class ServerUtils {
         return 10;
     }
 
-    public Boolean getHintJokerUsed() {
-        try {
-            GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
-
-            Response response = ClientBuilder.newClient(new ClientConfig())
-                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" + gameConfiguration.getRoomId() + "/getHintJokerUsed")
-                    .request(APPLICATION_JSON)
-                    .accept(APPLICATION_JSON).get(Response.class);
-            return response.readEntity(Boolean.class);
-
-        } catch (Exception e) {
-            System.out.println("An exception occurred");
-        }
-        return true;
-    }
-
-    public Boolean getDoublePointJokerUsed() {
-        try {
-            GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
-
-            Response response = ClientBuilder.newClient(new ClientConfig())
-                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" + gameConfiguration.getRoomId() + "/getDoublePointJokerUsed")
-                    .request(APPLICATION_JSON)
-                    .accept(APPLICATION_JSON).get(Response.class);
-            return response.readEntity(Boolean.class);
-
-        } catch (Exception e) {
-            System.out.println("An exception occurred");
-        }
-        return true;
-    }
-
-    public Boolean getTimeJokerUsed() {
-        try {
-            GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
-
-            Response response = ClientBuilder.newClient(new ClientConfig())
-                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" + gameConfiguration.getRoomId() + "/getTimeJokerUsed")
-                    .request(APPLICATION_JSON)
-                    .accept(APPLICATION_JSON).get(Response.class);
-            return response.readEntity(Boolean.class);
-
-        } catch (Exception e) {
-            System.out.println("An exception occurred");
-        }
-        return true;
-    }
-
     /**
      * HTTP request for receiving a byte array containing the image from the server
      *

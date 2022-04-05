@@ -88,6 +88,7 @@ public class MultiplayerRoom extends Room {
 
     public void useHintJoker(String username) { playerHintJokerUsed.put(username, true); }
     public void useDoublePointJoker(String username) { playerDoublePointJokerUsed.put(username, true); }
+
     public void useTimeJoker(String username, int number) {
         playerTimeJokerUsed.put(username, true);
 
@@ -96,6 +97,7 @@ public class MultiplayerRoom extends Room {
         HashMap<String, Integer> question = playerTime.get(number + 1);
         for (String key : question.keySet()) {
             if (key != username) {
+                System.out.println("Username limited: " + username + " in question: " + (number+1)) ;
                 question.put(key, 5);
             }
         }
