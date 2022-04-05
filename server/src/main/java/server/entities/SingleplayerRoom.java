@@ -29,7 +29,6 @@ public class SingleplayerRoom extends Room {
 
     /**
      * Returns the current score of the player
-     *
      * @return the score of the player in the room
      */
     public int getPlayerScore() {
@@ -38,10 +37,23 @@ public class SingleplayerRoom extends Room {
 
     public int getAddedPoints() { return this.addedPoints; }
 
+    /**
+     * Calculates the added point of the specific question using time left
+     * @param timeLeft the amount of time left to user, fast answer gives more points
+     * @return the new added point value
+     */
     public int calculateAddedPoints(long timeLeft) {
         this.addedPoints = (int) (addedPoints * (timeLeft));
         return addedPoints;
     }
+
+    /**
+     * Resets the points added as 10, to prevent the points getting doubled everytime after the double point joker is used
+     */
+    public void resetAddedPointAfterDoublePointJoker() {
+        addedPoints = 10;
+    }
+
     /**
      * Returns true if Hint Joker was used this game
      */
@@ -66,9 +78,6 @@ public class SingleplayerRoom extends Room {
     }
 
 
-    public void resetAddedPointAfterDoublePointJoker() {
-        addedPoints = 10;
-    }
 
 
     /**

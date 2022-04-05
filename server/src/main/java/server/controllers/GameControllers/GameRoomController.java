@@ -217,6 +217,14 @@ public class GameRoomController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
+    /**
+     * Calculates the points earned in this round
+     * @param username  the username of the player that requests his score
+     * @param gameType  the type of the game
+     * @param roomId    the id of the game that the player is in
+     * @param timeLeft  the amount of time left to the user
+     * @return whether the request was successful or not
+     */
     @GetMapping("/calculateAddedPoints")
     public ResponseEntity<Object> calculateAddedPoints(@PathVariable("username") String username, @PathVariable("gameType") String gameType,
                                                        @PathVariable("roomId") String roomId, @PathVariable("timeLeft") Long timeLeft) {
@@ -274,7 +282,6 @@ public class GameRoomController {
      * @param roomId         the id of the game that the player is in
      * @return if DoublePoint has been used this game
      */
-
     @GetMapping("/getDoublePointJokerUsed")
     public ResponseEntity<Boolean> getDoublePointJokerUsed(@PathVariable("username") String username, @PathVariable("gameType") String gameType, @PathVariable("roomId") String roomId) {
         if (gameType.equals("SINGLEPLAYER")) {
@@ -303,7 +310,6 @@ public class GameRoomController {
          * @param roomId         the id of the game that the player is in
          * @return if timeJoker has been used this game
          */
-
         @GetMapping("/getTimeJokerUsed")
         public ResponseEntity<Boolean> getTimeJokerUsed(@PathVariable("username") String username, @PathVariable("gameType") String gameType, @PathVariable("roomId") String roomId) {
             if (gameType.equals("MULTIPLAYER")) {
@@ -320,11 +326,11 @@ public class GameRoomController {
     /**
      * Updates the score of the player according to the given and correct answer or gives a corresponding error message
      *
-     * @param username the username of the player that gives the answer
-     * @param gameType the type of the game
-     * @param roomId the id of the game that the player is in
-     * @param questionNumber the number of the answered question
-     * @param userAnswer the user answer to the question
+     * @param username          the username of the player that gives the answer
+     * @param gameType          the type of the game
+     * @param roomId            the id of the game that the player is in
+     * @param questionNumber    the number of the answered question
+     * @param userAnswer        the user answer to the question
      * @return whether the request was successful or not
      */
     @PostMapping("/{questionNumber}/{timeLeft}/postAnswer")
@@ -363,9 +369,9 @@ public class GameRoomController {
     /**
      * Updates hintJokerUsed (sets to true) or gives a corresponding error message
      *
-     * @param username the username of the player that gives the answer
-     * @param gameType the type of the game
-     * @param roomId the id of the game that the player is in
+     * @param username  the username of the player that gives the answer
+     * @param gameType  the type of the game
+     * @param roomId    the id of the game that the player is in
      * @return whether the request was successful or not
      */
     @GetMapping("/useHintJoker")
@@ -399,9 +405,9 @@ public class GameRoomController {
     /**
      * Updates doublePointJoker (sets to true) or gives a corresponding error message
      *
-     * @param username the username of the player that gives the answer
-     * @param gameType the type of the game
-     * @param roomId the id of the game that the player is in
+     * @param username  the username of the player that gives the answer
+     * @param gameType  the type of the game
+     * @param roomId    the id of the game that the player is in
      * @return whether the request was successful or not
      */
     @GetMapping("/useDoublePointJoker")
@@ -428,6 +434,13 @@ public class GameRoomController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
+    /**
+     * Resets the points added, to prevent the points getting doubled everytime after the double point joker is used
+     * @param username  the username of the player that gives the answer
+     * @param gameType  the type of the game
+     * @param roomId    the id of the game that the player is in
+     * @return
+     */
     @GetMapping("/resetDoubledAddedPoints")
     public ResponseEntity<Object> resetDoubledAddedPoints(@PathVariable("username") String username, @PathVariable("gameType") String gameType,
                                                       @PathVariable("roomId") String roomId) {
@@ -443,14 +456,14 @@ public class GameRoomController {
             }
         }
 
-//        if (gameType.equals("MULTIPLAYER")) {
+        if (gameType.equals("MULTIPLAYER")) {
 //            try {
 //                return multiplayerGameService.useDoublePointJoker(username, roomId) ?
 //                        ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 //            } catch (Exception e) {
 //                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
 //            }
-//        }
+        }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }

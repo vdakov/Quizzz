@@ -285,6 +285,10 @@ public class ServerUtils {
         return null;
     }
 
+    /**
+     * Updates the player score stored in server by adding points earned in that question
+     * @param answer    the user's answer that should be compared with the correct answer
+     */
     public void updateScore(String answer) {
         try {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
@@ -316,6 +320,9 @@ public class ServerUtils {
         }
     }
 
+    /**
+     * Uses the hint joker
+     */
     public void useHintJoker() {
         try {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
@@ -334,7 +341,10 @@ public class ServerUtils {
         }
     }
 
-    public String useDoublePointJoker() {
+    /**
+     * Uses the double point joker
+     */
+    public void useDoublePointJoker() {
         try {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
 
@@ -343,31 +353,18 @@ public class ServerUtils {
                             gameConfiguration.getRoomId() + "/useDoublePointJoker")
                     .request(APPLICATION_JSON)
                     .accept(APPLICATION_JSON)
-                    .get(Response.class);
+                    .get();
 
-            switch (response.getStatus()) {
-                case 200: {
-                    return response.readEntity(String.class);
-                }
-                case 417: {
-                    System.out.println("Expectation failed when trying to get the player's score");
-                    return null;
-                    // something failed, show an apology message ?
-                }
-                case 400: {
-                    System.out.println("The request was invalid when trying to get the player's score");
-                    return "0";
-                    //return null;
-                }
-            }
             System.out.println("Response status: " + response.getStatus());
 
         } catch (Exception e) {
             System.out.println("An exception occurred");
         }
-        return null;
     }
 
+    /**
+     * Resets the points added as 10, to prevent the points getting doubled everytime after the double point joker is used
+     */
     public void resetDoubledAddedPoints() {
         try {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
@@ -386,25 +383,27 @@ public class ServerUtils {
         }
     }
 
-    public void calculateAddedPoints() {
-        try {
-            GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+//    public void calculateAddedPoints() {
+//        try {
+//            GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+//
+//            Response response = ClientBuilder.newClient(new ClientConfig()) //
+//                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" +
+//                            gameConfiguration.getRoomId() + "/" + gameConfiguration.getTimeLeft() +  "/calculateAddedPoints")
+//                    .request(APPLICATION_JSON)
+//                    .accept(APPLICATION_JSON)
+//                    .get();
+//
+//            System.out.println("Response status: " + response.getStatus());
+//
+//        } catch (Exception e) {
+//            System.out.println("An exception occurred");
+//        }
+//    }
 
-            Response response = ClientBuilder.newClient(new ClientConfig()) //
-                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" +
-                            gameConfiguration.getRoomId() + "/" + gameConfiguration.getTimeLeft() +  "/calculateAddedPoints")
-                    .request(APPLICATION_JSON)
-                    .accept(APPLICATION_JSON)
-                    .get();
-
-            System.out.println("Response status: " + response.getStatus());
-
-        } catch (Exception e) {
-            System.out.println("An exception occurred");
-        }
-    }
-
-
+    /**
+     * Uses the time joker
+     */
     public void useTimeJoker() {
         try {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
@@ -710,6 +709,10 @@ public class ServerUtils {
         return null;
     }
 
+    /**
+     * Checks whether the hint joker is used or not
+     * @return true when the hint joker is used
+     */
     public Boolean getHintJokerUsed() {
         try {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
@@ -726,6 +729,10 @@ public class ServerUtils {
         return true;
     }
 
+    /**
+     * Checks whether the double point joker is used or not
+     * @return true when the double point joker is used
+     */
     public Boolean getDoublePointJokerUsed() {
         try {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
@@ -742,6 +749,10 @@ public class ServerUtils {
         return true;
     }
 
+    /**
+     Checks whether the time joker is used or not
+     * @return true when the time joker is used
+     */
     public Boolean getTimeJokerUsed() {
         try {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();

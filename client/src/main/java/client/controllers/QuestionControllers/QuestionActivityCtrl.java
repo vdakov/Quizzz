@@ -293,7 +293,7 @@ public class QuestionActivityCtrl {
         if (getDoublePointJokerUsed()) { return; }
         System.out.println(getDoublePointJokerUsed());
 
-        String addedPoints = server.useDoublePointJoker();
+        server.useDoublePointJoker();
         gameConfig.setDoublePointJokerUsed(true);
         doublePointJoker.setDisable(true);
 
