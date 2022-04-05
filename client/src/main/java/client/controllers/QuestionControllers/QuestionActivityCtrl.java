@@ -23,8 +23,10 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 import javax.inject.Inject;
+import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -91,8 +93,12 @@ public class QuestionActivityCtrl {
     protected TableColumn<String, String> playersActivity;
     @FXML
     protected SplitPane splitPane;
-
-
+    @FXML
+    protected Button hintJoker;
+    @FXML
+    protected Button pointsJoker;
+    @FXML
+    protected Button timeJoker;
 
     protected IntegerProperty timeSeconds =
             new SimpleIntegerProperty((int) startTime);
@@ -111,8 +117,11 @@ public class QuestionActivityCtrl {
      */
     public void initialize() throws IOException {
         firstOptionText.setBorder(Border.EMPTY);
+        firstOptionText.setDisable(false);
         secondOptionText.setBorder(Border.EMPTY);
+        secondOptionText.setDisable(false);
         thirdOptionText.setBorder(Border.EMPTY);
+        thirdOptionText.setDisable(false);
 
         answered = false;
 
@@ -123,16 +132,22 @@ public class QuestionActivityCtrl {
         {
             splitPane.setVisible(true);
             playersActivity.setCellValueFactory(q -> new SimpleStringProperty(q.getValue()));
+                server.registerForMessages("/topic/emojis", q -> {
+                    refresh(q.get(0), q.get(1), q.get(2));
+                });
         }
         else
         {
             splitPane.setVisible(false);
         }
+      //  server.registerForMessages("/topic/emojis", q -> {
+        //    refresh(q.get(0), q.get(1), q.get(2));
+      //  });
 
-        server.registerForMessages("/topic/emojis", q -> {
-            refresh(q.get(0), q.get(1), q.get(1));
-        });
-
+        hintJoker.setDisable(false);
+        if (getHintJokerUsed() != null) {
+            hintJoker.setDisable(getHintJokerUsed());
+        }
     }
 
 
@@ -229,16 +244,10 @@ public class QuestionActivityCtrl {
      */
     public void displayNextQuestion() throws IOException {
         timeline.stop();
-        if (gameConfig.getCurrentQuestionNumber() >= 19) finishGame();
-        else sceneCtrl.showNextQuestion();
-    }
-
-    /**
-     * Method that adds the score of the player to the leaderboard when a game finishes
-     */
-    public void finishGame() {
-        server.addLeaderboardEntry(gameConfig.getUserName(), gameConfig.getRoomId(), Integer.parseInt(server.getScore()));
-        sceneCtrl.showLeaderboard();
+        if ((gameConfig.isMultiPlayer() && gameConfig.getCurrentQuestionNumber() == 9) || gameConfig.getCurrentQuestionNumber() == 19) {
+            server.addOrUpdateLeaderboardEntry(gameConfig.getUserName(), gameConfig.getRoomId(), gameConfig.getScore());
+            sceneCtrl.showLeaderboard();
+        } else sceneCtrl.showNextQuestion();
     }
 
     /**
@@ -248,6 +257,33 @@ public class QuestionActivityCtrl {
     public void goToMainScreen() throws IOException {
         timeline.stop();
         sceneCtrl.showMainScreenScene();
+    }
+
+    public void useHintJoker() {
+        //Joker that eliminates the wrong answer
+        if (getHintJokerUsed()) { return; }
+
+        //Make a list of possible answers
+        List<Label> answerLabels = new ArrayList();
+        answerLabels.add(firstOptionText);
+        answerLabels.add(secondOptionText);
+        answerLabels.add(thirdOptionText);
+
+        //shuffle answers to choose randomly from them
+        Collections.shuffle(answerLabels);
+        String correctAnswer = getCorrectAnswer();
+
+        server.useHintJoker();
+        gameConfig.setHintJokerUsed(true);
+        hintJoker.setDisable(true);
+
+        //go until incorrect answer is found and eliminate it
+        for (Label answerLabel : answerLabels) {
+            if (!answerLabel.getText().equals(correctAnswer)) {
+                answerLabel.setDisable(true);
+                return;
+            }
+        }
     }
 
     /**
@@ -264,6 +300,18 @@ public class QuestionActivityCtrl {
      */
     public int getPointsInt() {
         return Integer.parseInt(server.getScore());
+    }
+
+    public Boolean getHintJokerUsed() {
+        return gameConfig.isHintJokerUsed();
+    }
+
+    public boolean getDoublePointJokerUsed() {
+        return gameConfig.isDoublePointJokerUsed();
+    }
+
+    public boolean getTimeJokerUsed() {
+        return gameConfig.isTimeJokerUsed();
     }
 
     /**
@@ -324,30 +372,66 @@ public class QuestionActivityCtrl {
         server.send("/topic/emojis", payload);
     }
 
+    public void hintJokerEvent(MouseEvent event)
+    {
+        List<String> payload = new ArrayList<>();
+        payload.add("Hint");
+        payload.add(gameConfig.getUserName());
+        payload.add(gameConfig.getRoomId());
+        server.send("/topic/emojis", payload);
+    }
+
+    public void pointsJokerEvent(MouseEvent event)
+    {
+        List<String> payload = new ArrayList<>();
+        payload.add("x2 Points");
+        payload.add(gameConfig.getUserName());
+        payload.add(gameConfig.getRoomId());
+        server.send("/topic/emojis", payload);
+    }
+
+    public void timeJokerEvent(MouseEvent event)
+    {
+        List<String> payload = new ArrayList<>();
+        payload.add("Half Time");
+        payload.add(gameConfig.getUserName());
+        payload.add(gameConfig.getRoomId());
+        server.send("/topic/emojis", payload);
+    }
+
     /**
      * Method that refreshes the list of messages in the chat by adding a new message  whenever a user clicks on one of the objects.
      * @param type the unique number assigned to an object
      */
+
     public void refresh(String type, String username, String roomId) {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         List<String> chatEntries = new ArrayList<>();
-        System.out.println(username + "  " + roomId);
-
-            if (type.equals("1") && roomId.equals(gameConfiguration.getUserName())) {                                     // happy emoji
+            if (type.equals("1") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName()) ) {           // happy emoji
                 chatEntries.add(getTypeOfMessage("1", username));
             }
-            if (type.equals("2")  && roomId.equals(gameConfiguration.getUserName())) {                                     //sad emoji
+            if (type.equals("2") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName()) ) {           //sad emoji
                 chatEntries.add(getTypeOfMessage("2", username));
             }
-            if (type.equals("3") && roomId.equals(gameConfiguration.getUserName())) {                                     //no words emoji
+            if (type.equals("3") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName()) ) {           //no words emoji
                 chatEntries.add(getTypeOfMessage("3", username));
             }
-            if (type.equals("4") && roomId.equals(gameConfiguration.getUserName())) {                                     //snowman emoji
+            if (type.equals("4") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName()) ) {           //snowman emoji
                 chatEntries.add(getTypeOfMessage("4", username));
             }
-            if (type.equals("5") && roomId.equals(gameConfiguration.getUserName())) {                                     //dead emoji
+            if (type.equals("5") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName()) ) {           //dead emoji
                 chatEntries.add(getTypeOfMessage("5", username));
             }
+            if (type.equals("Hint") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName()) ) {        //Hint joker
+                 chatEntries.add(getTypeOfMessage("Hint", username));
+            }
+            if (type.equals("x2 Points") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName()) ) {   //x2 Points Joker
+                 chatEntries.add(getTypeOfMessage("x2 Points", username));
+            }
+            if (type.equals("Half Time") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName()) ) {   //Half Time Joker
+                chatEntries.add(getTypeOfMessage("Half Time", username));
+            }
+
             chatEntries.addAll(tableview.getItems());
             tableview.setItems(FXCollections.observableList(chatEntries));
 
@@ -360,16 +444,43 @@ public class QuestionActivityCtrl {
      */
     public String getTypeOfMessage(String type, String username)
     {
-        if (type.equals("1"))
-            return   "  \u263A" + " " + username;
-        if (type.equals("2"))
-            return  "  \u2639" + " " + username;
-        if (type.equals("3"))
-            return "  \u2687" + " " + username;
-        if (type.equals("4"))
-            return  "  \u2603" +  " " + username;
-        if (type.equals("5"))
-            return  "  \u2620" + " " + username;
-        return null;
+        switch (type) {
+            case "1" :
+                //happy emoji
+                return   " \u263A" + " " + username;
+
+            case "2" :
+                //sad emoji
+                return  " \u2639" + " " + username;
+
+            case "3" :
+                //no words emoji
+                return " \u2687" + " " + username;
+
+            case "4" :
+                //snowman emoji
+                return  " \u2603" +  " " + username;
+
+            case "5" :
+                //dead emoji
+                return  " \u2620" + " " + username;
+
+            case "Hint" :
+                //Hint Joker
+                return "Hint by" + " " + username;
+
+            case "x2 Points" :
+                //x2 Points Joker
+                return  "x2 Points by" + " " + username;
+
+            case "Half Time" :
+                //Half Time Joker
+                return  "Half Time by" + " " + username;
+
+            default:
+                return null;
+        }
+
+
     }
 }

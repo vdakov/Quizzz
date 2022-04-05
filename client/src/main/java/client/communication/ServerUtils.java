@@ -73,7 +73,7 @@ public class ServerUtils {
                 }
                 case 417: {
                     System.out.println("Expectation failed when creating a new room");
-                    return  null;
+                    return null;
                     // something failed, show an apology message ?
                 }
                 case 400: {
@@ -109,7 +109,7 @@ public class ServerUtils {
                 }
                 case 417: {
                     System.out.println("Expectation failed when trying to start the room");
-                    return  false;
+                    return false;
                     // something failed, show an apology message ?
                 }
                 case 400: {
@@ -176,7 +176,7 @@ public class ServerUtils {
                 }
                 case 417: {
                     System.out.println("Expectation failed when trying to get the random room");
-                    return  null;
+                    return null;
                     // something failed, show an apology message ?
                 }
                 case 400: {
@@ -199,25 +199,26 @@ public class ServerUtils {
         }
 
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+
         EXEC_WAIT_FOR_START.submit(() -> {
-            while (!Thread.interrupted()) {
+        while (!Thread.interrupted()) {
 
-                var res = ClientBuilder.newClient(new ClientConfig())
-                        .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/MULTIPLAYER/"
-                                + gameConfiguration.getRoomId() + "/waitForGameToStart")
-                        .request(APPLICATION_JSON)
-                        .accept(APPLICATION_JSON).get(Response.class);
+            var res = ClientBuilder.newClient(new ClientConfig())
+                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/MULTIPLAYER/"
+                            + gameConfiguration.getRoomId() + "/waitForGameToStart")
+                    .request(APPLICATION_JSON)
+                    .accept(APPLICATION_JSON).get(Response.class);
 
-                if (res.getStatus() == 204) {
-                    continue;
-                }
+            if (res.getStatus() == 204) {
+                continue;
+            }
 
-                Boolean gameInProgress = res.readEntity(Boolean.class);
+            Boolean gameInProgress = res.readEntity(Boolean.class);
 
-                if (gameInProgress) {
-                    startedGame.accept(true);
-                    this.stopWaitForRoomThread();
-                }
+            if (gameInProgress) {
+                startedGame.accept(true);
+                this.stopWaitForRoomThread();
+            }
             }
         });
     }
@@ -288,6 +289,47 @@ public class ServerUtils {
         EXEC_UPDATE_AVAILABLE_ROOMS.shutdownNow();
     }
 
+    private static ExecutorService EXEC = Executors.newSingleThreadExecutor();
+    public void waitForFilledLeaderboard(Consumer<List<LeaderboardEntry>> l) {
+        if (EXEC.isShutdown()) EXEC = Executors.newSingleThreadExecutor();
+        EXEC.submit(() -> {
+            while (!Thread.interrupted()) {
+
+                var res = ClientBuilder.newClient(new ClientConfig())
+                        .target(SERVER).path("api/leaderboard/filledLeaderboard/" + GameConfiguration.getConfiguration().getRoomId())
+                        .request(APPLICATION_JSON)
+                        .accept(APPLICATION_JSON).get(Response.class);
+
+                if (res.getStatus() == 204) {
+                    continue;
+                }
+
+                List<LeaderboardEntry> leaderboard = res.readEntity(List.class);
+                l.accept(leaderboard);
+                stop();
+            }
+        });
+    }
+
+    public void checkLeaderboardFilled() {
+        try {
+            GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+
+            Response response = ClientBuilder.newClient(new ClientConfig()) //
+                    .target(SERVER).path("api/leaderboard/checkLeaderboardFilled/" + gameConfiguration.getRoomId())
+                    .request(APPLICATION_JSON)
+                    .accept(APPLICATION_JSON)
+                    .get();
+        } catch (Exception e) {
+            System.out.println("An exception occurred when trying to check if leaderboard is ready");
+        }
+    }
+
+    public void stop() {
+        EXEC.shutdownNow();
+    }
+
+
     public String getQuestion() {
         try {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
@@ -304,7 +346,7 @@ public class ServerUtils {
                 }
                 case 417: {
                     System.out.println("Expectation failed when trying to get the question");
-                    return  null;
+                    return null;
                     // something failed, show an apology message ?
                 }
                 case 400: {
@@ -324,7 +366,7 @@ public class ServerUtils {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
 
             Response response = ClientBuilder.newClient(new ClientConfig()) //
-                    .target(SERVER).path("api/" +  gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" + gameConfiguration.getRoomId() + "/" +
+                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" + gameConfiguration.getRoomId() + "/" +
                             gameConfiguration.getCurrentQuestionNumber() + "/postAnswer")
                     .request(APPLICATION_JSON)
                     .accept(APPLICATION_JSON)
@@ -346,6 +388,60 @@ public class ServerUtils {
             }
         } catch (Exception e) {
             System.out.println("An exception occurred when trying to update the score");
+        }
+    }
+
+    public void useHintJoker() {
+        try {
+            GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+
+            Response response = ClientBuilder.newClient(new ClientConfig()) //
+                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" +
+                            gameConfiguration.getRoomId() + "/useHintJoker")
+                    .request(APPLICATION_JSON)
+                    .accept(APPLICATION_JSON)
+                    .get();
+
+            System.out.println("Response status: " + response.getStatus());
+
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+        }
+    }
+
+    public void useDoublePointJoker() {
+        try {
+            GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+
+            Response response = ClientBuilder.newClient(new ClientConfig()) //
+                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" +
+                            gameConfiguration.getRoomId() + "/useDoublePointJoker")
+                    .request(APPLICATION_JSON)
+                    .accept(APPLICATION_JSON)
+                    .get();
+
+            System.out.println("Response status: " + response.getStatus());
+
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+        }
+    }
+
+    public void useTimeJoker() {
+        try {
+            GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+
+            Response response = ClientBuilder.newClient(new ClientConfig()) //
+                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" +
+                            gameConfiguration.getRoomId() + "/useTimeJoker")
+                    .request(APPLICATION_JSON)
+                    .accept(APPLICATION_JSON)
+                    .get();
+
+            System.out.println("Response status: " + response.getStatus());
+
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
         }
     }
 
@@ -372,7 +468,7 @@ public class ServerUtils {
                 });
     }
 
-    public LeaderboardEntry addLeaderboardEntry(String name, String roomId, int points) {
+    public LeaderboardEntry addOrUpdateLeaderboardEntry(String name, String roomId, int points) {
         return ClientBuilder.newClient(new ClientConfig()) //
                 .target(SERVER).path("api/leaderboard/") //
                 .request(APPLICATION_JSON) //
@@ -392,12 +488,11 @@ public class ServerUtils {
                 .delete();
     }
 
-    // Where we connect to the websocket
-
     private StompSession session = connect("ws://localhost:8080/websocket");
 
     /**
      * Methods that creates the connection
+     *
      * @param url where we get connected
      * @return
      * @throws ExecutionException
@@ -407,17 +502,18 @@ public class ServerUtils {
         var client = new StandardWebSocketClient();
         var stomp = new WebSocketStompClient(client);
 
-        stomp.setMessageConverter(new MappingJackson2MessageConverter() );
-        return stomp.connect(url, new StompSessionHandlerAdapter() {} ).get();
+        stomp.setMessageConverter(new MappingJackson2MessageConverter());
+        return stomp.connect(url, new StompSessionHandlerAdapter() {
+        }).get();
     }
 
     /**
      * We are subscribed for a whenever there is a message on the destination path
-     * @param destination  /topic/emojis
-     * @param consumer that is informed whenever a new message is received
+     *
+     * @param destination /topic/emojis
+     * @param consumer    that is informed whenever a new message is received
      */
-    public void registerForMessages(String destination, Consumer<List<String>> consumer)
-    {
+    public void registerForMessages(String destination, Consumer<List<String>> consumer) {
         session.subscribe(destination, new StompFrameHandler() {
             @Override
             public Type getPayloadType(StompHeaders headers) {
@@ -426,18 +522,18 @@ public class ServerUtils {
 
             @Override
             public void handleFrame(StompHeaders headers, Object payload) {
-                consumer.accept((List<String>) payload );
+                consumer.accept((List<String>) payload);
             }
         });
     }
 
     /**
-     *Method that sends the message
+     * Method that sends the message
+     *
      * @param destination /topic/emojis
-     * @param o the payload
+     * @param o           the payload
      */
-    public void send(String destination, Object o)
-    {
+    public void send(String destination, Object o) {
         session.send(destination, o);
     }
 
@@ -472,6 +568,7 @@ public class ServerUtils {
     }
 
     public void editActivity(String id, Action a) {
+        System.out.println(id);
         ClientBuilder.newClient(new ClientConfig()) //
                 .target(SERVER).path("api/activities/update") //
                 .request() //
@@ -480,18 +577,55 @@ public class ServerUtils {
     }
 
     public Action getActivityById(String id) {
-        return ClientBuilder.newClient(new ClientConfig()) //
-                .target(SERVER).path("api/activities/" + id) //
-                .request() //
-                .accept(APPLICATION_JSON) //
-                .get(new GenericType<>() {
-                });
+        try {
+            Response response = ClientBuilder.newClient(new ClientConfig()) //
+                    .target(SERVER).path("api/activities/" + id) //
+                    .request() //
+                    .accept(APPLICATION_JSON) //
+                    .get(new GenericType<>() {
+                    });
+
+            switch (response.getStatus()) {
+                case 200: {
+                    System.out.println("Am intrat");
+                    return response.readEntity(Action.class);
+                }
+                case 417: {
+                    System.out.println("Could not get activity by id");
+                    return null;
+                    // something failed, show an apology message ?
+                }
+                case 400: {
+                    System.out.println("The request was invalid");
+                    return null;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+        }
+        return null;
     }
 
     public void alert() {
-        ClientBuilder.newClient(new ClientConfig()) //
-                .target(SERVER).path("api/activities/alert") //
-                .request().get(); //;
+        try {
+            Response response = ClientBuilder.newClient(new ClientConfig()) //
+                    .target(SERVER).path("api/activities/alert") //
+                    .request().get(); //;
+
+            switch (response.getStatus()) {
+                case 200: {
+                    System.out.println("Am intrat");
+                }
+                case 417: {
+                    System.out.println("Expectation failed");
+                }
+                case 400: {
+                    System.out.println("The request was invalid");
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+        }
     }
 
     public String getAnswer() {
@@ -511,6 +645,7 @@ public class ServerUtils {
                 }
                 case 417: {
                     System.out.println("Expectation failed when trying to get the answer");
+                    System.out.println("Could not get answer of question");
                     return null;
                     // something failed, show an apology message ?
                 }
@@ -541,7 +676,7 @@ public class ServerUtils {
                 }
                 case 417: {
                     System.out.println("Expectation failed when trying to get the player's score");
-                    return  null;
+                    return null;
                     // something failed, show an apology message ?
                 }
                 case 400: {
@@ -590,6 +725,22 @@ public class ServerUtils {
     }
 
     /**
+     * PUT HTTP request that will later be used to send images to the server from the adming interface
+     *
+     * @param base64Image the base64 string of the image
+     * @param imageName   the name as which the image will be saved as
+     */
+    public void sendImageEdit(String base64Image, String imageName, String imageFolder) {
+        ClientBuilder.newClient(new ClientConfig()) //
+                .target(SERVER).path("api/activities/receiveImageEdit/" + imageName + "/" + imageFolder) //
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .put(Entity.entity(base64Image, APPLICATION_JSON), String.class);
+
+    }
+
+
+    /**
      * Gets a list of the current games to display them on the server browser
      *
      * @return the list of current games
@@ -597,7 +748,7 @@ public class ServerUtils {
     public ObservableList<GameContainer> listOfCurrentGames(String username) {
 
         ArrayList<GameContainer> games = ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER).path("api/" + username +  "/MULTIPLAYER" + "/getGames")
+                .target(SERVER).path("api/" + username + "/MULTIPLAYER" + "/getGames")
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON)
                 .get(new GenericType<>() {
@@ -614,6 +765,9 @@ public class ServerUtils {
 
     public int getNumPlayers() {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+
+
+        System.out.println("api/" + gameConfiguration.getUserName() + "/MULTIPLAYER/" + gameConfiguration.getRoomId() + "/numPlayers");
         return ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/MULTIPLAYER/" + gameConfiguration.getRoomId() + "/numPlayers")
                 .request(APPLICATION_JSON)
@@ -622,12 +776,9 @@ public class ServerUtils {
                 });
     }
 
-    public void changeRoomStatusAsFinished() {
-        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+    public void restoreActivityBank() {
         ClientBuilder.newClient(new ClientConfig())
-            .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/MULTIPLAYER/" + gameConfiguration.getRoomId() + "/changeStatus")
-            .request(APPLICATION_JSON)
-            .accept(APPLICATION_JSON)
-            .get();
+                .target(SERVER).path("api/activities/restoreActivityBank")
+                .request().get();
     }
 }

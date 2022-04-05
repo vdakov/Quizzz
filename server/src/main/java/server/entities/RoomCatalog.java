@@ -119,8 +119,13 @@ public class RoomCatalog {
     }
 
     /**
+<<<<<<< HEAD
      * Gets the multiplayer games in waiting status
      * @return all multiplayer games that are not empty and not finished
+=======
+     * Get all multiplayer games that is currently in waiting status
+     * @return list of all multiplayer games that is in waiting status
+>>>>>>> dev
      */
     public List<GameContainer> getWaitingMultiplayerGames() {
         this.cleanEmptyGames();
