@@ -80,11 +80,11 @@ public class MultiplayerRoom extends Room {
     }
 
     // get the time for a spwcific player for specific question
-    public Integer getTimeClient(String username, int number) { return playerTime.get(number).get(username); }
-
-    public Boolean getHintJokerUsed(String username) { return playerHintJokerUsed.get(username); }
-    public Boolean getDoublePointJokerUsed(String username) { return playerDoublePointJokerUsed.get(username); }
-    public Boolean getTimeJokerUsed(String username) { return playerTimeJokerUsed.get(username); }
+    public Integer getTimeClient(String username, int number) {
+        System.out.println("Getting time for " + username + " at question number: " + number);
+        System.out.println("The time is: " + playerTime.get(number - 1).get(username));
+        return playerTime.get(number - 1).get(username);
+    }
 
     public void useHintJoker(String username) { playerHintJokerUsed.put(username, true); }
     public void useDoublePointJoker(String username) { playerDoublePointJokerUsed.put(username, true); }
@@ -94,11 +94,11 @@ public class MultiplayerRoom extends Room {
 
         if (number >= 20) { return; }
 
-        HashMap<String, Integer> question = playerTime.get(number + 1);
+        HashMap<String, Integer> question = playerTime.get(number);
         for (String key : question.keySet()) {
             if (key != username) {
                 System.out.println("Username limited: " + username + " in question: " + (number+1)) ;
-                question.put(key, 5);
+                question.replace(key, 5);
             }
         }
     }

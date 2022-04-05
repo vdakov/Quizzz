@@ -155,11 +155,11 @@ public class QuestionActivityCtrl {
             hintJoker.setDisable(getHintJokerUsed());
         }
         timeJoker.setDisable(false);
-        Boolean timeJokerUsed = getTimeJokerUsed();
-
-        if (timeJokerUsed != null) {
-            timeJoker.setDisable(timeJokerUsed);
-        }
+//        Boolean timeJokerUsed = getTimeJokerUsed();
+//
+//        if (timeJokerUsed != null) {
+//            timeJoker.setDisable(timeJokerUsed);
+//        }
     }
 
 
@@ -333,9 +333,10 @@ public class QuestionActivityCtrl {
 
     public void useTimeJoker() {
         //Joker that reduces time for all other players
-        if (server.getTimeJokerUsed()) { return; }
+        if (getTimeJokerUsed()) { return; }
 
         server.useTimeJoker();
+        gameConfig.setTimeJokerUsed(true);
         timeJoker.setDisable(true);
     }
 
