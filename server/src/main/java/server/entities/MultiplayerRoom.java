@@ -12,6 +12,7 @@ public class MultiplayerRoom extends Room {
     private final HashMap<String, Boolean> playerHintJokerUsed;
     private final HashMap<String, Boolean> playerDoublePointJokerUsed;
     private final HashMap<String, Boolean> playerTimeJokerUsed;
+    private final HashMap<String, Integer> playerAddedPoints;
 
     /**
      * Constructor for a multiplayer room
@@ -27,6 +28,7 @@ public class MultiplayerRoom extends Room {
         this.playerHintJokerUsed = new HashMap<>();
         this.playerDoublePointJokerUsed = new HashMap<>();
         this.playerTimeJokerUsed = new HashMap<>();
+        this.playerAddedPoints = new HashMap<>();
     }
 
     /**
@@ -39,6 +41,7 @@ public class MultiplayerRoom extends Room {
         playerHintJokerUsed.put(username, false);
         playerDoublePointJokerUsed.put(username, false);
         playerTimeJokerUsed.put(username, false);
+        playerAddedPoints.put(username, 10);
     }
 
     /**
@@ -51,6 +54,7 @@ public class MultiplayerRoom extends Room {
         playerHintJokerUsed.remove(username);
         playerDoublePointJokerUsed.remove(username);
         playerTimeJokerUsed.remove(username);
+        playerAddedPoints.remove(username);
     }
 
     /**
@@ -70,8 +74,32 @@ public class MultiplayerRoom extends Room {
     public Boolean getTimeJokerUsed(String username) { return playerTimeJokerUsed.get(username); }
 
     public void useHintJoker(String username) { playerHintJokerUsed.put(username, true); }
-    public void useDoublePointJoker(String username) { playerDoublePointJokerUsed.put(username, true); }
+    public void useDoublePointJoker(String username) {
+        playerAddedPoints.put(username, this.getAddedPoints(username) * 2);
+        playerDoublePointJokerUsed.put(username, true);
+    }
     public void useTimeJoker(String username) { playerTimeJokerUsed.put(username, true); }
+
+    public int getAddedPoints(String username) { return playerAddedPoints.get(username); }
+
+    /**
+     * Calculates the added point of the specific question using time left
+     * @param username
+     * @param timeLeft the amount of time left to user, fast answer gives more points
+     * @return the new added point value
+     */
+    public int calculateAddedPoints(String username, long timeLeft) {
+        int newAddedPoints = (int) (getAddedPoints(username) * (timeLeft));
+        playerAddedPoints.put(username, newAddedPoints);
+        return newAddedPoints;
+    }
+
+    /**
+     * Resets the points added as 10, to prevent the points getting doubled everytime after the double point joker is used
+     */
+    public void resetAddedPointAfterDoublePointJoker(String username) {
+        playerAddedPoints.put(username, 10);
+    }
 
     /**
      * Updates the score of the player

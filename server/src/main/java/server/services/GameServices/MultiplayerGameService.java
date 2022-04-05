@@ -202,12 +202,13 @@ public class MultiplayerGameService {
      * Calculated the points added on this round
      * @return the points earned in this round
      */
-    public Integer calculatePointsAdded(String username, String roomId) {
-        if (getDoublePointJokerUsed(username, roomId)) {
-            return 1000;
-        } else {
-            return 500;
-        }
+    public int calculatePointsAdded(String username, String roomId, long timeLeft) {
+        return roomCatalog.getMultiPlayerRoom(roomId).calculateAddedPoints(username, timeLeft);
+    }
+
+
+    public int getAddedPoints(String username, String roomId) {
+        return roomCatalog.getMultiPlayerRoom(roomId).getAddedPoints(username);
     }
 
     /**
@@ -215,6 +216,7 @@ public class MultiplayerGameService {
      *
      * @param username the user that requests the score
      * @param roomId   the id of the room the user is in
+     * @return returns true when the hint joker is used
      */
     public Boolean getHintJokerUsed(String username, String roomId) {
         try {
@@ -234,6 +236,7 @@ public class MultiplayerGameService {
      *
      * @param username the user that requests the score
      * @param roomId   the id of the room the user is in
+     * @return returns true when the double point joker is used
      */
     public Boolean getDoublePointJokerUsed(String username, String roomId) {
         try {
@@ -341,7 +344,7 @@ public class MultiplayerGameService {
      * @param questionNumber the question number answered by the user
      * @param userAnswer     the answer user
      */
-    public Boolean updateMultiPlayerScore(String username, String roomId, int questionNumber, String userAnswer) {
+    public Boolean updateMultiPlayerScore(String username, String roomId, int questionNumber, String userAnswer, Long timeLeft) {
         try {
             if (roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() != Room.RoomStatus.ONGOING ||
                     roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) == null) {
@@ -349,7 +352,7 @@ public class MultiplayerGameService {
             }
 
             if (userAnswer.equals(getMultiPlayerAnswer(username, roomId, questionNumber))) {
-                roomCatalog.getMultiPlayerRoom(roomId).updatePlayerScore(username, 500);
+                roomCatalog.getMultiPlayerRoom(roomId).updatePlayerScore(username, this.calculatePointsAdded(username, roomId, timeLeft));
             }
 
             return true;
@@ -384,5 +387,24 @@ public class MultiplayerGameService {
      */
     public void removePlayer(String roomId, String userName) {
         this.getGame(roomId).removePlayer(userName);
+    }
+
+    /**
+     * Resets the points added as 10, to prevent the points getting doubled everytime after the double point joker is used
+     * @param username  the user that needs the score update
+     * @param roomId    the id of the room the user is in
+     * @return true is the reset is successfully done
+     */
+    public Boolean resetAddedPointAfterDoublePointJoker(String username, String roomId) {
+        try {
+            if (!username.equals(roomCatalog.getSinglePlayerRoom(roomId).getRoomCreator())) {
+                return false;
+            }
+            roomCatalog.getMultiPlayerRoom(roomId).resetAddedPointAfterDoublePointJoker(username);
+            return true;
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+            return null;
+        }
     }
 }

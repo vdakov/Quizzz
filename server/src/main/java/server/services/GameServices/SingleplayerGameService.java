@@ -253,7 +253,7 @@ public class SingleplayerGameService {
      * Resets the points added as 10, to prevent the points getting doubled everytime after the double point joker is used
      * @param username  the user that needs the score update
      * @param roomId    the id of the room the user is in
-     * @return true is the resetAddedPointAfterDoublePointJoker is successfully done
+     * @return true is the reset is successfully done
      */
     public Boolean resetAddedPointAfterDoublePointJoker(String username, String roomId) {
         try {

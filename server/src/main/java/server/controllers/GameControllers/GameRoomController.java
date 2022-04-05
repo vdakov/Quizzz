@@ -207,7 +207,7 @@ public class GameRoomController {
 
         if (gameType.equals("MULTIPLAYER")) {
             try {
-                Integer addedPoints = multiplayerGameService.calculatePointsAdded(username, roomId);
+                Integer addedPoints = multiplayerGameService.getAddedPoints(username, roomId);
                 return (addedPoints != null) ? ResponseEntity.status(HttpStatus.OK).body(addedPoints) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             } catch (Exception e) {
                 return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
@@ -238,14 +238,15 @@ public class GameRoomController {
         }
 
         if (gameType.equals("MULTIPLAYER")) {
-//            try {
-//                Integer addedPoints = multiplayerGameService.calculatePointsAdded(username, roomId);
-//                return (addedPoints != null) ? ResponseEntity.status(HttpStatus.OK).body(addedPoints) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-//            } catch (Exception e) {
-//                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
+            try {
+                Integer addedPoints = multiplayerGameService.calculatePointsAdded(username, roomId, timeLeft);
+                return (addedPoints != null) ? ResponseEntity.status(HttpStatus.OK).body(addedPoints) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
             }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
 
     /**
      * @param username       the username of the player that requests his score
@@ -353,7 +354,7 @@ public class GameRoomController {
         if (gameType.equals("MULTIPLAYER")) {
             try {
                 int questionNo = Integer.parseInt(questionNumber);
-                return multiplayerGameService.updateMultiPlayerScore(username, roomId, questionNo, userAnswer) ?
+                return multiplayerGameService.updateMultiPlayerScore(username, roomId, questionNo, userAnswer, timeLeft) ?
                         ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             } catch (NumberFormatException e) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -457,12 +458,12 @@ public class GameRoomController {
         }
 
         if (gameType.equals("MULTIPLAYER")) {
-//            try {
-//                return multiplayerGameService.useDoublePointJoker(username, roomId) ?
-//                        ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-//            } catch (Exception e) {
-//                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
-//            }
+            try {
+                return multiplayerGameService.resetAddedPointAfterDoublePointJoker(username, roomId) ?
+                        ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
+            }
         }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
