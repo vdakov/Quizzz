@@ -38,30 +38,34 @@ public class QuizzzServer {
      */
     @Bean
     CommandLineRunner runner(ActionService actionService) {
-        return args -> {
-            ObjectMapper mapper = new ObjectMapper();
-            TypeReference<List<Action>> typeReference = new TypeReference<List<Action>>() {
-            }; //requires us to have a list of activities/actions
-            InputStream inputStream = TypeReference.class.getResourceAsStream("/activities.json"); //converts the JSON array to the reference type List<Action>
+        if (actionService.getRepository().count() < 1) {
+            return args -> {
+                ObjectMapper mapper = new ObjectMapper();
+                TypeReference<List<Action>> typeReference = new TypeReference<List<Action>>() {
+                }; //requires us to have a list of activities/actions
+                InputStream inputStream = TypeReference.class.getResourceAsStream("/activities.json"); //converts the JSON array to the reference type List<Action>
 
 
-            try {
-                List<Action> actions = mapper.readValue(inputStream, typeReference); //does the actual mapping to the list
-                // it won't save certain activities that do not match the current database, but this should be optimised
-                for (int i = 0; i < actions.size(); i++) {
-                    if (actions.get(i).getConsumption() > Integer.MAX_VALUE || actions.get(i).getSource() == null || actions.get(i).getSource().length() > 255) {
-                        actions.remove(i);
-                        i--;
+                try {
+                    List<Action> actions = mapper.readValue(inputStream, typeReference); //does the actual mapping to the list
+                    // it won't save certain activities that do not match the current database, but this should be optimised
+                    for (int i = 0; i < actions.size(); i++) {
+                        if (actions.get(i).getConsumption() > Integer.MAX_VALUE || actions.get(i).getSource() == null || actions.get(i).getSource().length() > 255) {
+                            actions.remove(i);
+                            i--;
+                        }
                     }
+
+                    actionService.save(actions); //saves the actions to the repository
+                    System.out.println("ACTIVITIES SAVED"); //confirmation message
+                } catch (IOException e) {
+                    System.out.println(e);
+                    System.out.println("ACTIVITIES NOT SAVED"); //failure message
                 }
 
-                actionService.save(actions); //saves the actions to the repository
-                System.out.println("ACTIVITIES SAVED"); //confirmation message
-            } catch (IOException e) {
-                System.out.println(e);
-                System.out.println("ACTIVITIES NOT SAVED"); //failure message
-            }
-
-        };
+            };
+        }
+        return args -> {
+        }; // do nothing if there are activities in repository
     }
 }

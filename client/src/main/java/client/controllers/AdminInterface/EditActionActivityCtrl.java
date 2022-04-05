@@ -29,6 +29,7 @@ public class EditActionActivityCtrl {
     private final SceneCtrl sceneCtrl;
 
     private String id;
+    private String folder;
 
     @FXML
     private TextField title;
@@ -57,16 +58,24 @@ public class EditActionActivityCtrl {
     }
 
     public void initialize(Action editingAction) throws IOException {
+
         ByteArrayInputStream bis = new ByteArrayInputStream(server.getQuestionImage(editingAction.getImagePath()));
         BufferedImage bImage = ImageIO.read(bis);
         this.currentImage.setImage(SwingFXUtils.toFXImage(bImage, null));
+        byte[] arr = server.getQuestionImage(editingAction.getImagePath());
 
         this.id = editingAction.getId();
+        this.folder = editingAction.getImagePath().substring(0, 2);
         System.out.println(id);
+        System.out.println(this.id);
         title.setText(editingAction.getTitle());
         source.setText(editingAction.getSource());
-        this.imageNameField.setText(editingAction.getImagePath());
+        this.imageNameField.setText(editingAction.getImagePath().substring(3));
         consumption.setText(String.valueOf(editingAction.getConsumption()));
+
+        this.base64Image = Base64.encodeBase64String(arr);
+        System.out.println(base64Image);
+        this.newImage.setImage(SwingFXUtils.toFXImage(bImage, null));
     }
 
     public void cancel() {
@@ -75,7 +84,7 @@ public class EditActionActivityCtrl {
     }
 
     public void ok() {
-        if (this.title == null || this.consumption == null || this.imageNameField.getText() == null || this.base64Image == null || this.source == null) {
+        if (this.title == null || this.consumption == null || this.imageNameField.getText() == null || this.source == null || this.base64Image == null) {
             var alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Please fill in all fields!!!!");
             alert.showAndWait();
@@ -84,8 +93,9 @@ public class EditActionActivityCtrl {
         }
 
         try {
-            server.editActivity(id, getActivity());
-            server.sendImage(this.base64Image, this.imageNameField.getText());
+            server.editActivity(this.id, getActivity());
+            System.out.println(this.imageNameField.getText());
+            server.sendImageEdit(this.base64Image, this.imageNameField.getText(), this.folder);
         } catch (WebApplicationException e) {
 
             var alert = new Alert(Alert.AlertType.ERROR);
@@ -94,9 +104,7 @@ public class EditActionActivityCtrl {
             alert.showAndWait();
             return;
         }
-
-        clearFields();
-        //sceneCtrl.showOverviewActionsScene();
+        cancel();
     }
 
     private Action getActivity() {
@@ -105,7 +113,8 @@ public class EditActionActivityCtrl {
         } catch (NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
         }
-        return new Action(this.id, this.imageNameField.getText(), title.getText(), Long.parseLong(this.consumption.getText()), source.getText());
+        return new Action(this.id, this.folder + "/" + this.imageNameField.getText(),
+                title.getText(), Long.parseLong(this.consumption.getText()), source.getText());
     }
 
     private void clearFields() {
