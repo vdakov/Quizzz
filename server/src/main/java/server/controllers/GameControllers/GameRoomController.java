@@ -380,7 +380,7 @@ public class GameRoomController {
      * @param roomId the id of the game that the player is in
      * @return whether the request was successful or not
      */
-    @GetMapping("/useDoublePoint")
+    @GetMapping("/useDoublePointJoker")
     public ResponseEntity<Object> useDoublePointJoker(@PathVariable("username") String username, @PathVariable("gameType") String gameType,
                                                @PathVariable("roomId") String roomId) {
         if (gameType.equals("SINGLEPLAYER")) {

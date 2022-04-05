@@ -262,6 +262,7 @@ public class QuestionActivityCtrl {
     public void useHintJoker(MouseEvent event) {
         //Joker that eliminates the wrong answer
         if (getHintJokerUsed()) { return; }
+        System.out.println(getHintJokerUsed());
 
         //Make a list of possible answers
         List<Label> answerLabels = new ArrayList();
@@ -290,6 +291,7 @@ public class QuestionActivityCtrl {
 
     public void useDoublePointJoker(MouseEvent event) {
         if (getDoublePointJokerUsed()) { return; }
+        System.out.println(getDoublePointJokerUsed());
 
         server.useDoublePointJoker();
         gameConfig.setDoublePointJokerUsed(true);
@@ -357,7 +359,7 @@ public class QuestionActivityCtrl {
         return server.getHintJokerUsed();
     }
 
-    public boolean getDoublePointJokerUsed() {
+    public Boolean getDoublePointJokerUsed() {
         return server.getDoublePointJokerUsed();
     }
 

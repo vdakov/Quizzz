@@ -235,7 +235,6 @@ public class SingleplayerGameService {
                 return false;
             }
 
-            System.out.println("-----used double point joker2");
             roomCatalog.getSinglePlayerRoom(roomId).useDoublePointJoker();
 
             return true;
