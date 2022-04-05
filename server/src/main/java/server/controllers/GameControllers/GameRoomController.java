@@ -425,8 +425,10 @@ public class GameRoomController {
         }
         if (gameType.equals("MULTIPLAYER")) {
             try {
-                return multiplayerGameService.useDoublePointJoker(username, roomId) ?
-                        ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+                multiplayerGameService.useDoublePointJoker(username, roomId);
+                Integer newAddedPoints = multiplayerGameService.getAddedPoints(username, roomId);
+                return (newAddedPoints != null) ?
+                        ResponseEntity.status(HttpStatus.OK).body(newAddedPoints) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             } catch (Exception e) {
                 return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
             }

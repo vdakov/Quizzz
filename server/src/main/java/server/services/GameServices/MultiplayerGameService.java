@@ -300,11 +300,10 @@ public class MultiplayerGameService {
      */
     public Boolean useDoublePointJoker(String username, String roomId) {
         try {
-//            if (roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() != Room.RoomStatus.ONGOING ||
-//                    roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) == null) {
-//                //return null;
-//            }
-
+            if (roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() != Room.RoomStatus.ONGOING ||
+                    roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) == null) {
+                //return null;
+            }
             roomCatalog.getMultiPlayerRoom(roomId).useDoublePointJoker(username);
             return true;
 
