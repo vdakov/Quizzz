@@ -54,7 +54,7 @@ public class MultiplayerGameRoomController {
     }
 
     @GetMapping("/waitForGameToStart")
-    public DeferredResult<ResponseEntity<Boolean>> waitForGameToStart(@PathVariable("roomId") String roomId) {
+    public DeferredResult<ResponseEntity<Boolean>> waitForGameToStart(@PathVariable("username") String username, @PathVariable("roomId") String roomId) {
         var noContent = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         var res = new DeferredResult<ResponseEntity<Boolean>>(50000L, noContent);
 

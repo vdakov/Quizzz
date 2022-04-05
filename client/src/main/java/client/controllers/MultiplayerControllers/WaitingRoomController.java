@@ -63,6 +63,7 @@ public class WaitingRoomController {
 
         server.waitForMultiPlayerRoomStart(q -> {
             try {
+                System.out.println("I tried to start the game");
                 sceneCtrl.showNextQuestion();
             } catch (Exception e) {
                 System.out.println("Exception occurred when trying to start the game by showing the next question");

@@ -137,7 +137,7 @@ public class MultiplayerGameService {
             }
 
             MultiplayerGameRoomController.getListeners().forEach((k, l) -> {
-                if (k.getValue().equals(roomId)) {
+                if (k.getValue().equals(roomId) && roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) != null) {
                     l.accept(true);
                 }
             });

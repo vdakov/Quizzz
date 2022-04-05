@@ -97,6 +97,8 @@ public class ServerUtils {
         try {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
 
+            System.out.println("I pressed the button");
+
             Response response = ClientBuilder.newClient(new ClientConfig())
                     .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" + gameConfiguration.getRoomId() + "/startRoom")
                     .request(APPLICATION_JSON)
@@ -216,6 +218,7 @@ public class ServerUtils {
             Boolean gameInProgress = res.readEntity(Boolean.class);
 
             if (gameInProgress) {
+                System.out.println("Game started 1234567890");
                 startedGame.accept(true);
                 this.stopWaitForRoomThread();
             }
