@@ -760,9 +760,11 @@ public class ServerUtils {
         return FXCollections.observableArrayList(games);
     }
 
-    public void removePlayer(String userName, String gameID) {
+    public void removePlayer() {
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+        System.out.println("api/" + gameConfiguration.getUserName() + "/MULTIPLAYER/" + gameConfiguration.getRoomId() + "/removePlayer");
         ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER).path("api/MULTIPLAYER/" + userName + "/" + gameID + "/" + "removePlayer")
+                .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/MULTIPLAYER/" + gameConfiguration.getRoomId() + "/removePlayer")
                 .request().get();
     }
 

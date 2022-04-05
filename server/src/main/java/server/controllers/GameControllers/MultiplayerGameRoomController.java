@@ -100,12 +100,13 @@ public class MultiplayerGameRoomController {
     /**
      * Removes a player(user) from the current multiplayer score leaderboard
      *
-     * @param userName the name of the removing player
+     * @param username the name of the removing player
      * @param roomId   the id of the game that the user wants to join
      */
     @GetMapping("/removePlayer")
-    public void removePlayer(@PathVariable String userName, @PathVariable String roomId) {
-        this.multiplayerGameService.removePlayer(roomId, userName);
+    public void removePlayer(@PathVariable("username") String username, @PathVariable("roomId") String roomId) {
+        System.out.println("The request is ok");
+        this.multiplayerGameService.removePlayer(roomId, username);
     }
 
     /**

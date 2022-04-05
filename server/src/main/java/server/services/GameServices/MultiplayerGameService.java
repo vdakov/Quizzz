@@ -389,6 +389,7 @@ public class MultiplayerGameService {
      */
     public void removePlayer(String roomId, String userName) {
         this.getGame(roomId).removePlayer(userName);
+        System.out.println("I got here when removing player");
 
         if (roomCatalog.getMultiPlayerRoom(roomId).getNumPlayers() == 0) {
             roomCatalog.getMultiPlayerRoom(roomId).setRoomStatus(Room.RoomStatus.FINISHED);

@@ -38,11 +38,13 @@ public class WaitingRoomController {
      * @param event the Action Event from the button
      */
     public void goBackToServerBrowser(ActionEvent event) {
-        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
-        this.server.removePlayer(gameConfiguration.getUserName(), gameConfiguration.getRoomId());
+        this.server.removePlayer();
 
         server.stopWaitForRoomThread();
         server.stopUpdatePlayerNumber();
+
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+        gameConfiguration.setRoomId(null);
 
         this.sceneCtrl.showServerBrowser();
     }
