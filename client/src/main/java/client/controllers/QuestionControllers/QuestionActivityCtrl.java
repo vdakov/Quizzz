@@ -34,6 +34,7 @@ public class QuestionActivityCtrl {
     protected int addedPointsInt;
     protected String userAnswer;
     protected boolean answered;
+    protected long timeLeft;
     @FXML
     protected Label timeLabel;
     @FXML
@@ -125,6 +126,8 @@ public class QuestionActivityCtrl {
         addedPoints.setText(" ");
         addedPointsInt = 0;
 
+        server.resetDoubledAddedPoints();
+
         if (!gameConfig.isSinglePlayer())
         {
             splitPane.setVisible(true);
@@ -157,11 +160,20 @@ public class QuestionActivityCtrl {
         Label current = (Label) event.getSource();
         userAnswer = current.getText();
         answered = true;
+        try {
+            timeLeft = Long.parseLong(timeLabel.getText());
+            updateTimeLeft();
+        } catch (Exception e) {
+            System.out.println("Error happened when parsing timeLeft");
+        }
+
 
         server.updateScore(userAnswer);
 
         answerUpdate();
         pointsUpdate();
+
+        addedPoints.setText("+" + String.valueOf(addedPointsInt));
 
         //blocks the possibility to answer anymore
     }
@@ -189,22 +201,10 @@ public class QuestionActivityCtrl {
     public void pointsUpdate() {
         // after the time ends the amount of won points is calculated and then shown to the player
 
-        addedPointsInt = 0;
         if (userAnswer.equals(getCorrectAnswer())) {
             addedPointsInt = getAddedPointsInt();
         }
-        addedPoints.setText("+" + String.valueOf(addedPointsInt));
 
-//        FadeTransition fadeout = new FadeTransition(Duration.seconds(1), addedPoints);
-//        fadeout.setFromValue(1);
-//        fadeout.setToValue(0);
-//        fadeout.play();
-//
-//        //after some effect
-//        pointsInt += addedPointsInt;
-//        addedPointsInt = 0;
-//        addedPoints.setText(null);
-//        points.setText(String.valueOf(pointsInt));
     }
 
     public void startTimer() {
@@ -293,7 +293,7 @@ public class QuestionActivityCtrl {
         if (getDoublePointJokerUsed()) { return; }
         System.out.println(getDoublePointJokerUsed());
 
-        server.useDoublePointJoker();
+        String addedPoints = server.useDoublePointJoker();
         gameConfig.setDoublePointJokerUsed(true);
         doublePointJoker.setDisable(true);
 
@@ -515,4 +515,6 @@ public class QuestionActivityCtrl {
     public int getAddedPointsInt() {
         return server.getAddedPoints();
     }
+
+    public void updateTimeLeft() { gameConfig.setTimeLeft(timeLeft); }
 }

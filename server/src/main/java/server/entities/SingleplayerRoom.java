@@ -10,6 +10,7 @@ public class SingleplayerRoom extends Room {
     private int playerScore;
     private boolean hintJokerUsed;
     private boolean doublePointJokerUsed;
+    private int addedPoints;
 
     /**
      * Constructor for a singleplayer room
@@ -23,6 +24,8 @@ public class SingleplayerRoom extends Room {
         this.playerScore = 0;
         hintJokerUsed = false;
         doublePointJokerUsed = false;
+        this.addedPoints = 10;
+//        this.timeLeft = ;
     }
 
     /**
@@ -34,6 +37,12 @@ public class SingleplayerRoom extends Room {
         return this.playerScore;
     }
 
+    public int getAddedPoints() { return this.addedPoints; }
+
+    public int calculateAddedPoints(long timeLeft) {
+        this.addedPoints = (int) (addedPoints*(timeLeft));
+        return addedPoints;
+    }
     /**
      * Returns true if Hint Joker was used this game
      */
@@ -52,7 +61,19 @@ public class SingleplayerRoom extends Room {
     /**
      * Records doublePoint joker used
      */
-    public void useDoublePointJoker() { doublePointJokerUsed = true; }
+    public void useDoublePointJoker() {
+        this.addedPoints = addedPoints*2;
+        doublePointJokerUsed = true;
+    }
+
+    public int doublesAddedPoints() {
+        return addedPoints*2;
+    }
+
+    public void resetAddedPointAfterDoublePointJoker() {
+        addedPoints = 10;
+    }
+
 
     /**
      * Sets the score for the player to the given score

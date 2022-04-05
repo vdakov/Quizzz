@@ -197,7 +197,8 @@ public class GameRoomController {
     public ResponseEntity<Integer> getAddedPoints(@PathVariable("username") String username, @PathVariable("gameType") String gameType, @PathVariable("roomId") String roomId) {
         if (gameType.equals("SINGLEPLAYER")) {
             try {
-                Integer addedPoints = singlePlayerGameService.calculatePointsAdded(username, roomId);
+
+                Integer addedPoints = singlePlayerGameService.getAddedPoints(username, roomId);
                 return (addedPoints != null) ? ResponseEntity.status(HttpStatus.OK).body(addedPoints) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             } catch (Exception e) {
                 return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
@@ -215,6 +216,27 @@ public class GameRoomController {
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
+
+    @GetMapping("/calculateAddedPoints")
+    public ResponseEntity<Object> calculateAddedPoints(@PathVariable("username") String username, @PathVariable("gameType") String gameType, @PathVariable("roomId") String roomId, @PathVariable("timeLeft") Long timeLeft) {
+        if (gameType.equals("SINGLEPLAYER")) {
+            try {
+                singlePlayerGameService.calculatePointsAdded(username, roomId, timeLeft);
+                return ResponseEntity.status(HttpStatus.OK).build();
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
+            }
+        }
+
+        if (gameType.equals("MULTIPLAYER")) {
+//            try {
+//                Integer addedPoints = multiplayerGameService.calculatePointsAdded(username, roomId);
+//                return (addedPoints != null) ? ResponseEntity.status(HttpStatus.OK).body(addedPoints) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+//            } catch (Exception e) {
+//                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
+            }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
 
     /**
      * @param username       the username of the player that requests his score
@@ -304,13 +326,14 @@ public class GameRoomController {
      * @param userAnswer the user answer to the question
      * @return whether the request was successful or not
      */
-    @PostMapping("/{questionNumber}/postAnswer")
+    @PostMapping("/{questionNumber}/{timeLeft}/postAnswer")
     public ResponseEntity<Object> postAnswer(@PathVariable("username") String username, @PathVariable("gameType") String gameType,
-                                               @PathVariable("roomId") String roomId, @PathVariable("questionNumber") String questionNumber, @RequestBody String userAnswer) {
+                                               @PathVariable("roomId") String roomId, @PathVariable("questionNumber") String questionNumber, @PathVariable("timeLeft") Long timeLeft,
+                                             @RequestBody String userAnswer) {
         if (gameType.equals("SINGLEPLAYER")) {
             try {
                 int questionNo = Integer.parseInt(questionNumber);
-                return singlePlayerGameService.updateSinglePlayerScore(username, roomId, questionNo, userAnswer) ?
+                return singlePlayerGameService.updateSinglePlayerScore(username, roomId, questionNo, userAnswer, timeLeft) ?
                         ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             } catch (NumberFormatException e) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -381,11 +404,35 @@ public class GameRoomController {
      * @return whether the request was successful or not
      */
     @GetMapping("/useDoublePointJoker")
-    public ResponseEntity<Object> useDoublePointJoker(@PathVariable("username") String username, @PathVariable("gameType") String gameType,
+    public ResponseEntity<Integer> useDoublePointJoker(@PathVariable("username") String username, @PathVariable("gameType") String gameType,
                                                @PathVariable("roomId") String roomId) {
         if (gameType.equals("SINGLEPLAYER")) {
             try {
-                return singlePlayerGameService.useDoublePointJoker(username, roomId) ?
+                singlePlayerGameService.useDoublePointJoker(username, roomId);
+                Integer newAddedPoints = singlePlayerGameService.getAddedPoints(username, roomId);
+                return (newAddedPoints != null) ? ResponseEntity.status(HttpStatus.OK).body(newAddedPoints) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
+            }
+        }
+        if (gameType.equals("MULTIPLAYER")) {
+            try {
+                return multiplayerGameService.useDoublePointJoker(username, roomId) ?
+                        ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
+            }
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
+    @GetMapping("/resetDoubledAddedPoints")
+    public ResponseEntity<Object> resetDoubledAddedPoints(@PathVariable("username") String username, @PathVariable("gameType") String gameType,
+                                                      @PathVariable("roomId") String roomId) {
+        if (gameType.equals("SINGLEPLAYER")) {
+            try {
+                return singlePlayerGameService.resetAddedPointAfterDoublePointJoker(username, roomId) ?
                         ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             } catch (NumberFormatException e) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -395,14 +442,14 @@ public class GameRoomController {
             }
         }
 
-        if (gameType.equals("MULTIPLAYER")) {
-            try {
-                return multiplayerGameService.useDoublePointJoker(username, roomId) ?
-                        ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-            } catch (Exception e) {
-                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
-            }
-        }
+//        if (gameType.equals("MULTIPLAYER")) {
+//            try {
+//                return multiplayerGameService.useDoublePointJoker(username, roomId) ?
+//                        ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+//            } catch (Exception e) {
+//                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
+//            }
+//        }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }

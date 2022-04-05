@@ -290,8 +290,9 @@ public class ServerUtils {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
 
             Response response = ClientBuilder.newClient(new ClientConfig()) //
-                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" + gameConfiguration.getRoomId() + "/" +
-                            gameConfiguration.getCurrentQuestionNumber() + "/postAnswer")
+                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() +
+                            "/" + gameConfiguration.getRoomId() + "/" + gameConfiguration.getCurrentQuestionNumber() + "/" + gameConfiguration.getTimeLeft() +
+                            "/postAnswer")
                     .request(APPLICATION_JSON)
                     .accept(APPLICATION_JSON)
                     .post(Entity.text(answer));
@@ -332,13 +333,48 @@ public class ServerUtils {
             System.out.println("An exception occurred");
         }
     }
-    public void useDoublePointJoker() {
+
+    public String useDoublePointJoker() {
         try {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
 
             Response response = ClientBuilder.newClient(new ClientConfig()) //
                     .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" +
                             gameConfiguration.getRoomId() + "/useDoublePointJoker")
+                    .request(APPLICATION_JSON)
+                    .accept(APPLICATION_JSON)
+                    .get(Response.class);
+
+            switch (response.getStatus()) {
+                case 200: {
+                    return response.readEntity(String.class);
+                }
+                case 417: {
+                    System.out.println("Expectation failed when trying to get the player's score");
+                    return null;
+                    // something failed, show an apology message ?
+                }
+                case 400: {
+                    System.out.println("The request was invalid when trying to get the player's score");
+                    return "0";
+                    //return null;
+                }
+            }
+            System.out.println("Response status: " + response.getStatus());
+
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+        }
+        return null;
+    }
+
+    public void resetDoubledAddedPoints() {
+        try {
+            GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+
+            Response response = ClientBuilder.newClient(new ClientConfig()) //
+                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" +
+                            gameConfiguration.getRoomId() + "/resetDoubledAddedPoints")
                     .request(APPLICATION_JSON)
                     .accept(APPLICATION_JSON)
                     .get();
@@ -349,6 +385,25 @@ public class ServerUtils {
             System.out.println("An exception occurred");
         }
     }
+
+    public void calculateAddedPoints() {
+        try {
+            GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+
+            Response response = ClientBuilder.newClient(new ClientConfig()) //
+                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" +
+                            gameConfiguration.getRoomId() + "/" + gameConfiguration.getTimeLeft() +  "/calculateAddedPoints")
+                    .request(APPLICATION_JSON)
+                    .accept(APPLICATION_JSON)
+                    .get();
+
+            System.out.println("Response status: " + response.getStatus());
+
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+        }
+    }
+
 
     public void useTimeJoker() {
         try {

@@ -4,6 +4,7 @@ import commons.Actions.ActionCatalog;
 import commons.Exceptions.NotEnoughActivitiesException;
 import commons.Questions.Question;
 import org.apache.commons.lang3.tuple.Pair;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import server.entities.Room;
 import server.entities.RoomCatalog;
@@ -141,15 +142,15 @@ public class SingleplayerGameService {
     }
 
     /**
-     * Calculated the points earned in this round
+     * Calculates the points earned in this round
      * @return the points earned in this round
      */
-    public Integer calculatePointsAdded(String username, String roomId) {
-        if (getDoublePointJokerUsed(username, roomId)) {
-            return 1000;
-        } else {
-            return 500;
-        }
+    public int calculatePointsAdded(String username, String roomId, long timeLeft) {
+        return roomCatalog.getSinglePlayerRoom(roomId).calculateAddedPoints(timeLeft);
+    }
+
+    public int getAddedPoints(String username, String roomId) {
+        return roomCatalog.getSinglePlayerRoom(roomId).getAddedPoints();
     }
 
     /**
@@ -173,8 +174,8 @@ public class SingleplayerGameService {
 
     /**
      * Checks whether the double point joker is used or not
-     * @param username the user who used the double point joker
-     * @param roomId the id of the room the user is in
+     * @param username  the user who used the double point joker
+     * @param roomId    the id of the room the user is in
      * @return returns true when the double point joker is used
      */
     public Boolean getDoublePointJokerUsed(String username, String roomId) {
@@ -182,7 +183,6 @@ public class SingleplayerGameService {
             if (!username.equals(roomCatalog.getSinglePlayerRoom(roomId).getRoomCreator())) {
                 return null;
             }
-
             return roomCatalog.getSinglePlayerRoom(roomId).getDoublePointJokerUsed();
         } catch (Exception e) {
             System.out.println("An exception occurred");
@@ -198,14 +198,14 @@ public class SingleplayerGameService {
      * @param questionNumber the question number answered by the user
      * @param userAnswer     the answer user
      */
-    public Boolean updateSinglePlayerScore(String username, String roomId, int questionNumber, String userAnswer) {
+    public Boolean updateSinglePlayerScore(String username, String roomId, int questionNumber, String userAnswer, Long timeLeft) {
         try {
             if (!username.equals(roomCatalog.getSinglePlayerRoom(roomId).getRoomCreator())) {
                 return false;
             }
 
             if (userAnswer.equals(getSinglePlayerAnswer(username, roomId, questionNumber))) {
-                roomCatalog.getSinglePlayerRoom(roomId).updatePlayerScore(this.calculatePointsAdded(username, roomId));
+                roomCatalog.getSinglePlayerRoom(roomId).updatePlayerScore(this.calculatePointsAdded(username, roomId, timeLeft));
             }
 
             return true;
@@ -229,13 +229,27 @@ public class SingleplayerGameService {
             return null;
         }
     }
-    public Boolean useDoublePointJoker(String username, String roomId) {
+    public void useDoublePointJoker(String username, String roomId) {
+        try {
+//            if (!username.equals(roomCatalog.getSinglePlayerRoom(roomId).getRoomCreator())) {
+//                return null;
+//            }
+
+            roomCatalog.getSinglePlayerRoom(roomId).useDoublePointJoker();
+
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+//            return null;
+        }
+    }
+
+    public Boolean resetAddedPointAfterDoublePointJoker(String username, String roomId) {
         try {
             if (!username.equals(roomCatalog.getSinglePlayerRoom(roomId).getRoomCreator())) {
                 return false;
             }
 
-            roomCatalog.getSinglePlayerRoom(roomId).useDoublePointJoker();
+            roomCatalog.getSinglePlayerRoom(roomId).resetAddedPointAfterDoublePointJoker();
 
             return true;
         } catch (Exception e) {
