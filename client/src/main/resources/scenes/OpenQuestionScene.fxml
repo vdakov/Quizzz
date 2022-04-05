@@ -99,7 +99,9 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="115.0" style="-fx-background-radius: 50; -fx-background-color: #2467bf;" text="Hint" textFill="WHITESMOKE" GridPane.columnIndex="1">
+
+                <Button fx:id="hintJoker" mnemonicParsing="false" onAction="#useHintJoker" onMouseClicked="#hintJokerEvent" prefHeight="38.0" prefWidth="115.0" style="-fx-background-radius: 50; -fx-background-color: #2467bf;" text="Hint" textFill="WHITESMOKE" GridPane.columnIndex="1">
+
                     <graphic>
                         <ImageView fitHeight="30.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -108,7 +110,7 @@
                         </ImageView>
                     </graphic>
                 </Button>
-                <Button fx:id="doublePointJoker" mnemonicParsing="false" onAction="#useDoublePointJoker" style="-fx-background-radius: 50; -fx-background-color: #2467bf;" text="2X Point" textFill="WHITESMOKE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <Button fx:id="doublePointJoker" mnemonicParsing="false" onAction="#useDoublePointJoker" onMouseClicked="#pointsJokerEvent" style="-fx-background-radius: 50; -fx-background-color: #2467bf;" text="2X Point" textFill="WHITESMOKE" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -117,7 +119,7 @@
                         </ImageView>
                     </graphic>
                 </Button>
-                <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="114.0" style="-fx-background-radius: 50; -fx-background-color: #2467bf;" text="--Time" textFill="WHITESMOKE" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                <Button fx:id="timeJoker" mnemonicParsing="false" onMouseClicked="#timeJokerEvent" prefHeight="38.0" prefWidth="114.0" style="-fx-background-radius: 50; -fx-background-color: #2467bf;" text="--Time" textFill="WHITESMOKE" GridPane.columnIndex="1" GridPane.rowIndex="2">
                     <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -172,8 +174,9 @@
                 <Font size="81.0" />
             </font>
         </Text>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
-         <children>
+
+        <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+          <children>
             <SplitPane fx:id="splitPane" dividerPositions="0.29797979797979796" layoutY="-1.0" prefHeight="360.0" prefWidth="200.0">
                <items>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="358.0" prefWidth="50.0" style="-fx-background-color: #fffee9;">
@@ -207,9 +210,9 @@
                   </AnchorPane>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="328.0" prefWidth="136.0">
                      <children>
-                        <TableView fx:id="tableview" layoutX="4.0" layoutY="5.0" prefHeight="348.0" prefWidth="128.0" style="-fx-background-color: #ffffff; -fx-font-size: 14;">
+                        <TableView fx:id="tableview" layoutX="4.0" layoutY="5.0" prefHeight="348.0" prefWidth="128.0" style="-fx-background-color: #ffffff; -fx-font-size: 12;">
                            <columns>
-                              <TableColumn fx:id="playersActivity" prefWidth="174.0" style="-fx-background-color: #fffee9; -fx-font-size: 18;" text="Chat" />
+                              <TableColumn fx:id="playersActivity" prefWidth="200.0" style="-fx-background-color: #fffee9; -fx-font-size: 18;" text="Chat" />
                            </columns>
                         </TableView>
                      </children>
@@ -218,7 +221,10 @@
             </SplitPane>
          </children>
       </AnchorPane>
-
-
+        <Label fx:id="hintAnswerLabel" alignment="CENTER" prefHeight="52.0" prefWidth="251.0" style="-fx-background-color: #2d4b5a; -fx-background-radius: 20;" text="Hint answer : " textAlignment="CENTER" textFill="WHITESMOKE" GridPane.columnIndex="3" GridPane.rowIndex="5">
+            <font>
+                <Font size="15.0" />
+            </font>
+        </Label>
     </children>
 </GridPane>

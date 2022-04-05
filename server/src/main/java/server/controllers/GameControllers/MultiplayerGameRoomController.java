@@ -20,15 +20,15 @@ import java.util.function.Consumer;
 @RequestMapping("api/{username}/MULTIPLAYER/{roomId}")
 public class MultiplayerGameRoomController {
 
-    private final MultiplayerGameService  multiplayerGameService;
+    private final MultiplayerGameService multiplayerGameService;
 
     /**
      * Constructor for the multiplayer game controller
      *
-     * @param multiplayerGameService  the service for the multiplayer  game features
+     * @param multiplayerGameService the service for the multiplayer  game features
      */
     public MultiplayerGameRoomController(MultiplayerGameService multiplayerGameService) {
-        this.multiplayerGameService  = multiplayerGameService;
+        this.multiplayerGameService = multiplayerGameService;
     }
 
     /**
@@ -69,16 +69,34 @@ public class MultiplayerGameRoomController {
         return res;
     }
 
+    /**
+     * Removes a player(user) from the current multiplayer score leaderboard
+     *
+     * @param userName the name of the removing player
+     * @param roomId   the id of the game that the user wants to join
+     */
     @GetMapping("/removePlayer")
     public void removePlayer(@PathVariable String userName, @PathVariable String roomId) {
         this.getGame(roomId).removePlayer(userName);
     }
 
+    /**
+     * Gets the multiplayer game room
+     *
+     * @param roomId the id of the game that the user wants to join
+     * @return the multiplayer room with the given id or null if a room with that id does not exist
+     */
     @GetMapping("/")
     public MultiplayerRoom getGame(@PathVariable String roomId) {
         return this.multiplayerGameService.getGame(roomId);
     }
 
+    /**
+     * Gets the number of players in the current multiplayer room
+     *
+     * @param roomId the id of the game that the user wants to join
+     * @return the number of players in terms of integer value
+     */
     @GetMapping("/numPlayers")
     public Integer getNumPlayers(@PathVariable String roomId) {
         return (Integer) this.multiplayerGameService.getGame(roomId).getNumPlayers();

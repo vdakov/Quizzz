@@ -359,16 +359,30 @@ public class MultiplayerGameService {
         }
     }
 
+    /**
+     * Get all multiplayer games that is currently in waiting status
+     * @return list of all multiplayer games that is in waiting status
+     */
     public List<GameContainer> getGameIds() {
         //this.roomCatalog.cleanEmptyGames();
         return roomCatalog.getWaitingMultiplayerGames();
     }
 
-    public MultiplayerRoom getGame(String gameId) {
-        return this.roomCatalog.getMultiPlayerRoom(gameId);
+    /**
+     * Gets the multiplayer game room
+     * @param roomId the id of the room the user is in
+     * @return the multiplayer room with the given id or null if a room with that id does not exist
+     */
+    public MultiplayerRoom getGame(String roomId) {
+        return this.roomCatalog.getMultiPlayerRoom(roomId);
     }
 
-    public void removePlayer(String gameId, String userName) {
-        this.getGame(gameId).removePlayer(userName);
+    /**
+     * Removes the player with given name at given room
+     * @param roomId the id of the room the user is in
+     * @param userName the name of the removing player
+     */
+    public void removePlayer(String roomId, String userName) {
+        this.getGame(roomId).removePlayer(userName);
     }
 }

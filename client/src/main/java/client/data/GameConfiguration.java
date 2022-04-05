@@ -16,7 +16,9 @@ public class GameConfiguration {
     private String roomId;
     private int currentQuestionNumber;
     private int score;
+    private boolean hintJokerUsed;
     private boolean doublePointJokerUsed;
+    private boolean timeJokerUsed;
 
     public GameConfiguration() {
         this.userName = null;
@@ -24,7 +26,11 @@ public class GameConfiguration {
         this.currentQuestionNumber = -1;
         this.gameType = GameType.UNDEFINED;
         this.score = 0;
+        this.hintJokerUsed = false;
         this.doublePointJokerUsed = false;
+        this.timeJokerUsed = false;
+
+
     }
 
     public static GameConfiguration getConfiguration() {
@@ -94,11 +100,27 @@ public class GameConfiguration {
         return score;
     }
 
+    public boolean isHintJokerUsed() {
+        return hintJokerUsed;
+    }
+
+    public void setHintJokerUsed(boolean hintJokerUsed) {
+        this.hintJokerUsed = hintJokerUsed;
+    }
+
     public boolean isDoublePointJokerUsed() {
         return doublePointJokerUsed;
     }
 
     public void setDoublePointJokerUsed(boolean doublePointJokerUsed) {
         this.doublePointJokerUsed = doublePointJokerUsed;
+    }
+
+    public boolean isTimeJokerUsed() {
+        return timeJokerUsed;
+    }
+
+    public void setTimeJokerUsed(boolean timeJokerUsed) {
+        this.timeJokerUsed = timeJokerUsed;
     }
 }
