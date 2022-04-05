@@ -369,7 +369,7 @@ public class MultiplayerGameService {
      * @return list of all multiplayer games that is in waiting status
      */
     public List<GameContainer> getGameIds() {
-        //this.roomCatalog.cleanEmptyGames();
+        this.roomCatalog.cleanEmptyGames();
         return roomCatalog.getWaitingMultiplayerGames();
     }
 

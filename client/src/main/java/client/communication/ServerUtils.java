@@ -270,7 +270,7 @@ public class ServerUtils {
             while (!Thread.interrupted()) {
 
                 var res = ClientBuilder.newClient(new ClientConfig())
-                        .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/MULTIPLAYER/x")
+                        .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/MULTIPLAYER/updateRooms")
                         .request(APPLICATION_JSON)
                         .accept(APPLICATION_JSON).get(Response.class);
 

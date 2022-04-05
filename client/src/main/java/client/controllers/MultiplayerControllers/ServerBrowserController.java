@@ -75,6 +75,7 @@ public class ServerBrowserController {
 
         server.updateAvailableRooms(q -> {
             try {
+                System.out.println("Am intrat in camera");
                 if (q.getNumPlayers() == 0) {
                     currentGames.remove(q);
                 } else {
