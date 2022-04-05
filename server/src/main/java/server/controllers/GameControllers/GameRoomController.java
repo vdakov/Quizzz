@@ -218,7 +218,8 @@ public class GameRoomController {
     }
 
     @GetMapping("/calculateAddedPoints")
-    public ResponseEntity<Object> calculateAddedPoints(@PathVariable("username") String username, @PathVariable("gameType") String gameType, @PathVariable("roomId") String roomId, @PathVariable("timeLeft") Long timeLeft) {
+    public ResponseEntity<Object> calculateAddedPoints(@PathVariable("username") String username, @PathVariable("gameType") String gameType,
+                                                       @PathVariable("roomId") String roomId, @PathVariable("timeLeft") Long timeLeft) {
         if (gameType.equals("SINGLEPLAYER")) {
             try {
                 singlePlayerGameService.calculatePointsAdded(username, roomId, timeLeft);

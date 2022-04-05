@@ -9,6 +9,6 @@ class SingleplayerRoomTest {
     @Test
     void calculateAddedPoints() {
         SingleplayerRoom s = new SingleplayerRoom("1", "1", null);
-        assertEquals((int)(500*5), s.calculateAddedPoints(5));
+        assertEquals((int) (10 * 5), s.calculateAddedPoints(5));
     }
 }

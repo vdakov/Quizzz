@@ -25,7 +25,6 @@ public class SingleplayerRoom extends Room {
         hintJokerUsed = false;
         doublePointJokerUsed = false;
         this.addedPoints = 10;
-//        this.timeLeft = ;
     }
 
     /**
@@ -40,7 +39,7 @@ public class SingleplayerRoom extends Room {
     public int getAddedPoints() { return this.addedPoints; }
 
     public int calculateAddedPoints(long timeLeft) {
-        this.addedPoints = (int) (addedPoints*(timeLeft));
+        this.addedPoints = (int) (addedPoints * (timeLeft));
         return addedPoints;
     }
     /**
@@ -62,13 +61,10 @@ public class SingleplayerRoom extends Room {
      * Records doublePoint joker used
      */
     public void useDoublePointJoker() {
-        this.addedPoints = addedPoints*2;
+        this.addedPoints = addedPoints * 2;
         doublePointJokerUsed = true;
     }
 
-    public int doublesAddedPoints() {
-        return addedPoints*2;
-    }
 
     public void resetAddedPointAfterDoublePointJoker() {
         addedPoints = 10;

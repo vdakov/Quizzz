@@ -4,7 +4,6 @@ import commons.Actions.ActionCatalog;
 import commons.Exceptions.NotEnoughActivitiesException;
 import commons.Questions.Question;
 import org.apache.commons.lang3.tuple.Pair;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import server.entities.Room;
 import server.entities.RoomCatalog;
