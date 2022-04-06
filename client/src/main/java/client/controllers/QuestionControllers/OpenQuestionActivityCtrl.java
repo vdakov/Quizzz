@@ -119,7 +119,7 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         startTimerGlobal();
     }
 
-    public void answerQuestion(ActionEvent event) {
+    public void answerQuestion(ActionEvent event) throws IOException {
         // answers the question and blocks the possibility to answer anymore
         if (answered) {
             return;
@@ -128,7 +128,7 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
 
         try {
             //userAnswerInt = Integer.parseInt(answerTextfield.getText());
-            server.updateScore(answerTextfield.getText());
+            updateTheScoreServer();
             System.out.println(1);
         } catch (NumberFormatException e) {
             answerTextfield.setText("-99999");
@@ -142,9 +142,7 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         } catch (Exception e) {
             System.out.println(e);
         }
-
-        answerUpdate();
-        pointsUpdate();
+        disableAnswers();
     }
 
     public void answerUpdate() {
@@ -159,6 +157,8 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         }
 
         correctAnswerRectangle.setOpacity(1);
+        progressBarTime.setOpacity(0);
+        timeLabel.textProperty().bind(timeSecondsGlobal.divide(1000).asString());
 
     }
 
@@ -207,8 +207,10 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
      * @throws IOException
      */
     public void disableAnswers() throws IOException {
-        timelineClient.stop();
         answerTextfield.setDisable(true);
         answer.setDisable(true);
+    }
+    public void updateTheScoreServer() {
+        server.updateScore(answerTextfield.getText());
     }
 }

@@ -34,8 +34,8 @@ public class QuestionActivityCtrl {
     protected final ServerUtils server;
     protected final SceneCtrl sceneCtrl;
     protected final GameConfiguration gameConfig = GameConfiguration.getConfiguration();
-    protected final double startTime = 10;
-    protected double startTimeClient = 10;
+    protected final double startTime = 13000;
+    protected double startTimeClient = 10000;
     protected int addedPointsInt;
     protected String userAnswer;
     protected boolean answered;
@@ -105,7 +105,7 @@ public class QuestionActivityCtrl {
     protected Timeline timelineGlobal;
 
     protected IntegerProperty timeSecondsClient =
-            new SimpleIntegerProperty((int) startTime);
+            new SimpleIntegerProperty((int) startTimeClient);
     protected Timeline timelineClient;
 
     @Inject
@@ -165,19 +165,17 @@ public class QuestionActivityCtrl {
         }
     }
 
-    public void answerQuestion(MouseEvent event) {
+    public void answerQuestion(MouseEvent event) throws IOException {
         // answers the question
         if (answered) {
             return;
         }
+        disableAnswers();
 
         Label current = (Label) event.getSource();
         userAnswer = current.getText();
         answered = true;
-        server.updateScore(userAnswer);
 
-        answerUpdate();
-        pointsUpdate();
 
         //blocks the possibility to answer anymore
     }
@@ -186,6 +184,9 @@ public class QuestionActivityCtrl {
         // after the time ends the right answer is requested and then shown
 
         //check whether the user's answer is correct and update the boolean value
+        firstOptionText.setDisable(false);
+        secondOptionText.setDisable(false);
+        thirdOptionText.setDisable(false);
 
         firstOptionText.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(50), BorderStroke.THICK)));
         secondOptionText.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(50), BorderStroke.THICK)));
@@ -198,6 +199,9 @@ public class QuestionActivityCtrl {
         } else {
             thirdOptionText.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(50), BorderStroke.THICK)));
         }
+
+        progressBarTime.setOpacity(0);
+        timeLabel.textProperty().bind(timeSecondsGlobal.divide(1000).asString());
 
 
     }
@@ -228,7 +232,7 @@ public class QuestionActivityCtrl {
         timeSecondsGlobal.set((int) startTime);
         timelineGlobal = new Timeline();
         timelineGlobal.getKeyFrames().add(
-                new KeyFrame(Duration.seconds(startTime + 1),      //the timeLine handles an animation which lasts start + 1 seconds
+                new KeyFrame(Duration.millis(startTime + 1),      //the timeLine handles an animation which lasts start + 1 seconds
                         new KeyValue(timeSecondsGlobal, 0)));    //animation finishes when timeSeconds comes to 0
         timelineGlobal.setOnFinished(event -> {
             try {
@@ -246,19 +250,23 @@ public class QuestionActivityCtrl {
             timeSecondsClient.set((int) startTimeClient);
         }
          else {
-            timeSecondsClient.set((int) startTime);
+            timeSecondsClient.set((int) startTimeClient);
         }
-
+        progressBarTime.setOpacity(1);
         progressBarTime.progressProperty().bind(Bindings.divide(timeSecondsClient, startTimeClient));
-        timeLabel.textProperty().bind(timeSecondsClient.asString());    //bind the progressbar value to the seconds left
+        timeLabel.textProperty().bind(timeSecondsClient.divide(1000).asString());    //bind the progressbar value to the seconds left
 
         timelineClient = new Timeline();
         timelineClient.getKeyFrames().add(
-                new KeyFrame(Duration.seconds(startTimeClient + 1),      //the timeLine handles an animation which lasts start + 1 seconds
+                new KeyFrame(Duration.millis(startTimeClient + 1),      //the timeLine handles an animation which lasts start + 1 seconds
                         new KeyValue(timeSecondsClient, 0)));    //animation finishes when timeSeconds comes to 0
         timelineClient.setOnFinished(event -> {
             try {
                 disableAnswers();
+                updateTheScoreServer();
+                answerUpdate();
+                pointsUpdate();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -271,7 +279,6 @@ public class QuestionActivityCtrl {
      * @throws IOException
      */
     public void disableAnswers() throws IOException {
-        timelineClient.stop();
         firstOptionText.setDisable(true);
         secondOptionText.setDisable(true);
         thirdOptionText.setDisable(true);
@@ -396,6 +403,9 @@ public class QuestionActivityCtrl {
      */
     public int getQuestionNumber() {
         return gameConfig.getCurrentQuestionNumber();
+    }
+    public void updateTheScoreServer() {
+        server.updateScore(userAnswer);
     }
 
     /**
