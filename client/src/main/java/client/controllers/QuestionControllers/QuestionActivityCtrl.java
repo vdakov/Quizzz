@@ -9,6 +9,9 @@ import javafx.animation.Timeline;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
+import javafx.css.PseudoClass;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -47,17 +50,17 @@ public class QuestionActivityCtrl {
     @FXML
     protected ImageView questionStatementImage;
     @FXML
-    protected Label firstOptionText;
+    protected Button firstOptionText;
     @FXML
     protected ImageView firstOptionImage;
     @FXML
-    protected Label secondOptionText;
+    protected Button secondOptionText;
     @FXML
     protected ImageView secondOptionImage;
     @FXML
     protected ImageView image;
     @FXML
-    protected Label thirdOptionText;
+    protected Button thirdOptionText;
     @FXML
     protected ImageView thirdOptionImage;
     // current labels
@@ -120,12 +123,48 @@ public class QuestionActivityCtrl {
      * If the game is multiplayer it displays the option to use emojis and to post them in a chat
      */
     public void initialize() throws IOException {
+        answered=false;
         firstOptionText.setBorder(Border.EMPTY);
         firstOptionText.setDisable(false);
         secondOptionText.setBorder(Border.EMPTY);
         secondOptionText.setDisable(false);
         thirdOptionText.setBorder(Border.EMPTY);
         thirdOptionText.setDisable(false);
+        firstOptionText.setStyle("   -fx-background-color: #2e4c8d;");
+        secondOptionText.setStyle("   -fx-background-color: #2e4c8d;");
+        thirdOptionText.setStyle("   -fx-background-color: #2e4c8d;");
+
+
+//        firstOptionText.setOnAction(new EventHandler<ActionEvent>() {
+//            @Override public void handle(ActionEvent e) {
+//                if(!answered){
+//                    firstOptionText.setStyle("   -fx-background-color: #203665;");
+//                }
+//
+//
+//            }
+//        });
+//
+//        secondOptionText.setOnAction(new EventHandler<ActionEvent>() {
+//            @Override public void handle(ActionEvent e) {
+//                if(!answered){
+//                    secondOptionText.setStyle("   -fx-background-color: #203665;");
+//                }
+//
+//
+//            }
+//        });
+//
+//        thirdOptionText.setOnAction(new EventHandler<ActionEvent>() {
+//            @Override public void handle(ActionEvent e) {
+//                if(!answered){
+//                    thirdOptionText.setStyle("   -fx-background-color: #203665;");
+//                }
+//
+//
+//            }
+//        });
+
 
         answered = false;
 
@@ -161,13 +200,13 @@ public class QuestionActivityCtrl {
     }
 
 
-    public void answerQuestion(MouseEvent event) {
+    public void answerQuestion(ActionEvent event) {
         // answers the question
         if (answered) {
             return;
         }
 
-        Label current = (Label) event.getSource();
+        Button current = (Button) event.getSource();
         userAnswer = current.getText();
         answered = true;
 
@@ -184,16 +223,19 @@ public class QuestionActivityCtrl {
 
         //check whether the user's answer is correct and update the boolean value
 
-        firstOptionText.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(50), BorderStroke.THICK)));
-        secondOptionText.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(50), BorderStroke.THICK)));
-        thirdOptionText.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(50), BorderStroke.THICK)));
+        firstOptionText.setStyle("-fx-background-color: #ff000f;");
+        secondOptionText.setStyle("-fx-background-color: #ff000f;");
+        thirdOptionText.setStyle("-fx-background-color: #ff000f;");
+
+
+
 
         if (getCorrectAnswer().equals(firstOptionText.getText())) {
-            firstOptionText.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(50), BorderStroke.THICK)));
+            firstOptionText.setStyle("-fx-background-color: #72ff00;");
         } else if (getCorrectAnswer().equals(secondOptionText.getText())) {
-            secondOptionText.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(50), BorderStroke.THICK)));
+            secondOptionText.setStyle("-fx-background-color: #72ff00;");
         } else {
-            thirdOptionText.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(50), BorderStroke.THICK)));
+            thirdOptionText.setStyle("-fx-background-color: #72ff00;");
         }
 
 
@@ -276,7 +318,7 @@ public class QuestionActivityCtrl {
         }
 
         //Make a list of possible answers
-        List<Label> answerLabels = new ArrayList();
+        List<Button> answerLabels = new ArrayList();
         answerLabels.add(firstOptionText);
         answerLabels.add(secondOptionText);
         answerLabels.add(thirdOptionText);
@@ -290,7 +332,7 @@ public class QuestionActivityCtrl {
         hintJoker.setDisable(true);
 
         //go until incorrect answer is found and eliminate it
-        for (Label answerLabel : answerLabels) {
+        for (Button answerLabel : answerLabels) {
             if (!answerLabel.getText().equals(correctAnswer)) {
                 answerLabel.setDisable(true);
                 return;

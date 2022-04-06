@@ -116,7 +116,7 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         startTimer();
     }
 
-    public void answerQuestion(ActionEvent event) {
+    public void answerOpenQuestion(ActionEvent event) {
         // answers the question and blocks the possibility to answer anymore
         if (answered) {
             return;
