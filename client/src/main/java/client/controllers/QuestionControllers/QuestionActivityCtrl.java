@@ -123,7 +123,7 @@ public class QuestionActivityCtrl {
      * If the game is multiplayer it displays the option to use emojis and to post them in a chat
      */
     public void initialize() throws IOException {
-        answered=false;
+        answered = false;
         firstOptionText.setBorder(Border.EMPTY);
         firstOptionText.setDisable(false);
         secondOptionText.setBorder(Border.EMPTY);
@@ -226,8 +226,6 @@ public class QuestionActivityCtrl {
         firstOptionText.setStyle("-fx-background-color: #ff000f;");
         secondOptionText.setStyle("-fx-background-color: #ff000f;");
         thirdOptionText.setStyle("-fx-background-color: #ff000f;");
-
-
 
 
         if (getCorrectAnswer().equals(firstOptionText.getText())) {
