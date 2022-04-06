@@ -66,14 +66,20 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         if (getHintJokerUsed() != null) {
             hintJoker.setDisable(getHintJokerUsed());
         }
-        if (!gameConfig.isSinglePlayer())
-        {
+        if (!gameConfig.isSinglePlayer()) {
             splitPane.setVisible(true);
+            chatColumn.setPercentWidth(15);
+            questionCol1.setPercentWidth(23.333);
+            questionCol1.setPercentWidth(23.333);
+            questionCol1.setPercentWidth(23.333);
+
             playersActivity.setCellValueFactory(q -> new SimpleStringProperty(q.getValue()));
-        }
-        else
-        {
+        } else {
             splitPane.setVisible(false);
+            chatColumn.setPercentWidth(9);
+            questionCol1.setPercentWidth(25.333);
+            questionCol1.setPercentWidth(25.333);
+            questionCol1.setPercentWidth(25.333);
         }
 
         server.registerForMessages("/topic/emojis", q -> {
@@ -84,6 +90,7 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
     /**
      * Sets the text for the needed question given as parameter
      * Displays the appropriate image for the question
+     *
      * @param openQuestion the question that is set
      */
     public void displayQuestion(OpenQuestion openQuestion) throws IOException {
@@ -176,7 +183,9 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
 
     public void useHintJoker() {
         //Joker that eliminates the wrong answer
-        if (getHintJokerUsed()) { return; }
+        if (getHintJokerUsed()) {
+            return;
+        }
 
         Integer correctAnswer = Integer.parseInt(getCorrectAnswer());
 
