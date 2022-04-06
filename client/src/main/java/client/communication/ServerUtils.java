@@ -517,17 +517,19 @@ public class ServerUtils {
      * @param consumer    that is informed whenever a new message is received
      */
     public void registerForMessages(String destination, Consumer<List<String>> consumer) {
-        session.subscribe(destination, new StompFrameHandler() {
-            @Override
-            public Type getPayloadType(StompHeaders headers) {
-                return List.class;                                    // the type of message we expect to receive
-            }
+        if(!session.isConnected()) {
+            session.subscribe(destination, new StompFrameHandler() {
+                @Override
+                public Type getPayloadType(StompHeaders headers) {
+                    return List.class;                                    // the type of message we expect to receive
+                }
 
-            @Override
-            public void handleFrame(StompHeaders headers, Object payload) {
-                consumer.accept((List<String>) payload);
-            }
-        });
+                @Override
+                public void handleFrame(StompHeaders headers, Object payload) {
+                    consumer.accept((List<String>) payload);
+                }
+            });
+        }
     }
 
     /**
