@@ -238,63 +238,6 @@ public class MultiplayerGameService {
     }
 
     /**
-     * Returns whether the hint joker was used by this player in this game or null if it doesnt exist
-     *
-     * @param username the user that requests the score
-     * @param roomId   the id of the room the user is in
-     */
-    public Boolean getHintJokerUsed(String username, String roomId) {
-        try {
-//            if (roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() != Room.RoomStatus.ONGOING ||
-//                    roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) == null) {
-//                return null;
-//            }
-            return roomCatalog.getMultiPlayerRoom(roomId).getHintJokerUsed(username);
-        } catch (Exception e) {
-            System.out.println("An exception occurred");
-            return null;
-        }
-    }
-
-    /**
-     * Returns whether the double point joker was used by this player in this game or null if it doesnt exist
-     *
-     * @param username the user that requests the score
-     * @param roomId   the id of the room the user is in
-     */
-    public Boolean getDoublePointJokerUsed(String username, String roomId) {
-        try {
-//            if (roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() != Room.RoomStatus.ONGOING ||
-//                    roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) == null) {
-//                return null;
-//            }
-            return roomCatalog.getMultiPlayerRoom(roomId).getDoublePointJokerUsed(username);
-        } catch (Exception e) {
-            System.out.println("An exception occurred");
-            return null;
-        }
-    }
-
-    /**
-     * Returns whether the time joker was used by this player in this game or null if it doesnt exist
-     *
-     * @param username the user that requests the score
-     * @param roomId   the id of the room the user is in
-     */
-    public Boolean getTimeJokerUsed(String username, String roomId) {
-        try {
-//            if (roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() != Room.RoomStatus.ONGOING ||
-//                    roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) == null) {
-//                return null;
-//            }
-            return roomCatalog.getMultiPlayerRoom(roomId).getTimeJokerUsed(username);
-        } catch (Exception e) {
-            System.out.println("An exception occurred");
-            return null;
-        }
-    }
-
-    /**
      * "Uses" the hint joker, sets hintJokerUsed to true
      *
      * @param username       the user that needs the score update
