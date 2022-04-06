@@ -73,6 +73,34 @@ public class ServerBrowserController {
             this.listOfGameIds.add(game.getGameId());
         }
 
+        server.updateAvailableRooms(q -> {
+            try {
+                System.out.println("Am intrat in camera");
+                if (q.getNumPlayers() == 0) {
+                    for (int i = 0; i < currentGames.size(); i++) {
+                        if (currentGames.get(i).getGameId().equals(q.getGameId())) {
+                            listOfGameIds.remove(q.getGameId());
+                            currentGames.remove(i);
+                            break;
+                        }
+                    }
+                } else {
+                    for (int i = 0; i < currentGames.size(); i++) {
+                        if (currentGames.get(i).getGameId().equals(q.getGameId())) {
+                            listOfGameIds.remove(q.getGameId());
+                            currentGames.remove(i);
+                            break;
+                        }
+                    }
+
+                    listOfGameIds.add(q.getGameId());
+                    currentGames.add(q);
+                }
+            } catch (Exception e) {
+                System.out.println("An exception occurred when trying to live update room count");
+            }
+        });
+
         missingUsername.setText("");
 
 
@@ -103,8 +131,6 @@ public class ServerBrowserController {
             return row;
         });
         this.gameTable.setItems(currentGames);
-
-
     }
 
     /**
@@ -116,6 +142,9 @@ public class ServerBrowserController {
     public void refresh(ActionEvent event) {
         this.gameTable.getColumns().remove(this.gameIdColumn);
         this.gameTable.getColumns().remove(this.numPlayerColumn);
+
+        server.stopUpdateAvailableRooms();
+
         this.initialize();
     }
 
@@ -125,6 +154,7 @@ public class ServerBrowserController {
      * @param event the actionevent of the button
      */
     public void mainMenu(ActionEvent event) {
+        server.stopUpdateAvailableRooms();
         this.sceneCtrl.showMainScreenScene();
     }
 
@@ -137,6 +167,8 @@ public class ServerBrowserController {
 
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         gameConfiguration.setUserName(username);
+        gameConfiguration.setCurrentQuestionNumber(0);
+        gameConfiguration.setGameTypeMultiPlayer();
 
         String roomId = server.getRandomMultiPlayerRoomId();
 
@@ -147,6 +179,7 @@ public class ServerBrowserController {
             return;
         }
 
+        server.stopUpdateAvailableRooms();
         this.sceneCtrl.showWaitingRoom();
     }
 
@@ -166,6 +199,8 @@ public class ServerBrowserController {
 
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         gameConfiguration.setUserName(username);
+        gameConfiguration.setCurrentQuestionNumber(0);
+        gameConfiguration.setGameTypeMultiPlayer();
 
         String roomId = this.gameIdField.getText();
 
@@ -184,6 +219,8 @@ public class ServerBrowserController {
             missingUsername.setText("The username is already taken!");
             return;
         }
+
+        server.stopUpdateAvailableRooms();
         this.sceneCtrl.showWaitingRoom();
     }
 
@@ -203,11 +240,13 @@ public class ServerBrowserController {
 
         gameConfiguration.setUserName(username);
         gameConfiguration.setCurrentQuestionNumber(0);
+        gameConfiguration.setGameTypeMultiPlayer();
 
         String roomId = server.createNewRoom();
-        gameConfiguration.setRoomId(roomId);
+        gameConfiguration.setRoomId(roomId); 
 
         if (roomId != null) {
+            server.stopUpdateAvailableRooms();
             this.sceneCtrl.showWaitingRoom();
         } else {
             // error message

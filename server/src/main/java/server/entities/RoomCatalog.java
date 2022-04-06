@@ -90,14 +90,10 @@ public class RoomCatalog {
      * @return the multiplayer room with the given id or null if a room with that id does not exist
      */
     public MultiplayerRoom getMultiPlayerRoom(String roomId) {
-        System.out.println("Roomcatalog roomid: " + roomId);
-        System.out.println("RandomRoom id" + multiplayerRandomRoom.getRoomId());
         if (roomId.equals(multiplayerRandomRoom.getRoomId())) {
             return multiplayerRandomRoom;
         }
 
-        System.out.println("Desired room: " + roomId);
-        multiplayerRooms.forEach((q, k) -> System.out.println(q));
         return multiplayerRooms.get(roomId);
     }
 
@@ -119,11 +115,17 @@ public class RoomCatalog {
     }
 
     /**
+<<<<<<< HEAD
+     * Gets the multiplayer games in waiting status
+     * @return all multiplayer games that are not empty and not finished
+=======
      * Get all multiplayer games that is currently in waiting status
      * @return list of all multiplayer games that is in waiting status
+>>>>>>> dev
      */
     public List<GameContainer> getWaitingMultiplayerGames() {
         this.cleanEmptyGames();
+        this.removeFinishedMultiplayerGames();
         ArrayList<GameContainer> games = new ArrayList<>();
         Iterator<String> iterator1 = multiplayerRooms.keySet().iterator();
         Iterator<MultiplayerRoom> iterator2 = multiplayerRooms.values().iterator();
@@ -156,6 +158,26 @@ public class RoomCatalog {
         }
 
         for (MultiplayerRoom game : emptyGames) {
+            this.multiplayerRooms.remove(game.getRoomId());
+        }
+    }
+
+    /**
+     * Removes all the finished multiplayer games from the multiplayer room list
+     */
+    public void removeFinishedMultiplayerGames() {
+
+        Iterator<MultiplayerRoom> gameIterator = multiplayerRooms.values().iterator();
+        ArrayList<MultiplayerRoom> finishedGames = new ArrayList<>();
+
+        while (gameIterator.hasNext()) {
+            MultiplayerRoom game = gameIterator.next();
+            if (game.getRoomStatus() == Room.RoomStatus.FINISHED) {
+                finishedGames.add(game);
+            }
+        }
+
+        for (MultiplayerRoom game : finishedGames) {
             this.multiplayerRooms.remove(game.getRoomId());
         }
     }

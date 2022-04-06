@@ -7,20 +7,22 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.*;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
-
-
 import javax.inject.Inject;
-import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -147,7 +149,6 @@ public class QuestionActivityCtrl {
         }
     }
 
-
     public void answerQuestion(MouseEvent event) {
         // answers the question
         if (answered) {
@@ -157,7 +158,6 @@ public class QuestionActivityCtrl {
         Label current = (Label) event.getSource();
         userAnswer = current.getText();
         answered = true;
-
         server.updateScore(userAnswer);
 
         answerUpdate();
@@ -241,14 +241,37 @@ public class QuestionActivityCtrl {
      */
     public void displayNextQuestion() throws IOException {
         timeline.stop();
+
+        if (answered == false) {
+            gameConfig.setConsecutiveUnansweredQuestions(gameConfig.getConsecutiveUnansweredQuestions() + 1);
+        } else {
+            gameConfig.setConsecutiveUnansweredQuestions(0);
+        }
+
+        System.out.println("Question bugs: " + gameConfig.getConsecutiveUnansweredQuestions() + "     " + answered);
+
+        if (gameConfig.getConsecutiveUnansweredQuestions() >= 3 && gameConfig.getGameTypeString().equals("MULTIPLAYER")) {
+            this.server.removePlayer();
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("You have been removed from the room");
+            alert.setHeaderText("You have been remove from the room due to inactivity");
+            alert.setContentText("You have not answered 3 consecutive questions in a row, so you were left out of the game");
+            alert.show();
+
+            sceneCtrl.showServerBrowser();
+            return;
+        }
+
         if ((gameConfig.isMultiPlayer() && gameConfig.getCurrentQuestionNumber() == 9) || gameConfig.getCurrentQuestionNumber() == 19) {
             server.addOrUpdateLeaderboardEntry(gameConfig.getUserName(), gameConfig.getRoomId(), gameConfig.getScore());
             sceneCtrl.showLeaderboard();
         } else sceneCtrl.showNextQuestion();
     }
 
-    /*
-        Method that ends the game and returns the player to the main screen of the app
+    /**
+     * Method that ends the game and returns the player to the main screen of the app
+     * @throws IOException
      */
     public void goToMainScreen() throws IOException {
         timeline.stop();
