@@ -30,6 +30,16 @@
          <font>
             <Font size="24.0" />
          </font></Button>
+      <Button mnemonicParsing="false" onAction="#goToMainScreen" prefHeight="49.0" prefWidth="138.0" style="-fx-background-color: transparent;" translateX="14.0" GridPane.halignment="LEFT">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <graphic>
+            <ImageView fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@pictures/home.png" />
+               </image></ImageView>
+         </graphic></Button>
       <Button fx:id="editButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#editActivity" prefHeight="50.0" prefWidth="363.0" text="EDIT ACTIVITY" textFill="WHITE" translateY="172.0" GridPane.halignment="CENTER" GridPane.rowIndex="1">
          <font>
             <Font size="24.0" />
@@ -51,22 +61,12 @@
          <font>
             <Font name="System Bold" size="33.0" />
          </font></Label>
-      <Button mnemonicParsing="false" onAction="#goToMainScreen" prefHeight="49.0" prefWidth="138.0" style="-fx-background-color: transparent;" translateX="14.0" GridPane.halignment="LEFT">
-         <font>
-            <Font size="14.0" />
-         </font>
-         <graphic>
-            <ImageView fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@pictures/home.png" />
-               </image></ImageView>
-         </graphic></Button>
       <TextField fx:id="editingID" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="363.0" promptText="Please type in ID of editing action" scaleShape="false" translateY="120.0" GridPane.halignment="CENTER" GridPane.rowIndex="1">
          <font>
             <Font size="9.0" />
          </font>
       </TextField>
-      <Text id="title" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Overview Activities" textAlignment="CENTER" wrappingWidth="1086.9366006851196" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+      <Text id="title" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Overview Activities" wrappingWidth="809.3366003036499" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
          <font>
             <Font size="40.0" />
          </font>

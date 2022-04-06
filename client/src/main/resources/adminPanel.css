@@ -5,7 +5,7 @@
 #gridPane{
     -fx-background-color: #18276e;
     -fx-font-family: 'Paytone One', sans-serif;
-    -fx-font-size: 60px;
+    -fx-font-size: 48px;
 }
 
 #gridPane #title{
@@ -54,6 +54,12 @@
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em;
 }
+
+.table-row-cell :hover {
+    -fx-background-color: #8aa9a5;
+}
+
+
 
 .text-field{
     -fx-font-family: 'Paytone One', sans-serif;

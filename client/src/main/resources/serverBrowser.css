@@ -60,3 +60,7 @@
 .text-field{
     -fx-font-family: 'Paytone One', sans-serif;
 }
+
+.table-row-cell :hover {
+    -fx-background-color: #8aa9a5;
+}
