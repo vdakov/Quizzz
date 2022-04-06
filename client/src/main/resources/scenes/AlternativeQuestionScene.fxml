@@ -45,7 +45,7 @@
             <graphic>
                 <ImageView fitWidth="50.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@pictures/home.png" />
+                        <Image url="/pictures/home.png"/>
                     </image>
                 </ImageView>
             </graphic>
@@ -106,7 +106,7 @@
             <children>
                 <ImageView fx:id="image" fitHeight="268.0" fitWidth="273.0" layoutX="40.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../pictures/blank.jpg" />
+                        <Image url="/pictures/blank.jpg"/>
                     </image>
                 </ImageView>
                 <Label alignment="CENTER" layoutX="337.0" layoutY="13.0" prefHeight="63.0" prefWidth="540.0" style="-fx-background-color: #2d4b5a; -fx-background-radius: 50;" text="Instead of ... you could do ..." textFill="WHITESMOKE" AnchorPane.bottomAnchor="280.0" AnchorPane.leftAnchor="340.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
@@ -137,7 +137,7 @@
                     <graphic>
                         <ImageView fitHeight="30.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@pictures/light-bulb.jpg" />
+                                <Image url="/pictures/light-bulb.jpg"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -146,7 +146,7 @@
                     <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@pictures/fire.png" />
+                                <Image url="/pictures/fire.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -155,7 +155,7 @@
                     <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@pictures/clock-joker.png" />
+                                <Image url="/pictures/clock-joker.png"/>
                             </image>
                         </ImageView>
                     </graphic>

@@ -40,12 +40,12 @@
     <children>
         <ImageView fitHeight="80.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
             <image>
-                <Image url="@pictures/single.png" />
+                <Image url="/pictures/single.png"/>
             </image>
         </ImageView>
         <ImageView fitHeight="80.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
             <image>
-                <Image url="@pictures/multi.png" />
+                <Image url="/pictures/multi.png"/>
             </image>
         </ImageView>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3">

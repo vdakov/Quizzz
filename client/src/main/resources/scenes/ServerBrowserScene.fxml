@@ -93,7 +93,7 @@
             <graphic>
                 <ImageView blendMode="SRC_ATOP" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@pictures/home.png" />
+                        <Image url="/pictures/home.png" />
                     </image>
                 </ImageView>
             </graphic>
