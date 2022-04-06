@@ -68,6 +68,13 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         if (getHintJokerUsed() != null) {
             hintJoker.setDisable(getHintJokerUsed());
         }
+        if(getTimeJokerUsed() != null){
+            timeJoker.setDisable(getTimeJokerUsed());
+            if(getTimeJokerUsed()){
+                timeJoker.setOpacity(0.5);
+            }
+        }
+
         if (!gameConfig.isSinglePlayer())
         {
             splitPane.setVisible(true);

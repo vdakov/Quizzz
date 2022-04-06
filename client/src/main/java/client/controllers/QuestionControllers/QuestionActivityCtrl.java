@@ -157,10 +157,12 @@ public class QuestionActivityCtrl {
             hintJoker.setDisable(getHintJokerUsed());
         }
         timeJoker.setDisable(false);
-        Boolean timeJokerUsed = getTimeJokerUsed();
 
-        if (timeJokerUsed != null) {
-            timeJoker.setDisable(timeJokerUsed);
+        if (getTimeJokerUsed() != null) {
+            timeJoker.setDisable(getTimeJokerUsed());
+            if(getTimeJokerUsed()){
+                timeJoker.setOpacity(0.5);
+            }
         }
     }
 
@@ -350,10 +352,14 @@ public class QuestionActivityCtrl {
 
     public void useTimeJoker() {
         //Joker that reduces time for all other players
-        if (getTimeJokerUsed()) { return; }
 
-        server.useTimeJoker();
+        if (getTimeJokerUsed()) { return; }
+        System.out.println("Time joker just used" + getTimeJokerUsed());
         timeJoker.setDisable(true);
+        timeJoker.setOpacity(0.5);
+        gameConfig.setTimeJokerUsed(true);
+        server.useTimeJoker();
+
     }
 
     /**
@@ -380,7 +386,7 @@ public class QuestionActivityCtrl {
         return gameConfig.isDoublePointJokerUsed();
     }
 
-    public boolean getTimeJokerUsed() {
+    public Boolean getTimeJokerUsed() {
         return gameConfig.isTimeJokerUsed();
     }
 
