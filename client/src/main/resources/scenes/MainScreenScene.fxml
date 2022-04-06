@@ -47,7 +47,7 @@
                   <Font size="30.0" />
               </font>
           </Button>
-          <TextField id="field" fx:id="userName" alignment="CENTER" maxWidth="-Infinity" prefHeight="60.0" prefWidth="347.0" promptText="Enter your name..." GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+          <TextField id="field" fx:id="userName" alignment="CENTER" maxWidth="-Infinity" prefHeight="60.0" prefWidth="347.0" promptText="Enter your name..." translateY="-30.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
               <font>
                   <Font size="24.0" />
               </font>
@@ -86,5 +86,10 @@
             <Image url="@pictures/admin.png" />
          </image>
       </ImageView>
+      <TextField id="field" fx:id="serverField" alignment="CENTER" maxWidth="-Infinity" prefHeight="60.0" prefWidth="344.0" promptText="Enter server address:" text="http://localhost:8080/" translateY="45.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </TextField>
     </children>
 </GridPane>
