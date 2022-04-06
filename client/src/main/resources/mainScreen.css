@@ -5,19 +5,18 @@
 #gridPane{
     -fx-background-color: #18276e;
     -fx-font-family: 'Paytone One', sans-serif;
-    -fx-font-size: 60px;
+    -fx-font-size:24px;
 }
 
 #gridPane #title{
     -fx-font-family: 'Press Start 2P', cursive;
-
+    -fx-font-size: 60px;
     -fx-stroke: black, 20px;
 }
 
 .button{
     -fx-font-family: 'Paytone One', sans-serif;
     -fx-text-transform: uppercase;
-    -fx-font-size:24px;
     -fx-background-color: #2e4c8d;
 }
 
@@ -27,6 +26,7 @@
 
 .text-field{
     -fx-font-family: 'Paytone One', sans-serif;
+
 }
 
 

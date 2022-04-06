@@ -7,7 +7,6 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -15,101 +14,97 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #8749e8;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.LeaderboardCtrl">
-    <children>
-        <GridPane alignment="CENTER" layoutX="-298.0" layoutY="155.0" prefHeight="683.0" prefWidth="1214.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="15.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="70.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="15.0" prefWidth="100.0" />
-            </columnConstraints>
-            <rowConstraints>
-                <RowConstraints minHeight="10.0" percentHeight="40.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" percentHeight="60.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            </rowConstraints>
-            <children>
-                <Text fx:id="title" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="LEADERBOARD" textAlignment="CENTER" wrappingWidth="602.13671875" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="TOP">
-                    <font>
-                        <Font size="72.0" />
-                    </font>
-                    <GridPane.margin>
-                        <Insets />
-                    </GridPane.margin>
-                </Text>
-                <Rectangle fill="#d3c9fb" height="160.0" smooth="false" stroke="#7b7691" strokeType="INSIDE" width="200.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
-                <Rectangle fill="#d3c9fb" height="100.0" smooth="false" stroke="#7b7691" strokeType="INSIDE" width="200.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
-                    <GridPane.margin>
-                        <Insets right="400.0" />
-                    </GridPane.margin>
-                </Rectangle>
-                <Rectangle fill="#d3c9fb" height="60.0" smooth="false" stroke="#7b7691" strokeType="INSIDE" width="200.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
-                    <GridPane.margin>
-                        <Insets left="400.0" />
-                    </GridPane.margin>
-                </Rectangle>
-                <Text fx:id="place1" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="202.462890625" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
-                    <font>
-                        <Font size="36.0" />
-                    </font>
-                    <GridPane.margin>
-                        <Insets bottom="160.0" />
-                    </GridPane.margin>
-                </Text>
-                <Text fx:id="place2" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="202.462890625" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
-                    <font>
-                        <Font size="36.0" />
-                    </font>
-                    <GridPane.margin>
-                        <Insets bottom="100.0" right="400.0" />
-                    </GridPane.margin>
-                </Text>
-                <Text fx:id="place3" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="200.462890625" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
-                    <font>
-                        <Font size="36.0" />
-                    </font>
-                    <GridPane.margin>
-                        <Insets bottom="60.0" left="400.0" />
-                    </GridPane.margin>
-                </Text>
-                <TableView fx:id="leaderboardTable" prefHeight="156.0" prefWidth="876.0" style="-fx-background-color: #d3c9fb;" stylesheets="@leaderboard.css" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
-                    <columns>
-                        <TableColumn fx:id="placeCol" prefWidth="75.0" text="Place" />
-                        <TableColumn fx:id="nameCol" prefWidth="170.0" text="Name" />
-                        <TableColumn fx:id="pointsCol" prefWidth="170.0" text="Points" />
-                    </columns>
-                    <GridPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                    </GridPane.margin>
-               <columnResizePolicy>
-                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-               </columnResizePolicy>
-                </TableView>
-                <Button mnemonicParsing="false" onAction="#exit" style="-fx-background-color: transparent;" GridPane.halignment="LEFT" GridPane.valignment="TOP">
-                    <graphic>
-                        <ImageView fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@pictures/home.png" />
-                            </image>
-                        </ImageView>
-                    </graphic>
-                    <GridPane.margin>
-                        <Insets left="25.0" top="25.0" />
-                    </GridPane.margin>
-                </Button>
-                <Button fx:id="playAgainButton" mnemonicParsing="false" onAction="#playAgain" prefHeight="100.0" prefWidth="150.0" text="Play Again" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
-                    <GridPane.margin>
-                        <Insets bottom="10.0" />
-                    </GridPane.margin>
-                </Button>
-            <Label fx:id="timeLabel" text="10" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="TOP">
-               <font>
-                  <Font size="72.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets bottom="5.0" />
-               </GridPane.margin>
-            </Label>
-            </children>
-        </GridPane>
-    </children>
-</AnchorPane>
+<GridPane id="gridPane" alignment="CENTER" prefHeight="683.0" prefWidth="1214.0" stylesheets="@leaderBoard.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.LeaderboardCtrl">
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="15.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="70.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="15.0" prefWidth="100.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints minHeight="10.0" percentHeight="40.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" percentHeight="60.0" prefHeight="30.0" vgrow="SOMETIMES" />
+   </rowConstraints>
+   <children>
+      <Text id="title" fx:id="title" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="LEADERBOARD" textAlignment="CENTER" wrappingWidth="652.5366954803467" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+         <font>
+            <Font size="72.0" />
+         </font>
+         <GridPane.margin>
+            <Insets />
+         </GridPane.margin>
+      </Text>
+      <Rectangle fill="#203665" height="160.0" smooth="false" stroke="#7b7691" strokeType="INSIDE" width="200.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
+      <Rectangle fill="#203665" height="100.0" smooth="false" stroke="#7b7691" strokeType="INSIDE" width="200.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+         <GridPane.margin>
+            <Insets right="400.0" />
+         </GridPane.margin>
+      </Rectangle>
+      <Rectangle fill="#203665" height="60.0" smooth="false" stroke="#7b7691" strokeType="INSIDE" width="200.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+         <GridPane.margin>
+            <Insets left="400.0" />
+         </GridPane.margin>
+      </Rectangle>
+      <Text fx:id="place1" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="202.462890625" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+         <font>
+            <Font size="36.0" />
+         </font>
+         <GridPane.margin>
+            <Insets bottom="160.0" />
+         </GridPane.margin>
+      </Text>
+      <Text fx:id="place2" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="202.462890625" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+         <font>
+            <Font size="36.0" />
+         </font>
+         <GridPane.margin>
+            <Insets bottom="100.0" right="400.0" />
+         </GridPane.margin>
+      </Text>
+      <Text fx:id="place3" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="200.462890625" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+         <font>
+            <Font size="36.0" />
+         </font>
+         <GridPane.margin>
+            <Insets bottom="60.0" left="400.0" />
+         </GridPane.margin>
+      </Text>
+      <TableView fx:id="leaderboardTable" prefHeight="156.0" prefWidth="876.0" style="-fx-background-color: #d3c9fb;" stylesheets="@leaderboard.css" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+         <columns>
+            <TableColumn fx:id="placeCol" prefWidth="75.0" text="Place" />
+            <TableColumn fx:id="nameCol" prefWidth="170.0" text="Name" />
+            <TableColumn fx:id="pointsCol" prefWidth="170.0" text="Points" />
+         </columns>
+         <GridPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </GridPane.margin>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+      <Button mnemonicParsing="false" onAction="#exit" style="-fx-background-color: transparent;" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+         <graphic>
+            <ImageView fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@pictures/home.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <GridPane.margin>
+            <Insets left="25.0" top="25.0" />
+         </GridPane.margin>
+      </Button>
+      <Button fx:id="playAgainButton" mnemonicParsing="false" onAction="#playAgain" prefHeight="100.0" prefWidth="150.0" text="Play Again" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+         <GridPane.margin>
+            <Insets bottom="10.0" />
+         </GridPane.margin>
+      </Button>
+      <Label fx:id="timeLabel" text="10" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+         <font>
+            <Font size="72.0" />
+         </font>
+         <GridPane.margin>
+            <Insets bottom="5.0" />
+         </GridPane.margin>
+      </Label>
+   </children>
+</GridPane>

@@ -1,12 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Paytone+One&family=Press+Start+2P&display=swap');
 
-@font-face {
-    font-family: "Press Start 2P";
-    font-style: normal;
-    font-weight: 400;
-    src: url("fonts/PressStart2P-Regular.ttf");
+
+
+#gridPane{
+    -fx-background-color: #18276e;
+    -fx-font-family: 'Paytone One', sans-serif;
+    -fx-font-size:20px;
+    -fx-font-fill:white;
 }
-
 .table-row-cell {
     -fx-text-background-color: white;
 }
@@ -21,22 +22,38 @@
 }
 
 .table-row-cell :odd {
-    -fx-background-color: #d3c9fb;
+    -fx-background-color: #0a6a9f;
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em;
 }
 
 .table-row-cell :even {
-    -fx-background-color: #8749e8;
+    -fx-background-color: #320575;
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em;
 }
 
 #title{
     -fx-font-family: 'Press Start 2P';
+    -fx-font-size:55px;
 }
 
 * {
     -fx-font-size: 16;
+}
+
+.table-row-cell :hover {
+    -fx-background-color: #8aa9a5;
+}
+
+.button{
+    -fx-font-family: 'Paytone One', sans-serif;
+    -fx-text-transform: uppercase;
+    -fx-font-size:24px;
+    -fx-background-color: #2e4c8d;
+}
+
+.button:hover{
+    -fx-background-color: #203665;
 }
 
