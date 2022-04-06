@@ -97,7 +97,7 @@ public class MultiplayerRoom extends Room {
         HashMap<String, Integer> question = playerTime.get(number);
         for (String key : question.keySet()) {
             if (!key.equals(username)) {
-                System.out.println("Username limited: " + username + " in question: " + (number+1)) ;
+                System.out.println("Username limited: " + username + " in question: " + (number + 1)) ;
                 question.replace(key, 5);
             }
         }

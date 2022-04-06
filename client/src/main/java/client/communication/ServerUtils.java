@@ -515,7 +515,7 @@ public class ServerUtils {
      * @param consumer    that is informed whenever a new message is received
      */
     public void registerForMessages(String destination, Consumer<List<String>> consumer) {
-        if(!session.isConnected()) {
+        if (!session.isConnected()) {
             session.subscribe(destination, new StompFrameHandler() {
                 @Override
                 public Type getPayloadType(StompHeaders headers) {

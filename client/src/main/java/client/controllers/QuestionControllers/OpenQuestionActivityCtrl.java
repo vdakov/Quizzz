@@ -68,9 +68,9 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         if (getHintJokerUsed() != null) {
             hintJoker.setDisable(getHintJokerUsed());
         }
-        if(getTimeJokerUsed() != null){
+        if (getTimeJokerUsed() != null) {
             timeJoker.setDisable(getTimeJokerUsed());
-            if(getTimeJokerUsed()){
+            if (getTimeJokerUsed()) {
                 timeJoker.setOpacity(0.5);
             }
         }

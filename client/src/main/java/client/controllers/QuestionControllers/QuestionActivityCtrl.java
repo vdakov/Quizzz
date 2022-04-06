@@ -159,7 +159,7 @@ public class QuestionActivityCtrl {
         timeJoker.setDisable(false);
         if (getTimeJokerUsed() != null) {
             timeJoker.setDisable(getTimeJokerUsed());
-            if(getTimeJokerUsed()){
+            if (getTimeJokerUsed()) {
                 timeJoker.setOpacity(0.5);
             }
         }
@@ -284,7 +284,6 @@ public class QuestionActivityCtrl {
     public void displayNextQuestion() throws IOException {
         timelineGlobal.stop();
         timelineClient.stop();
-<<<<<<< HEAD
 
         if (answered == false) {
             gameConfig.setConsecutiveUnansweredQuestions(gameConfig.getConsecutiveUnansweredQuestions() + 1);
@@ -307,23 +306,17 @@ public class QuestionActivityCtrl {
             return;
         }
 
-=======
->>>>>>> 569d0a9520065845cb789b16d8b1bd8c00377803
         if ((gameConfig.isMultiPlayer() && gameConfig.getCurrentQuestionNumber() == 9) || gameConfig.getCurrentQuestionNumber() == 19) {
             server.addOrUpdateLeaderboardEntry(gameConfig.getUserName(), gameConfig.getRoomId(), gameConfig.getScore());
             sceneCtrl.showLeaderboard();
         } else sceneCtrl.showNextQuestion();
     }
 
-<<<<<<< HEAD
+
     /**
      * Method that ends the game and returns the player to the main screen of the app
      * @throws IOException
-=======
-    /*
-        Method that ends the game and returns the player to the main screen of the app
->>>>>>> 569d0a9520065845cb789b16d8b1bd8c00377803
-     */
+     * */
     public void goToMainScreen() throws IOException {
         timelineGlobal.stop();
         timelineClient.stop();
@@ -359,16 +352,8 @@ public class QuestionActivityCtrl {
 
     public void useTimeJoker() {
         //Joker that reduces time for all other players
-<<<<<<< HEAD
-
         if (getTimeJokerUsed()) { return; }
         System.out.println("Time joker just used" + getTimeJokerUsed());
-=======
-        if (getTimeJokerUsed()) { return; }
-
-        server.useTimeJoker();
-        gameConfig.setTimeJokerUsed(true);
->>>>>>> 569d0a9520065845cb789b16d8b1bd8c00377803
         timeJoker.setDisable(true);
         timeJoker.setOpacity(0.5);
         gameConfig.setTimeJokerUsed(true);
