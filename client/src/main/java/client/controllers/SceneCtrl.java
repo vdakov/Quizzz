@@ -150,6 +150,7 @@ public class SceneCtrl {
         primaryStage.setTitle("Leaderboard");
         scene.setRoot(pair.getValue());
 
+
         primaryStage.setOnCloseRequest(event -> {
             event.consume();
             exitConfirmation(primaryStage);

@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Paytone+One&family=Press+Start+2P&display=swap');
+
+
+
+#gridPane{
+    -fx-background-color: #18276e;
+    -fx-font-family: 'Paytone One', sans-serif;
+    -fx-font-size: 60px;
+}
+
+#gridPane #title{
+    -fx-font-family: 'Press Start 2P', cursive;
+
+    -fx-stroke: black, 20px;
+}
+
+.button{
+    -fx-font-family: 'Paytone One', sans-serif;
+    -fx-text-transform: uppercase;
+    -fx-font-size:24px;
+    -fx-background-color: #2e4c8d;
+}
+
+.button:hover{
+    -fx-background-color: #203665;
+}
+
+.text-field{
+    -fx-font-family: 'Paytone One', sans-serif;
+}
+
+
+
