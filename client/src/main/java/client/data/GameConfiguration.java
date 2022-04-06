@@ -20,6 +20,8 @@ public class GameConfiguration {
     private boolean doublePointJokerUsed;
     private boolean timeJokerUsed;
 
+    private int consecutiveUnansweredQuestions;
+
     public GameConfiguration() {
         this.userName = null;
         this.roomId = null;
@@ -30,6 +32,15 @@ public class GameConfiguration {
         this.doublePointJokerUsed = false;
         this.timeJokerUsed = false;
 
+        this.consecutiveUnansweredQuestions = 0;
+    }
+
+    public int getConsecutiveUnansweredQuestions() {
+        return consecutiveUnansweredQuestions;
+    }
+
+    public void setConsecutiveUnansweredQuestions(int consecutiveUnansweredQuestions) {
+        this.consecutiveUnansweredQuestions = consecutiveUnansweredQuestions;
     }
 
     public static GameConfiguration getConfiguration() {

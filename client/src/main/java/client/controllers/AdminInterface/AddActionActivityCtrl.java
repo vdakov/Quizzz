@@ -14,8 +14,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
+import org.apache.tomcat.util.codec.binary.Base64;
 
 import javax.imageio.ImageIO;
 import java.io.File;

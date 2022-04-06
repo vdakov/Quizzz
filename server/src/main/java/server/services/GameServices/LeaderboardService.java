@@ -20,7 +20,12 @@ public class LeaderboardService {
         return repository.findAll(Sort.by(Sort.Order.desc("score")));
     }
 
-    public LeaderboardEntry addLeaderboardEntry(LeaderboardEntry e) {
+    public LeaderboardEntry addOrUpdateLeaderboardEntry(LeaderboardEntry e) {
+        LeaderboardEntry entryInDB = repository.getLeaderboardEntryByUsernameAndRoomId(e.getUsername(), e.getRoomId()); //uniquely identify by username and roomId
+        if (entryInDB != null) { //if this entry was already in the database, just update the score
+            entryInDB.setScore(e.getScore());
+            e = entryInDB;
+        }
         return repository.save(e);
     }
 

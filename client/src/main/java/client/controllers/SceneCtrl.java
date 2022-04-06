@@ -21,6 +21,8 @@ import commons.Questions.OpenQuestion;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
@@ -89,6 +91,11 @@ public class SceneCtrl {
 
         ctrl.displayQuestion(openQuestion);
         scene.setRoot(pair.getValue());
+
+        primaryStage.setOnCloseRequest(event -> {
+            event.consume();
+            exitConfirmation(primaryStage);
+        });
     }
 
     public void showKnowledgeQuestionScene(KnowledgeQuestion knowledgeQuestion) throws IOException {
@@ -98,6 +105,11 @@ public class SceneCtrl {
 
         ctrl.displayQuestion(knowledgeQuestion);
         scene.setRoot(pair.getValue());
+
+        primaryStage.setOnCloseRequest(event -> {
+            event.consume();
+            exitConfirmation(primaryStage);
+        });
     }
 
     public void showComparisonQuestionScene(ComparisonQuestion comparisonQuestion) throws IOException {
@@ -107,6 +119,11 @@ public class SceneCtrl {
 
         ctrl.displayQuestion(comparisonQuestion);
         scene.setRoot(pair.getValue());
+
+        primaryStage.setOnCloseRequest(event -> {
+            event.consume();
+            exitConfirmation(primaryStage);
+        });
     }
 
     public void showAlternativeQuestionScene(AlternativeQuestion alternativeQuestion) throws IOException {
@@ -116,6 +133,11 @@ public class SceneCtrl {
 
         ctrl.displayQuestion(alternativeQuestion);
         scene.setRoot(pair.getValue());
+
+        primaryStage.setOnCloseRequest(event -> {
+            event.consume();
+            exitConfirmation(primaryStage);
+        });
     }
 
     public void showLeaderboard() {
@@ -127,6 +149,11 @@ public class SceneCtrl {
         ctrl.refresh();
         primaryStage.setTitle("Leaderboard");
         scene.setRoot(pair.getValue());
+
+        primaryStage.setOnCloseRequest(event -> {
+            event.consume();
+            exitConfirmation(primaryStage);
+        });
     }
 
     public void showMainScreenScene() {
@@ -137,6 +164,11 @@ public class SceneCtrl {
 
         primaryStage.setTitle("Main Screen");
         scene.setRoot(pair.getValue());
+
+        primaryStage.setOnCloseRequest(event -> {
+            event.consume();
+            exitConfirmation(primaryStage);
+        });
     }
 
     public void showOverviewActionScene() {
@@ -144,8 +176,14 @@ public class SceneCtrl {
         OverviewActionsActivityCtrl ctrl = (OverviewActionsActivityCtrl) pair.getKey();
 
         ctrl.initialize();
+        ctrl.refresh();
         primaryStage.setTitle("Overview Action");
         scene.setRoot(pair.getValue());
+
+        primaryStage.setOnCloseRequest(event -> {
+            event.consume();
+            exitConfirmation(primaryStage);
+        });
     }
 
     public void showAddActionScene() {
@@ -173,6 +211,11 @@ public class SceneCtrl {
 
         primaryStage.setTitle("Server Browser");
         scene.setRoot(pair.getValue());
+
+        primaryStage.setOnCloseRequest(event -> {
+            event.consume();
+            exitConfirmation(primaryStage);
+        });
     }
 
     public void showWaitingRoom() {
@@ -183,5 +226,25 @@ public class SceneCtrl {
 
         primaryStage.setTitle("WaitingRoom");
         scene.setRoot(pair.getValue());
+
+        primaryStage.setOnCloseRequest(event -> {
+            event.consume();
+            exitConfirmation(primaryStage);
+        });
+    }
+
+    /**
+     * Showing confirmation alert for exiting the application
+     * @param stage
+     */
+    public void exitConfirmation(Stage stage) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Exit Confirmation");
+        alert.setHeaderText("Are you sure to exit the application?");
+
+        if (alert.showAndWait().get() == ButtonType.OK) {
+            System.out.println("You successfully exit!");
+            stage.close();
+        }
     }
 }

@@ -1,5 +1,6 @@
 package server.controllers.GameControllers;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
-import server.entities.MultiplayerRoom;
 import server.services.GameServices.MultiplayerGameService;
 
 import java.util.HashMap;
@@ -20,15 +20,15 @@ import java.util.function.Consumer;
 @RequestMapping("api/{username}/MULTIPLAYER/{roomId}")
 public class MultiplayerGameRoomController {
 
-    private final MultiplayerGameService  multiplayerGameService;
+    private final MultiplayerGameService multiplayerGameService;
 
     /**
      * Constructor for the multiplayer game controller
      *
-     * @param multiplayerGameService  the service for the multiplayer  game features
+     * @param multiplayerGameService the service for the multiplayer  game features
      */
     public MultiplayerGameRoomController(MultiplayerGameService multiplayerGameService) {
-        this.multiplayerGameService  = multiplayerGameService;
+        this.multiplayerGameService = multiplayerGameService;
     }
 
     /**
@@ -47,38 +47,74 @@ public class MultiplayerGameRoomController {
         }
     }
 
-    private static Map<Object, Consumer<String>> listeners = new HashMap<>();
+    private static Map<Pair<Object, String>, Consumer<Boolean>> startingGameListeners = new HashMap<>();
 
-    public static Map<Object, Consumer<String>> getListeners() {
-        return listeners;
+    public static Map<Pair<Object, String>, Consumer<Boolean>> getListeners() {
+        return startingGameListeners;
     }
 
     @GetMapping("/waitForGameToStart")
-    public DeferredResult<ResponseEntity<String>> waitForGameToStart(@PathVariable("roomId") String roomId) {
+    public DeferredResult<ResponseEntity<Boolean>> waitForGameToStart(@PathVariable("username") String username, @PathVariable("roomId") String roomId) {
         var noContent = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        var res = new DeferredResult<ResponseEntity<String>>(50000L, noContent);
+        var res = new DeferredResult<ResponseEntity<Boolean>>(50000L, noContent);
 
-        var key = new Object();
-        listeners.put(key, q -> {
-            res.setResult(ResponseEntity.ok(q));
+        var key = Pair.of(new Object(), roomId);
+        startingGameListeners.put(key, q -> {
+            res.setResult(ResponseEntity.ok(true));
         });
         res.onCompletion(() -> {
-            listeners.remove(key);
+            startingGameListeners.remove(key);
         });
 
         return res;
     }
 
+    private static Map<Pair<Object, String>, Consumer<Integer>> playerNumberListeners = new HashMap<>();
+
+    public static Map<Pair<Object, String>, Consumer<Integer>> getPlayerNumberListeners() {
+        return playerNumberListeners;
+    }
+
+    /**
+     * Get the number of players in the multiplayer game
+     * @param roomId    the id of the game that the user wants to join
+     * @return give the number of players using asynchronous operation
+     */
+    @GetMapping("/getPlayerNumber")
+    public DeferredResult<ResponseEntity<Integer>> getPlayerNumber(@PathVariable("roomId") String roomId) {
+        var noContent = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        var res = new DeferredResult<ResponseEntity<Integer>>(50000L, noContent);
+
+        var key = Pair.of(new Object(), roomId);
+        playerNumberListeners.put(key, q -> {
+            res.setResult(ResponseEntity.ok(q));
+            System.out.println("Am update result");
+        });
+        res.onCompletion(() -> {
+            playerNumberListeners.remove(key);
+        });
+
+        return res;
+    }
+
+    /**
+     * Removes a player(user) from the current multiplayer score leaderboard
+     *
+     * @param username the name of the removing player
+     * @param roomId   the id of the game that the user wants to join
+     */
     @GetMapping("/removePlayer")
-    public void removePlayer(@PathVariable String userName, @PathVariable String roomId) {
-        this.getGame(roomId).removePlayer(userName);
+    public void removePlayer(@PathVariable("username") String username, @PathVariable("roomId") String roomId) {
+        System.out.println("The request is ok");
+        this.multiplayerGameService.removePlayer(roomId, username);
     }
 
-    @GetMapping("/")
-    public MultiplayerRoom getGame(@PathVariable String roomId) {
-        return this.multiplayerGameService.getGame(roomId);
-    }
-
+    /**
+     * Gets the number of players in the current multiplayer room
+     *
+     * @param roomId the id of the game that the user wants to join
+     * @return the number of players in terms of integer value
+     */
     @GetMapping("/numPlayers")
     public Integer getNumPlayers(@PathVariable String roomId) {
         return (Integer) this.multiplayerGameService.getGame(roomId).getNumPlayers();
