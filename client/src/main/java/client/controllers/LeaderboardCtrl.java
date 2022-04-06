@@ -12,7 +12,10 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
@@ -40,6 +43,8 @@ public class LeaderboardCtrl {
     private TableColumn<LeaderboardEntry, String> pointsCol;
     @FXML
     private Button playAgainButton;
+    @FXML
+    private Button goBackToMainScreen;
     @FXML
     private Label timeLabel;
 
@@ -149,5 +154,14 @@ public class LeaderboardCtrl {
 
     public void playAgain() {
         sceneCtrl.showWaitingRoom();
+    }
+
+    /**
+     * Method that ends the game and returns the player to the main screen of the app
+     * Also, checks whether all player have left the room and if then it changes the room status as finished
+     * @throws IOException
+     */
+    public void goToMainScreen() {
+        sceneCtrl.showMainScreenScene();
     }
 }

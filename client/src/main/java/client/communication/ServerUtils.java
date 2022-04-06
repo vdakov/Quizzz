@@ -97,6 +97,8 @@ public class ServerUtils {
         try {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
 
+            System.out.println("I pressed the button");
+
             Response response = ClientBuilder.newClient(new ClientConfig())
                     .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" + gameConfiguration.getRoomId() + "/startRoom")
                     .request(APPLICATION_JSON)
@@ -104,6 +106,7 @@ public class ServerUtils {
 
             switch (response.getStatus()) {
                 case 200: {
+                    stopWaitForRoomThread();
                     return true;
                 }
                 case 417: {
@@ -190,12 +193,16 @@ public class ServerUtils {
         return null;
     }
 
-    private static ExecutorService EXEC = Executors.newSingleThreadExecutor();
+    private static ExecutorService EXEC_WAIT_FOR_START = Executors.newSingleThreadExecutor();
 
-    public void waitForMultiPlayerRoomStart(Consumer<String> startedGame) {
+    public void waitForMultiPlayerRoomStart(Consumer<Boolean> startedGame) {
+        if (EXEC_WAIT_FOR_START.isShutdown()) {
+            EXEC_WAIT_FOR_START = Executors.newSingleThreadExecutor();
+        }
+
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
-        if (EXEC.isShutdown()) EXEC = Executors.newSingleThreadExecutor();
-        EXEC.submit(() -> {
+
+        EXEC_WAIT_FOR_START.submit(() -> {
             while (!Thread.interrupted()) {
 
                 var res = ClientBuilder.newClient(new ClientConfig())
@@ -208,12 +215,84 @@ public class ServerUtils {
                     continue;
                 }
 
-                String gameInProgress = res.readEntity(String.class);
-                startedGame.accept(gameInProgress);
-                stop();
+                Boolean gameInProgress = res.readEntity(Boolean.class);
+
+                if (gameInProgress) {
+                    System.out.println("Game started 1234567890");
+                    startedGame.accept(true);
+                    this.stopWaitForRoomThread();
+                }
             }
         });
     }
+
+    public void stopWaitForRoomThread() {
+        EXEC_WAIT_FOR_START.shutdownNow();
+    }
+
+    private static ExecutorService EXEC_GET_PLAYER_NUMBER = Executors.newSingleThreadExecutor();
+
+    public void updatePlayerNumber(Consumer<Integer> playerNumber) {
+        if (EXEC_GET_PLAYER_NUMBER.isShutdown()) {
+            EXEC_GET_PLAYER_NUMBER = Executors.newSingleThreadExecutor();
+        }
+
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+        EXEC_GET_PLAYER_NUMBER.submit(() -> {
+            while (!Thread.interrupted()) {
+
+                var res = ClientBuilder.newClient(new ClientConfig())
+                        .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/MULTIPLAYER/"
+                                + gameConfiguration.getRoomId() + "/getPlayerNumber")
+                        .request(APPLICATION_JSON)
+                        .accept(APPLICATION_JSON).get(Response.class);
+
+                if (res.getStatus() == 204) {
+                    continue;
+                }
+
+                Integer gameInProgress = res.readEntity(Integer.class);
+                playerNumber.accept(gameInProgress);
+            }
+        });
+    }
+
+    public void stopUpdatePlayerNumber() {
+        EXEC_GET_PLAYER_NUMBER.shutdownNow();
+    }
+
+    private static ExecutorService EXEC_UPDATE_AVAILABLE_ROOMS = Executors.newSingleThreadExecutor();
+
+    public void updateAvailableRooms(Consumer<GameContainer> roomUpdate) {
+        if (EXEC_UPDATE_AVAILABLE_ROOMS.isShutdown()) {
+            EXEC_UPDATE_AVAILABLE_ROOMS = Executors.newSingleThreadExecutor();
+        }
+
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+        EXEC_UPDATE_AVAILABLE_ROOMS.submit(() -> {
+            while (!Thread.interrupted()) {
+
+                var res = ClientBuilder.newClient(new ClientConfig())
+                        .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/MULTIPLAYER/updateRooms")
+                        .request(APPLICATION_JSON)
+                        .accept(APPLICATION_JSON).get(Response.class);
+
+                if (res.getStatus() == 204) {
+                    continue;
+                }
+
+                GameContainer gameInProgress = res.readEntity(GameContainer.class);
+
+                roomUpdate.accept(gameInProgress);
+            }
+        });
+    }
+
+    public void stopUpdateAvailableRooms() {
+        EXEC_UPDATE_AVAILABLE_ROOMS.shutdownNow();
+    }
+
+    private static ExecutorService EXEC = Executors.newSingleThreadExecutor();
 
     public void waitForFilledLeaderboard(Consumer<List<LeaderboardEntry>> l) {
         if (EXEC.isShutdown()) EXEC = Executors.newSingleThreadExecutor();
@@ -253,6 +332,7 @@ public class ServerUtils {
     public void stop() {
         EXEC.shutdownNow();
     }
+
 
     public String getQuestion() {
         try {
@@ -438,17 +518,19 @@ public class ServerUtils {
      * @param consumer    that is informed whenever a new message is received
      */
     public void registerForMessages(String destination, Consumer<List<String>> consumer) {
-        session.subscribe(destination, new StompFrameHandler() {
-            @Override
-            public Type getPayloadType(StompHeaders headers) {
-                return List.class;                                    // the type of message we expect to receive
-            }
+        if (!session.isConnected()) {
+            session.subscribe(destination, new StompFrameHandler() {
+                @Override
+                public Type getPayloadType(StompHeaders headers) {
+                    return List.class;                                    // the type of message we expect to receive
+                }
 
-            @Override
-            public void handleFrame(StompHeaders headers, Object payload) {
-                consumer.accept((List<String>) payload);
-            }
-        });
+                @Override
+                public void handleFrame(StompHeaders headers, Object payload) {
+                    consumer.accept((List<String>) payload);
+                }
+            });
+        }
     }
 
     /**
@@ -681,9 +763,11 @@ public class ServerUtils {
         return FXCollections.observableArrayList(games);
     }
 
-    public void removePlayer(String userName, String gameID) {
+    public void removePlayer() {
+        GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+        System.out.println("api/" + gameConfiguration.getUserName() + "/MULTIPLAYER/" + gameConfiguration.getRoomId() + "/removePlayer");
         ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER).path("api/MULTIPLAYER/" + userName + "/" + gameID + "/" + "removePlayer")
+                .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/MULTIPLAYER/" + gameConfiguration.getRoomId() + "/removePlayer")
                 .request().get();
     }
 
