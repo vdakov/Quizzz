@@ -63,17 +63,16 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         answerTextfield.setText("");
         answered = false;
 
+        if(gameConfig.getCurrentQuestionNumber() <= 1){
+            resetJokers();
+        }
+
         hintAnswerLabel.setOpacity(0);
 
         if (getHintJokerUsed() != null) {
             hintJoker.setDisable(getHintJokerUsed());
         }
-        if (getTimeJokerUsed() != null) {
-            timeJoker.setDisable(getTimeJokerUsed());
-            if (getTimeJokerUsed()) {
-                timeJoker.setOpacity(0.5);
-            }
-        }
+
 
         if (!gameConfig.isSinglePlayer())
         {
@@ -84,6 +83,14 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
             questionCol1.setPercentWidth(23.333);
 
             playersActivity.setCellValueFactory(q -> new SimpleStringProperty(q.getValue()));
+
+            if (getTimeJokerUsed() != null) {
+                timeJoker.setDisable(getTimeJokerUsed());
+                if (getTimeJokerUsed()) {
+                    timeJoker.setOpacity(0.5);
+                }
+            }
+
         } else {
             splitPane.setVisible(false);
             chatColumn.setPercentWidth(9);

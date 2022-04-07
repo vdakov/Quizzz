@@ -173,6 +173,10 @@ public class QuestionActivityCtrl {
         addedPoints.setText(" ");
         addedPointsInt = 0;
 
+        if(gameConfig.getCurrentQuestionNumber() <= 1){
+            resetJokers();
+        }
+
         if (!gameConfig.isSinglePlayer()) {
             splitPane.setVisible(true); //show the chat
             chatColumn.setPercentWidth(15);
@@ -186,12 +190,21 @@ public class QuestionActivityCtrl {
             });
             timeJoker.setOpacity(1);
             timeJoker.setDisable(false);
+            if (getTimeJokerUsed() != null) {
+                timeJoker.setDisable(getTimeJokerUsed());
+                if (getTimeJokerUsed()) {
+                    timeJoker.setOpacity(0.5);
+                }
+            }
+
         } else {
             splitPane.setVisible(false); //hide the chat
             chatColumn.setPercentWidth(9);
             questionCol1.setPercentWidth(25.333);
             questionCol1.setPercentWidth(25.333);
             questionCol1.setPercentWidth(25.333);
+            timeJoker.setOpacity(0);
+            gameConfig.setTimeJokerUsed(true);
         }
         //  server.registerForMessages("/topic/emojis", q -> {
         //    refresh(q.get(0), q.get(1), q.get(2));
@@ -200,13 +213,6 @@ public class QuestionActivityCtrl {
         hintJoker.setDisable(false);
         if (getHintJokerUsed() != null) {
             hintJoker.setDisable(getHintJokerUsed());
-        }
-        timeJoker.setDisable(false);
-        if (getTimeJokerUsed() != null) {
-            timeJoker.setDisable(getTimeJokerUsed());
-            if (getTimeJokerUsed()) {
-                timeJoker.setOpacity(0.5);
-            }
         }
     }
 
@@ -442,6 +448,12 @@ public class QuestionActivityCtrl {
 
     public Boolean getTimeJokerUsed() {
         return gameConfig.isTimeJokerUsed();
+    }
+
+    public void resetJokers(){
+        gameConfig.setHintJokerUsed(false);
+        gameConfig.setDoublePointJokerUsed(false);
+        gameConfig.setTimeJokerUsed(false);
     }
 
 
