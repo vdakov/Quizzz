@@ -121,7 +121,7 @@
                         </ImageView>
                     </graphic>
                 </Button>
-                <Button id="hint" fx:id="pointsJoker" mnemonicParsing="false" onAction="#usePointsJoker" onMouseClicked="#pointsJokerEvent" style="-fx-background-color: #203665;" text="2X Point" textFill="WHITESMOKE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <Button id="hint" fx:id="doublePointJoker" mnemonicParsing="false" onAction="#useDoublePointJoker" onMouseClicked="#pointsJokerEvent" style="-fx-background-color: #203665;" text="2X Point" textFill="WHITESMOKE" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                             <image>

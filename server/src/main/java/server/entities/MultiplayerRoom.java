@@ -15,6 +15,7 @@ public class MultiplayerRoom extends Room {
     private final HashMap<String, Boolean> playerTimeJokerUsed;
     private final List<HashMap<String, Integer>> playerTime;
     private final HashMap<String, Integer> playerAddedPoints;
+    private final HashMap<String, Integer> timeLeft;
     
     /**
      * Constructor for a multiplayer room
@@ -36,6 +37,7 @@ public class MultiplayerRoom extends Room {
             playerTime.add(hashMap);
         }
         this.playerAddedPoints = new HashMap<>();
+        this.timeLeft = new HashMap<>();
     }
 
     /**
@@ -52,6 +54,7 @@ public class MultiplayerRoom extends Room {
             playerTime.get(i).put(username, 10000);
         }
         playerAddedPoints.put(username, 10);
+        timeLeft.put(username, 0);
     }
 
     /**
@@ -68,6 +71,7 @@ public class MultiplayerRoom extends Room {
             playerTime.get(i).remove(username);
         }
         playerAddedPoints.remove(username);
+        timeLeft.remove(username);
     }
 
     /**
@@ -82,12 +86,25 @@ public class MultiplayerRoom extends Room {
         return playerScores.get(username);
     }
 
+    public void setTimeLeft(String username, int timeLeft) {
+        this.timeLeft.put(username, timeLeft);
+    }
+
+    public Integer getTimeLeft(String username) {
+        return this.timeLeft.get(username);
+    }
+
     // get the time for a spwcific player for specific question
     public Integer getTimeClient(String username, int number) {
         System.out.println("Getting time for " + username + " at question number: " + number);
         System.out.println("The time is: " + playerTime.get(number - 1).get(username));
         return playerTime.get(number - 1).get(username);
     }
+
+    public Boolean getHintJokerUsed(String username) { return playerHintJokerUsed.get(username); }
+    public Boolean getDoublePointJokerUsed(String username) { return playerDoublePointJokerUsed.get(username); }
+    public Boolean getTimeJokerUsed(String username) { return playerTimeJokerUsed.get(username); }
+
 
     public void useHintJoker(String username) { playerHintJokerUsed.put(username, true); }
     public void useDoublePointJoker(String username) {
@@ -116,7 +133,7 @@ public class MultiplayerRoom extends Room {
      * @param timeLeft the amount of time left to user, fast answer gives more points
      * @return the new added point value
      */
-    public int calculateAddedPoints(String username, long timeLeft) {
+    public int calculateAddedPoints(String username, int timeLeft) {
         int newAddedPoints = (int) (getAddedPoints(username) * (timeLeft));
         playerAddedPoints.put(username, newAddedPoints);
         return newAddedPoints;

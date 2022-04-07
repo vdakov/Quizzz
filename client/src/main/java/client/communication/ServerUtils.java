@@ -463,23 +463,6 @@ public class ServerUtils {
         }
     }
 
-//    public void calculateAddedPoints() {
-//        try {
-//            GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
-//
-//            Response response = ClientBuilder.newClient(new ClientConfig()) //
-//                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" +
-//                            gameConfiguration.getRoomId() + "/" + gameConfiguration.getTimeLeft() +  "/calculateAddedPoints")
-//                    .request(APPLICATION_JSON)
-//                    .accept(APPLICATION_JSON)
-//                    .get();
-//
-//            System.out.println("Response status: " + response.getStatus());
-//
-//        } catch (Exception e) {
-//            System.out.println("An exception occurred");
-//        }
-//    }
 
     /**
      * Uses the time joker
@@ -844,6 +827,37 @@ public class ServerUtils {
             System.out.println("An exception occurred");
         }
         return true;
+    }
+
+    public Integer setTimeLeft() {
+        try {
+            GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+
+            Response response = ClientBuilder.newClient(new ClientConfig())
+                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" + gameConfiguration.getRoomId() + "/" + gameConfiguration.getTimeLeft() + "/setTimeLeft")
+                    .request(APPLICATION_JSON)
+                    .accept(APPLICATION_JSON).get(Response.class);
+
+            switch (response.getStatus()) {
+                case 200: {
+                    return response.readEntity(Integer.class);
+                }
+                case 417: {
+                    System.out.println("Expectation failed");
+                    return  null;
+                    // something failed, show an apology message ?
+                }
+                case 400: {
+                    System.out.println("The request was invalid");
+                    return 0;
+                    //return null;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+        }
+
+        return null;
     }
 
     /**

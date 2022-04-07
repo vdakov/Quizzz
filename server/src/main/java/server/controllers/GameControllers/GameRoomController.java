@@ -224,8 +224,7 @@ public class GameRoomController {
         if (gameType.equals("SINGLEPLAYER")) {
             try {
                 int questionNo = Integer.parseInt(questionNumber);
-                int timeLeft = this.getTimeClient(username, gameType, roomId, questionNumber);
-                return singlePlayerGameService.updateSinglePlayerScore(username, roomId, questionNo, userAnswer, timeLeft) ?
+                return singlePlayerGameService.updateSinglePlayerScore(username, roomId, questionNo, userAnswer, singlePlayerGameService.getTimeLeft(username, roomId)) ?
                         ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             } catch (NumberFormatException e) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -238,8 +237,7 @@ public class GameRoomController {
         if (gameType.equals("MULTIPLAYER")) {
             try {
                 int questionNo = Integer.parseInt(questionNumber);
-                int timeLeft = this.getTimeClient(username, gameType, roomId, questionNumber);
-                return multiplayerGameService.updateMultiPlayerScore(username, roomId, questionNo, userAnswer, timeLeft) ?
+                return multiplayerGameService.updateMultiPlayerScore(username, roomId, questionNo, userAnswer, multiplayerGameService.getTimeLeft(username, roomId)) ?
                         ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             } catch (NumberFormatException e) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -416,15 +414,16 @@ public class GameRoomController {
      * @param username  the username of the player that requests his score
      * @param gameType  the type of the game
      * @param roomId    the id of the game that the player is in
-     * @param timeLeft  the amount of time left to the user
      * @return whether the request was successful or not
      */
     @GetMapping("/calculateAddedPoints")
     public ResponseEntity<Object> calculateAddedPoints(@PathVariable("username") String username, @PathVariable("gameType") String gameType,
-                                                       @PathVariable("roomId") String roomId, @PathVariable("timeLeft") Long timeLeft) {
+                                                       @PathVariable("roomId") String roomId, @PathVariable("questionNumber") String questionNumber) {
         if (gameType.equals("SINGLEPLAYER")) {
             try {
-                singlePlayerGameService.calculatePointsAdded(username, roomId, timeLeft);
+                int questionNo = Integer.parseInt(questionNumber);
+//                int timeLeft = singlePlayerGameService.///;
+                singlePlayerGameService.calculatePointsAdded(username, roomId, singlePlayerGameService.getTimeLeft(username, roomId));
                 return ResponseEntity.status(HttpStatus.OK).build();
             } catch (Exception e) {
                 return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
@@ -433,7 +432,8 @@ public class GameRoomController {
 
         if (gameType.equals("MULTIPLAYER")) {
             try {
-                Integer addedPoints = multiplayerGameService.calculatePointsAdded(username, roomId, timeLeft);
+                int questionNo = Integer.parseInt(questionNumber);
+                Integer addedPoints = multiplayerGameService.calculatePointsAdded(username, roomId, multiplayerGameService.getTimeLeft(username, roomId));
                 return (addedPoints != null) ? ResponseEntity.status(HttpStatus.OK).body(addedPoints) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             } catch (Exception e) {
                 return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
@@ -515,6 +515,52 @@ public class GameRoomController {
                 return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
             }
         }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
+    @GetMapping("/getTimeLeft")
+    public ResponseEntity<Integer> getTimeLeft(@PathVariable("username") String username, @PathVariable("gameType") String gameType, @PathVariable("roomId") String roomId) {
+        if (gameType.equals("SINGLEPLAYER")) {
+            try {
+                Integer timeLeft = singlePlayerGameService.getTimeLeft(username, roomId);
+                return (timeLeft != null) ? ResponseEntity.status(HttpStatus.OK).body(timeLeft) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
+            }
+        }
+
+        if (gameType.equals("MULTIPLAYER")) {
+            try {
+                Integer timeLeft = multiplayerGameService.getTimeLeft(username, roomId);
+                return (timeLeft != null) ? ResponseEntity.status(HttpStatus.OK).body(timeLeft) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
+            }
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
+    @GetMapping("/setTimeLeft")
+    public ResponseEntity<Object> setTimeLeft(@PathVariable("username") String username, @PathVariable("gameType") String gameType, @PathVariable("roomId") String roomId, @PathVariable("timeLeft") Integer timeLeft) {
+        if (gameType.equals("SINGLEPLAYER")) {
+            try {
+                singlePlayerGameService.setTimeLeft(username, roomId, timeLeft);
+                return (timeLeft != null) ? ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
+            }
+        }
+
+        if (gameType.equals("MULTIPLAYER")) {
+            try {
+                multiplayerGameService.setTimeLeft(username, roomId, timeLeft);
+                return (timeLeft != null) ? ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
+            }
+        }
+
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 

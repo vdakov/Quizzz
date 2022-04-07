@@ -144,12 +144,20 @@ public class SingleplayerGameService {
      * Calculates the points earned in this round
      * @return the points earned in this round
      */
-    public int calculatePointsAdded(String username, String roomId, long timeLeft) {
+    public int calculatePointsAdded(String username, String roomId, int timeLeft) {
         return roomCatalog.getSinglePlayerRoom(roomId).calculateAddedPoints(timeLeft);
     }
 
     public int getAddedPoints(String username, String roomId) {
         return roomCatalog.getSinglePlayerRoom(roomId).getAddedPoints();
+    }
+
+    public int getTimeLeft(String username, String roomId) {
+        return roomCatalog.getSinglePlayerRoom(roomId).getTimeLeft();
+    }
+
+    public void setTimeLeft(String username, String roomId, int timeLeft) {
+        roomCatalog.getSinglePlayerRoom(roomId).setTimeLeft(timeLeft);
     }
 
     /**
@@ -197,7 +205,7 @@ public class SingleplayerGameService {
      * @param questionNumber the question number answered by the user
      * @param userAnswer     the answer user
      */
-    public Boolean updateSinglePlayerScore(String username, String roomId, int questionNumber, String userAnswer, Long timeLeft) {
+    public Boolean updateSinglePlayerScore(String username, String roomId, int questionNumber, String userAnswer, int timeLeft) {
         try {
             if (!username.equals(roomCatalog.getSinglePlayerRoom(roomId).getRoomCreator())) {
                 return false;

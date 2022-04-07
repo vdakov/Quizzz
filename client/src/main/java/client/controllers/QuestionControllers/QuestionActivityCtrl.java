@@ -36,6 +36,7 @@ public class QuestionActivityCtrl {
     protected int addedPointsInt;
     protected String userAnswer;
     protected boolean answered;
+    protected int timeLeft;
     @FXML
     protected Label timeLabel;
     @FXML
@@ -77,7 +78,7 @@ public class QuestionActivityCtrl {
     @FXML
     protected Button hintJoker;
     @FXML
-    protected Button pointsJoker;
+    protected Button doublePointJoker;
     @FXML
     protected Button timeJoker;
     @FXML
@@ -221,6 +222,8 @@ public class QuestionActivityCtrl {
     public void answerQuestion(ActionEvent event) throws IOException {
         // answers the question
         if (answered) {
+            timeLeft = timeSecondsGlobal.get();
+            updateTimeLeft();
             return;
         }
         disableAnswers();

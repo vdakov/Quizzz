@@ -222,7 +222,7 @@ public class MultiplayerGameService {
      * Calculated the points added on this round
      * @return the points earned in this round
      */
-    public int calculatePointsAdded(String username, String roomId, long timeLeft) {
+    public int calculatePointsAdded(String username, String roomId, int timeLeft) {
         return roomCatalog.getMultiPlayerRoom(roomId).calculateAddedPoints(username, timeLeft);
     }
 
@@ -230,6 +230,15 @@ public class MultiplayerGameService {
     public int getAddedPoints(String username, String roomId) {
         return roomCatalog.getMultiPlayerRoom(roomId).getAddedPoints(username);
     }
+
+    public int getTimeLeft(String username, String roomId) {
+        return roomCatalog.getMultiPlayerRoom(roomId).getTimeLeft(username);
+    }
+
+    public void setTimeLeft(String username, String roomId, int timeLeft) {
+        roomCatalog.getMultiPlayerRoom(roomId).setTimeLeft(username, timeLeft);
+    }
+
     /**
      * Returns time the client has this round or null if it doesnt exist
      *
@@ -381,7 +390,7 @@ public class MultiplayerGameService {
      * @param questionNumber the question number answered by the user
      * @param userAnswer     the answer user
      */
-    public Boolean updateMultiPlayerScore(String username, String roomId, int questionNumber, String userAnswer, Long timeLeft) {
+    public Boolean updateMultiPlayerScore(String username, String roomId, int questionNumber, String userAnswer, int timeLeft) {
         try {
             if (roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() != Room.RoomStatus.ONGOING ||
                     roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) == null) {

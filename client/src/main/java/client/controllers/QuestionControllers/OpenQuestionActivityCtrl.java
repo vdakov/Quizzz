@@ -225,7 +225,6 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         gameConfig.setDoublePointJokerUsed(true);
         doublePointJoker.setDisable(true);
 
-        pointsJokerEvent();
     }
 
     /**

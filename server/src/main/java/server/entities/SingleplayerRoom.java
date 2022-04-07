@@ -3,6 +3,7 @@ package server.entities;
 import commons.Questions.Question;
 import org.apache.commons.lang3.tuple.Pair;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class SingleplayerRoom extends Room {
@@ -11,6 +12,7 @@ public class SingleplayerRoom extends Room {
     private boolean hintJokerUsed;
     private boolean doublePointJokerUsed;
     private int addedPoints;
+    private int timeLeft;
 
     /**
      * Constructor for a singleplayer room
@@ -25,6 +27,7 @@ public class SingleplayerRoom extends Room {
         hintJokerUsed = false;
         doublePointJokerUsed = false;
         this.addedPoints = 10;
+        this.timeLeft = 0;
     }
 
     /**
@@ -35,6 +38,14 @@ public class SingleplayerRoom extends Room {
         return this.playerScore;
     }
 
+    public void setTimeLeft(int timeLeft) {
+        this.timeLeft = timeLeft;
+    }
+
+    public Integer getTimeLeft() {
+        return this.timeLeft;
+    }
+
     public int getAddedPoints() { return this.addedPoints; }
 
     /**
@@ -42,7 +53,7 @@ public class SingleplayerRoom extends Room {
      * @param timeLeft the amount of time left to user, fast answer gives more points
      * @return the new added point value
      */
-    public int calculateAddedPoints(long timeLeft) {
+    public int calculateAddedPoints(int timeLeft) {
         this.addedPoints = (int) (addedPoints * (timeLeft));
         return addedPoints;
     }
