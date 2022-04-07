@@ -36,12 +36,12 @@
         <RowConstraints maxHeight="300.0" minHeight="0.0" percentHeight="15.0" prefHeight="140.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
-        <Label id="pointsNum" fx:id="points" alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="98.0" text="0 " textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="6" GridPane.rowIndex="3">
+        <Label id="pointsNum" fx:id="points" alignment="CENTER" contentDisplay="CENTER" prefHeight="36.0" prefWidth="150.0" text="0 " textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="6" GridPane.rowIndex="2">
             <font>
                 <Font name="Chalkboard" size="18.0" />
             </font>
         </Label>
-        <Label fx:id="addedPoints" alignment="CENTER_RIGHT" prefHeight="34.0" prefWidth="179.0" text=" " textFill="#92d36e" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+        <Label id="pointsNum" fx:id="addedPoints" alignment="CENTER_RIGHT" prefHeight="34.0" prefWidth="179.0" text=" " textFill="#92d36e" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
 
         <Button fx:id="emoji" disable="true" mnemonicParsing="false" opacity="0.0" prefHeight="63.0" prefWidth="66.0" text="Emoji" GridPane.columnIndex="1" GridPane.rowIndex="6" />
         <Label id="questionNum" fx:id="questionNumberLabel" alignment="CENTER" prefHeight="38.0" prefWidth="114.0" text="Question 1" textFill="WHITESMOKE" GridPane.columnIndex="3" GridPane.rowIndex="3">
@@ -204,7 +204,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Text id="points" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Points" textAlignment="CENTER" wrappingWidth="153.3366756439209" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+      <Text id="points" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Points" textAlignment="CENTER" wrappingWidth="153.3366756439209" GridPane.columnIndex="6" GridPane.halignment="CENTER" />
 
 
     </children>

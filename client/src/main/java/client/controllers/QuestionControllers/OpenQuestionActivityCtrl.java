@@ -54,7 +54,7 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
      * Initialises all the colors for the current scene
      */
     public void initialize() {
-        answer.setStyle("-fx-background-color: #ffd783; -fx-border-color:  #ffd783; -fx-background-radius: 15; -fx-border-radius: 15;");
+        answer.setStyle("-fx-background-color: #ffd783; -fx-border-color:  #ffd783; ");
         userAnswerRectangle.setBorder(Border.EMPTY);
         answerTextfield.setText("");
         correctAnswerRectangle.setOpacity(0);
@@ -148,10 +148,10 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         // after the time ends the right answer is requested and then shown
         System.out.println(userAnswerInt);
         if (userAnswerInt == Integer.parseInt(getCorrectAnswer())) {
-            userAnswerRectangle.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(30), BorderStroke.THICK)));
+            userAnswerRectangle.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(0), BorderStroke.THICK)));
         } else {
-            userAnswerRectangle.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(30), BorderStroke.THICK)));
-            correctAnswerRectangle.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(30), BorderStroke.THICK)));
+            userAnswerRectangle.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(0), BorderStroke.THICK)));
+            correctAnswerRectangle.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(0), BorderStroke.THICK)));
             correctAnswerLabel.setText(getCorrectAnswer());
         }
 

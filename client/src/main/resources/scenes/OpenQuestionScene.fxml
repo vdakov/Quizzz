@@ -43,12 +43,12 @@
                 <Font name="Chalkboard" size="18.0" />
             </font>
         </Label>
-        <Label id="pointsNum" fx:id="points" alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="98.0" text="0 " textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="6" GridPane.rowIndex="2">
+        <Label id="pointsNum" fx:id="points" alignment="CENTER" contentDisplay="CENTER" prefHeight="36.0" prefWidth="152.0" text="0 " textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="2">
             <font>
                 <Font name="Chalkboard" size="18.0" />
             </font>
         </Label>
-        <Label fx:id="addedPoints" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="33.0" prefWidth="182.0" text=" " textAlignment="RIGHT" textFill="#92d36e" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+        <Label id="pointsNum" fx:id="addedPoints" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="33.0" prefWidth="182.0" text=" " textAlignment="RIGHT" textFill="#92d36e" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
         <Label id="questionNum" fx:id="questionNumberLabel" alignment="CENTER" prefHeight="38.0" prefWidth="114.0" text="Question 1" textFill="WHITESMOKE" GridPane.columnIndex="3" GridPane.rowIndex="3">
             <font>
                 <Font name="Trebuchet MS" size="15.0" />
