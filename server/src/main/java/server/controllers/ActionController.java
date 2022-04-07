@@ -32,7 +32,6 @@ public class ActionController {
         return service.list();
     }
 
-
     /**
      * Get a specific action using the id of action
      * @param id the unique id of the action
@@ -43,7 +42,6 @@ public class ActionController {
         return service.getById(id);
     }
 
-
     /**
      * Gets a randomly selected activity from the list of actions
      * @return random activity
@@ -53,7 +51,6 @@ public class ActionController {
         List<Action> activities = (List<Action>) service.list();
         return activities.get((int) Math.floor(Math.random() * activities.size()));
     }
-
 
     /**
      * allows the user to update all the fields of an activity except the ID, but only if the object with that ID already exists

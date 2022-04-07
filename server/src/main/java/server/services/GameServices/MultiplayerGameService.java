@@ -6,6 +6,7 @@ import commons.GameContainer;
 import commons.Questions.Question;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Service;
+import server.controllers.GameControllers.GameController;
 import server.controllers.GameControllers.MultiplayerGameRoomController;
 import server.entities.MultiplayerRoom;
 import server.entities.Room;
@@ -57,7 +58,7 @@ public class MultiplayerGameService {
      */
     public String createNewMultiPlayerGame(String username) {
         try {
-            String roomId               = Util.getAlphaNumericString(10);
+            String roomId               = Util.getAlphaNumericString(5);
             ActionCatalog actionCatalog = new ActionCatalog(activityRepository.findAll());
 
             List<Pair<Question, String>> questionList = QuestionGenerator.generateQuestions(actionCatalog, 20, 2, 7, new Random());
@@ -67,6 +68,7 @@ public class MultiplayerGameService {
                 roomCatalog.setMultiplayerRandomRoom(newGame);
             } else {
                 roomCatalog.addMultiplayerRoom(newGame);
+
                 joinMultiPlayerGame(username, newGame.getRoomId());
             }
 
@@ -95,6 +97,17 @@ public class MultiplayerGameService {
             }
 
             roomCatalog.getMultiPlayerRoom(roomId).addPlayer(username);
+
+            MultiplayerGameRoomController.getPlayerNumberListeners().forEach((k, l) -> {
+                if (k.getValue().equals(roomId)) {
+                    l.accept(roomCatalog.getMultiPlayerRoom(roomId).getNumPlayers());
+                }
+            });
+
+            GameController.getActiveRoomsListeners().forEach((k, l) -> {
+                l.accept(new GameContainer(roomId, roomCatalog.getMultiPlayerRoom(roomId).getNumPlayers()));
+            });
+
             return true;
         } catch (Exception e) {
             System.out.println("An exception occurred when trying to join the game");
@@ -123,8 +136,15 @@ public class MultiplayerGameService {
                 createNewMultiPlayerGame(null);
             }
 
-            MultiplayerGameRoomController.getListeners().forEach((k, l) -> l.accept(roomId));
+            MultiplayerGameRoomController.getListeners().forEach((k, l) -> {
+                if (k.getValue().equals(roomId) && roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) != null) {
+                    l.accept(true);
+                }
+            });
 
+            GameController.getActiveRoomsListeners().forEach((k, l) -> {
+                l.accept(new GameContainer(roomId, 0));
+            });
 
             return roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() == Room.RoomStatus.ONGOING;
         } catch (Exception e) {
@@ -366,7 +386,7 @@ public class MultiplayerGameService {
      * @return list of all multiplayer games that is in waiting status
      */
     public List<GameContainer> getGameIds() {
-        //this.roomCatalog.cleanEmptyGames();
+        this.roomCatalog.cleanEmptyGames();
         return roomCatalog.getWaitingMultiplayerGames();
     }
 
@@ -380,12 +400,27 @@ public class MultiplayerGameService {
     }
 
     /**
-     * Removes the player with given name at given room
-     * @param roomId the id of the room the user is in
-     * @param userName the name of the removing player
+     * Removing specific player
+     * @param roomId    the id of the room the user is in
+     * @param userName  the user that needs the score update
      */
     public void removePlayer(String roomId, String userName) {
         this.getGame(roomId).removePlayer(userName);
+        System.out.println("I got here when removing player");
+
+        if (roomCatalog.getMultiPlayerRoom(roomId).getNumPlayers() == 0) {
+            roomCatalog.getMultiPlayerRoom(roomId).setRoomStatus(Room.RoomStatus.FINISHED);
+        } else {
+            MultiplayerGameRoomController.getPlayerNumberListeners().forEach((k, l) -> {
+                if (k.getValue().equals(roomId)) {
+                    l.accept(roomCatalog.getMultiPlayerRoom(roomId).getNumPlayers());
+                }
+            });
+        }
+
+        GameController.getActiveRoomsListeners().forEach((k, l) -> {
+            l.accept(new GameContainer(roomId, roomCatalog.getMultiPlayerRoom(roomId).getNumPlayers()));
+        });
     }
 
     /**

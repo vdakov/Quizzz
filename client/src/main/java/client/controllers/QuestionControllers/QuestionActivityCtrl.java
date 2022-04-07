@@ -7,18 +7,22 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.*;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 import javax.inject.Inject;
-import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -198,6 +202,7 @@ public class QuestionActivityCtrl {
 
     }
 
+
     public void pointsUpdate() {
         // after the time ends the amount of won points is calculated and then shown to the player
 
@@ -240,6 +245,28 @@ public class QuestionActivityCtrl {
      */
     public void displayNextQuestion() throws IOException {
         timeline.stop();
+
+        if (answered == false) {
+            gameConfig.setConsecutiveUnansweredQuestions(gameConfig.getConsecutiveUnansweredQuestions() + 1);
+        } else {
+            gameConfig.setConsecutiveUnansweredQuestions(0);
+        }
+
+        System.out.println("Question bugs: " + gameConfig.getConsecutiveUnansweredQuestions() + "     " + answered);
+
+        if (gameConfig.getConsecutiveUnansweredQuestions() >= 3 && gameConfig.getGameTypeString().equals("MULTIPLAYER")) {
+            this.server.removePlayer();
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("You have been removed from the room");
+            alert.setHeaderText("You have been remove from the room due to inactivity");
+            alert.setContentText("You have not answered 3 consecutive questions in a row, so you were left out of the game");
+            alert.show();
+
+            sceneCtrl.showServerBrowser();
+            return;
+        }
+
         if ((gameConfig.isMultiPlayer() && gameConfig.getCurrentQuestionNumber() == 9) || gameConfig.getCurrentQuestionNumber() == 19) {
             server.addOrUpdateLeaderboardEntry(gameConfig.getUserName(), gameConfig.getRoomId(), gameConfig.getScore());
             sceneCtrl.showLeaderboard();
@@ -356,23 +383,21 @@ public class QuestionActivityCtrl {
     }
 
     public Boolean getHintJokerUsed() {
-        return server.getHintJokerUsed();
+        return gameConfig.isHintJokerUsed();
     }
 
     public Boolean getDoublePointJokerUsed() {
-        return server.getDoublePointJokerUsed();
+        return gameConfig.isDoublePointJokerUsed();
     }
 
-    public boolean getTimeJokerUsed() {
-        return server.getTimeJokerUsed();
+    public Boolean getTimeJokerUsed() {
+        return gameConfig.isTimeJokerUsed();
     }
-
 
     /**
      * Getter for the question number
      * @return the current question number
      */
-
     public int getQuestionNumber() {
         return gameConfig.getCurrentQuestionNumber();
     }
@@ -432,6 +457,7 @@ public class QuestionActivityCtrl {
      * Method that refreshes the list of messages in the chat by adding a new message  whenever a user clicks on one of the objects.
      * @param type the unique number assigned to an object
      */
+
     public void refresh(String type, String username, String roomId) {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         List<String> chatEntries = new ArrayList<>();

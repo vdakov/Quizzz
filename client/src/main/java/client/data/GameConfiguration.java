@@ -21,6 +21,8 @@ public class GameConfiguration {
     private boolean timeJokerUsed;
     private long timeLeft;
 
+    private int consecutiveUnansweredQuestions;
+
     public GameConfiguration() {
         this.userName = null;
         this.roomId = null;
@@ -31,6 +33,15 @@ public class GameConfiguration {
         this.doublePointJokerUsed = false;
         this.timeJokerUsed = false;
 
+        this.consecutiveUnansweredQuestions = 0;
+    }
+
+    public int getConsecutiveUnansweredQuestions() {
+        return consecutiveUnansweredQuestions;
+    }
+
+    public void setConsecutiveUnansweredQuestions(int consecutiveUnansweredQuestions) {
+        this.consecutiveUnansweredQuestions = consecutiveUnansweredQuestions;
     }
 
     public static GameConfiguration getConfiguration() {
