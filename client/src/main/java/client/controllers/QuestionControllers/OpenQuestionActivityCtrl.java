@@ -63,7 +63,7 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         answerTextfield.setText("");
         answered = false;
 
-        if(gameConfig.getCurrentQuestionNumber() <= 1){
+        if (gameConfig.getCurrentQuestionNumber() <= 1) {
             resetJokers();
         }
 

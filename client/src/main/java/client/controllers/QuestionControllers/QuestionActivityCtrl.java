@@ -173,7 +173,7 @@ public class QuestionActivityCtrl {
         addedPoints.setText(" ");
         addedPointsInt = 0;
 
-        if(gameConfig.getCurrentQuestionNumber() <= 1){
+        if (gameConfig.getCurrentQuestionNumber() <= 1) {
             resetJokers();
         }
 
@@ -450,7 +450,7 @@ public class QuestionActivityCtrl {
         return gameConfig.isTimeJokerUsed();
     }
 
-    public void resetJokers(){
+    public void resetJokers() {
         gameConfig.setHintJokerUsed(false);
         gameConfig.setDoublePointJokerUsed(false);
         gameConfig.setTimeJokerUsed(false);
