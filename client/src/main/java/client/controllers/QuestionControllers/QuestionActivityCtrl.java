@@ -227,8 +227,6 @@ public class QuestionActivityCtrl {
 
         timeLeft = timeSecondsGlobal.get();
         updateTimeLeft();
-        server.calculateAddedPoints();
-        System.out.println("server point- " + server.getAddedPoints());
 
         disableAnswers();
 
@@ -268,10 +266,7 @@ public class QuestionActivityCtrl {
 
     public void pointsUpdate() {
         // after the time ends the amount of won points is calculated and then shown to the player
-
         addedPointsInt = 0;
-        System.out.println("Points : " + getAddedPointsInt());
-        System.out.println("Score : " + server.getScore());
         if (userAnswer != null && userAnswer.equals(getCorrectAnswer())) {
             addedPointsInt = getAddedPointsInt();
         }
@@ -315,6 +310,8 @@ public class QuestionActivityCtrl {
             try {
                 disableAnswers();
                 updateTheScoreServer();
+                System.out.println("Points : " + getAddedPointsInt());
+                System.out.println("Score : " + server.getScore());
                 answerUpdate();
                 pointsUpdate();
 
@@ -385,7 +382,7 @@ public class QuestionActivityCtrl {
      * Getter for the correct answer
      * @return the correct answer from the server
      */
-    public void useHintJoker(MouseEvent event) {
+    public void useHintJoker() {
         //Joker that eliminates the wrong answer
         if (getHintJokerUsed()) { return; }
 
@@ -412,7 +409,7 @@ public class QuestionActivityCtrl {
         }
     }
 
-    public void useDoublePointJoker(MouseEvent event) {
+    public void useDoublePointJoker() {
         if (getDoublePointJokerUsed()) { return; }
         System.out.println(getDoublePointJokerUsed());
 

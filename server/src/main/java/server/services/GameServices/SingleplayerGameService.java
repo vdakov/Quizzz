@@ -250,7 +250,8 @@ public class SingleplayerGameService {
             }
 
             if (userAnswer.equals(getSinglePlayerAnswer(username, roomId, questionNumber))) {
-                roomCatalog.getSinglePlayerRoom(roomId).updatePlayerScore(this.calculatePointsAdded(username, roomId, timeLeft));
+                this.calculatePointsAdded(username, roomId, timeLeft);
+                roomCatalog.getSinglePlayerRoom(roomId).updatePlayerScore(this.getAddedPoints(username, roomId));
             }
 
             return true;
