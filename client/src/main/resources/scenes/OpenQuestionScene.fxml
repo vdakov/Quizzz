@@ -124,7 +124,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Button fx:id="answer" mnemonicParsing="false" onAction="#answerOpenQuestion" prefHeight="39.0" prefWidth="148.0" text="SUBMIT" GridPane.columnIndex="1">
+                <Button fx:id="answer" mnemonicParsing="false" onAction="#answerQuestion" prefHeight="39.0" prefWidth="148.0" text="SUBMIT" GridPane.columnIndex="1">
                     <font>
                         <Font name="Chalkboard" size="18.0" />
                     </font>

@@ -210,7 +210,7 @@ public class QuestionActivityCtrl {
         }
     }
 
-    public void answerQuestion(MouseEvent event) throws IOException {
+    public void answerQuestion(ActionEvent event) throws IOException {
         // answers the question
         if (answered) {
             return;
