@@ -230,7 +230,25 @@ public class MultiplayerGameService {
     public int getAddedPoints(String username, String roomId) {
         return roomCatalog.getMultiPlayerRoom(roomId).getAddedPoints(username);
     }
-
+    /**
+     * Returns time the client has this round or null if it doesnt exist
+     *
+     * @param username the user that requests the score
+     * @param roomId   the id of the room the user is in
+     */
+    public Integer getTimeClient(String username, String roomId, int number) {
+        try {
+//            if (roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() != Room.RoomStatus.ONGOING ||
+//                    roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) == null) {
+//                return null;
+//            }
+            return roomCatalog.getMultiPlayerRoom(roomId).getTimeClient(username, number);
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+            return null;
+        }
+    }
+    
     /**
      * Returns whether the hint joker was used by this player in this game or null if it doesnt exist
      *
@@ -339,14 +357,14 @@ public class MultiplayerGameService {
      * @param username       the user that needs the score update
      * @param roomId         the id of the room the user is in
      */
-    public Boolean useTimeJoke(String username, String roomId) {
+    public Boolean useTimeJoker(String username, String roomId, int number) {
         try {
 //            if (roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() != Room.RoomStatus.ONGOING ||
 //                    roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) == null) {
 //                //return null;
 //            }
 
-            roomCatalog.getMultiPlayerRoom(roomId).useTimeJoker(username);
+            roomCatalog.getMultiPlayerRoom(roomId).useTimeJoker(username, number);
             return true;
 
         } catch (Exception e) {

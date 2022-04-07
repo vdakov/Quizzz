@@ -55,12 +55,18 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
      * Initialises all the colors for the current scene
      */
     public void initialize() {
-        answer.setStyle("-fx-background-color: #ffd783; -fx-border-color:  #ffd783; -fx-background-radius: 15; -fx-border-radius: 15;");
+        answerTextfield.setDisable(false);
+        answer.setDisable(false);
+        answer.setStyle("-fx-background-color: #ffd783; -fx-border-color:  #ffd783; ");
         userAnswerRectangle.setBorder(Border.EMPTY);
         answerTextfield.setText("");
         correctAnswerRectangle.setOpacity(0);
         answerTextfield.setText("");
         answered = false;
+
+        if (gameConfig.getCurrentQuestionNumber() <= 1) {
+            resetJokers();
+        }
 
         hintAnswerLabel.setOpacity(0);
         if (getHintJokerUsed() != null) {
@@ -72,11 +78,26 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         if (!gameConfig.isSinglePlayer())
         {
             splitPane.setVisible(true);
+            chatColumn.setPercentWidth(15);
+            questionCol1.setPercentWidth(23.333);
+            questionCol1.setPercentWidth(23.333);
+            questionCol1.setPercentWidth(23.333);
+
             playersActivity.setCellValueFactory(q -> new SimpleStringProperty(q.getValue()));
-        }
-        else
-        {
+
+            if (getTimeJokerUsed() != null) {
+                timeJoker.setDisable(getTimeJokerUsed());
+                if (getTimeJokerUsed()) {
+                    timeJoker.setOpacity(0.5);
+                }
+            }
+
+        } else {
             splitPane.setVisible(false);
+            chatColumn.setPercentWidth(9);
+            questionCol1.setPercentWidth(25.333);
+            questionCol1.setPercentWidth(25.333);
+            questionCol1.setPercentWidth(25.333);
         }
 
         server.registerForMessages("/topic/emojis", q -> {
@@ -87,6 +108,7 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
     /**
      * Sets the text for the needed question given as parameter
      * Displays the appropriate image for the question
+     *
      * @param openQuestion the question that is set
      */
     public void displayQuestion(OpenQuestion openQuestion) throws IOException {
@@ -109,10 +131,11 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         else splitPane.setVisible(true);
 
         initialize();
-        startTimer();
+        startTimerClient();
+        startTimerGlobal();
     }
 
-    public void answerQuestion(ActionEvent event) {
+    public void answerQuestion(ActionEvent event) throws IOException {
         // answers the question and blocks the possibility to answer anymore
         if (answered) {
             return;
@@ -121,7 +144,7 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
 
         try {
             //userAnswerInt = Integer.parseInt(answerTextfield.getText());
-            server.updateScore(answerTextfield.getText());
+            updateTheScoreServer();
             System.out.println(1);
         } catch (NumberFormatException e) {
             answerTextfield.setText("-99999");
@@ -135,23 +158,23 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         } catch (Exception e) {
             System.out.println(e);
         }
-
-        answerUpdate();
-        pointsUpdate();
+        disableAnswers();
     }
 
     public void answerUpdate() {
         // after the time ends the right answer is requested and then shown
         System.out.println(userAnswerInt);
         if (userAnswerInt == Integer.parseInt(getCorrectAnswer())) {
-            userAnswerRectangle.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(30), BorderStroke.THICK)));
+            userAnswerRectangle.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(0), BorderStroke.THICK)));
         } else {
-            userAnswerRectangle.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(30), BorderStroke.THICK)));
-            correctAnswerRectangle.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(30), BorderStroke.THICK)));
+            userAnswerRectangle.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(0), BorderStroke.THICK)));
+            correctAnswerRectangle.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(0), BorderStroke.THICK)));
             correctAnswerLabel.setText(getCorrectAnswer());
         }
 
         correctAnswerRectangle.setOpacity(1);
+        progressBarTime.setOpacity(0);
+        timeLabel.textProperty().bind(timeSecondsGlobal.divide(1000).asString());
 
     }
 
@@ -203,5 +226,17 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         doublePointJoker.setDisable(true);
 
         pointsJokerEvent();
+    }
+
+    /**
+     * Method that stops the player from answering after client timer has ran out
+     * @throws IOException
+     */
+    public void disableAnswers() throws IOException {
+        answerTextfield.setDisable(true);
+        answer.setDisable(true);
+    }
+    public void updateTheScoreServer() {
+        server.updateScore(answerTextfield.getText());
     }
 }

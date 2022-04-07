@@ -111,7 +111,7 @@ public class GameConfiguration {
         return score;
     }
 
-    public boolean isHintJokerUsed() {
+    public Boolean isHintJokerUsed() {
         return hintJokerUsed;
     }
 
@@ -119,7 +119,7 @@ public class GameConfiguration {
         this.hintJokerUsed = hintJokerUsed;
     }
 
-    public boolean isDoublePointJokerUsed() {
+    public Boolean isDoublePointJokerUsed() {
         return doublePointJokerUsed;
     }
 
@@ -127,7 +127,7 @@ public class GameConfiguration {
         this.doublePointJokerUsed = doublePointJokerUsed;
     }
 
-    public boolean isTimeJokerUsed() {
+    public Boolean isTimeJokerUsed() {
         return timeJokerUsed;
     }
 

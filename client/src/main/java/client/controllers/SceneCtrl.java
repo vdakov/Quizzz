@@ -49,7 +49,7 @@ public class SceneCtrl {
     public void initialize(Stage primaryStage, HashMap<String, Pair<Object, Parent>> sceneRoots) {
         this.primaryStage = primaryStage;
         this.sceneRoots = sceneRoots;
-        this.scene = new Scene(new Group(), 1080, 720);
+        this.scene = new Scene(new Group(), 1280, 720);
         this.primaryStage.setScene(this.scene);
 
         showMainScreenScene();
@@ -154,6 +154,7 @@ public class SceneCtrl {
         primaryStage.setTitle("Leaderboard");
         scene.setRoot(pair.getValue());
 
+
         primaryStage.setOnCloseRequest(event -> {
             event.consume();
             exitConfirmation(primaryStage);
@@ -239,6 +240,7 @@ public class SceneCtrl {
 
     /**
      * Showing confirmation alert for exiting the application
+     *
      * @param stage
      */
     public void exitConfirmation(Stage stage) {

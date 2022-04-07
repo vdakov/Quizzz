@@ -27,7 +27,8 @@ public class KnowledgeQuestionActivityCtrl extends QuestionActivityCtrl {
 
     /**
      * Sets the text for the needed question given as parameter
-     *Displays the appropriate image for the question
+     * Displays the appropriate image for the question
+     *
      * @param knowledgeQuestion the question that is set
      */
     public void displayQuestion(KnowledgeQuestion knowledgeQuestion) throws IOException {
@@ -52,7 +53,8 @@ public class KnowledgeQuestionActivityCtrl extends QuestionActivityCtrl {
         gameConfig.setScore(getPointsInt());
 
         initialize();
-        startTimer();
+        startTimerClient();
+        startTimerGlobal();
     }
 }
 

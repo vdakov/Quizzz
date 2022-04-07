@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<GridPane prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #3084f2;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.AdminInterface.OverviewActionsActivityCtrl">
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<GridPane id="gridPane" prefHeight="720.0" prefWidth="1080.0" stylesheets="@adminPanel.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.AdminInterface.OverviewActionsActivityCtrl">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="635.2000122070312" minWidth="10.0" prefWidth="473.59998779296876" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="900.0" minWidth="10.0" prefWidth="807.2000122070312" />
@@ -12,68 +23,76 @@
       <RowConstraints maxHeight="234.8000244140625" minHeight="10.0" prefHeight="45.20001831054688" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="539.2000122070312" minHeight="10.0" prefHeight="539.2000122070312" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="129.59995117187498" minHeight="10.0" prefHeight="31.199987792968727" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="129.59995117187498" minHeight="10.0" prefHeight="31.199987792968727" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-      <TableView fx:id="table" prefHeight="322.0" prefWidth="563.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-         <columns>
-            <TableColumn fx:id="colId" prefWidth="218.3999908566475" text="ID" />
-            <TableColumn fx:id="colTitle" prefWidth="188.8000030517578" text="title" />
-            <TableColumn fx:id="colConsumption" prefWidth="181.60003662109375" text="consumption" />
-            <TableColumn fx:id="colSource" prefWidth="310.39996337890625" text="source" />
-         </columns>
-      </TableView>
-      <Button fx:id="addButton" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#addActivity" prefHeight="31.0" prefWidth="382.0" text="ADD ACTIVITY" translateY="-200.0" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+      <Button fx:id="addButton" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#addActivity" prefHeight="31.0" prefWidth="363.0" text="ADD ACTIVITY" textFill="WHITE" translateY="-175.0" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+         <font>
+            <Font size="24.0" />
+         </font></Button>
+      <Button mnemonicParsing="false" onAction="#goToMainScreen" prefHeight="49.0" prefWidth="138.0" style="-fx-background-color: transparent;" translateX="14.0" GridPane.halignment="LEFT">
          <font>
             <Font size="14.0" />
-         </font></Button>
-      <Button fx:id="refreshButton" alignment="CENTER" mnemonicParsing="false" onAction="#refresh" prefHeight="31.0" prefWidth="83.0" text="REFRESH" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+         </font>
+         <graphic>
+            <ImageView fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@pictures/home.png" />
+               </image></ImageView>
+         </graphic></Button>
+      <Button fx:id="editButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#editActivity" prefHeight="50.0" prefWidth="363.0" text="EDIT ACTIVITY" textFill="WHITE" translateY="172.0" GridPane.halignment="CENTER" GridPane.rowIndex="1">
          <font>
-            <Font size="14.0" />
+            <Font size="24.0" />
          </font></Button>
-      <Button fx:id="editButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#editActivity" prefHeight="31.0" prefWidth="389.0" text="EDIT ACTIVITY" translateY="14.0" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+      <Button fx:id="deleteButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deleteActivity" prefHeight="50.0" prefWidth="363.0" text="DELETE ACTIVITY" textFill="WHITE" translateY="43.0" GridPane.halignment="CENTER" GridPane.rowIndex="1">
          <font>
-            <Font size="13.0" />
+            <Font size="24.0" />
          </font></Button>
-      <Button fx:id="deleteButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#deleteActivity" prefHeight="31.0" prefWidth="386.0" text="DELETE ACTIVITY" translateY="-67.0" GridPane.halignment="CENTER" GridPane.rowIndex="1">
-         <font>
-            <Font size="14.0" />
-         </font></Button>
-      <TextField fx:id="deletingID" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="35.0" prefWidth="366.0" promptText="Please type in ID of deleting action" scaleShape="false" translateY="-100.0" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+      <TextField id="id" fx:id="deletingID" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="363.0" promptText="Please type in ID of deleting action" scaleShape="false" translateY="-7.0" GridPane.halignment="CENTER" GridPane.rowIndex="1">
          <font>
             <Font size="9.0" />
          </font>
       </TextField>
-      <Label alignment="CENTER" prefHeight="30.0" prefWidth="387.0" text="Admin" translateY="-150.0" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+      <Label alignment="CENTER" prefHeight="30.0" prefWidth="387.0" text="Admin" textFill="WHITE" translateY="-60.0" GridPane.halignment="CENTER" GridPane.rowIndex="1">
          <font>
             <Font name="System Bold" size="33.0" />
          </font></Label>
-      <Label alignment="CENTER" prefHeight="18.0" prefWidth="386.0" text="User" translateY="-250.0" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+      <Label alignment="CENTER" prefHeight="18.0" prefWidth="386.0" text="User" textFill="WHITE" translateY="-226.0" GridPane.halignment="CENTER" GridPane.rowIndex="1">
          <font>
             <Font name="System Bold" size="33.0" />
          </font></Label>
-      <Button mnemonicParsing="false" onAction="#goToMainScreen" prefHeight="31.0" prefWidth="137.0" text="HOME" GridPane.halignment="CENTER" GridPane.rowIndex="2">
-         <font>
-            <Font size="14.0" />
-         </font></Button>
-      <TextField fx:id="editingID" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="36.0" prefWidth="363.0" promptText="Please type in ID of editing action" scaleShape="false" translateY="-20.0" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+      <TextField id="id" fx:id="editingID" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="363.0" promptText="Please type in ID of editing action" scaleShape="false" translateY="120.0" GridPane.halignment="CENTER" GridPane.rowIndex="1">
          <font>
             <Font size="9.0" />
          </font>
       </TextField>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Overview Activities" textAlignment="CENTER" underline="true" wrappingWidth="384.53669357299805" GridPane.halignment="CENTER">
+      <Text id="title" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Overview Activities" wrappingWidth="809.3366003036499" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
          <font>
             <Font size="40.0" />
          </font>
       </Text>
-      <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#restoreActivityBank" prefHeight="31.0" prefWidth="389.0" text="RESTORE ACTIVITY BANK" translateY="86.0" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+      <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#restoreActivityBank" prefHeight="50.0" prefWidth="363.0" text="RESTORE ACTIVITY BANK" textFill="WHITE" translateY="-12.0" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
          <font>
-            <Font size="13.0" />
+            <Font size="24.0" />
          </font>
       </Button>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="*Pressing this button resets the state of all default activities" textAlignment="CENTER" translateY="110.0" wrappingWidth="384.53669357299805" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+      <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="*Pressing this button resets the state of all default activities" textAlignment="CENTER" translateY="-8.0" wrappingWidth="384.53669357299805" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
          <font>
             <Font size="13.0" />
          </font>
       </Text>
+      <Button id="button" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#refresh" prefHeight="50.0" prefWidth="50.0" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM">
+         <graphic>
+            <SVGPath content="M12 6v1.79c0 .45.54.67.85.35l2.79-2.79c.2-.2.2-.51 0-.71l-2.79-2.79c-.31-.31-.85-.09-.85.36V4c-4.42 0-8 3.58-8 8 0 1.04.2 2.04.57 2.95.27.67 1.13.85 1.64.34.27-.27.38-.68.23-1.04C6.15 13.56 6 12.79 6 12c0-3.31 2.69-6 6-6zm5.79 2.71c-.27.27-.38.69-.23 1.04.28.7.44 1.46.44 2.25 0 3.31-2.69 6-6 6v-1.79c0-.45-.54-.67-.85-.35l-2.79 2.79c-.2.2-.2.51 0 .71l2.79 2.79c.31.31.85.09.85-.35V20c4.42 0 8-3.58 8-8 0-1.04-.2-2.04-.57-2.95-.27-.67-1.13-.85-1.64-.34z" fill="WHITE" scaleX="2.0" scaleY="2.0" scaleZ="2.0" />
+         </graphic>
+      </Button>
+      <TableView id="table" fx:id="table" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="550.0" prefWidth="731.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+         <columns>
+            <TableColumn fx:id="colId" maxWidth="151.20001220703125" prefWidth="151.20001220703125" text="ID" />
+            <TableColumn fx:id="colTitle" prefWidth="148.0" text="title" />
+            <TableColumn fx:id="colConsumption" minWidth="0.0" prefWidth="191.199951171875" text="consumption" />
+            <TableColumn fx:id="colSource" prefWidth="215.20000000000005" text="source" />
+         </columns>
+      </TableView>
    </children>
 </GridPane>

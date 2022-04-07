@@ -28,6 +28,7 @@ public class AlternativeQuestionActivityCtrl extends QuestionActivityCtrl {
     /**
      * Sets the text for the needed question given as parameter
      * Properly displays the corresponding images
+     *
      * @param alternativeQuestion the question that is set
      */
     public void displayQuestion(AlternativeQuestion alternativeQuestion) throws IOException {
@@ -51,7 +52,8 @@ public class AlternativeQuestionActivityCtrl extends QuestionActivityCtrl {
         gameConfig.setScore(getPointsInt());
 
         initialize();
-        startTimer();
+        startTimerClient();
+        startTimerGlobal();
         System.out.println("Timer started");
     }
 }

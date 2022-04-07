@@ -3,6 +3,7 @@ package server.entities;
 import commons.Questions.Question;
 import org.apache.commons.lang3.tuple.Pair;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -12,8 +13,9 @@ public class MultiplayerRoom extends Room {
     private final HashMap<String, Boolean> playerHintJokerUsed;
     private final HashMap<String, Boolean> playerDoublePointJokerUsed;
     private final HashMap<String, Boolean> playerTimeJokerUsed;
+    private final List<HashMap<String, Integer>> playerTime;
     private final HashMap<String, Integer> playerAddedPoints;
-
+    
     /**
      * Constructor for a multiplayer room
      *
@@ -28,6 +30,11 @@ public class MultiplayerRoom extends Room {
         this.playerHintJokerUsed = new HashMap<>();
         this.playerDoublePointJokerUsed = new HashMap<>();
         this.playerTimeJokerUsed = new HashMap<>();
+        this.playerTime = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+            HashMap<String, Integer> hashMap = new HashMap<>();
+            playerTime.add(hashMap);
+        }
         this.playerAddedPoints = new HashMap<>();
     }
 
@@ -41,6 +48,9 @@ public class MultiplayerRoom extends Room {
         playerHintJokerUsed.put(username, false);
         playerDoublePointJokerUsed.put(username, false);
         playerTimeJokerUsed.put(username, false);
+        for (int i = 0; i < 20; i++) {
+            playerTime.get(i).put(username, 10000);
+        }
         playerAddedPoints.put(username, 10);
     }
 
@@ -54,6 +64,9 @@ public class MultiplayerRoom extends Room {
         playerHintJokerUsed.remove(username);
         playerDoublePointJokerUsed.remove(username);
         playerTimeJokerUsed.remove(username);
+        for (int i = 0; i < 20; i++) {
+            playerTime.get(i).remove(username);
+        }
         playerAddedPoints.remove(username);
     }
 
@@ -69,16 +82,31 @@ public class MultiplayerRoom extends Room {
         return playerScores.get(username);
     }
 
-    public Boolean getHintJokerUsed(String username) { return playerHintJokerUsed.get(username); }
-    public Boolean getDoublePointJokerUsed(String username) { return playerDoublePointJokerUsed.get(username); }
-    public Boolean getTimeJokerUsed(String username) { return playerTimeJokerUsed.get(username); }
+    // get the time for a spwcific player for specific question
+    public Integer getTimeClient(String username, int number) {
+        System.out.println("Getting time for " + username + " at question number: " + number);
+        System.out.println("The time is: " + playerTime.get(number - 1).get(username));
+        return playerTime.get(number - 1).get(username);
+    }
 
     public void useHintJoker(String username) { playerHintJokerUsed.put(username, true); }
     public void useDoublePointJoker(String username) {
         playerAddedPoints.put(username, getAddedPoints(username) * 2);
         playerDoublePointJokerUsed.put(username, true);
     }
-    public void useTimeJoker(String username) { playerTimeJokerUsed.put(username, true); }
+    public void useTimeJoker(String username, int number) {
+        playerTimeJokerUsed.put(username, true);
+
+        if (number >= 20) { return; }
+
+        HashMap<String, Integer> question = playerTime.get(number);
+        for (String key : question.keySet()) {
+            if (!key.equals(username)) {
+                System.out.println("Username limited: " + username + " in question: " + (number + 1)) ;
+                question.replace(key, 5000);
+            }
+        }
+    }
 
     public int getAddedPoints(String username) { return playerAddedPoints.get(username); }
 
