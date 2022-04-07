@@ -103,7 +103,7 @@
                         </ImageView>
                     </graphic>
                 </Button>
-                <Button id="hint" fx:id="timeJoker" mnemonicParsing="false" onMouseClicked="#timeJokerEvent" prefHeight="38.0" prefWidth="114.0" style="-fx-background-color: #203665;" text="--Time" textFill="WHITESMOKE" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                <Button id="hint" fx:id="timeJoker" mnemonicParsing="false" onAction="#useTimeJoker" onMouseClicked="#timeJokerEvent" prefHeight="38.0" prefWidth="114.0" style="-fx-background-color: #203665;" text="--Time" textFill="WHITESMOKE" GridPane.columnIndex="1" GridPane.rowIndex="2">
                     <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -124,7 +124,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Button fx:id="answer" mnemonicParsing="false" onAction="#answerOpenQuestion" prefHeight="39.0" prefWidth="148.0" text="SUBMIT" GridPane.columnIndex="1">
+                <Button fx:id="answer" mnemonicParsing="false" onAction="#answerQuestion" prefHeight="39.0" prefWidth="148.0" text="SUBMIT" GridPane.columnIndex="1">
                     <font>
                         <Font name="Chalkboard" size="18.0" />
                     </font>

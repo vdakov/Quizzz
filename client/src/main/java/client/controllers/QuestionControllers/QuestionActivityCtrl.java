@@ -31,7 +31,8 @@ public class QuestionActivityCtrl {
     protected final ServerUtils server;
     protected final SceneCtrl sceneCtrl;
     protected final GameConfiguration gameConfig = GameConfiguration.getConfiguration();
-    protected final double startTime = 10;
+    protected final double startTime = 13000;
+    protected double startTimeClient = 10000;
     protected int addedPointsInt;
     protected String userAnswer;
     protected boolean answered;
@@ -104,9 +105,13 @@ public class QuestionActivityCtrl {
     @FXML
     protected ColumnConstraints questionCol3;
 
-    protected IntegerProperty timeSeconds =
+    protected IntegerProperty timeSecondsGlobal =
             new SimpleIntegerProperty((int) startTime);
-    protected Timeline timeline;
+    protected Timeline timelineGlobal;
+
+    protected IntegerProperty timeSecondsClient =
+            new SimpleIntegerProperty((int) startTimeClient);
+    protected Timeline timelineClient;
 
     @Inject
     public QuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) throws ExecutionException, InterruptedException {
@@ -168,6 +173,10 @@ public class QuestionActivityCtrl {
         addedPoints.setText(" ");
         addedPointsInt = 0;
 
+        if (gameConfig.getCurrentQuestionNumber() <= 1) {
+            resetJokers();
+        }
+
         if (!gameConfig.isSinglePlayer()) {
             splitPane.setVisible(true); //show the chat
             chatColumn.setPercentWidth(15);
@@ -179,12 +188,23 @@ public class QuestionActivityCtrl {
             server.registerForMessages("/topic/emojis", q -> {
                 refresh(q.get(0), q.get(1), q.get(2));
             });
+            timeJoker.setOpacity(1);
+            timeJoker.setDisable(false);
+            if (getTimeJokerUsed() != null) {
+                timeJoker.setDisable(getTimeJokerUsed());
+                if (getTimeJokerUsed()) {
+                    timeJoker.setOpacity(0.5);
+                }
+            }
+
         } else {
             splitPane.setVisible(false); //hide the chat
             chatColumn.setPercentWidth(9);
             questionCol1.setPercentWidth(25.333);
             questionCol1.setPercentWidth(25.333);
             questionCol1.setPercentWidth(25.333);
+            timeJoker.setOpacity(0);
+            gameConfig.setTimeJokerUsed(true);
         }
         //  server.registerForMessages("/topic/emojis", q -> {
         //    refresh(q.get(0), q.get(1), q.get(2));
@@ -196,22 +216,16 @@ public class QuestionActivityCtrl {
         }
     }
 
-
-    public void answerQuestion(ActionEvent event) {
+    public void answerQuestion(ActionEvent event) throws IOException {
         // answers the question
         if (answered) {
             return;
         }
+        disableAnswers();
 
         Button current = (Button) event.getSource();
         userAnswer = current.getText();
         answered = true;
-
-        server.updateScore(userAnswer);
-
-        answerUpdate();
-        pointsUpdate();
-
         //blocks the possibility to answer anymore
     }
 
@@ -219,6 +233,9 @@ public class QuestionActivityCtrl {
         // after the time ends the right answer is requested and then shown
 
         //check whether the user's answer is correct and update the boolean value
+        firstOptionText.setDisable(false);
+        secondOptionText.setDisable(false);
+        thirdOptionText.setDisable(false);
 
         firstOptionText.setStyle("-fx-background-color: #ff000f;");
         secondOptionText.setStyle("-fx-background-color: #ff000f;");
@@ -233,6 +250,9 @@ public class QuestionActivityCtrl {
             thirdOptionText.setStyle("-fx-background-color: #72ff00;");
         }
 
+        progressBarTime.setOpacity(0);
+        timeLabel.textProperty().bind(timeSecondsGlobal.divide(1000).asString());
+
 
     }
 
@@ -241,7 +261,7 @@ public class QuestionActivityCtrl {
         // after the time ends the amount of won points is calculated and then shown to the player
 
         addedPointsInt = 0;
-        if (userAnswer.equals(getCorrectAnswer())) {
+        if (userAnswer != null && userAnswer.equals(getCorrectAnswer())) {
             addedPointsInt = 500;
         }
         addedPoints.setText("+" + String.valueOf(addedPointsInt));
@@ -257,32 +277,61 @@ public class QuestionActivityCtrl {
 //        addedPoints.setText(null);
 //        points.setText(String.valueOf(pointsInt));
     }
-
-    public void startTimer() {
-        progressBarTime.progressProperty().bind(Bindings.divide(timeSeconds, startTime));
-
-        timeLabel.textProperty().bind(timeSeconds.asString());    //bind the progressbar value to the seconds left
-        timeSeconds.set((int) startTime);
-        timeline = new Timeline();
-        timeline.getKeyFrames().add(
-                new KeyFrame(Duration.seconds(startTime + 1),      //the timeLine handles an animation which lasts start + 1 seconds
-                        new KeyValue(timeSeconds, 0)));    //animation finishes when timeSeconds comes to 0
-        timeline.setOnFinished(event -> {
+    //Always 10 seconds, to make the game synchronous
+    public void startTimerGlobal() {
+        timeSecondsGlobal.set((int) startTime);
+        timelineGlobal = new Timeline();
+        timelineGlobal.getKeyFrames().add(
+                new KeyFrame(Duration.millis(startTime + 1),      //the timeLine handles an animation which lasts start + 1 seconds
+                        new KeyValue(timeSecondsGlobal, 0)));    //animation finishes when timeSeconds comes to 0
+        timelineGlobal.setOnFinished(event -> {
             try {
                 displayNextQuestion();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });       //proceeds to the next question if no answer was given in 10 sec
-        timeline.playFromStart();                                 //start the animation
+        timelineGlobal.playFromStart();                                 //start the animation
     }
 
-    public void handleTimer(MouseEvent event) {
-        if (timeline != null) {
-            timeline.stop();        //if timeline exists stop it when any answer button is pressed
+    public void startTimerClient() {
+        if (!gameConfig.isSinglePlayer()) {
+            startTimeClient = server.getTimeClient();
+            timeSecondsClient.set((int) startTimeClient);
         }
-        timeline.stop();
-        System.out.println("Time took to answer - " + timeSeconds);
+         else {
+            timeSecondsClient.set((int) startTimeClient);
+        }
+        progressBarTime.setOpacity(1);
+        progressBarTime.progressProperty().bind(Bindings.divide(timeSecondsClient, startTimeClient));
+        timeLabel.textProperty().bind(timeSecondsClient.divide(1000).asString());    //bind the progressbar value to the seconds left
+
+        timelineClient = new Timeline();
+        timelineClient.getKeyFrames().add(
+                new KeyFrame(Duration.millis(startTimeClient + 1000),      //the timeLine handles an animation which lasts start + 1 seconds
+                        new KeyValue(timeSecondsClient, 0)));    //animation finishes when timeSeconds comes to 0
+        timelineClient.setOnFinished(event -> {
+            try {
+                disableAnswers();
+                updateTheScoreServer();
+                answerUpdate();
+                pointsUpdate();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });       //proceeds to the next question if no answer was given in 10 sec
+        timelineClient.playFromStart();                                 //start the animation
+    }
+
+    /**
+     * Method that stops the player from answering after client timer has ran out
+     * @throws IOException
+     */
+    public void disableAnswers() throws IOException {
+        firstOptionText.setDisable(true);
+        secondOptionText.setDisable(true);
+        thirdOptionText.setDisable(true);
     }
 
     /**
@@ -291,18 +340,43 @@ public class QuestionActivityCtrl {
      * @throws IOException
      */
     public void displayNextQuestion() throws IOException {
-        timeline.stop();
+        timelineGlobal.stop();
+        timelineClient.stop();
+
+        if (answered == false) {
+            gameConfig.setConsecutiveUnansweredQuestions(gameConfig.getConsecutiveUnansweredQuestions() + 1);
+        } else {
+            gameConfig.setConsecutiveUnansweredQuestions(0);
+        }
+
+        System.out.println("Question bugs: " + gameConfig.getConsecutiveUnansweredQuestions() + "     " + answered);
+
+        if (gameConfig.getConsecutiveUnansweredQuestions() >= 3 && gameConfig.getGameTypeString().equals("MULTIPLAYER")) {
+            this.server.removePlayer();
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("You have been removed from the room");
+            alert.setHeaderText("You have been remove from the room due to inactivity");
+            alert.setContentText("You have not answered 3 consecutive questions in a row, so you were left out of the game");
+            alert.show();
+
+            sceneCtrl.showServerBrowser();
+            return;
+        }
+
         if ((gameConfig.isMultiPlayer() && gameConfig.getCurrentQuestionNumber() == 9) || gameConfig.getCurrentQuestionNumber() == 19) {
             server.addOrUpdateLeaderboardEntry(gameConfig.getUserName(), gameConfig.getRoomId(), gameConfig.getScore());
             sceneCtrl.showLeaderboard();
         } else sceneCtrl.showNextQuestion();
     }
 
-    /*
-        Method that ends the game and returns the player to the main screen of the app
-     */
+    /**
+     * Method that ends the game and returns the player to the main screen of the app
+     * @throws IOException
+     * */
     public void goToMainScreen() throws IOException {
-        timeline.stop();
+        timelineGlobal.stop();
+        timelineClient.stop();
         sceneCtrl.showMainScreenScene();
     }
 
@@ -335,6 +409,17 @@ public class QuestionActivityCtrl {
         }
     }
 
+    public void useTimeJoker() {
+        //Joker that reduces time for all other players
+        if (getTimeJokerUsed()) { return; }
+        System.out.println("Time joker just used" + getTimeJokerUsed());
+        timeJoker.setDisable(true);
+        timeJoker.setOpacity(0.5);
+        gameConfig.setTimeJokerUsed(true);
+        server.useTimeJoker();
+
+    }
+
     /**
      * Getter for the correct answer
      *
@@ -361,9 +446,16 @@ public class QuestionActivityCtrl {
         return gameConfig.isDoublePointJokerUsed();
     }
 
-    public boolean getTimeJokerUsed() {
+    public Boolean getTimeJokerUsed() {
         return gameConfig.isTimeJokerUsed();
     }
+
+    public void resetJokers() {
+        gameConfig.setHintJokerUsed(false);
+        gameConfig.setDoublePointJokerUsed(false);
+        gameConfig.setTimeJokerUsed(false);
+    }
+
 
     /**
      * Getter for the question number
@@ -372,6 +464,9 @@ public class QuestionActivityCtrl {
      */
     public int getQuestionNumber() {
         return gameConfig.getCurrentQuestionNumber();
+    }
+    public void updateTheScoreServer() {
+        server.updateScore(userAnswer);
     }
 
     /**

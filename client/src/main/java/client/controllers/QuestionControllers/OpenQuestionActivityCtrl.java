@@ -54,6 +54,8 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
      * Initialises all the colors for the current scene
      */
     public void initialize() {
+        answerTextfield.setDisable(false);
+        answer.setDisable(false);
         answer.setStyle("-fx-background-color: #ffd783; -fx-border-color:  #ffd783; ");
         userAnswerRectangle.setBorder(Border.EMPTY);
         answerTextfield.setText("");
@@ -61,12 +63,19 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         answerTextfield.setText("");
         answered = false;
 
+        if (gameConfig.getCurrentQuestionNumber() <= 1) {
+            resetJokers();
+        }
+
         hintAnswerLabel.setOpacity(0);
 
         if (getHintJokerUsed() != null) {
             hintJoker.setDisable(getHintJokerUsed());
         }
-        if (!gameConfig.isSinglePlayer()) {
+
+
+        if (!gameConfig.isSinglePlayer())
+        {
             splitPane.setVisible(true);
             chatColumn.setPercentWidth(15);
             questionCol1.setPercentWidth(23.333);
@@ -74,6 +83,14 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
             questionCol1.setPercentWidth(23.333);
 
             playersActivity.setCellValueFactory(q -> new SimpleStringProperty(q.getValue()));
+
+            if (getTimeJokerUsed() != null) {
+                timeJoker.setDisable(getTimeJokerUsed());
+                if (getTimeJokerUsed()) {
+                    timeJoker.setOpacity(0.5);
+                }
+            }
+
         } else {
             splitPane.setVisible(false);
             chatColumn.setPercentWidth(9);
@@ -113,10 +130,11 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         else splitPane.setVisible(true);
 
         initialize();
-        startTimer();
+        startTimerClient();
+        startTimerGlobal();
     }
 
-    public void answerOpenQuestion(ActionEvent event) {
+    public void answerQuestion(ActionEvent event) throws IOException {
         // answers the question and blocks the possibility to answer anymore
         if (answered) {
             return;
@@ -125,7 +143,7 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
 
         try {
             //userAnswerInt = Integer.parseInt(answerTextfield.getText());
-            server.updateScore(answerTextfield.getText());
+            updateTheScoreServer();
             System.out.println(1);
         } catch (NumberFormatException e) {
             answerTextfield.setText("-99999");
@@ -139,9 +157,7 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         } catch (Exception e) {
             System.out.println(e);
         }
-
-        answerUpdate();
-        pointsUpdate();
+        disableAnswers();
     }
 
     public void answerUpdate() {
@@ -156,6 +172,8 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         }
 
         correctAnswerRectangle.setOpacity(1);
+        progressBarTime.setOpacity(0);
+        timeLabel.textProperty().bind(timeSecondsGlobal.divide(1000).asString());
 
     }
 
@@ -199,5 +217,17 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         server.useHintJoker();
         hintJoker.setDisable(true);
         gameConfig.setHintJokerUsed(true);
+    }
+
+    /**
+     * Method that stops the player from answering after client timer has ran out
+     * @throws IOException
+     */
+    public void disableAnswers() throws IOException {
+        answerTextfield.setDisable(true);
+        answer.setDisable(true);
+    }
+    public void updateTheScoreServer() {
+        server.updateScore(answerTextfield.getText());
     }
 }
