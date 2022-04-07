@@ -48,7 +48,7 @@
          <font>
             <Font size="24.0" />
          </font></Button>
-      <TextField fx:id="deletingID" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="363.0" promptText="Please type in ID of deleting action" scaleShape="false" translateY="-7.0" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+      <TextField id="id" fx:id="deletingID" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="363.0" promptText="Please type in ID of deleting action" scaleShape="false" translateY="-7.0" GridPane.halignment="CENTER" GridPane.rowIndex="1">
          <font>
             <Font size="9.0" />
          </font>
@@ -61,7 +61,7 @@
          <font>
             <Font name="System Bold" size="33.0" />
          </font></Label>
-      <TextField fx:id="editingID" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="363.0" promptText="Please type in ID of editing action" scaleShape="false" translateY="120.0" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+      <TextField id="id" fx:id="editingID" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="363.0" promptText="Please type in ID of editing action" scaleShape="false" translateY="120.0" GridPane.halignment="CENTER" GridPane.rowIndex="1">
          <font>
             <Font size="9.0" />
          </font>

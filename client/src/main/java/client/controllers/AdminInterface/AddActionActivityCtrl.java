@@ -96,7 +96,7 @@ public class AddActionActivityCtrl {
         } catch (NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
         }
-        return new Action("contribution-" + title.getText(), "Contributions/" + this.imageNameField.getText(), title.getText(), Long.parseLong(this.consumption.getText()), source.getText());
+        return new Action("contribution-" + title.getText(), "US/" + this.imageNameField.getText(), title.getText(), Long.parseLong(this.consumption.getText()), source.getText());
     }
 
     private void clearFields() {
