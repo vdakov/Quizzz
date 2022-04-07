@@ -7,22 +7,19 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.*;
 import javafx.util.Duration;
 
+
 import javax.inject.Inject;
+import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -50,17 +47,17 @@ public class QuestionActivityCtrl {
     @FXML
     protected ImageView questionStatementImage;
     @FXML
-    protected Label firstOptionText;
+    protected Button firstOptionText;
     @FXML
     protected ImageView firstOptionImage;
     @FXML
-    protected Label secondOptionText;
+    protected Button secondOptionText;
     @FXML
     protected ImageView secondOptionImage;
     @FXML
     protected ImageView image;
     @FXML
-    protected Label thirdOptionText;
+    protected Button thirdOptionText;
     @FXML
     protected ImageView thirdOptionImage;
     // current labels
@@ -98,6 +95,14 @@ public class QuestionActivityCtrl {
     protected Button pointsJoker;
     @FXML
     protected Button timeJoker;
+    @FXML
+    protected ColumnConstraints chatColumn;
+    @FXML
+    protected ColumnConstraints questionCol1;
+    @FXML
+    protected ColumnConstraints questionCol2;
+    @FXML
+    protected ColumnConstraints questionCol3;
 
     protected IntegerProperty timeSeconds =
             new SimpleIntegerProperty((int) startTime);
@@ -115,33 +120,75 @@ public class QuestionActivityCtrl {
      * If the game is multiplayer it displays the option to use emojis and to post them in a chat
      */
     public void initialize() throws IOException {
+        answered = false;
         firstOptionText.setBorder(Border.EMPTY);
         firstOptionText.setDisable(false);
         secondOptionText.setBorder(Border.EMPTY);
         secondOptionText.setDisable(false);
         thirdOptionText.setBorder(Border.EMPTY);
         thirdOptionText.setDisable(false);
+        firstOptionText.setStyle("   -fx-background-color: #2e4c8d;");
+        secondOptionText.setStyle("   -fx-background-color: #2e4c8d;");
+        thirdOptionText.setStyle("   -fx-background-color: #2e4c8d;");
+
+
+//        firstOptionText.setOnAction(new EventHandler<ActionEvent>() {
+//            @Override public void handle(ActionEvent e) {
+//                if(!answered){
+//                    firstOptionText.setStyle("   -fx-background-color: #203665;");
+//                }
+//
+//
+//            }
+//        });
+//
+//        secondOptionText.setOnAction(new EventHandler<ActionEvent>() {
+//            @Override public void handle(ActionEvent e) {
+//                if(!answered){
+//                    secondOptionText.setStyle("   -fx-background-color: #203665;");
+//                }
+//
+//
+//            }
+//        });
+//
+//        thirdOptionText.setOnAction(new EventHandler<ActionEvent>() {
+//            @Override public void handle(ActionEvent e) {
+//                if(!answered){
+//                    thirdOptionText.setStyle("   -fx-background-color: #203665;");
+//                }
+//
+//
+//            }
+//        });
+
 
         answered = false;
 
         addedPoints.setText(" ");
         addedPointsInt = 0;
 
-        if (!gameConfig.isSinglePlayer())
-        {
-            splitPane.setVisible(true);
+        if (!gameConfig.isSinglePlayer()) {
+            splitPane.setVisible(true); //show the chat
+            chatColumn.setPercentWidth(15);
+            questionCol1.setPercentWidth(23.333);
+            questionCol1.setPercentWidth(23.333);
+            questionCol1.setPercentWidth(23.333);
+
             playersActivity.setCellValueFactory(q -> new SimpleStringProperty(q.getValue()));
-                server.registerForMessages("/topic/emojis", q -> {
-                    refresh(q.get(0), q.get(1), q.get(2));
-                });
+            server.registerForMessages("/topic/emojis", q -> {
+                refresh(q.get(0), q.get(1), q.get(2));
+            });
+        } else {
+            splitPane.setVisible(false); //hide the chat
+            chatColumn.setPercentWidth(9);
+            questionCol1.setPercentWidth(25.333);
+            questionCol1.setPercentWidth(25.333);
+            questionCol1.setPercentWidth(25.333);
         }
-        else
-        {
-            splitPane.setVisible(false);
-        }
-      //  server.registerForMessages("/topic/emojis", q -> {
+        //  server.registerForMessages("/topic/emojis", q -> {
         //    refresh(q.get(0), q.get(1), q.get(2));
-      //  });
+        //  });
 
         hintJoker.setDisable(false);
         if (getHintJokerUsed() != null) {
@@ -149,15 +196,17 @@ public class QuestionActivityCtrl {
         }
     }
 
-    public void answerQuestion(MouseEvent event) {
+
+    public void answerQuestion(ActionEvent event) {
         // answers the question
         if (answered) {
             return;
         }
 
-        Label current = (Label) event.getSource();
+        Button current = (Button) event.getSource();
         userAnswer = current.getText();
         answered = true;
+
         server.updateScore(userAnswer);
 
         answerUpdate();
@@ -171,16 +220,17 @@ public class QuestionActivityCtrl {
 
         //check whether the user's answer is correct and update the boolean value
 
-        firstOptionText.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(50), BorderStroke.THICK)));
-        secondOptionText.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(50), BorderStroke.THICK)));
-        thirdOptionText.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(50), BorderStroke.THICK)));
+        firstOptionText.setStyle("-fx-background-color: #ff000f;");
+        secondOptionText.setStyle("-fx-background-color: #ff000f;");
+        thirdOptionText.setStyle("-fx-background-color: #ff000f;");
+
 
         if (getCorrectAnswer().equals(firstOptionText.getText())) {
-            firstOptionText.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(50), BorderStroke.THICK)));
+            firstOptionText.setStyle("-fx-background-color: #72ff00;");
         } else if (getCorrectAnswer().equals(secondOptionText.getText())) {
-            secondOptionText.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(50), BorderStroke.THICK)));
+            secondOptionText.setStyle("-fx-background-color: #72ff00;");
         } else {
-            thirdOptionText.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(50), BorderStroke.THICK)));
+            thirdOptionText.setStyle("-fx-background-color: #72ff00;");
         }
 
 
@@ -237,41 +287,19 @@ public class QuestionActivityCtrl {
 
     /**
      * Method that displays the next question or stops the game after the last question ends
+     *
      * @throws IOException
      */
     public void displayNextQuestion() throws IOException {
         timeline.stop();
-
-        if (answered == false) {
-            gameConfig.setConsecutiveUnansweredQuestions(gameConfig.getConsecutiveUnansweredQuestions() + 1);
-        } else {
-            gameConfig.setConsecutiveUnansweredQuestions(0);
-        }
-
-        System.out.println("Question bugs: " + gameConfig.getConsecutiveUnansweredQuestions() + "     " + answered);
-
-        if (gameConfig.getConsecutiveUnansweredQuestions() >= 3 && gameConfig.getGameTypeString().equals("MULTIPLAYER")) {
-            this.server.removePlayer();
-
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("You have been removed from the room");
-            alert.setHeaderText("You have been remove from the room due to inactivity");
-            alert.setContentText("You have not answered 3 consecutive questions in a row, so you were left out of the game");
-            alert.show();
-
-            sceneCtrl.showServerBrowser();
-            return;
-        }
-
         if ((gameConfig.isMultiPlayer() && gameConfig.getCurrentQuestionNumber() == 9) || gameConfig.getCurrentQuestionNumber() == 19) {
             server.addOrUpdateLeaderboardEntry(gameConfig.getUserName(), gameConfig.getRoomId(), gameConfig.getScore());
             sceneCtrl.showLeaderboard();
         } else sceneCtrl.showNextQuestion();
     }
 
-    /**
-     * Method that ends the game and returns the player to the main screen of the app
-     * @throws IOException
+    /*
+        Method that ends the game and returns the player to the main screen of the app
      */
     public void goToMainScreen() throws IOException {
         timeline.stop();
@@ -280,10 +308,12 @@ public class QuestionActivityCtrl {
 
     public void useHintJoker() {
         //Joker that eliminates the wrong answer
-        if (getHintJokerUsed()) { return; }
+        if (getHintJokerUsed()) {
+            return;
+        }
 
         //Make a list of possible answers
-        List<Label> answerLabels = new ArrayList();
+        List<Button> answerLabels = new ArrayList();
         answerLabels.add(firstOptionText);
         answerLabels.add(secondOptionText);
         answerLabels.add(thirdOptionText);
@@ -297,7 +327,7 @@ public class QuestionActivityCtrl {
         hintJoker.setDisable(true);
 
         //go until incorrect answer is found and eliminate it
-        for (Label answerLabel : answerLabels) {
+        for (Button answerLabel : answerLabels) {
             if (!answerLabel.getText().equals(correctAnswer)) {
                 answerLabel.setDisable(true);
                 return;
@@ -307,6 +337,7 @@ public class QuestionActivityCtrl {
 
     /**
      * Getter for the correct answer
+     *
      * @return the correct answer from the server
      */
     public String getCorrectAnswer() {
@@ -315,6 +346,7 @@ public class QuestionActivityCtrl {
 
     /**
      * Getter for the score
+     *
      * @return the score from the server
      */
     public int getPointsInt() {
@@ -335,6 +367,7 @@ public class QuestionActivityCtrl {
 
     /**
      * Getter for the question number
+     *
      * @return the current question number
      */
     public int getQuestionNumber() {
@@ -343,11 +376,11 @@ public class QuestionActivityCtrl {
 
     /**
      * Methods that will send to the server the type of emojy the player has selected
-     * @param event  the users clicks on the label
+     *
+     * @param event the users clicks on the label
      */
 
-    public void emoji1Display(MouseEvent event)
-    {
+    public void emoji1Display(MouseEvent event) {
         List<String> payload = new ArrayList<>();
         payload.add("1");
         payload.add(gameConfig.getUserName());
@@ -355,8 +388,7 @@ public class QuestionActivityCtrl {
         server.send("/topic/emojis", payload);
     }
 
-    public void emoji2Display(MouseEvent event)
-    {
+    public void emoji2Display(MouseEvent event) {
         List<String> payload = new ArrayList<>();
         payload.add("2");
         payload.add(gameConfig.getUserName());
@@ -364,8 +396,7 @@ public class QuestionActivityCtrl {
         server.send("/topic/emojis", payload);
     }
 
-    public void emoji3Display(MouseEvent event)
-    {
+    public void emoji3Display(MouseEvent event) {
         List<String> payload = new ArrayList<>();
         payload.add("3");
         payload.add(gameConfig.getUserName());
@@ -373,8 +404,7 @@ public class QuestionActivityCtrl {
         server.send("/topic/emojis", payload);
     }
 
-    public void emoji4Display(MouseEvent event)
-    {
+    public void emoji4Display(MouseEvent event) {
         List<String> payload = new ArrayList<>();
         payload.add("4");
         payload.add(gameConfig.getUserName());
@@ -382,8 +412,7 @@ public class QuestionActivityCtrl {
         server.send("/topic/emojis", payload);
     }
 
-    public void emoji5Display(MouseEvent event)
-    {
+    public void emoji5Display(MouseEvent event) {
         List<String> payload = new ArrayList<>();
         payload.add("5");
         payload.add(gameConfig.getUserName());
@@ -391,8 +420,7 @@ public class QuestionActivityCtrl {
         server.send("/topic/emojis", payload);
     }
 
-    public void hintJokerEvent(MouseEvent event)
-    {
+    public void hintJokerEvent(MouseEvent event) {
         List<String> payload = new ArrayList<>();
         payload.add("Hint");
         payload.add(gameConfig.getUserName());
@@ -400,8 +428,7 @@ public class QuestionActivityCtrl {
         server.send("/topic/emojis", payload);
     }
 
-    public void pointsJokerEvent(MouseEvent event)
-    {
+    public void pointsJokerEvent(MouseEvent event) {
         List<String> payload = new ArrayList<>();
         payload.add("x2 Points");
         payload.add(gameConfig.getUserName());
@@ -409,8 +436,7 @@ public class QuestionActivityCtrl {
         server.send("/topic/emojis", payload);
     }
 
-    public void timeJokerEvent(MouseEvent event)
-    {
+    public void timeJokerEvent(MouseEvent event) {
         List<String> payload = new ArrayList<>();
         payload.add("Half Time");
         payload.add(gameConfig.getUserName());
@@ -420,81 +446,82 @@ public class QuestionActivityCtrl {
 
     /**
      * Method that refreshes the list of messages in the chat by adding a new message  whenever a user clicks on one of the objects.
+     *
      * @param type the unique number assigned to an object
      */
 
     public void refresh(String type, String username, String roomId) {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         List<String> chatEntries = new ArrayList<>();
-            if (type.equals("1") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName()) ) {           // happy emoji
-                chatEntries.add(getTypeOfMessage("1", username));
-            }
-            if (type.equals("2") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName()) ) {           //sad emoji
-                chatEntries.add(getTypeOfMessage("2", username));
-            }
-            if (type.equals("3") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName()) ) {           //no words emoji
-                chatEntries.add(getTypeOfMessage("3", username));
-            }
-            if (type.equals("4") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName()) ) {           //snowman emoji
-                chatEntries.add(getTypeOfMessage("4", username));
-            }
-            if (type.equals("5") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName()) ) {           //dead emoji
-                chatEntries.add(getTypeOfMessage("5", username));
-            }
-            if (type.equals("Hint") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName()) ) {        //Hint joker
-                 chatEntries.add(getTypeOfMessage("Hint", username));
-            }
-            if (type.equals("x2 Points") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName()) ) {   //x2 Points Joker
-                 chatEntries.add(getTypeOfMessage("x2 Points", username));
-            }
-            if (type.equals("Half Time") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName()) ) {   //Half Time Joker
-                chatEntries.add(getTypeOfMessage("Half Time", username));
-            }
+        if (type.equals("1") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName())) {           // happy emoji
+            chatEntries.add(getTypeOfMessage("1", username));
+        }
+        if (type.equals("2") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName())) {           //sad emoji
+            chatEntries.add(getTypeOfMessage("2", username));
+        }
+        if (type.equals("3") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName())) {           //no words emoji
+            chatEntries.add(getTypeOfMessage("3", username));
+        }
+        if (type.equals("4") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName())) {           //snowman emoji
+            chatEntries.add(getTypeOfMessage("4", username));
+        }
+        if (type.equals("5") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName())) {           //dead emoji
+            chatEntries.add(getTypeOfMessage("5", username));
+        }
+        if (type.equals("Hint") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName())) {        //Hint joker
+            chatEntries.add(getTypeOfMessage("Hint", username));
+        }
+        if (type.equals("x2 Points") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName())) {   //x2 Points Joker
+            chatEntries.add(getTypeOfMessage("x2 Points", username));
+        }
+        if (type.equals("Half Time") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName())) {   //Half Time Joker
+            chatEntries.add(getTypeOfMessage("Half Time", username));
+        }
 
-            chatEntries.addAll(tableview.getItems());
-            tableview.setItems(FXCollections.observableList(chatEntries));
+        chatEntries.addAll(tableview.getItems());
+        tableview.setItems(FXCollections.observableList(chatEntries));
 
     }
 
     /**
      * Method that is going to return a message about what emojis were used by players
+     *
      * @param type identifies the type of object with which the players have interacted. All objects have an unique number assigned to them
      * @return a message in the form of a String
      */
-    public String getTypeOfMessage(String type, String username)
-    {
+    public String getTypeOfMessage(String type, String username) {
         switch (type) {
-            case "1" :
+            case "1":
                 //happy emoji
-                return   " \u263A" + " " + username;
+                return " \u263A" + " " + username;
 
-            case "2" :
+            case "2":
                 //sad emoji
-                return  " \u2639" + " " + username;
+                return " \u2639" + " " + username;
 
-            case "3" :
+            case "3":
                 //no words emoji
                 return " \u2687" + " " + username;
 
-            case "4" :
+            case "4":
                 //snowman emoji
-                return  " \u2603" +  " " + username;
+                return " \u2603" + " " + username;
 
-            case "5" :
+            case "5":
                 //dead emoji
-                return  " \u2620" + " " + username;
+                return " \u2620" + " " + username;
 
-            case "Hint" :
+            case "Hint":
                 //Hint Joker
                 return "Hint by" + " " + username;
 
-            case "x2 Points" :
+            case "x2 Points":
                 //x2 Points Joker
-                return  "x2 Points by" + " " + username;
+                return "x2 Points by" + " " + username;
 
-            case "Half Time" :
+            case "Half Time":
                 //Half Time Joker
-                return  "Half Time by" + " " + username;
+                return "Half Time by" + " " + username;
 
             default:
                 return null;
