@@ -47,7 +47,7 @@ public class MultiplayerRoom extends Room {
         playerDoublePointJokerUsed.put(username, false);
         playerTimeJokerUsed.put(username, false);
         for (int i = 0; i < 20; i++) {
-            playerTime.get(i).put(username, 10);
+            playerTime.get(i).put(username, 10000);
         }
 
     }
@@ -98,7 +98,7 @@ public class MultiplayerRoom extends Room {
         for (String key : question.keySet()) {
             if (!key.equals(username)) {
                 System.out.println("Username limited: " + username + " in question: " + (number + 1)) ;
-                question.replace(key, 5);
+                question.replace(key, 5000);
             }
         }
     }

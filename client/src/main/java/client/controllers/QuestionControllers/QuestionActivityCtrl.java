@@ -211,7 +211,7 @@ public class QuestionActivityCtrl {
         // after the time ends the amount of won points is calculated and then shown to the player
 
         addedPointsInt = 0;
-        if (userAnswer.equals(getCorrectAnswer())) {
+        if (userAnswer != null && userAnswer.equals(getCorrectAnswer())) {
             addedPointsInt = 500;
         }
         addedPoints.setText("+" + String.valueOf(addedPointsInt));
@@ -258,7 +258,7 @@ public class QuestionActivityCtrl {
 
         timelineClient = new Timeline();
         timelineClient.getKeyFrames().add(
-                new KeyFrame(Duration.millis(startTimeClient + 1),      //the timeLine handles an animation which lasts start + 1 seconds
+                new KeyFrame(Duration.millis(startTimeClient + 1000),      //the timeLine handles an animation which lasts start + 1 seconds
                         new KeyValue(timeSecondsClient, 0)));    //animation finishes when timeSeconds comes to 0
         timelineClient.setOnFinished(event -> {
             try {
