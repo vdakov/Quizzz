@@ -203,25 +203,25 @@ public class ServerUtils {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
 
         EXEC_WAIT_FOR_START.submit(() -> {
-        while (!Thread.interrupted()) {
+            while (!Thread.interrupted()) {
 
-            var res = ClientBuilder.newClient(new ClientConfig())
-                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/MULTIPLAYER/"
-                            + gameConfiguration.getRoomId() + "/waitForGameToStart")
-                    .request(APPLICATION_JSON)
-                    .accept(APPLICATION_JSON).get(Response.class);
+                var res = ClientBuilder.newClient(new ClientConfig())
+                        .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/MULTIPLAYER/"
+                                + gameConfiguration.getRoomId() + "/waitForGameToStart")
+                        .request(APPLICATION_JSON)
+                        .accept(APPLICATION_JSON).get(Response.class);
 
-            if (res.getStatus() == 204) {
-                continue;
-            }
+                if (res.getStatus() == 204) {
+                    continue;
+                }
 
-            Boolean gameInProgress = res.readEntity(Boolean.class);
+                Boolean gameInProgress = res.readEntity(Boolean.class);
 
-            if (gameInProgress) {
-                System.out.println("Game started 1234567890");
-                startedGame.accept(true);
-                this.stopWaitForRoomThread();
-            }
+                if (gameInProgress) {
+                    System.out.println("Game started 1234567890");
+                    startedGame.accept(true);
+                    this.stopWaitForRoomThread();
+                }
             }
         });
     }
@@ -293,6 +293,7 @@ public class ServerUtils {
     }
 
     private static ExecutorService EXEC = Executors.newSingleThreadExecutor();
+
     public void waitForFilledLeaderboard(Consumer<List<LeaderboardEntry>> l) {
         if (EXEC.isShutdown()) EXEC = Executors.newSingleThreadExecutor();
         EXEC.submit(() -> {

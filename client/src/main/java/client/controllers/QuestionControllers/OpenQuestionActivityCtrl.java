@@ -56,7 +56,7 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
     public void initialize() {
         answerTextfield.setDisable(false);
         answer.setDisable(false);
-        answer.setStyle("-fx-background-color: #ffd783; -fx-border-color:  #ffd783; -fx-background-radius: 15; -fx-border-radius: 15;");
+        answer.setStyle("-fx-background-color: #ffd783; -fx-border-color:  #ffd783; ");
         userAnswerRectangle.setBorder(Border.EMPTY);
         answerTextfield.setText("");
         correctAnswerRectangle.setOpacity(0);
@@ -78,11 +78,18 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         if (!gameConfig.isSinglePlayer())
         {
             splitPane.setVisible(true);
+            chatColumn.setPercentWidth(15);
+            questionCol1.setPercentWidth(23.333);
+            questionCol1.setPercentWidth(23.333);
+            questionCol1.setPercentWidth(23.333);
+
             playersActivity.setCellValueFactory(q -> new SimpleStringProperty(q.getValue()));
-        }
-        else
-        {
+        } else {
             splitPane.setVisible(false);
+            chatColumn.setPercentWidth(9);
+            questionCol1.setPercentWidth(25.333);
+            questionCol1.setPercentWidth(25.333);
+            questionCol1.setPercentWidth(25.333);
         }
 
         server.registerForMessages("/topic/emojis", q -> {
@@ -93,6 +100,7 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
     /**
      * Sets the text for the needed question given as parameter
      * Displays the appropriate image for the question
+     *
      * @param openQuestion the question that is set
      */
     public void displayQuestion(OpenQuestion openQuestion) throws IOException {
@@ -149,10 +157,10 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         // after the time ends the right answer is requested and then shown
         System.out.println(userAnswerInt);
         if (userAnswerInt == Integer.parseInt(getCorrectAnswer())) {
-            userAnswerRectangle.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(30), BorderStroke.THICK)));
+            userAnswerRectangle.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(0), BorderStroke.THICK)));
         } else {
-            userAnswerRectangle.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(30), BorderStroke.THICK)));
-            correctAnswerRectangle.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(30), BorderStroke.THICK)));
+            userAnswerRectangle.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(0), BorderStroke.THICK)));
+            correctAnswerRectangle.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(0), BorderStroke.THICK)));
             correctAnswerLabel.setText(getCorrectAnswer());
         }
 
@@ -186,7 +194,9 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
 
     public void useHintJoker() {
         //Joker that eliminates the wrong answer
-        if (getHintJokerUsed()) { return; }
+        if (getHintJokerUsed()) {
+            return;
+        }
 
         Integer correctAnswer = Integer.parseInt(getCorrectAnswer());
 
