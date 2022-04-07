@@ -375,7 +375,7 @@ public class ServerUtils {
 
             Response response = ClientBuilder.newClient(new ClientConfig()) //
                     .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() +
-                            "/" + gameConfiguration.getRoomId() + "/" + gameConfiguration.getCurrentQuestionNumber() + "/" + gameConfiguration.getTimeLeft() +
+                            "/" + gameConfiguration.getRoomId() + "/" + gameConfiguration.getCurrentQuestionNumber() +
                             "/postAnswer")
                     .request(APPLICATION_JSON)
                     .accept(APPLICATION_JSON)
@@ -767,6 +767,7 @@ public class ServerUtils {
                     .request(APPLICATION_JSON)
                     .accept(APPLICATION_JSON).get(Response.class);
 
+            System.out.println("response added Point" + response.getStatus());
             switch (response.getStatus()) {
                 case 200: {
                     return response.readEntity(Integer.class);
@@ -971,4 +972,24 @@ public class ServerUtils {
                 .target(SERVER).path("api/activities/restoreActivityBank")
                 .request().get();
     }
+
+    public void calculateAddedPoints() {
+        try {
+            GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+
+            Response response = ClientBuilder.newClient(new ClientConfig()) //
+                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" +
+                            gameConfiguration.getRoomId() + "/" + gameConfiguration.getCurrentQuestionNumber() + "/calculateAddedPoints")
+                    .request(APPLICATION_JSON)
+                    .accept(APPLICATION_JSON)
+                    .get();
+
+            System.out.println("Response status: " + response.getStatus());
+
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+        }
+    }
+
+
 }

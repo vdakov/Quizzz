@@ -144,20 +144,58 @@ public class SingleplayerGameService {
      * Calculates the points earned in this round
      * @return the points earned in this round
      */
-    public int calculatePointsAdded(String username, String roomId, int timeLeft) {
-        return roomCatalog.getSinglePlayerRoom(roomId).calculateAddedPoints(timeLeft);
+    public Integer calculatePointsAdded(String username, String roomId, int timeLeft) {
+        try {
+            if (!username.equals(roomCatalog.getSinglePlayerRoom(roomId).getRoomCreator())) {
+                return null;
+            }
+
+            return roomCatalog.getSinglePlayerRoom(roomId).calculateAddedPoints(timeLeft);
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+            return null;
+        }
     }
 
-    public int getAddedPoints(String username, String roomId) {
-        return roomCatalog.getSinglePlayerRoom(roomId).getAddedPoints();
+    public Integer getAddedPoints(String username, String roomId) {
+        try {
+            if (!username.equals(roomCatalog.getSinglePlayerRoom(roomId).getRoomCreator())) {
+                return null;
+            }
+
+            return roomCatalog.getSinglePlayerRoom(roomId).getAddedPoints();
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+            return null;
+        }
+
     }
 
-    public int getTimeLeft(String username, String roomId) {
-        return roomCatalog.getSinglePlayerRoom(roomId).getTimeLeft();
+    public Integer getTimeLeft(String username, String roomId) {
+        try {
+            if (!username.equals(roomCatalog.getSinglePlayerRoom(roomId).getRoomCreator())) {
+                return null;
+            }
+
+            return roomCatalog.getSinglePlayerRoom(roomId).getTimeLeft();
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+            return null;
+        }
+
     }
 
     public void setTimeLeft(String username, String roomId, int timeLeft) {
-        roomCatalog.getSinglePlayerRoom(roomId).setTimeLeft(timeLeft);
+        try {
+            if (!username.equals(roomCatalog.getSinglePlayerRoom(roomId).getRoomCreator())) {
+                return;
+            }
+
+            roomCatalog.getSinglePlayerRoom(roomId).setTimeLeft(timeLeft);
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+            return;
+        }
     }
 
     /**

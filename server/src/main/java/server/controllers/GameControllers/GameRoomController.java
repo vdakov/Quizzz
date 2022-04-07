@@ -416,13 +416,12 @@ public class GameRoomController {
      * @param roomId    the id of the game that the player is in
      * @return whether the request was successful or not
      */
-    @GetMapping("/calculateAddedPoints")
+    @GetMapping("/{questionNumber}/calculateAddedPoints")
     public ResponseEntity<Object> calculateAddedPoints(@PathVariable("username") String username, @PathVariable("gameType") String gameType,
                                                        @PathVariable("roomId") String roomId, @PathVariable("questionNumber") String questionNumber) {
         if (gameType.equals("SINGLEPLAYER")) {
             try {
                 int questionNo = Integer.parseInt(questionNumber);
-//                int timeLeft = singlePlayerGameService.///;
                 singlePlayerGameService.calculatePointsAdded(username, roomId, singlePlayerGameService.getTimeLeft(username, roomId));
                 return ResponseEntity.status(HttpStatus.OK).build();
             } catch (Exception e) {

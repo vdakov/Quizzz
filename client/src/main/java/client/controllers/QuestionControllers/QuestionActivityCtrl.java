@@ -222,10 +222,14 @@ public class QuestionActivityCtrl {
     public void answerQuestion(ActionEvent event) throws IOException {
         // answers the question
         if (answered) {
-            timeLeft = timeSecondsGlobal.get();
-            updateTimeLeft();
             return;
         }
+
+        timeLeft = timeSecondsGlobal.get();
+        updateTimeLeft();
+        server.calculateAddedPoints();
+        System.out.println("server point- " + server.getAddedPoints());
+
         disableAnswers();
 
         Button current = (Button) event.getSource();
@@ -266,6 +270,8 @@ public class QuestionActivityCtrl {
         // after the time ends the amount of won points is calculated and then shown to the player
 
         addedPointsInt = 0;
+        System.out.println("Points : " + getAddedPointsInt());
+        System.out.println("Score : " + server.getScore());
         if (userAnswer != null && userAnswer.equals(getCorrectAnswer())) {
             addedPointsInt = getAddedPointsInt();
         }
@@ -638,5 +644,8 @@ public class QuestionActivityCtrl {
         return server.getAddedPoints();
     }
 
-    public void updateTimeLeft() { gameConfig.setTimeLeft(timeLeft); }
+    public void updateTimeLeft() {
+        gameConfig.setTimeLeft(timeLeft);
+        server.setTimeLeft();
+    }
 }
