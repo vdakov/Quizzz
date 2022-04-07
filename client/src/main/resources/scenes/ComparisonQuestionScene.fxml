@@ -63,7 +63,7 @@
                 <RowConstraints maxHeight="260.0" minHeight="10.0" prefHeight="260.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-            <Button fx:id="firstOptionText" mnemonicParsing="false" onAction="#answerQuestion" prefHeight="178.0" prefWidth="254.0" text="1" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <Button fx:id="firstOptionText" mnemonicParsing="false" onAction="#answerQuestion" prefHeight="178.0" prefWidth="254.0" text="1" textFill="WHITE" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                 <ImageView fx:id="firstOptionImage" pickOnBounds="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             </children>
             <columnConstraints>
