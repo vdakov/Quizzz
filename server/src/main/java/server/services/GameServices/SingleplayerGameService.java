@@ -38,7 +38,7 @@ public class SingleplayerGameService {
      */
     public String createNewSinglePlayerGame(String username) {
         try {
-            String roomId               = Util.getAlphaNumericString(10);
+            String roomId               = Util.getAlphaNumericString(5);
             ActionCatalog actionCatalog = new ActionCatalog(activityRepository.findAll());
 
             List<Pair<Question, String>> questionList = QuestionGenerator.generateQuestions(actionCatalog, 20, 2, 7, new Random());
@@ -132,13 +132,67 @@ public class SingleplayerGameService {
             if (!username.equals(roomCatalog.getSinglePlayerRoom(roomId).getRoomCreator())) {
                 return null;
             }
-
             return roomCatalog.getSinglePlayerRoom(roomId).getPlayerScore();
         } catch (Exception e) {
             System.out.println("An exception occurred");
             return null;
         }
     }
+
+    /**
+     * Calculates the points earned in this round
+     * @return the points earned in this round
+     */
+    public Integer calculatePointsAdded(String username, String roomId, boolean partialPoint) {
+        try {
+            return roomCatalog.getSinglePlayerRoom(roomId).calculateAddedPoints(partialPoint);
+        } catch (Exception e) {
+            System.out.println("An exception occurred while calculating points");
+            return null;
+        }
+    }
+
+    /**
+     * Gets the points earned by the player for that specific game
+     * @param username  the username of the player
+     * @param roomId    the id of the game that the player is in
+     * @return the points earned in this question
+     */
+    public Integer getAddedPoints(String username, String roomId) {
+        try {
+            return roomCatalog.getSinglePlayerRoom(roomId).getAddedPoints();
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+            return null;
+        }
+    }
+
+    /**
+     * Sets the time left after the user input the answer
+     * @param username  the username of the player
+     * @param roomId    the id of the game that the player is in
+     * @param timeLeft  time left in milliseconds
+     */
+    public void setTimeLeft(String username, String roomId, int timeLeft) {
+        try {
+            if (!username.equals(roomCatalog.getSinglePlayerRoom(roomId).getRoomCreator())) {
+                return;
+            }
+
+            roomCatalog.getSinglePlayerRoom(roomId).setTimeLeft(timeLeft);
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+            return;
+        }
+    }
+
+    /**
+     * Checks whether the hint joker is used or not
+     *
+     * @param username  the user who used the hint joker
+     * @param roomId    the id of the room the user is in
+     * @return returns true when the hint joker is used
+     */
     public Boolean getHintJokerUsed(String username, String roomId) {
         try {
             if (!username.equals(roomCatalog.getSinglePlayerRoom(roomId).getRoomCreator())) {
@@ -152,12 +206,17 @@ public class SingleplayerGameService {
         }
     }
 
+    /**
+     * Checks whether the double point joker is used or not
+     * @param username  the user who used the double point joker
+     * @param roomId    the id of the room the user is in
+     * @return returns true when the double point joker is used
+     */
     public Boolean getDoublePointJokerUsed(String username, String roomId) {
         try {
             if (!username.equals(roomCatalog.getSinglePlayerRoom(roomId).getRoomCreator())) {
                 return null;
             }
-
             return roomCatalog.getSinglePlayerRoom(roomId).getDoublePointJokerUsed();
         } catch (Exception e) {
             System.out.println("An exception occurred");
@@ -166,29 +225,57 @@ public class SingleplayerGameService {
     }
 
     /**
-     * Updated the score of the player or returns null / false if some error occurs
+     * Compares whether the user answer and correct answer is equal and updates the score of the player.
+     * If the question type is open question, there is a range of answer that is accepted to gain partial points even if the user answer is not equal to the correct answer.
      *
      * @param username       the user that needs the score update
      * @param roomId         the id of the room the user is in
      * @param questionNumber the question number answered by the user
      * @param userAnswer     the answer user
+     * @return null / false if some error occurs
      */
-    public Boolean updateSinglePlayerScore(String username, String roomId, int questionNumber, String userAnswer) {
+    public Boolean updateSinglePlayerScore(String username, String roomId, int questionNumber, String userAnswer, String questionType) {
         try {
             if (!username.equals(roomCatalog.getSinglePlayerRoom(roomId).getRoomCreator())) {
                 return false;
             }
-
-            if (userAnswer.equals(getSinglePlayerAnswer(username, roomId, questionNumber))) {
-                roomCatalog.getSinglePlayerRoom(roomId).updatePlayerScore(500);
+            String correctAnswer = getSinglePlayerAnswer(username, roomId, questionNumber);
+            if (userAnswer.equals(correctAnswer)) {
+                this.calculatePointsAdded(username, roomId, false);
+                roomCatalog.getSinglePlayerRoom(roomId).updatePlayerScore();
+                return true;
+            } else if (questionType.equals("OpenQuestion")) {
+                int userAnswerInt;
+                        try {
+                            userAnswerInt = Integer.parseInt(userAnswer);
+                            if (userAnswerInt > Integer.parseInt(correctAnswer) * 0.8 || userAnswerInt < Integer.parseInt(correctAnswer) * 1.2 ) {
+                                this.calculatePointsAdded(username, roomId, true);
+                                roomCatalog.getSinglePlayerRoom(roomId).updatePlayerScore();
+                            }
+                            System.out.println(1);
+                        } catch (NumberFormatException e) {
+                            return false;
+                        } catch (NullPointerException e) {
+                            return false;
+                        } catch (Exception e) {
+                            System.out.println(e);
+                }
+            } else {
+                roomCatalog.getSinglePlayerRoom(roomId).setAddedPoint(0);
             }
-
             return true;
         } catch (Exception e) {
             System.out.println("An exception occurred");
             return null;
         }
     }
+
+    /**
+     * Use the hint joker
+     * @param username  the user that needs the score update
+     * @param roomId    the id of the room the user is in
+     * @return true if the hint joker is successfully used
+     */
     public Boolean useHintJoker(String username, String roomId) {
         try {
             if (!username.equals(roomCatalog.getSinglePlayerRoom(roomId).getRoomCreator())) {
@@ -204,19 +291,19 @@ public class SingleplayerGameService {
             return null;
         }
     }
-    public Boolean useDoublePointJoker(String username, String roomId) {
+
+    /**
+     * Uses the double point joker
+     * @param username  the user that needs the score update
+     * @param roomId    the id of the room the user is in
+     */
+    public void useDoublePointJoker(String username, String roomId) {
         try {
-            if (!username.equals(roomCatalog.getSinglePlayerRoom(roomId).getRoomCreator())) {
-                return false;
-            }
-
             roomCatalog.getSinglePlayerRoom(roomId).useDoublePointJoker();
-
-            return true;
         } catch (Exception e) {
             System.out.println("An exception occurred");
-            return null;
         }
     }
+
 }
 

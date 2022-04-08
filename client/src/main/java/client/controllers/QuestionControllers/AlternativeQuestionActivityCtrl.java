@@ -5,12 +5,12 @@ import client.controllers.SceneCtrl;
 import com.google.inject.Inject;
 import commons.Questions.AlternativeQuestion;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.Image;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-
 import java.util.concurrent.ExecutionException;
 
 
@@ -29,6 +29,7 @@ public class AlternativeQuestionActivityCtrl extends QuestionActivityCtrl {
     /**
      * Sets the text for the needed question given as parameter
      * Properly displays the corresponding images
+     *
      * @param alternativeQuestion the question that is set
      */
     public void displayQuestion(AlternativeQuestion alternativeQuestion) throws IOException {
@@ -39,7 +40,11 @@ public class AlternativeQuestionActivityCtrl extends QuestionActivityCtrl {
         ByteArrayInputStream bis = new ByteArrayInputStream(server.getQuestionImage(alternativeQuestion.getQuestion().getRight()));
         BufferedImage bImage = ImageIO.read(bis);
 
-        image.setImage(SwingFXUtils.toFXImage(bImage, null));
+        try {
+            this.image.setImage(SwingFXUtils.toFXImage(bImage, null));
+        } catch (Exception e) {
+            this.image.setImage(new Image("pictures/placeholder.png"));
+        }
 
 
         sampleQuestion.setText(alternativeQuestion.getQuestion().getKey());
@@ -52,7 +57,8 @@ public class AlternativeQuestionActivityCtrl extends QuestionActivityCtrl {
         gameConfig.setScore(getPointsInt());
 
         initialize();
-        startTimer();
+        startTimerClient();
+        startTimerGlobal();
         System.out.println("Timer started");
     }
 }

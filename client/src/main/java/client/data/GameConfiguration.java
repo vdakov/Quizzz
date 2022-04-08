@@ -12,6 +12,7 @@ public class GameConfiguration {
     }
 
     private GameType gameType;
+    private String questionType;
     private String userName;
     private String roomId;
     private int currentQuestionNumber;
@@ -19,6 +20,11 @@ public class GameConfiguration {
     private boolean hintJokerUsed;
     private boolean doublePointJokerUsed;
     private boolean timeJokerUsed;
+    private long timeLeft;
+
+    private int consecutiveUnansweredQuestions;
+
+    private boolean hasConnected;
 
     public GameConfiguration() {
         this.userName = null;
@@ -30,6 +36,24 @@ public class GameConfiguration {
         this.doublePointJokerUsed = false;
         this.timeJokerUsed = false;
 
+        this.consecutiveUnansweredQuestions = 0;
+        hasConnected  = false;
+    }
+
+    public boolean getConnected() {
+        return hasConnected;
+    }
+
+    public void connect() {
+        hasConnected = true;
+    }
+
+    public int getConsecutiveUnansweredQuestions() {
+        return consecutiveUnansweredQuestions;
+    }
+
+    public void setConsecutiveUnansweredQuestions(int consecutiveUnansweredQuestions) {
+        this.consecutiveUnansweredQuestions = consecutiveUnansweredQuestions;
     }
 
     public static GameConfiguration getConfiguration() {
@@ -99,7 +123,7 @@ public class GameConfiguration {
         return score;
     }
 
-    public boolean isHintJokerUsed() {
+    public Boolean isHintJokerUsed() {
         return hintJokerUsed;
     }
 
@@ -107,7 +131,7 @@ public class GameConfiguration {
         this.hintJokerUsed = hintJokerUsed;
     }
 
-    public boolean isDoublePointJokerUsed() {
+    public Boolean isDoublePointJokerUsed() {
         return doublePointJokerUsed;
     }
 
@@ -115,11 +139,19 @@ public class GameConfiguration {
         this.doublePointJokerUsed = doublePointJokerUsed;
     }
 
-    public boolean isTimeJokerUsed() {
+    public Boolean isTimeJokerUsed() {
         return timeJokerUsed;
     }
 
     public void setTimeJokerUsed(boolean timeJokerUsed) {
         this.timeJokerUsed = timeJokerUsed;
     }
+
+    public long getTimeLeft() { return timeLeft; }
+
+    public void setTimeLeft(long timeLeft) { this.timeLeft = timeLeft; }
+
+    public String getQuestionType() { return questionType; }
+
+    public void setQuestionType(String questionType) { this.questionType = questionType; }
 }

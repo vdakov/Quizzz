@@ -14,16 +14,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
-
-import java.util.concurrent.ExecutionException;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
 
 public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
-    private int userAnswerInt;
+    private String userAnswer;
     private int addedPointsInt;
     // current labels
     @FXML
@@ -55,26 +54,55 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
      * Initialises all the colors for the current scene
      */
     public void initialize() {
-        answer.setStyle("-fx-background-color: #ffd783; -fx-border-color:  #ffd783; -fx-background-radius: 15; -fx-border-radius: 15;");
+        answerTextfield.setDisable(false);
+        answer.setDisable(false);
+        answer.setStyle("-fx-background-color: #ffd783; -fx-border-color:  #ffd783; ");
         userAnswerRectangle.setBorder(Border.EMPTY);
         answerTextfield.setText("");
         correctAnswerRectangle.setOpacity(0);
         answerTextfield.setText("");
         answered = false;
 
+        addedPoints.setText(" ");
+        addedPointsInt = 0;
+
+        if (gameConfig.getCurrentQuestionNumber() <= 1) {
+            resetJokers();
+        }
+
         hintAnswerLabel.setOpacity(0);
 
         if (getHintJokerUsed() != null) {
             hintJoker.setDisable(getHintJokerUsed());
         }
-        if (!gameConfig.isSinglePlayer())
-        {
-            splitPane.setVisible(true);
-            playersActivity.setCellValueFactory(q -> new SimpleStringProperty(q.getValue()));
+        if (getDoublePointJokerUsed() != null) {
+            doublePointJoker.setDisable(getDoublePointJokerUsed());
         }
-        else
-        {
+        if (!gameConfig.isSinglePlayer()) {
+            splitPane.setVisible(true);
+            chatColumn.setPercentWidth(15);
+            questionCol1.setPercentWidth(23.333);
+            questionCol1.setPercentWidth(23.333);
+            questionCol1.setPercentWidth(23.333);
+
+            playersActivity.setCellValueFactory(q -> new SimpleStringProperty(q.getValue()));
+
+            if (getTimeJokerUsed() != null) {
+                timeJoker.setDisable(getTimeJokerUsed());
+                if (getTimeJokerUsed()) {
+                    timeJoker.setOpacity(0.5);
+                }
+            }
+
+        } else {
             splitPane.setVisible(false);
+            chatColumn.setPercentWidth(9);
+            questionCol1.setPercentWidth(25.333);
+            questionCol1.setPercentWidth(25.333);
+            questionCol1.setPercentWidth(25.333);
+
+            timeJoker.setOpacity(0);
+            gameConfig.setTimeJokerUsed(true);
         }
 
         server.registerForMessages("/topic/emojis", q -> {
@@ -85,12 +113,14 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
     /**
      * Sets the text for the needed question given as parameter
      * Displays the appropriate image for the question
+     *
      * @param openQuestion the question that is set
      */
     public void displayQuestion(OpenQuestion openQuestion) throws IOException {
         if (openQuestion == null) {
             return;
         }
+
         sampleQuestion.setText(openQuestion.getQuestion().getKey());
         questionNumberLabel.setText("Question " + getQuestionNumber());
         points.setText(String.valueOf(getPointsInt()));
@@ -107,77 +137,68 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         else splitPane.setVisible(true);
 
         initialize();
-        startTimer();
+        startTimerClient();
+        startTimerGlobal();
     }
 
-    public void answerQuestion(ActionEvent event) {
+    /**
+     * Gets the answer that was given for the question
+     * @param event the action that triggers getting the input that was answered
+     * @throws IOException
+     */
+    public void answerQuestion(ActionEvent event) throws IOException {
         // answers the question and blocks the possibility to answer anymore
         if (answered) {
             return;
         }
+        timeLeft = timeSecondsGlobal.get();
+        System.out.println(timeLeft);
+
+        userAnswer = answerTextfield.getText();
         answered = true;
-
-        try {
-            //userAnswerInt = Integer.parseInt(answerTextfield.getText());
-            server.updateScore(answerTextfield.getText());
-            System.out.println(1);
-        } catch (NumberFormatException e) {
-            answerTextfield.setText("-99999");
-            //server.updateScore(answerTextfield.getText());
-            userAnswerInt = Integer.parseInt(answerTextfield.getText());
-        } catch (NullPointerException e) {
-            if (answerTextfield.getText() == (null) || answerTextfield.getText().trim().isEmpty()) {
-                answerTextfield.setText("-99999");
-                userAnswerInt = Integer.parseInt(answerTextfield.getText());
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
-        answerUpdate();
-        pointsUpdate();
+        disableAnswers();
     }
 
+    /**
+     * Updates the answer
+     *  after the time ends the right answer is requested and then shown
+     */
     public void answerUpdate() {
-        // after the time ends the right answer is requested and then shown
-        System.out.println(userAnswerInt);
-        if (userAnswerInt == Integer.parseInt(getCorrectAnswer())) {
-            userAnswerRectangle.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(30), BorderStroke.THICK)));
+        System.out.println(userAnswer);
+        if (userAnswer.equals(getCorrectAnswer())) {
+            userAnswerRectangle.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(0), BorderStroke.THICK)));
         } else {
-            userAnswerRectangle.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(30), BorderStroke.THICK)));
-            correctAnswerRectangle.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(30), BorderStroke.THICK)));
+            userAnswerRectangle.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(0), BorderStroke.THICK)));
             correctAnswerLabel.setText(getCorrectAnswer());
         }
 
         correctAnswerRectangle.setOpacity(1);
+        progressBarTime.setOpacity(0);
+        timeLabel.textProperty().bind(timeSecondsGlobal.divide(1000).asString());
 
     }
 
+    /**
+     * Updates the points
+     */
     public void pointsUpdate() {
-        int correctAnswer = Integer.parseInt(getCorrectAnswer());
-        // after the time ends the amount of won points is calculated and then shown to the player
-        if (userAnswerInt == correctAnswer) {
-            addedPointsInt = 500;
-        } else if (userAnswerInt > correctAnswer * 0.95 && userAnswerInt < correctAnswer * 1.05) {
-            addedPointsInt = 250;
+        if (userAnswer.equals(getCorrectAnswer())) {
+            addedPointsInt = getAddedPointsInt();
+        } else {
+            addedPointsInt = 0;
         }
         addedPoints.setText("+" + addedPointsInt);
 
-//        FadeTransition fadeout = new FadeTransition(Duration.seconds(1), addedPoints);
-//        fadeout.setFromValue(1);
-//        fadeout.setToValue(0);
-//        fadeout.play();
-//
-//        //after some effect
-//        pointsInt += addedPointsInt;
-//        addedPointsInt = 0;
-//        addedPoints.setText(null);
-//        points.setText(String.valueOf(pointsInt));
     }
 
+    /**
+     * The hint Joker
+     */
     public void useHintJoker() {
         //Joker that eliminates the wrong answer
-        if (getHintJokerUsed()) { return; }
+        if (getHintJokerUsed()) {
+            return;
+        }
 
         Integer correctAnswer = Integer.parseInt(getCorrectAnswer());
 
@@ -191,5 +212,36 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         server.useHintJoker();
         hintJoker.setDisable(true);
         gameConfig.setHintJokerUsed(true);
+    }
+
+    /**
+     * The double points joker
+     */
+    public void useDoublePointJoker() {
+        if (getDoublePointJokerUsed()) {
+            return;
+        }
+
+        server.useDoublePointJoker();
+        gameConfig.setDoublePointJokerUsed(true);
+        doublePointJoker.setDisable(true);
+
+    }
+
+    /**
+     * Method that stops the player from answering after client timer has ran out
+     *
+     * @throws IOException
+     */
+    public void disableAnswers() throws IOException {
+        answerTextfield.setDisable(true);
+        answer.setDisable(true);
+    }
+
+    /**
+     * Updates the score
+     */
+    public void updateTheScoreServer() {
+        server.updateScore(userAnswer);
     }
 }

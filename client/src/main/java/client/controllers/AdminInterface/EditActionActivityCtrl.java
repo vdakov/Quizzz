@@ -10,8 +10,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import org.apache.commons.io.FileUtils;
@@ -51,12 +51,22 @@ public class EditActionActivityCtrl {
 
     private String base64Image;
 
+    /**
+     * Constructor for the EditActionActivityCtrl
+     * @param server the server
+     * @param sceneCtrl the scene controller
+     */
     @Inject
     public EditActionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
         this.sceneCtrl = sceneCtrl;
         this.server = server;
     }
 
+    /**
+     * Initializes the screen
+     * @param editingAction
+     * @throws IOException
+     */
     public void initialize(Action editingAction) throws IOException {
 
         ByteArrayInputStream bis = new ByteArrayInputStream(server.getQuestionImage(editingAction.getImagePath()));
@@ -66,8 +76,7 @@ public class EditActionActivityCtrl {
 
         this.id = editingAction.getId();
         this.folder = editingAction.getImagePath().substring(0, 2);
-        System.out.println(id);
-        System.out.println(this.id);
+
         title.setText(editingAction.getTitle());
         source.setText(editingAction.getSource());
         this.imageNameField.setText(editingAction.getImagePath().substring(3));
@@ -75,9 +84,16 @@ public class EditActionActivityCtrl {
 
         this.base64Image = Base64.encodeBase64String(arr);
         System.out.println(base64Image);
-        this.newImage.setImage(SwingFXUtils.toFXImage(bImage, null));
+        try {
+            this.newImage.setImage(SwingFXUtils.toFXImage(bImage, null));
+        } catch (Exception e) {
+            this.newImage.setImage(new Image("pictures/placeholder.png"));
+        }
     }
 
+    /**
+     * Clears all the fields
+     */
     public void cancel() {
         clearFields();
         sceneCtrl.showOverviewActionScene();
@@ -107,6 +123,10 @@ public class EditActionActivityCtrl {
         cancel();
     }
 
+    /**
+     * Gets the activity from the server
+     * @return an action initialized with the fields of the activity
+     */
     private Action getActivity() {
         try {
             consumption.getText();
@@ -117,6 +137,9 @@ public class EditActionActivityCtrl {
                 title.getText(), Long.parseLong(this.consumption.getText()), source.getText());
     }
 
+    /**
+     * Clears a field
+     */
     private void clearFields() {
         title.clear();
         source.clear();
@@ -124,18 +147,11 @@ public class EditActionActivityCtrl {
     }
 
 
-    public void keyPressed(KeyEvent e) {
-        switch (e.getCode()) {
-            case ENTER:
-                ok();
-                break;
-            case ESCAPE:
-                cancel();
-                break;
-            default:
-                break;
-        }
-    }
+    /**
+     * Chooses the file
+     * @param event the way in which the file is chosen
+     * @throws IOException
+     */
 
     public void chooseFile(ActionEvent event) throws IOException {
         FileChooser imageChooser = new FileChooser();

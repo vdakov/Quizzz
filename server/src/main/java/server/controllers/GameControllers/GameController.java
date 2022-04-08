@@ -7,10 +7,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.async.DeferredResult;
 import server.services.GameServices.MultiplayerGameService;
 import server.services.GameServices.SingleplayerGameService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
 
 @RestController
 @RequestMapping("api/{username}/{gameType}")
@@ -68,6 +72,13 @@ public class GameController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
+    /**
+     * Get the id of the multiplayer random game room
+     *
+     * @param username the username of the desired player
+     * @param gameType the type of the game
+     * @return the id of the multiplayer random game room
+     */
     @GetMapping("/getRandomRoom")
     public ResponseEntity<String> getRandomRoom(@PathVariable("username") String username, @PathVariable("gameType") String gameType) {
         if (gameType.equals("MULTIPLAYER")) {
@@ -86,8 +97,40 @@ public class GameController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
+    /**
+     * Get all multiplayer games that is currently in waiting status
+     *
+     * @return list of all multiplayer games that is in waiting status
+     */
     @GetMapping("/getGames")
     public List<GameContainer> getGameIds() {
         return multiplayerGameService.getGameIds();
+    }
+
+    private static Map<Object, Consumer<GameContainer>> activeRoomsListeners = new HashMap<>();
+
+    public static Map<Object, Consumer<GameContainer>> getActiveRoomsListeners() {
+        return activeRoomsListeners;
+    }
+
+    /**
+     * Updates the room list using long polling
+     *
+     * @return the updated room list stored in game container
+     */
+    @GetMapping("/updateRooms")
+    public DeferredResult<ResponseEntity<GameContainer>> updateRoomList() {
+        var noContent = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        var res = new DeferredResult<ResponseEntity<GameContainer>>(50000L, noContent);
+
+        var key = new Object();
+        activeRoomsListeners.put(key, q -> {
+            res.setResult(ResponseEntity.ok(q));
+        });
+        res.onCompletion(() -> {
+            activeRoomsListeners.remove(key);
+        });
+
+        return res;
     }
 }

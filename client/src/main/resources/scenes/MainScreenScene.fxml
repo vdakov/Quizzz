@@ -4,7 +4,6 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -12,13 +11,14 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #3084f2;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.MainScreenActivityCtrl">
+<GridPane id="gridPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" stylesheets="@/mainScreen.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.MainScreenActivityCtrl">
+
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="147.0" minWidth="10.0" percentWidth="5.0" prefWidth="146.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="554.6667236328125" minWidth="10.0" percentWidth="45.0" prefWidth="300.0" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="554.6667236328125" minWidth="10.0" percentWidth="45.0" prefWidth="362.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="656.0" minWidth="10.0" percentWidth="45.0" prefWidth="426.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="128.19995117187494" minWidth="0.0" percentWidth="5.0" prefWidth="71.86669921875" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="554.6667236328125" minWidth="10.0" percentWidth="45.0" prefWidth="501.800048828125" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="554.6667236328125" minWidth="10.0" percentWidth="45.0" prefWidth="287.5999755859375" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="554.6667236328125" minWidth="10.0" percentWidth="45.0" prefWidth="501.800048828125" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="147.0" minWidth="10.0" percentWidth="5.0" prefWidth="146.0" />
         <ColumnConstraints />
         <ColumnConstraints />
         <ColumnConstraints />
@@ -38,102 +38,55 @@
         <RowConstraints />
     </rowConstraints>
     <children>
-        <ImageView fitHeight="80.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
-            <image>
-                <Image url="@pictures/single.png" />
-            </image>
-        </ImageView>
-        <ImageView fitHeight="80.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
-            <image>
-                <Image url="@pictures/multi.png" />
-            </image>
-        </ImageView>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3">
-         <children>
-                <Button layoutX="222.0" layoutY="31.0" mnemonicParsing="false" onAction="#enterAdminInterface" prefHeight="60.0" prefWidth="165.0" style="-fx-background-color: #5bc0de;" text="Admin">
+        <Text id="title" fx:id="title" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="QUIZZZZ" textAlignment="CENTER" wrappingWidth="757.5999999999999" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <font>
+                <Font size="81.0" />
+            </font>
+        </Text>
+        <Button id="admin" mnemonicParsing="false" onAction="#enterAdminInterface" prefHeight="40.0" prefWidth="207.0" text="Admin" textFill="WHITE" translateY="56.0" GridPane.columnIndex="3" GridPane.halignment="RIGHT">
+            <font>
+                <Font size="30.0" />
+            </font>
+        </Button>
+        <TextField id="field" fx:id="userName" alignment="CENTER" maxWidth="-Infinity" prefHeight="60.0" prefWidth="347.0" promptText="Enter your name..." translateY="-30.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+            <font>
+                <Font size="24.0" />
+            </font>
+        </TextField>
+        <GridPane id="spGridPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="291.0" prefWidth="334.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+            <columnConstraints>
+                <ColumnConstraints />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="400.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="135.53338623046875" minHeight="10.0" percentHeight="33.0" prefHeight="115.3999924659729" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="165.4000244140625" minHeight="10.0" percentHeight="33.0" prefHeight="19.79998779296875" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="165.4000244140625" minHeight="10.0" percentHeight="33.0" prefHeight="114.20001220703125" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="225.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="2.0" width="469.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <Button id="leaderboard" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#showLeaderboard" prefHeight="65.0" prefWidth="404.0" text="Singleplayer Leaderboard" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
                     <font>
                         <Font size="30.0" />
                     </font>
                 </Button>
-         </children>
-      </AnchorPane>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
-         <children>
-                <TextField fx:id="userName" layoutX="26.0" layoutY="75.0" maxWidth="-Infinity" prefHeight="60.0" prefWidth="347.0" promptText="Enter your name...">
+                <Button id="enterSp" fx:id="enterSoloGame" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#enterSoloGame" prefHeight="65.0" prefWidth="404.0" text="Enter Singleplayer" textFill="WHITE" GridPane.columnIndex="1">
                     <font>
-                        <Font size="24.0" />
+                        <Font size="30.0" />
                     </font>
-                </TextField>
-         </children>
-      </AnchorPane>
-      <AnchorPane prefHeight="270.0" prefWidth="374.0" GridPane.columnIndex="2">
-         <children>
-              <Text layoutX="53.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="QUIZZZZ" textAlignment="CENTER" wrappingWidth="379.73674392700195">
-                  <font>
-                      <Font size="81.0" />
-                  </font>
-              </Text>
-         </children>
-      </AnchorPane>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-         <children>
-              <GridPane prefHeight="300.0" prefWidth="500.0">
-                  <columnConstraints>
-                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="400.0" />
-                  </columnConstraints>
-                  <rowConstraints>
-                      <RowConstraints maxHeight="135.53338623046875" minHeight="10.0" percentHeight="33.0" prefHeight="119.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="135.53338623046875" minHeight="10.0" percentHeight="33.0" prefHeight="119.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="165.4000244140625" minHeight="10.0" percentHeight="33.0" prefHeight="63.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="165.4000244140625" minHeight="10.0" percentHeight="33.0" prefHeight="63.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" percentHeight="33.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  </rowConstraints>
-               <children>
-                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="225.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="2.0" width="480.0" GridPane.rowIndex="2" />
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4" />
-                      <Button mnemonicParsing="false" onAction="#showLeaderboard" prefHeight="60.0" prefWidth="450.0" style="-fx-background-color: #5bc0de;" text="Singleplayer Leaderboard" GridPane.rowIndex="3">
-                          <font>
-                              <Font size="30.0" />
-                          </font>
-                      </Button>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
-                     <children>
-                            <Button fx:id="enterSoloGame" layoutX="25.0" layoutY="27.0" mnemonicParsing="false" onAction="#enterSoloGame" prefHeight="60.0" prefWidth="450.0" style="-fx-background-color: #5bc0de;" text="Enter Singleplayer">
-                                <font>
-                                    <Font size="30.0" />
-                                </font>
-                            </Button>
-                     </children>
-                  </AnchorPane>
-               </children>
-              </GridPane>
-         </children>
-      </AnchorPane>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
-         <children>
-            <GridPane layoutX="-108.0" layoutY="1.0" prefHeight="300.0" prefWidth="500.0">
-               <columnConstraints>
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="400.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints maxHeight="135.53338623046875" minHeight="10.0" percentHeight="33.0" prefHeight="119.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="135.53338623046875" minHeight="10.0" percentHeight="33.0" prefHeight="119.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="165.4000244140625" minHeight="10.0" percentHeight="33.0" prefHeight="63.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="165.4000244140625" minHeight="10.0" percentHeight="33.0" prefHeight="63.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" percentHeight="33.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               </rowConstraints>
-               <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="225.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="2.0" width="480.0" GridPane.rowIndex="2" />
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4" />
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
-                      <Button mnemonicParsing="false" onAction="#enterServerBrowser" prefHeight="60.0" prefWidth="450.0" style="-fx-background-color: #5bc0de;" text="Enter Multiplayer" GridPane.rowIndex="2">
-                          <font>
-                              <Font size="30.0" />
-                          </font>
-                      </Button>
-               </children>
-            </GridPane>
-         </children>
-      </AnchorPane>
+                </Button>
+                <Button id="enterMp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#enterServerBrowser" prefHeight="65.0" prefWidth="404.0" text="Multiplayer" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                    <font>
+                        <Font size="29.0" />
+                    </font>
+                </Button>
+            </children>
+        </GridPane>
+        <ImageView id="#icon" fx:id="enterAdminInterface" fitHeight="104.0" fitWidth="161.0" pickOnBounds="true" preserveRatio="true" translateY="-26.0" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+            <image>
+                <Image url="@/pictures/admin.png" />
+            </image>
+        </ImageView>
+
     </children>
 </GridPane>

@@ -18,13 +18,17 @@ public class ActionController {
 
     private ActionService service; //serves the controller with all sorts of "business" methods
 
-
+    /**
+     * Constructor for action controller
+     * @param service
+     */
     public ActionController(ActionService service) {
         this.service = service;
     }
 
     /**
      * Get the specified list of activities
+     *
      * @return iterable list of all activities currently in the repository
      */
     @GetMapping("/list")
@@ -32,9 +36,9 @@ public class ActionController {
         return service.list();
     }
 
-
     /**
      * Get a specific action using the id of action
+     *
      * @param id the unique id of the action
      * @return the action that have same id as given input
      */
@@ -43,9 +47,9 @@ public class ActionController {
         return service.getById(id);
     }
 
-
     /**
      * Gets a randomly selected activity from the list of actions
+     *
      * @return random activity
      */
     @GetMapping("/random")
@@ -54,15 +58,18 @@ public class ActionController {
         return activities.get((int) Math.floor(Math.random() * activities.size()));
     }
 
+    @GetMapping("testConnection")
+    public int testConnection() {
+      return 1;
+    }
 
     /**
      * allows the user to update all the fields of an activity except the ID, but only if the object with that ID already exists
+     *
      * @param a action containing updated fields
      */
     @PutMapping(path = "/update")
     public void update(@RequestBody Action a) {
-
-
         Action activity = service.getById(a.getId()); //.orElseThrow(() -> new IllegalStateException(("No such activity!!!")));
 
         activity.setId(a.getId());
@@ -78,9 +85,7 @@ public class ActionController {
         System.out.println(activity.getId());
         service.save(activity);
     }
-
-
-    //test mapping to use as println cuz I am pretty bad at writing tests :(
+    
     @PostMapping("/alert")
     public void alert(@RequestBody String input) {
         System.out.println(input);
@@ -160,7 +165,6 @@ public class ActionController {
 
     @GetMapping(path = {"/restoreActivityBank"})
     public void restoreActivityBank() {
-
         ObjectMapper mapper = new ObjectMapper();
         TypeReference<List<Action>> typeReference = new TypeReference<List<Action>>() {
         }; //requires us to have a list of activities/actions
@@ -184,6 +188,4 @@ public class ActionController {
             System.out.println("ACTIVITIES NOT SAVED"); //failure message
         }
     }
-
-
 }

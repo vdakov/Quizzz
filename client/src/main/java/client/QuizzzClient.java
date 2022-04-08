@@ -3,6 +3,7 @@ package client;
 import client.controllers.AdminInterface.AddActionActivityCtrl;
 import client.controllers.AdminInterface.EditActionActivityCtrl;
 import client.controllers.AdminInterface.OverviewActionsActivityCtrl;
+import client.controllers.LeaderboardCtrl;
 import client.controllers.MainScreenActivityCtrl;
 import client.controllers.MultiplayerControllers.ServerBrowserController;
 import client.controllers.MultiplayerControllers.WaitingRoomController;
@@ -11,7 +12,6 @@ import client.controllers.QuestionControllers.ComparisonQuestionActivityCtrl;
 import client.controllers.QuestionControllers.KnowledgeQuestionActivityCtrl;
 import client.controllers.QuestionControllers.OpenQuestionActivityCtrl;
 import client.controllers.SceneCtrl;
-import client.controllers.LeaderboardCtrl;
 import client.logic.FXMLConfig;
 import client.logic.ModuleConfig;
 import com.google.inject.Injector;
@@ -42,7 +42,6 @@ public class QuizzzClient extends Application {
      */
     public static void main(String[] args) throws URISyntaxException, IOException {
         launch(QuizzzClient.class, args);
-
     }
 
     /**
@@ -66,7 +65,9 @@ public class QuizzzClient extends Application {
     };
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws IOException {
+
+
         //make a hashmap to easily look up any root (parent of scene) using its filename (without the .fxml extension)
         HashMap<String, Pair<Object, Parent>> rootsMap = new HashMap<>();
 
@@ -82,5 +83,6 @@ public class QuizzzClient extends Application {
 
         var sceneCtrl = INJECTOR.getInstance(SceneCtrl.class);
         sceneCtrl.initialize(primaryStage, rootsMap);
+
     }
 }

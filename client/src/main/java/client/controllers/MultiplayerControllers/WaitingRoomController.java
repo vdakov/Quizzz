@@ -12,7 +12,6 @@ import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
-import java.util.HashSet;
 
 
 public class WaitingRoomController {
@@ -25,17 +24,12 @@ public class WaitingRoomController {
     @FXML
     private Button startButton; // the button to start the game- only accessible to the owner
     @FXML
-    private Text ownerText; // the text displaying whether you are the owner of the room
-    @FXML
     private Text gameID; // displays the gameID of the current waiting room
-
-    private final HashSet<String> ongoingGames;
 
     @Inject
     public WaitingRoomController(ServerUtils server, SceneCtrl sceneCtrl) {
         this.server = server;
         this.sceneCtrl = sceneCtrl;
-        this.ongoingGames = new HashSet<>();
     }
 
     /**
@@ -44,8 +38,13 @@ public class WaitingRoomController {
      * @param event the Action Event from the button
      */
     public void goBackToServerBrowser(ActionEvent event) {
+        this.server.removePlayer();
+
+        server.stopWaitForRoomThread();
+        server.stopUpdatePlayerNumber();
+
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
-        this.server.removePlayer(gameConfiguration.getUserName(), gameConfiguration.getRoomId());
+        gameConfiguration.setRoomId(null);
 
         this.sceneCtrl.showServerBrowser();
     }
@@ -62,18 +61,24 @@ public class WaitingRoomController {
         }
 
         this.gameID.setText(gameConfiguration.getRoomId());
-        this.playerLabel.setText(Integer.toString(server.getNumPlayers()));
+        this.playerLabel.setText(String.valueOf(server.getNumPlayers()));
 
         server.waitForMultiPlayerRoomStart(q -> {
-            ongoingGames.add(q);
+            try {
+                System.out.println("I tried to start the game");
+                this.sceneCtrl.showNextQuestion();
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("Exception occurred when trying to start the game by showing the next question");
+            }
+        });
 
-            if (ongoingGames.contains(gameConfiguration.getRoomId())) {
-                //server.stop();
-                try {
-                    sceneCtrl.showNextQuestion();
-                } catch (Exception e) {
-                    System.out.println("Exception occurred when trying to start the game by showing the next question");
-                }
+
+        server.updatePlayerNumber(q -> {
+            try {
+                this.playerLabel.setText(Integer.toString(q));
+            } catch (Exception e) {
+                System.out.println("Exception occurred when trying to show player number");
             }
         });
 
@@ -90,6 +95,9 @@ public class WaitingRoomController {
      * Refresh method to update the number of current players
      */
     public void refresh() throws IOException {
+        server.stopWaitForRoomThread();
+        server.stopUpdatePlayerNumber();
+
         this.initialize();
     }
 
