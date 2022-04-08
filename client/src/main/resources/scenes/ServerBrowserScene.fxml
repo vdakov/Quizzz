@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane id="gridPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../serverBrowser.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.MultiplayerControllers.ServerBrowserController">
+<GridPane id="gridPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@/serverBrowser.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.MultiplayerControllers.ServerBrowserController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="814.5333251953125" minWidth="10.0" prefWidth="409.0" />
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="895.9999938964843" minWidth="10.0" prefWidth="716.0" />
@@ -94,7 +94,7 @@
             <graphic>
                 <ImageView blendMode="SRC_ATOP" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../pictures/home.png" />
+                        <Image url="@/pictures/home.png" />
                     </image>
                 </ImageView>
             </graphic>

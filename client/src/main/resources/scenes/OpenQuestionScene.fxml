@@ -16,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane id="gridPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../question.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.QuestionControllers.OpenQuestionActivityCtrl">
+<GridPane id="gridPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@/question.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.QuestionControllers.OpenQuestionActivityCtrl">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="10.0" percentWidth="1.0" prefWidth="30.0" />
         <ColumnConstraints fx:id="chatColumn" hgrow="SOMETIMES" maxWidth="133.66668605804443" minWidth="7.0" percentWidth="15.0" prefWidth="73.0" />
@@ -89,7 +89,7 @@
                     <graphic>
                         <ImageView fitHeight="30.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../pictures/light-bulb.jpg" />
+                                <Image url="@/pictures/light-bulb.jpg" />
                             </image>
                         </ImageView>
                     </graphic>
@@ -98,7 +98,7 @@
                     <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../pictures/fire.png" />
+                                <Image url="@/pictures/fire.png" />
                             </image>
                         </ImageView>
                     </graphic>
@@ -107,7 +107,7 @@
                     <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../pictures/clock-joker.png" />
+                                <Image url="@/pictures/clock-joker.png" />
                             </image>
                         </ImageView>
                     </graphic>
@@ -211,7 +211,7 @@
             <graphic>
                 <ImageView fitWidth="50.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../pictures/home.png" />
+                        <Image url="@/pictures/home.png" />
                     </image>
                 </ImageView>
             </graphic>
