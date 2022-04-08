@@ -226,6 +226,8 @@ public class GameRoomController {
                                                @PathVariable("roomId") String roomId, @PathVariable("questionNumber") String questionNumber, @RequestBody String userAnswer) {
         System.out.println("Am postat raspunsu");
 
+        System.out.println("Game type: " + gameType);
+
         String questionType = "Any";
 
         try {
@@ -251,6 +253,7 @@ public class GameRoomController {
         if (gameType.equals("MULTIPLAYER")) {
             try {
                 System.out.println("Am ajuns sa updated raspunsu");
+                System.out.println(questionNumber);
                 int questionNo = Integer.parseInt(questionNumber);
                 return multiplayerGameService.updateMultiPlayerScore(username, roomId, questionNo, userAnswer, questionType) ?
                         ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
