@@ -32,6 +32,8 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class SceneCtrl {
+
+
     private Stage primaryStage;
     private Scene scene;
     private HashMap<String, Pair<Object, Parent>> sceneRoots;
@@ -43,10 +45,11 @@ public class SceneCtrl {
     public void sceneCtrl(ServerUtils serverUtils) {
         this.serverUtils = serverUtils;
         this.gameConfiguration = GameConfiguration.getConfiguration();
+
     }
 
 
-    public void initialize(Stage primaryStage, HashMap<String, Pair<Object, Parent>> sceneRoots) {
+    public void initialize(Stage primaryStage, HashMap<String, Pair<Object, Parent>> sceneRoots) throws IOException {
         this.primaryStage = primaryStage;
         this.sceneRoots = sceneRoots;
         this.scene = new Scene(new Group(), 1280, 720);
@@ -56,28 +59,42 @@ public class SceneCtrl {
         primaryStage.show();
     }
 
+
+
     public void showNextQuestion() throws IOException {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         gameConfiguration.setCurrentQuestionNumber(gameConfiguration.getCurrentQuestionNumber() + 1);
+
         String response = serverUtils.getQuestion();
+
         Scanner scanner = new Scanner(response).useDelimiter(": ");
         String questionType = scanner.next();
-        //primaryStage.setTitle("Question #" + gameConfiguration.getCurrentQuestionNumber() + ": " + questionType);
+
+        try {
+            primaryStage.setTitle("Question #" + gameConfiguration.getCurrentQuestionNumber() + " " + questionType);
+        } catch (Exception e) {
+            System.out.println("It worked");
+        }
+
 
         switch (questionType) {
             case "OpenQuestion": {
+                gameConfiguration.setQuestionType("OpenQuestion");
                 this.showOpenQuestionScene(QuestionParsers.openQuestionParser(scanner.next()));
                 break;
             }
             case "KnowledgeQuestion": {
+                gameConfiguration.setQuestionType("KnowledgeQuestion");
                 this.showKnowledgeQuestionScene(QuestionParsers.knowledgeQuestionParser(scanner.next()));
                 break;
             }
             case "ComparisonQuestion": {
+                gameConfiguration.setQuestionType("ComparisonQuestion");
                 this.showComparisonQuestionScene(QuestionParsers.comparisonQuestionParser(scanner.next()));
                 break;
             }
             case "AlternativeQuestion": {
+                gameConfiguration.setQuestionType("AlternativeQuestion");
                 this.showAlternativeQuestionScene(QuestionParsers.alternativeQuestionParser(scanner.next()));
                 break;
             }
@@ -90,7 +107,6 @@ public class SceneCtrl {
         OpenQuestionActivityCtrl ctrl = (OpenQuestionActivityCtrl) pair.getKey();
 
         ctrl.displayQuestion(openQuestion);
-        primaryStage.setTitle("Question screen");
         scene.setRoot(pair.getValue());
 
         primaryStage.setOnCloseRequest(event -> {
@@ -105,7 +121,6 @@ public class SceneCtrl {
         KnowledgeQuestionActivityCtrl ctrl = (KnowledgeQuestionActivityCtrl) pair.getKey();
 
         ctrl.displayQuestion(knowledgeQuestion);
-        primaryStage.setTitle("Question screen");
         scene.setRoot(pair.getValue());
 
         primaryStage.setOnCloseRequest(event -> {
@@ -120,7 +135,6 @@ public class SceneCtrl {
         ComparisonQuestionActivityCtrl ctrl = (ComparisonQuestionActivityCtrl) pair.getKey();
 
         ctrl.displayQuestion(comparisonQuestion);
-        primaryStage.setTitle("Question screen");
         scene.setRoot(pair.getValue());
 
         primaryStage.setOnCloseRequest(event -> {
@@ -135,7 +149,6 @@ public class SceneCtrl {
         AlternativeQuestionActivityCtrl ctrl = (AlternativeQuestionActivityCtrl) pair.getKey();
 
         ctrl.displayQuestion(alternativeQuestion);
-        primaryStage.setTitle("Question screen");
         scene.setRoot(pair.getValue());
 
         primaryStage.setOnCloseRequest(event -> {
@@ -167,7 +180,8 @@ public class SceneCtrl {
         MainScreenActivityCtrl ctrl = (MainScreenActivityCtrl) pair.getKey();
         ctrl.initialise();
 
-        primaryStage.setTitle("Main Screen");
+        primaryStage.setTitle("Main screen");
+
         scene.setRoot(pair.getValue());
 
         primaryStage.setOnCloseRequest(event -> {
@@ -252,5 +266,36 @@ public class SceneCtrl {
             System.out.println("You successfully exit!");
             stage.close();
         }
+    }
+
+    /**
+     * Gets the  primary stage
+     * @return
+     */
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
+    /**
+     * Gets the scene
+     * @return
+     */
+    public Scene getScene() {
+        return scene;
+    }
+
+    /*
+    Sets the primary stage
+     */
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+    }
+
+    /**
+     * Sets the scene
+     * @param scene
+     */
+    public void setScene(Scene scene) {
+        this.scene = scene;
     }
 }

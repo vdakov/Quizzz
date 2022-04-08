@@ -52,6 +52,12 @@ public class LeaderboardCtrl {
     private SceneCtrl sceneCtrl;
     private GameConfiguration gameConfig;
 
+    /**
+     * Creates the scene with the needed dependencies
+     *
+     * @param server    initialised the communication with the server
+     * @param sceneCtrl the scene controller
+     */
     @Inject
     public LeaderboardCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
         this.server = server;
@@ -59,6 +65,9 @@ public class LeaderboardCtrl {
         gameConfig = GameConfiguration.getConfiguration();
     }
 
+    /**
+     * Initializes the screen
+     */
     public void initialize() {
         //set which field each column contains
         placeCol.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().getRank() == -1 ? "..." : q.getValue().getRank() + ""));
@@ -70,6 +79,9 @@ public class LeaderboardCtrl {
     private Timeline timeline;
     private IntegerProperty timeSeconds = new SimpleIntegerProperty(10);
 
+    /**
+     * Start the timer
+     */
     public void startTimer() {
         timeLabel.textProperty().bind(timeSeconds.asString());    //bind the progressbar value to the seconds left
         timeSeconds.set(10);
@@ -88,6 +100,9 @@ public class LeaderboardCtrl {
         timeline.playFromStart();                                 //start the animation
     }
 
+    /**
+     * Refreshes the page
+     */
     public void refresh() {
         leaderboardTable.setItems(FXCollections.observableList(new ArrayList<>()));
 
@@ -106,6 +121,9 @@ public class LeaderboardCtrl {
         }
     }
 
+    /**
+     * Gets the leaderboard
+     */
     public void getLeaderboard() {
         if (gameConfig.isMultiPlayer()) {
             server.waitForFilledLeaderboard(q -> {
@@ -118,6 +136,10 @@ public class LeaderboardCtrl {
         }
     }
 
+    /**
+     * Fills the leaderboard
+     * @param entries the entries with which we want to fill the leaderboard
+     */
     public void fillLeaderboard(List<LeaderboardEntry> entries) {
         List top10 = entries.subList(0, Integer.min(10, entries.size()));
 
@@ -148,10 +170,16 @@ public class LeaderboardCtrl {
         }
     }
 
+    /**
+     * Goes back to main screen
+     */
     public void exit() {
         sceneCtrl.showMainScreenScene();
     }
 
+    /**
+     * Goes to waiting room
+     */
     public void playAgain() {
         sceneCtrl.showWaitingRoom();
     }

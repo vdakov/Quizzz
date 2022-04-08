@@ -149,7 +149,7 @@ public class OverviewActionsActivityCtrl {
     }
 
     /**
-     * refreshes the page
+     * Refreshes the page
      */
     public void refresh() {
         var activities = server.getActivities();
@@ -160,10 +160,18 @@ public class OverviewActionsActivityCtrl {
         table.sort();
     }
 
+    /**
+     * Goes back to the main screen
+     * @throws IOException
+     */
     public void goToMainScreen() throws IOException {
         sceneCtrl.showMainScreenScene();
     }
 
+    /**
+     * Restore the activity bank
+     * @param event the action that triggers the restoration of the activity bank
+     */
     public void restoreActivityBank(ActionEvent event) {
         server.restoreActivityBank();
         refresh();

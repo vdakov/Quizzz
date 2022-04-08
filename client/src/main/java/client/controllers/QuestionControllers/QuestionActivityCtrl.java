@@ -115,6 +115,13 @@ public class QuestionActivityCtrl {
             new SimpleIntegerProperty((int) startTimeClient);
     protected Timeline timelineClient;
 
+
+    /**
+     * Creates the scene with the needed dependencies
+     *
+     * @param server    initialised the communication with the server
+     * @param sceneCtrl the scene controller
+     */
     @Inject
     public QuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) throws ExecutionException, InterruptedException {
         this.server = server;
@@ -138,26 +145,23 @@ public class QuestionActivityCtrl {
         secondOptionText.setStyle("   -fx-background-color: #2e4c8d;");
         thirdOptionText.setStyle("   -fx-background-color: #2e4c8d;");
 
-
-
         answered = false;
 
         addedPoints.setText(" ");
         addedPointsInt = 0;
 
-        server.resetDoubledAddedPoints();
 
         if (gameConfig.getCurrentQuestionNumber() <= 1) {
             resetJokers();
         }
-        
+
         if (!gameConfig.isSinglePlayer()) {
             splitPane.setVisible(true); //show the chat
             chatColumn.setPercentWidth(15);
             questionCol1.setPercentWidth(23.333);
             questionCol1.setPercentWidth(23.333);
             questionCol1.setPercentWidth(23.333);
-            
+
             playersActivity.setCellValueFactory(q -> new SimpleStringProperty(q.getValue()));
             server.registerForMessages("/topic/emojis", q -> {
                 refresh(q.get(0), q.get(1), q.get(2));
@@ -180,16 +184,28 @@ public class QuestionActivityCtrl {
             timeJoker.setOpacity(0);
             gameConfig.setTimeJokerUsed(true);
         }
-        //  server.registerForMessages("/topic/emojis", q -> {
-        //    refresh(q.get(0), q.get(1), q.get(2));
-        //  });
+        if (gameConfig.getConnected() == false) {
+            server.registerForMessages("/topic/emojis", q -> {
+                refresh(q.get(0), q.get(1), q.get(2));
+            });
+            gameConfig.connect();
+        }
+
 
         hintJoker.setDisable(false);
         if (getHintJokerUsed() != null) {
             hintJoker.setDisable(getHintJokerUsed());
         }
+        if (getDoublePointJokerUsed() != null) {
+            doublePointJoker.setDisable(getDoublePointJokerUsed());
+        }
     }
 
+    /**
+     * Answers the question
+     * @param event what triggers the input being processes
+     * @throws IOException
+     */
     public void answerQuestion(ActionEvent event) throws IOException {
         // answers the question
         if (answered) {
@@ -197,7 +213,6 @@ public class QuestionActivityCtrl {
         }
 
         timeLeft = timeSecondsGlobal.get();
-        updateTimeLeft();
         disableAnswers();
 
         Button current = (Button) event.getSource();
@@ -206,6 +221,9 @@ public class QuestionActivityCtrl {
         //blocks the possibility to answer anymore
     }
 
+    /**
+     * Updates the answer
+     */
     public void answerUpdate() {
         // after the time ends the right answer is requested and then shown
 
@@ -218,10 +236,11 @@ public class QuestionActivityCtrl {
         secondOptionText.setStyle("-fx-background-color: #ff000f;");
         thirdOptionText.setStyle("-fx-background-color: #ff000f;");
 
+        String answer = getCorrectAnswer();
 
-        if (getCorrectAnswer().equals(firstOptionText.getText())) {
+        if (answer.equals(firstOptionText.getText())) {
             firstOptionText.setStyle("-fx-background-color: #72ff00;");
-        } else if (getCorrectAnswer().equals(secondOptionText.getText())) {
+        } else if (answer.equals(secondOptionText.getText())) {
             secondOptionText.setStyle("-fx-background-color: #72ff00;");
         } else {
             thirdOptionText.setStyle("-fx-background-color: #72ff00;");
@@ -232,11 +251,16 @@ public class QuestionActivityCtrl {
     }
 
 
+    /**
+     * Updates the points
+     */
     public void pointsUpdate() {
         // after the time ends the amount of won points is calculated and then shown to the player
         addedPointsInt = 0;
-        addedPoints.setText("+" + (Integer.parseInt(server.getScore()) - Integer.parseInt(points.getText())));
+//        addedPoints.setText("+" + (Integer.parseInt(server.getScore()) - Integer.parseInt(points.getText())));
+        addedPoints.setText("+" + server.getAddedPoints());
     }
+
     //Always 10 seconds, to make the game synchronous
     public void startTimerGlobal() {
         timeSecondsGlobal.set((int) startTime);
@@ -254,12 +278,14 @@ public class QuestionActivityCtrl {
         timelineGlobal.playFromStart();                                 //start the animation
     }
 
+    /**
+     * Starts the timer
+     */
     public void startTimerClient() {
         if (!gameConfig.isSinglePlayer()) {
             startTimeClient = server.getTimeClient();
             timeSecondsClient.set((int) startTimeClient);
-        }
-         else {
+        } else {
             timeSecondsClient.set((int) startTimeClient);
         }
         progressBarTime.setOpacity(1);
@@ -272,6 +298,8 @@ public class QuestionActivityCtrl {
                         new KeyValue(timeSecondsClient, 0)));    //animation finishes when timeSeconds comes to 0
         timelineClient.setOnFinished(event -> {
             try {
+                updateTimeLeft();
+                System.out.println(timeLeft);
                 disableAnswers();
                 updateTheScoreServer();
                 answerUpdate();
@@ -287,6 +315,7 @@ public class QuestionActivityCtrl {
 
     /**
      * Method that stops the player from answering after client timer has ran out
+     *
      * @throws IOException
      */
     public void disableAnswers() throws IOException {
@@ -333,6 +362,7 @@ public class QuestionActivityCtrl {
 
     /**
      * Method that ends the game and returns the player to the main screen of the app
+     *
      * @throws IOException
      */
     public void goToMainScreen() throws IOException {
@@ -343,11 +373,14 @@ public class QuestionActivityCtrl {
 
     /**
      * Getter for the correct answer
+     *
      * @return the correct answer from the server
      */
     public void useHintJoker() {
         //Joker that eliminates the wrong answer
-        if (getHintJokerUsed()) { return; }
+        if (getHintJokerUsed()) {
+            return;
+        }
 
         //Make a list of possible answers
         List<Button> answerLabels = new ArrayList();
@@ -372,8 +405,13 @@ public class QuestionActivityCtrl {
         }
     }
 
+    /**
+     * Uses the double points joker
+     */
     public void useDoublePointJoker() {
-        if (getDoublePointJokerUsed()) { return; }
+        if (getDoublePointJokerUsed()) {
+            return;
+        }
         System.out.println(getDoublePointJokerUsed());
 
         server.useDoublePointJoker();
@@ -381,9 +419,14 @@ public class QuestionActivityCtrl {
         doublePointJoker.setDisable(true);
     }
 
+    /**
+     * Uses the time joker
+     */
     public void useTimeJoker() {
         //Joker that reduces time for all other players
-        if (getTimeJokerUsed()) { return; }
+        if (getTimeJokerUsed()) {
+            return;
+        }
         System.out.println("Time joker just used" + getTimeJokerUsed());
         timeJoker.setDisable(true);
         timeJoker.setOpacity(0.5);
@@ -410,18 +453,34 @@ public class QuestionActivityCtrl {
         return Integer.parseInt(server.getScore());
     }
 
+    /**
+     * Getter for wheter the hint joker used
+     * @return boolean value
+     */
     public Boolean getHintJokerUsed() {
         return gameConfig.isHintJokerUsed();
     }
 
+    /**
+     * Getter for whether the double points joker was used
+     * @return boolean value
+     */
     public Boolean getDoublePointJokerUsed() {
         return gameConfig.isDoublePointJokerUsed();
     }
 
+
+    /**
+     * Getter for whether the double time joker was used
+     * @return boolean value
+     */
     public Boolean getTimeJokerUsed() {
         return gameConfig.isTimeJokerUsed();
     }
 
+    /**
+     * Resets the jokers to not being used
+     */
     public void resetJokers() {
         gameConfig.setHintJokerUsed(false);
         gameConfig.setDoublePointJokerUsed(false);
@@ -437,6 +496,7 @@ public class QuestionActivityCtrl {
     public int getQuestionNumber() {
         return gameConfig.getCurrentQuestionNumber();
     }
+
     public void updateTheScoreServer() {
         server.updateScore(userAnswer);
     }
@@ -452,6 +512,7 @@ public class QuestionActivityCtrl {
         payload.add("1");
         payload.add(gameConfig.getUserName());
         payload.add(gameConfig.getRoomId());
+        System.out.println("Am trimis primu emoji");
         server.send("/topic/emojis", payload);
     }
 
@@ -487,8 +548,7 @@ public class QuestionActivityCtrl {
         server.send("/topic/emojis", payload);
     }
 
-    public void hintJokerEvent(MouseEvent event)
-    {
+    public void hintJokerEvent(MouseEvent event) {
         List<String> payload = new ArrayList<>();
         payload.add("Hint");
         payload.add(gameConfig.getUserName());
@@ -496,8 +556,7 @@ public class QuestionActivityCtrl {
         server.send("/topic/emojis", payload);
     }
 
-    public void pointsJokerEvent(MouseEvent event)
-    {
+    public void pointsJokerEvent(MouseEvent event) {
         List<String> payload = new ArrayList<>();
         payload.add("x2 Points");
         payload.add(gameConfig.getUserName());
@@ -505,8 +564,7 @@ public class QuestionActivityCtrl {
         server.send("/topic/emojis", payload);
     }
 
-    public void timeJokerEvent(MouseEvent event)
-    {
+    public void timeJokerEvent(MouseEvent event) {
         List<String> payload = new ArrayList<>();
         payload.add("Half Time");
         payload.add(gameConfig.getUserName());
@@ -523,6 +581,9 @@ public class QuestionActivityCtrl {
     public void refresh(String type, String username, String roomId) {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         List<String> chatEntries = new ArrayList<>();
+
+        System.out.println("Am primit ceva" + type);
+
         if (type.equals("1") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName())) {           // happy emoji
             chatEntries.add(getTypeOfMessage("1", username));
         }
@@ -600,10 +661,17 @@ public class QuestionActivityCtrl {
 
     }
 
+    /**
+     * Gets the added points
+     * @return the added points as an int
+     */
     public int getAddedPointsInt() {
         return server.getAddedPoints();
     }
 
+    /**
+     * Updates the time left
+     */
     public void updateTimeLeft() {
         gameConfig.setTimeLeft(timeLeft);
         server.setTimeLeft();

@@ -12,6 +12,7 @@ public class GameConfiguration {
     }
 
     private GameType gameType;
+    private String questionType;
     private String userName;
     private String roomId;
     private int currentQuestionNumber;
@@ -22,6 +23,8 @@ public class GameConfiguration {
     private long timeLeft;
 
     private int consecutiveUnansweredQuestions;
+
+    private boolean hasConnected;
 
     public GameConfiguration() {
         this.userName = null;
@@ -34,6 +37,15 @@ public class GameConfiguration {
         this.timeJokerUsed = false;
 
         this.consecutiveUnansweredQuestions = 0;
+        hasConnected  = false;
+    }
+
+    public boolean getConnected() {
+        return hasConnected;
+    }
+
+    public void connect() {
+        hasConnected = true;
     }
 
     public int getConsecutiveUnansweredQuestions() {
@@ -138,4 +150,8 @@ public class GameConfiguration {
     public long getTimeLeft() { return timeLeft; }
 
     public void setTimeLeft(long timeLeft) { this.timeLeft = timeLeft; }
+
+    public String getQuestionType() { return questionType; }
+
+    public void setQuestionType(String questionType) { this.questionType = questionType; }
 }
