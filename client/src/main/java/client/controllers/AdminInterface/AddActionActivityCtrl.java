@@ -47,6 +47,11 @@ public class AddActionActivityCtrl {
     private String base64Image;
 
 
+    /**
+     * Constructor for the AddActionAcvityCtrl
+     * @param server the server
+     * @param sceneCtrl the scene controller
+     */
     @Inject
     public AddActionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
         this.sceneCtrl = sceneCtrl;
@@ -54,14 +59,21 @@ public class AddActionActivityCtrl {
 
     }
 
+    /**
+     * Initializes the controller
+     */
     public void initialize() {
 
     }
 
+    /**
+     * Clears all the fields
+     */
     public void cancel() {
         clearFields();
         sceneCtrl.showOverviewActionScene();
     }
+
 
     public void ok() {
         if (this.title == null || this.consumption == null || this.imageNameField.getText() == null || this.base64Image == null || this.source == null) {
@@ -89,6 +101,10 @@ public class AddActionActivityCtrl {
         //sceneCtrl.showOverviewActionsScene();
     }
 
+    /**
+     * Gets the activity
+     * @return an Action initiliazed with the fields of the activity
+     */
     private Action getActivity() {
         try {
             consumption.getText();
@@ -99,8 +115,10 @@ public class AddActionActivityCtrl {
         return new Action("contribution-" + title.getText(), "US/" + this.imageNameField.getText(), title.getText(), Long.parseLong(this.consumption.getText()), source.getText());
     }
 
+    /**
+     * Clears a field
+     */
     private void clearFields() {
-//        id.clear();
         title.clear();
         source.clear();
         consumption.clear();
@@ -108,19 +126,11 @@ public class AddActionActivityCtrl {
         this.image.setImage(null);
     }
 
-    public void keyPressed(KeyEvent e) {
-        switch (e.getCode()) {
-            case ENTER:
-                ok();
-                break;
-            case ESCAPE:
-                cancel();
-                break;
-            default:
-                break;
-        }
-    }
-
+    /**
+     * Chooses the file
+     * @param event the way in which the file is chosen
+     * @throws IOException
+     */
     public void chooseFile(ActionEvent event) throws IOException {
         FileChooser imageChooser = new FileChooser();
         imageChooser.getExtensionFilters().addAll(

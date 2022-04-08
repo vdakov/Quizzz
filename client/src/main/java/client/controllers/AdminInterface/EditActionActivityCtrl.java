@@ -51,12 +51,22 @@ public class EditActionActivityCtrl {
 
     private String base64Image;
 
+    /**
+     * Constructor for the EditActionActivityCtrl
+     * @param server the server
+     * @param sceneCtrl the scene controller
+     */
     @Inject
     public EditActionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
         this.sceneCtrl = sceneCtrl;
         this.server = server;
     }
 
+    /**
+     * Initializes the screen
+     * @param editingAction
+     * @throws IOException
+     */
     public void initialize(Action editingAction) throws IOException {
 
         ByteArrayInputStream bis = new ByteArrayInputStream(server.getQuestionImage(editingAction.getImagePath()));
@@ -78,6 +88,9 @@ public class EditActionActivityCtrl {
         this.newImage.setImage(SwingFXUtils.toFXImage(bImage, null));
     }
 
+    /**
+     * Clears all the fields
+     */
     public void cancel() {
         clearFields();
         sceneCtrl.showOverviewActionScene();
@@ -107,6 +120,10 @@ public class EditActionActivityCtrl {
         cancel();
     }
 
+    /**
+     * Gets the activity from the server
+     * @return an action initialized with the fields of the activity
+     */
     private Action getActivity() {
         try {
             consumption.getText();
@@ -117,6 +134,9 @@ public class EditActionActivityCtrl {
                 title.getText(), Long.parseLong(this.consumption.getText()), source.getText());
     }
 
+    /**
+     * Clears a field
+     */
     private void clearFields() {
         title.clear();
         source.clear();
@@ -124,18 +144,11 @@ public class EditActionActivityCtrl {
     }
 
 
-    public void keyPressed(KeyEvent e) {
-        switch (e.getCode()) {
-            case ENTER:
-                ok();
-                break;
-            case ESCAPE:
-                cancel();
-                break;
-            default:
-                break;
-        }
-    }
+    /**
+     * Chooses the file
+     * @param event the way in which the file is chosen
+     * @throws IOException
+     */
 
     public void chooseFile(ActionEvent event) throws IOException {
         FileChooser imageChooser = new FileChooser();
