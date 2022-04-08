@@ -65,7 +65,7 @@ class SingleplayerRoomTest {
     void resetAddedPointTest() {
         SingleplayerRoom s = new SingleplayerRoom("1", "1", null);
 
-        assertEquals(1, s.getAddedPoints());
+        assertEquals(0 , s.getAddedPoints());
     }
 
 
