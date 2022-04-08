@@ -91,7 +91,6 @@ public class SingleplayerRoom extends Room {
     public void useDoublePointJoker() {
         this.addedPoints = 2;
         doublePointJokerUsed = true;
-        this.addedPoints = 1;
     }
 
 
