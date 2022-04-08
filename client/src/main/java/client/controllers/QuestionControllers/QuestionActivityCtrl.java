@@ -219,6 +219,8 @@ public class QuestionActivityCtrl {
         hintJoker.setDisable(false);
         if (getHintJokerUsed() != null) {
             hintJoker.setDisable(getHintJokerUsed());
+        } if (getDoublePointJokerUsed() != null) {
+            doublePointJoker.setDisable(getDoublePointJokerUsed());
         }
     }
 
