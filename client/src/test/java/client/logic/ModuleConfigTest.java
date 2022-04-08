@@ -1,9 +1,9 @@
 package client.logic;
 
-import com.google.inject.Binder;
+//import com.google.inject.Binder;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+//import static org.junit.jupiter.api.Assertions.*;
 
 class ModuleConfigTest {
 
