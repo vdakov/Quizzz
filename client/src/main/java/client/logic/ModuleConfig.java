@@ -11,7 +11,6 @@ import com.google.inject.Module;
 import com.google.inject.Scopes;
 
 public class ModuleConfig implements Module {
-
     /**
      * Binds every control to the class
      * @param binder the binder that is used to store all the binds

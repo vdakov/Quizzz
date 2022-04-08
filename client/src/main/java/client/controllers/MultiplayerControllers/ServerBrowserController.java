@@ -121,11 +121,7 @@ public class ServerBrowserController {
                         this.gameIdField.setText(Id);
 
                     }
-
-
                 }
-
-
             });
 
             return row;

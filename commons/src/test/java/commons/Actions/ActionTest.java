@@ -7,6 +7,14 @@ import static org.junit.jupiter.api.Assertions.*;
 class ActionTest {
 
     private final Action action = new Action("id", "path", "title", 1000, "source");
+    private final Action action2 = new Action();
+
+    @Test
+    void emptyConstructor()
+    {
+        assertNotNull(action2);
+    }
+
 
     @Test
     void setId() {

@@ -139,36 +139,6 @@ public class QuestionActivityCtrl {
         thirdOptionText.setStyle("   -fx-background-color: #2e4c8d;");
 
 
-//        firstOptionText.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override public void handle(ActionEvent e) {
-//                if(!answered){
-//                    firstOptionText.setStyle("   -fx-background-color: #203665;");
-//                }
-//
-//
-//            }
-//        });
-//
-//        secondOptionText.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override public void handle(ActionEvent e) {
-//                if(!answered){
-//                    secondOptionText.setStyle("   -fx-background-color: #203665;");
-//                }
-//
-//
-//            }
-//        });
-//
-//        thirdOptionText.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override public void handle(ActionEvent e) {
-//                if(!answered){
-//                    thirdOptionText.setStyle("   -fx-background-color: #203665;");
-//                }
-//
-//
-//            }
-//        });
-
 
         answered = false;
 

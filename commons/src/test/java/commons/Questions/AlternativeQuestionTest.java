@@ -9,12 +9,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AlternativeQuestionTest {
 
-    private final Question question = new ComparisonQuestion(Pair.of("1", "2"), List.of(Pair.of("a", "b"),
+    private final Question question = new AlternativeQuestion(Pair.of("1", "2"), List.of(Pair.of("a", "b"),
             Pair.of("c", "d"), Pair.of("e", "f")));
 
     @Test
     void testToString() {
-        assertEquals("Comparison question statement: 1\n" +
+        assertEquals("Alternative question statement: 1\n" +
                 "   Choice 0: a\n" +
                 "   Choice 1: c\n" +
                 "   Choice 2: e", question.toString());
