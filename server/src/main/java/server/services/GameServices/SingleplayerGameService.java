@@ -247,7 +247,7 @@ public class SingleplayerGameService {
                 this.calculatePointsAdded(username, roomId);
                 roomCatalog.getSinglePlayerRoom(roomId).updatePlayerScore();
             } else {
-                roomCatalog.getSinglePlayerRoom(roomId).setAddedPoint(10);
+                roomCatalog.getSinglePlayerRoom(roomId).setAddedPoint(1);
             }
 
             return true;

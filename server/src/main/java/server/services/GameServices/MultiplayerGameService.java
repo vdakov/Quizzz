@@ -222,8 +222,8 @@ public class MultiplayerGameService {
      * Calculated the points added on this round
      * @return the points earned in this round
      */
-    public int calculatePointsAdded(String username, String roomId, int timeLeft) {
-        return roomCatalog.getMultiPlayerRoom(roomId).calculateAddedPoints(username, timeLeft);
+    public int calculatePointsAdded(String username, String roomId) {
+        return roomCatalog.getMultiPlayerRoom(roomId).calculateAddedPoints(username);
     }
 
 
@@ -390,15 +390,18 @@ public class MultiplayerGameService {
      * @param questionNumber the question number answered by the user
      * @param userAnswer     the answer user
      */
-    public Boolean updateMultiPlayerScore(String username, String roomId, int questionNumber, String userAnswer, int timeLeft) {
+    public Boolean updateMultiPlayerScore(String username, String roomId, int questionNumber, String userAnswer) {
         try {
             if (roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() != Room.RoomStatus.ONGOING ||
                     roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) == null) {
-                //return null;
+                return false;
             }
 
             if (userAnswer.equals(getMultiPlayerAnswer(username, roomId, questionNumber))) {
-                roomCatalog.getMultiPlayerRoom(roomId).updatePlayerScore(username, this.calculatePointsAdded(username, roomId, timeLeft));
+                this.calculatePointsAdded(username, roomId);
+                roomCatalog.getMultiPlayerRoom(roomId).updatePlayerScore(username);
+            } else {
+                roomCatalog.getMultiPlayerRoom(roomId).setAddedPoints(username, 1);
             }
 
             return true;

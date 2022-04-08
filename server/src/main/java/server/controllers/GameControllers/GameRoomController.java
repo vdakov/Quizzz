@@ -237,7 +237,7 @@ public class GameRoomController {
         if (gameType.equals("MULTIPLAYER")) {
             try {
                 int questionNo = Integer.parseInt(questionNumber);
-                return multiplayerGameService.updateMultiPlayerScore(username, roomId, questionNo, userAnswer, multiplayerGameService.getTimeLeft(username, roomId)) ?
+                return multiplayerGameService.updateMultiPlayerScore(username, roomId, questionNo, userAnswer) ?
                         ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             } catch (NumberFormatException e) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -431,8 +431,8 @@ public class GameRoomController {
         if (gameType.equals("MULTIPLAYER")) {
             try {
                 int questionNo = Integer.parseInt(questionNumber);
-                Integer addedPoints = multiplayerGameService.calculatePointsAdded(username, roomId, multiplayerGameService.getTimeLeft(username, roomId));
-                return (addedPoints != null) ? ResponseEntity.status(HttpStatus.OK).body(addedPoints) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+                multiplayerGameService.calculatePointsAdded(username, roomId);
+                return ResponseEntity.status(HttpStatus.OK).build();
             } catch (Exception e) {
                 return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
             }

@@ -53,7 +53,7 @@ public class MultiplayerRoom extends Room {
         for (int i = 0; i < 20; i++) {
             playerTime.get(i).put(username, 10000);
         }
-        playerAddedPoints.put(username, 10);
+        playerAddedPoints.put(username, 1);
         timeLeft.put(username, 0);
     }
 
@@ -127,14 +127,15 @@ public class MultiplayerRoom extends Room {
 
     public int getAddedPoints(String username) { return playerAddedPoints.get(username); }
 
+    public void setAddedPoints(String username, int addedPoint) { this.playerAddedPoints.put(username, addedPoint);}
     /**
      * Calculates the added point of the specific question using time left
      * @param username
      * @param timeLeft the amount of time left to user, fast answer gives more points
      * @return the new added point value
      */
-    public int calculateAddedPoints(String username, int timeLeft) {
-        int newAddedPoints = (int) (getAddedPoints(username) * (timeLeft));
+    public int calculateAddedPoints(String username) {
+        int newAddedPoints = (int) (getAddedPoints(username) * (this.getTimeLeft(username)) / 100);
         playerAddedPoints.put(username, newAddedPoints);
         return newAddedPoints;
     }
@@ -143,7 +144,7 @@ public class MultiplayerRoom extends Room {
      * Resets the points added as 10, to prevent the points getting doubled everytime after the double point joker is used
      */
     public void resetAddedPointAfterDoublePointJoker(String username) {
-        playerAddedPoints.put(username, 10);
+        playerAddedPoints.put(username, 1);
     }
 
     /**
@@ -152,8 +153,8 @@ public class MultiplayerRoom extends Room {
      * @param username the username of the player that won points
      * @param addedScore the score that the player has earned
      */
-    public void updatePlayerScore(String username, int addedScore) {
-        playerScores.put(username, getPlayerScore(username) + addedScore);
+    public void updatePlayerScore(String username) {
+        playerScores.put(username, getPlayerScore(username) + this.getAddedPoints(username));
     }
 
     public int getNumPlayers() {
