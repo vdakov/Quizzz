@@ -381,7 +381,7 @@ public class ServerUtils {
                     .accept(APPLICATION_JSON)
                     .post(Entity.text(answer));
 
-            System.out.println("Update Score : "+response.getStatus());
+            System.out.println("Update Score : " + response.getStatus());
             switch (response.getStatus()) {
                 case 200: {
                     break;
@@ -835,7 +835,8 @@ public class ServerUtils {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
 
             Response response = ClientBuilder.newClient(new ClientConfig())
-                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" + gameConfiguration.getRoomId() + "/" + gameConfiguration.getTimeLeft() + "/setTimeLeft")
+                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() +
+                                        "/" + gameConfiguration.getRoomId() + "/" + gameConfiguration.getTimeLeft() + "/setTimeLeft")
                     .request(APPLICATION_JSON)
                     .accept(APPLICATION_JSON).get(Response.class);
 
