@@ -53,6 +53,12 @@ public class MultiplayerGameRoomController {
         return startingGameListeners;
     }
 
+    /**
+     *
+     * @param username
+     * @param roomId
+     * @return
+     */
     @GetMapping("/waitForGameToStart")
     public DeferredResult<ResponseEntity<Boolean>> waitForGameToStart(@PathVariable("username") String username, @PathVariable("roomId") String roomId) {
         var noContent = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -77,6 +83,7 @@ public class MultiplayerGameRoomController {
 
     /**
      * Get the number of players in the multiplayer game
+     *
      * @param roomId    the id of the game that the user wants to join
      * @return give the number of players using asynchronous operation
      */

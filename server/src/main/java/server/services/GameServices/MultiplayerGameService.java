@@ -36,7 +36,7 @@ public class MultiplayerGameService {
     }
 
     /**
-     * Returns the id of the multiplayer random game room
+     * Get the id of the multiplayer random game room
      *
      * @return the id of the multiplayer random game room
      */
