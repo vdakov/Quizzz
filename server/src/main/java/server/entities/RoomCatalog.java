@@ -94,8 +94,11 @@ public class RoomCatalog {
             return multiplayerRandomRoom;
         }
 
-
         return multiplayerRooms.get(roomId);
+    }
+
+    public HashMap<String, MultiplayerRoom> getMultiPlayerRooms() {
+        return this.multiplayerRooms;
     }
 
     /**
@@ -167,7 +170,6 @@ public class RoomCatalog {
      * Removes all the finished multiplayer games from the multiplayer room list
      */
     public void removeFinishedMultiplayerGames() {
-
         Iterator<MultiplayerRoom> gameIterator = multiplayerRooms.values().iterator();
         ArrayList<MultiplayerRoom> finishedGames = new ArrayList<>();
 

@@ -38,12 +38,14 @@ class SingleplayerRoomTest {
     void calculateAddedPointsTestUsePointJokerNoPartialPoint() {
         s.useDoublePointJoker();
         s.setTimeLeft(10000);
+        assertEquals(10000, s.getTimeLeft());
         assertEquals((int) (2 * 10000 / 100), s.calculateAddedPoints(false));
     }
 
     @Test
     void testUpdatePlayerScore() {
         s.setPlayerScore(100);
+        assertEquals(100, s.getPlayerScore());
         s.setAddedPoint(100);
         assertEquals(100, s.getAddedPoints());
         s.updatePlayerScore();
