@@ -221,14 +221,25 @@ public class GameRoomController {
      * @param userAnswer        the user answer to the question
      * @return whether the request was successful or not
      */
-    @PostMapping("/{questionNumber}/{questionType}/postAnswer")
+    @PostMapping("/{questionNumber}/postAnswer")
     public ResponseEntity<Object> postAnswer(@PathVariable("username") String username, @PathVariable("gameType") String gameType,
-                                               @PathVariable("roomId") String roomId, @PathVariable("questionNumber") String questionNumber,
-                                             @PathVariable("questionType") String questionType, @RequestBody String userAnswer) {
+                                               @PathVariable("roomId") String roomId, @PathVariable("questionNumber") String questionNumber, @RequestBody String userAnswer) {
+        System.out.println("Am postat raspunsu");
+
+        System.out.println("Game type: " + gameType);
+
+        String questionType = "Any";
+
+        try {
+            int temp = Integer.parseInt(userAnswer);
+            questionType = "Any";
+        } catch (Exception e) {
+            questionType = "OpenQuestion";
+        }
+
         if (gameType.equals("SINGLEPLAYER")) {
             try {
                 int questionNo = Integer.parseInt(questionNumber);
-                Question question = singlePlayerGameService.getSinglePlayerQuestion(username, roomId, questionNo);
                 return singlePlayerGameService.updateSinglePlayerScore(username, roomId, questionNo, userAnswer, questionType) ?
                         ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             } catch (NumberFormatException e) {
@@ -241,11 +252,13 @@ public class GameRoomController {
 
         if (gameType.equals("MULTIPLAYER")) {
             try {
+                System.out.println("Am ajuns sa updated raspunsu");
+                System.out.println(questionNumber);
                 int questionNo = Integer.parseInt(questionNumber);
-                Question question = singlePlayerGameService.getSinglePlayerQuestion(username, roomId, questionNo);
                 return multiplayerGameService.updateMultiPlayerScore(username, roomId, questionNo, userAnswer, questionType) ?
                         ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             } catch (NumberFormatException e) {
+                System.out.println("Got here");
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             }
             catch (Exception e) {

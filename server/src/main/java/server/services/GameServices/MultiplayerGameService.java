@@ -372,10 +372,6 @@ public class MultiplayerGameService {
      */
     public Boolean updateMultiPlayerScore(String username, String roomId, int questionNumber, String userAnswer, String questionType) {
         try {
-            if (roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() != Room.RoomStatus.ONGOING ||
-                    roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) == null) {
-                return false;
-            }
             String correctAnswer = getMultiPlayerAnswer(username, roomId, questionNumber);
             if (userAnswer.equals(correctAnswer)) {
                 this.calculatePointsAdded(username, roomId, false);

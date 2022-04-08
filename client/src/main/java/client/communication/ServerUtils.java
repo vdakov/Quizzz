@@ -412,13 +412,21 @@ public class ServerUtils {
      * @param answer    the user's answer that should be compared with the correct answer
      */
     public void updateScore(String answer) {
+        if (answer == null) {
+            return;
+        }
+
         try {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
 
+            System.out.println("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() +
+                    "/" + gameConfiguration.getRoomId() + "/" + gameConfiguration.getCurrentQuestionNumber() + "/" +
+                    "postAnswer");
+
             Response response = ClientBuilder.newClient(new ClientConfig()) //
                     .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() +
-                            "/" + gameConfiguration.getRoomId() + "/" + gameConfiguration.getCurrentQuestionNumber() + "/" + gameConfiguration.getQuestionType() +
-                            "/postAnswer")
+                            "/" + gameConfiguration.getRoomId() + "/" + gameConfiguration.getCurrentQuestionNumber() + "/" +
+                            "postAnswer")
                     .request(APPLICATION_JSON)
                     .accept(APPLICATION_JSON)
                     .post(Entity.text(answer));
@@ -591,7 +599,6 @@ public class ServerUtils {
      * @param consumer    that is informed whenever a new message is received
      */
     public void registerForMessages(String destination, Consumer<List<String>> consumer) {
-        if (session.isConnected()) return;
         session.subscribe(destination, new StompFrameHandler() {
             @Override
             public Type getPayloadType(StompHeaders headers) {
