@@ -224,7 +224,7 @@ public class GameRoomController {
         if (gameType.equals("SINGLEPLAYER")) {
             try {
                 int questionNo = Integer.parseInt(questionNumber);
-                return singlePlayerGameService.updateSinglePlayerScore(username, roomId, questionNo, userAnswer, singlePlayerGameService.getTimeLeft(username, roomId)) ?
+                return singlePlayerGameService.updateSinglePlayerScore(username, roomId, questionNo, userAnswer) ?
                         ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             } catch (NumberFormatException e) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -389,7 +389,6 @@ public class GameRoomController {
     public ResponseEntity<Integer> getAddedPoints(@PathVariable("username") String username, @PathVariable("gameType") String gameType, @PathVariable("roomId") String roomId) {
         if (gameType.equals("SINGLEPLAYER")) {
             try {
-
                 Integer addedPoints = singlePlayerGameService.getAddedPoints(username, roomId);
                 return (addedPoints != null) ? ResponseEntity.status(HttpStatus.OK).body(addedPoints) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             } catch (Exception e) {

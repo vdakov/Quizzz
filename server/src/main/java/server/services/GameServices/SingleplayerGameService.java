@@ -162,7 +162,6 @@ public class SingleplayerGameService {
             if (!username.equals(roomCatalog.getSinglePlayerRoom(roomId).getRoomCreator())) {
                 return null;
             }
-
             return roomCatalog.getSinglePlayerRoom(roomId).getAddedPoints();
         } catch (Exception e) {
             System.out.println("An exception occurred");
@@ -243,15 +242,13 @@ public class SingleplayerGameService {
      * @param questionNumber the question number answered by the user
      * @param userAnswer     the answer user
      */
-    public Boolean updateSinglePlayerScore(String username, String roomId, int questionNumber, String userAnswer, int timeLeft) {
+    public Boolean updateSinglePlayerScore(String username, String roomId, int questionNumber, String userAnswer) {
         try {
             if (!username.equals(roomCatalog.getSinglePlayerRoom(roomId).getRoomCreator())) {
                 return false;
             }
-
             if (userAnswer.equals(getSinglePlayerAnswer(username, roomId, questionNumber))) {
-                this.calculatePointsAdded(username, roomId, timeLeft);
-                roomCatalog.getSinglePlayerRoom(roomId).updatePlayerScore(this.getAddedPoints(username, roomId));
+                roomCatalog.getSinglePlayerRoom(roomId).updatePlayerScore(this.calculatePointsAdded(username, roomId, this.getTimeLeft(username, roomId)));
             }
 
             return true;

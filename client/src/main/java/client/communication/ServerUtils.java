@@ -381,6 +381,7 @@ public class ServerUtils {
                     .accept(APPLICATION_JSON)
                     .post(Entity.text(answer));
 
+            System.out.println("Update Score : "+response.getStatus());
             switch (response.getStatus()) {
                 case 200: {
                     break;
@@ -767,7 +768,6 @@ public class ServerUtils {
                     .request(APPLICATION_JSON)
                     .accept(APPLICATION_JSON).get(Response.class);
 
-            System.out.println("response added Point" + response.getStatus());
             switch (response.getStatus()) {
                 case 200: {
                     return response.readEntity(Integer.class);
