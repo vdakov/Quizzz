@@ -220,7 +220,7 @@ public class ServerUtils {
                 if (gameInProgress) {
                     System.out.println("Game started 1234567890");
                     startedGame.accept(true);
-                    this.stopWaitForRoomThread();
+                    //this.stopWaitForRoomThread();
                 }
             }
         });
@@ -654,7 +654,6 @@ public class ServerUtils {
     public String getAnswer() {
         try {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
-
             Response response = ClientBuilder.newClient(new ClientConfig())
                     .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" + gameConfiguration.getRoomId() + "/" +
                             gameConfiguration.getCurrentQuestionNumber() + "/getAnswer")
@@ -673,7 +672,7 @@ public class ServerUtils {
                     // something failed, show an apology message ?
                 }
                 case 400: {
-                    System.out.println("The request was invalid when trying to get the answer");
+                    System.out.println("The request was invalid when trying to get the answer DA");
                     return null;
                 }
             }

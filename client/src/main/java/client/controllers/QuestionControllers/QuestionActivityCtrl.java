@@ -170,8 +170,6 @@ public class QuestionActivityCtrl {
 //        });
 
 
-        System.out.println(correctAnswer);
-
         answered = false;
 
         addedPoints.setText(" ");
@@ -251,10 +249,11 @@ public class QuestionActivityCtrl {
         secondOptionText.setStyle("-fx-background-color: #ff000f;");
         thirdOptionText.setStyle("-fx-background-color: #ff000f;");
 
+        String answer = getCorrectAnswer();
 
-        if (getCorrectAnswer().equals(firstOptionText.getText())) {
+        if (answer.equals(firstOptionText.getText())) {
             firstOptionText.setStyle("-fx-background-color: #72ff00;");
-        } else if (getCorrectAnswer().equals(secondOptionText.getText())) {
+        } else if (answer.equals(secondOptionText.getText())) {
             secondOptionText.setStyle("-fx-background-color: #72ff00;");
         } else {
             thirdOptionText.setStyle("-fx-background-color: #72ff00;");

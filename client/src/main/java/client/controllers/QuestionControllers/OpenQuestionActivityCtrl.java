@@ -109,7 +109,6 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         server.registerForMessages("/topic/emojis", q -> {
             refresh(q.get(0), q.get(1), q.get(2));
         });
-        System.out.println(getCorrectAnswer());
     }
 
     /**
@@ -122,6 +121,7 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         if (openQuestion == null) {
             return;
         }
+
         sampleQuestion.setText(openQuestion.getQuestion().getKey());
         questionNumberLabel.setText("Question " + getQuestionNumber());
         points.setText(String.valueOf(getPointsInt()));

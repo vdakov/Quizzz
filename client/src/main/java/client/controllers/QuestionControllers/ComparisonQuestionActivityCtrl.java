@@ -34,6 +34,7 @@ public class ComparisonQuestionActivityCtrl extends QuestionActivityCtrl {
         if (comparisonQuestion == null) {
             return;
         }
+
         ByteArrayInputStream bis = new ByteArrayInputStream(server.getQuestionImage("30/beef.jpg"));
         BufferedImage bImage = ImageIO.read(bis);
 
