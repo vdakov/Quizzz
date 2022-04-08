@@ -9,7 +9,9 @@ plugins {
 
 dependencies {
 
-	implementation project(":client");
+
+    implementation 'junit:junit:4.13.1'
+    implementation project(":client");
 	implementation 'org.projectlombok:lombok:1.18.20'
 	implementation 'org.projectlombok:lombok:1.18.20'
 	implementation 'org.springframework.boot:spring-boot-starter-web'

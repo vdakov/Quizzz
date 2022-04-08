@@ -488,28 +488,28 @@ public class GameRoomController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
-    @GetMapping("/getTimeLeft")
-    public ResponseEntity<Integer> getTimeLeft(@PathVariable("username") String username, @PathVariable("gameType") String gameType, @PathVariable("roomId") String roomId) {
-        if (gameType.equals("SINGLEPLAYER")) {
-            try {
-                Integer timeLeft = singlePlayerGameService.getTimeLeft(username, roomId);
-                return (timeLeft != null) ? ResponseEntity.status(HttpStatus.OK).body(timeLeft) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-            } catch (Exception e) {
-                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
-            }
-        }
-
-        if (gameType.equals("MULTIPLAYER")) {
-            try {
-                Integer timeLeft = multiplayerGameService.getTimeLeft(username, roomId);
-                return (timeLeft != null) ? ResponseEntity.status(HttpStatus.OK).body(timeLeft) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-            } catch (Exception e) {
-                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
-            }
-        }
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-    }
+//    @GetMapping("/getTimeLeft")
+//    public ResponseEntity<Integer> getTimeLeft(@PathVariable("username") String username, @PathVariable("gameType") String gameType, @PathVariable("roomId") String roomId) {
+//        if (gameType.equals("SINGLEPLAYER")) {
+//            try {
+//                Integer timeLeft = singlePlayerGameService.getTimeLeft(username, roomId);
+//                return (timeLeft != null) ? ResponseEntity.status(HttpStatus.OK).body(timeLeft) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+//            } catch (Exception e) {
+//                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
+//            }
+//        }
+//
+//        if (gameType.equals("MULTIPLAYER")) {
+//            try {
+//                Integer timeLeft = multiplayerGameService.getTimeLeft(username, roomId);
+//                return (timeLeft != null) ? ResponseEntity.status(HttpStatus.OK).body(timeLeft) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+//            } catch (Exception e) {
+//                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
+//            }
+//        }
+//
+//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+//    }
 
     @GetMapping("/{timeLeft}/setTimeLeft")
     public ResponseEntity<Object> setTimeLeft(@PathVariable("username") String username, @PathVariable("gameType") String gameType,

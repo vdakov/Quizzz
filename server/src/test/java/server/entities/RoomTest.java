@@ -1,12 +1,8 @@
 package server.entities;
 
 import commons.Exceptions.NotEnoughActivitiesException;
-import commons.Questions.Question;
 //import javafx.util.Pair;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.util.TestPropertyValues;
-
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

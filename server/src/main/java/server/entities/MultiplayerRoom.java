@@ -139,7 +139,7 @@ public class MultiplayerRoom extends Room {
      */
     public int calculateAddedPoints(String username, boolean partialPoint) {
         int newAddedPoints = 0;
-        if( getAddedPoints(username) == 2 ) {
+        if ( getAddedPoints(username) == 2 ) {
             if (partialPoint) {
                 newAddedPoints = (int) (2 * ((this.getTimeLeft(username) / 100) / 2));
             } else {

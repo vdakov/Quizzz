@@ -32,29 +32,29 @@ class MultiplayerRoomTest {
 
     @Test
     void calculateAddedPointsTestNoPointJokerNoPartialPoint() {
-        m.setTimeLeft("userName",10000);
-        assertEquals((int) (1 * 10000 / 100), m.calculateAddedPoints("userName", false));
+        m.setTimeLeft("userName", 10000);
+        assertEquals((int) (1 * 10000 / 100), m .calculateAddedPoints("userName", false));
     }
 
     @Test
     void calculateAddedPointsTestUsePointJokerUsePartialPoint() {
         m.useDoublePointJoker("userName");
         assertEquals(true, m.getDoublePointJokerUsed("userName"));
-        m.setTimeLeft("userName",10000);
+        m.setTimeLeft("userName", 10000);
         assertEquals((int) ((2 * 10000 / 100) / 2), m.calculateAddedPoints("userName", true));
     }
 
     @Test
     void calculateAddedPointsTestNoPointJokerUsePartialPoint() {
-        m.setTimeLeft("userName",10000);
-        assertEquals((int) ((1 * 10000 / 100) / 2), m.calculateAddedPoints("userName",true));
+        m.setTimeLeft("userName", 10000);
+        assertEquals((int) ((1 * 10000 / 100) / 2), m.calculateAddedPoints("userName", true));
     }
 
     @Test
     void calculateAddedPointsTestUsePointJokerNoPartialPoint() {
         m.useDoublePointJoker("userName");
-        m.setTimeLeft("userName",10000);
-        assertEquals((int) (2 * 10000 / 100), m.calculateAddedPoints("userName",false));
+        m.setTimeLeft("userName", 10000);
+        assertEquals((int) (2 * 10000 / 100), m.calculateAddedPoints("userName", false));
     }
 
     @Test
