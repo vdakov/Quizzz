@@ -53,7 +53,7 @@ public class MultiplayerRoom extends Room {
         for (int i = 0; i < 20; i++) {
             playerTime.get(i).put(username, 10000);
         }
-        playerAddedPoints.put(username, 1);
+        playerAddedPoints.put(username, 0);
         timeLeft.put(username, 0);
     }
 
@@ -108,7 +108,7 @@ public class MultiplayerRoom extends Room {
 
     public void useHintJoker(String username) { playerHintJokerUsed.put(username, true); }
     public void useDoublePointJoker(String username) {
-        playerAddedPoints.put(username, getAddedPoints(username) * 2);
+        playerAddedPoints.put(username, 2);
         playerDoublePointJokerUsed.put(username, true);
     }
     public void useTimeJoker(String username, int number) {
@@ -135,20 +135,21 @@ public class MultiplayerRoom extends Room {
      */
     public int calculateAddedPoints(String username, boolean partialPoint) {
         int newAddedPoints = 0;
-        if (partialPoint) {
-            newAddedPoints = (int) (1 * ((this.getTimeLeft(username) / 100) / 2));
+        if( getAddedPoints(username) == 2 ) {
+            if (partialPoint) {
+                newAddedPoints = (int) (2 * ((this.getTimeLeft(username) / 100) / 2));
+            } else {
+                newAddedPoints = (int) (2 * (this.getTimeLeft(username) / 100));
+            }
         } else {
-            newAddedPoints = (int) (1 * (this.getTimeLeft(username) / 100));
+            if (partialPoint) {
+                newAddedPoints = (int) (1 * ((this.getTimeLeft(username) / 100) / 2));
+            } else {
+                newAddedPoints = (int) (1 * (this.getTimeLeft(username) / 100));
+            }
         }
         playerAddedPoints.put(username, newAddedPoints);
         return newAddedPoints;
-    }
-
-    /**
-     * Resets the points added as 10, to prevent the points getting doubled everytime after the double point joker is used
-     */
-    public void resetAddedPointAfterDoublePointJoker(String username) {
-        playerAddedPoints.put(username, 1);
     }
 
     /**
