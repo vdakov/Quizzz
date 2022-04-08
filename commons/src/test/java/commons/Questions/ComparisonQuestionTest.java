@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ComparisonQuestionTest {
 
     private final Question question = new ComparisonQuestion(Pair.of("1", "2"), List.of(Pair.of("a", "b"),
-            Pair.of("c","d"), Pair.of("e", "f")));
+            Pair.of("c", "d"), Pair.of("e", "f")));
 
     @Test
     void testToString() {
