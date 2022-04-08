@@ -127,21 +127,17 @@ public class MultiplayerGameService {
             if (roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) == null) {
                 return false;
             }
-
             roomCatalog.getMultiPlayerRoom(roomId).setRoomStatus(Room.RoomStatus.ONGOING);
-
             // if the random room is starting, we have to generate another one
             if (roomId.equals(roomCatalog.getMultiplayerRandomRoom().getRoomId())) {
                 roomCatalog.addMultiplayerRoom(roomCatalog.getMultiplayerRandomRoom());
                 createNewMultiPlayerGame(null);
             }
-
             MultiplayerGameRoomController.getListeners().forEach((k, l) -> {
                 if (k.getValue().equals(roomId) && roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) != null) {
                     l.accept(true);
                 }
             });
-
             GameController.getActiveRoomsListeners().forEach((k, l) -> {
                 l.accept(new GameContainer(roomId, 0));
             });
@@ -206,11 +202,6 @@ public class MultiplayerGameService {
      */
     public Integer getMultiPlayerScore(String username, String roomId) {
         try {
-//            if (roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() != Room.RoomStatus.ONGOING ||
-//                    roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) == null) {
-//                return null;
-//            }
-
             return roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username);
         } catch (Exception e) {
             System.out.println("An exception occurred");
@@ -220,6 +211,7 @@ public class MultiplayerGameService {
 
     /**
      * Calculated the points added on this round
+     *
      * @return the points earned in this round
      */
     public Integer calculatePointsAdded(String username, String roomId, boolean partialPoint) {
@@ -231,15 +223,24 @@ public class MultiplayerGameService {
         }
     }
 
-
+    /**
+     * Gets the points earned by the player for that specific game
+     *
+     * @param username  the username of the player that requests his score
+     * @param roomId    the id of the game that the player is in
+     * @return the points earned in this round
+     */
     public int getAddedPoints(String username, String roomId) {
         return roomCatalog.getMultiPlayerRoom(roomId).getAddedPoints(username);
     }
 
-    public int getTimeLeft(String username, String roomId) {
-        return roomCatalog.getMultiPlayerRoom(roomId).getTimeLeft(username);
-    }
-
+    /**
+     * Sets the time left after the user input the answer
+     *
+     * @param username  the username of the player
+     * @param roomId    the id of the game that the player is in
+     * @param timeLeft  time left in milliseconds
+     */
     public void setTimeLeft(String username, String roomId, int timeLeft) {
         roomCatalog.getMultiPlayerRoom(roomId).setTimeLeft(username, timeLeft);
     }
@@ -252,10 +253,6 @@ public class MultiplayerGameService {
      */
     public Integer getTimeClient(String username, String roomId, int number) {
         try {
-//            if (roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() != Room.RoomStatus.ONGOING ||
-//                    roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) == null) {
-//                return null;
-//            }
             return roomCatalog.getMultiPlayerRoom(roomId).getTimeClient(username, number);
         } catch (Exception e) {
             System.out.println("An exception occurred");
@@ -272,10 +269,6 @@ public class MultiplayerGameService {
      */
     public Boolean getHintJokerUsed(String username, String roomId) {
         try {
-//            if (roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() != Room.RoomStatus.ONGOING ||
-//                    roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) == null) {
-//                return null;
-//            }
             return roomCatalog.getMultiPlayerRoom(roomId).getHintJokerUsed(username);
         } catch (Exception e) {
             System.out.println("An exception occurred");
@@ -292,10 +285,6 @@ public class MultiplayerGameService {
      */
     public Boolean getDoublePointJokerUsed(String username, String roomId) {
         try {
-//            if (roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() != Room.RoomStatus.ONGOING ||
-//                    roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) == null) {
-//                return null;
-//            }
             return roomCatalog.getMultiPlayerRoom(roomId).getDoublePointJokerUsed(username);
         } catch (Exception e) {
             System.out.println("An exception occurred");
@@ -311,10 +300,6 @@ public class MultiplayerGameService {
      */
     public Boolean getTimeJokerUsed(String username, String roomId) {
         try {
-//            if (roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() != Room.RoomStatus.ONGOING ||
-//                    roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) == null) {
-//                return null;
-//            }
             return roomCatalog.getMultiPlayerRoom(roomId).getTimeJokerUsed(username);
         } catch (Exception e) {
             System.out.println("An exception occurred");
@@ -323,21 +308,15 @@ public class MultiplayerGameService {
     }
 
     /**
-     * "Uses" the hint joker, sets hintJokerUsed to true
+     * Uses the hint joker, sets hintJokerUsed to true
      *
      * @param username       the user that needs the score update
      * @param roomId         the id of the room the user is in
      */
     public Boolean useHintJoker(String username, String roomId) {
         try {
-//            if (roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() != Room.RoomStatus.ONGOING ||
-//                    roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) == null) {
-//                //return null;
-//            }
-
-        roomCatalog.getMultiPlayerRoom(roomId).useHintJoker(username);
-        return true;
-
+            roomCatalog.getMultiPlayerRoom(roomId).useHintJoker(username);
+            return true;
         } catch (Exception e) {
             System.out.println("An exception occurred");
             return null;
@@ -345,7 +324,7 @@ public class MultiplayerGameService {
     }
 
     /**
-     * "Uses" the double point joker, sets doublePointJokerUsed to true
+     * Uses the double point joker, sets doublePointJokerUsed to true
      *
      * @param username       the user that needs the score update
      * @param roomId         the id of the room the user is in
@@ -366,21 +345,15 @@ public class MultiplayerGameService {
     }
 
     /**
-     * "Uses" the time joker, sets timeJokerUSed to true
+     * Uses the time joker, sets timeJokerUSed to true
      *
      * @param username       the user that needs the score update
      * @param roomId         the id of the room the user is in
      */
     public Boolean useTimeJoker(String username, String roomId, int number) {
         try {
-//            if (roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() != Room.RoomStatus.ONGOING ||
-//                    roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) == null) {
-//                //return null;
-//            }
-
             roomCatalog.getMultiPlayerRoom(roomId).useTimeJoker(username, number);
             return true;
-
         } catch (Exception e) {
             System.out.println("An exception occurred");
             return null;
@@ -388,12 +361,14 @@ public class MultiplayerGameService {
     }
 
     /**
-     * Updated the score of the player or returns null / false if some error occurs
+     * Compares whether the user answer and correct answer is equal and updates the score of the player.
+     * If the question type is open question, there is a range of answer that is accepted to gain partial points even if the user answer is not equal to the correct answer
      *
      * @param username       the user that needs the score update
      * @param roomId         the id of the room the user is in
      * @param questionNumber the question number answered by the user
      * @param userAnswer     the answer user
+     * @return null / false if some error occurs
      */
     public Boolean updateMultiPlayerScore(String username, String roomId, int questionNumber, String userAnswer, String questionType) {
         try {
@@ -435,6 +410,7 @@ public class MultiplayerGameService {
 
     /**
      * Get all multiplayer games that is currently in waiting status
+     *
      * @return list of all multiplayer games that is in waiting status
      */
     public List<GameContainer> getGameIds() {
@@ -444,6 +420,7 @@ public class MultiplayerGameService {
 
     /**
      * Gets the multiplayer game room
+     *
      * @param roomId the id of the room the user is in
      * @return the multiplayer room with the given id or null if a room with that id does not exist
      */
@@ -453,6 +430,7 @@ public class MultiplayerGameService {
 
     /**
      * Removing specific player
+     *
      * @param roomId    the id of the room the user is in
      * @param userName  the user that needs the score update
      */

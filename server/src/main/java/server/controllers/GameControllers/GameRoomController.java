@@ -158,6 +158,7 @@ public class GameRoomController {
 
     /**
      * Returns the score of the desired player or gives a corresponding error message
+     *
      * @param username       the username of the player that requests his score
      * @param gameType       the type of the game
      * @param roomId         the id of the game that the player is in
@@ -187,6 +188,8 @@ public class GameRoomController {
     }
 
     /**
+     *
+     *
      * @param username       the username of the player that requests his score
      * @param gameType       the type of the game
      * @param roomId         the id of the game that the player is in
@@ -323,40 +326,6 @@ public class GameRoomController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
-//    /**
-//     * Resets the points added, to prevent the points getting doubled everytime after the double point joker is used
-//     * @param username  the username of the player that gives the answer
-//     * @param gameType  the type of the game
-//     * @param roomId    the id of the game that the player is in
-//     * @return
-//     */
-//    @GetMapping("/resetDoubledAddedPoints")
-//    public ResponseEntity<Object> resetDoubledAddedPoints(@PathVariable("username") String username, @PathVariable("gameType") String gameType,
-//                                                          @PathVariable("roomId") String roomId) {
-//        if (gameType.equals("SINGLEPLAYER")) {
-//            try {
-//                return singlePlayerGameService.resetAddedPointAfterDoublePointJoker(username, roomId) ?
-//                        ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-//            } catch (NumberFormatException e) {
-//                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-//            }
-//            catch (Exception e) {
-//                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
-//            }
-//        }
-//
-//        if (gameType.equals("MULTIPLAYER")) {
-//            try {
-//                return multiplayerGameService.resetAddedPointAfterDoublePointJoker(username, roomId) ?
-//                        ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-//            } catch (Exception e) {
-//                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
-//            }
-//        }
-//
-//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-//    }
-
     /**
      * Updates timeJokerUsed (sets to true) or gives a corresponding error message
      *
@@ -382,7 +351,8 @@ public class GameRoomController {
     }
 
     /**
-     * Returns the points earned by the player for that specific game
+     * Gets the points earned by the player for that specific game
+     *
      * @param username  the username of the player that requests his score
      * @param gameType  the type of the game
      * @param roomId    the id of the game that the player is in
@@ -413,6 +383,8 @@ public class GameRoomController {
 
 
     /**
+     * Checks whether the hint joker is used or not
+     *
      * @param username       the username of the player that requests his score
      * @param gameType       the type of the game
      * @param roomId         the id of the game that the player is in
@@ -442,6 +414,8 @@ public class GameRoomController {
     }
 
     /**
+     * Checks whether the double point joker is used or not
+     *
      * @param username       the username of the player that requests his score
      * @param gameType       the type of the game
      * @param roomId         the id of the game that the player is in
@@ -470,6 +444,8 @@ public class GameRoomController {
     }
 
     /**
+     * Checks whether the time joker is used or not
+     *
      * @param username       the username of the player that requests his score
      * @param gameType       the type of the game
      * @param roomId         the id of the game that the player is in
@@ -488,29 +464,15 @@ public class GameRoomController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
-//    @GetMapping("/getTimeLeft")
-//    public ResponseEntity<Integer> getTimeLeft(@PathVariable("username") String username, @PathVariable("gameType") String gameType, @PathVariable("roomId") String roomId) {
-//        if (gameType.equals("SINGLEPLAYER")) {
-//            try {
-//                Integer timeLeft = singlePlayerGameService.getTimeLeft(username, roomId);
-//                return (timeLeft != null) ? ResponseEntity.status(HttpStatus.OK).body(timeLeft) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-//            } catch (Exception e) {
-//                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
-//            }
-//        }
-//
-//        if (gameType.equals("MULTIPLAYER")) {
-//            try {
-//                Integer timeLeft = multiplayerGameService.getTimeLeft(username, roomId);
-//                return (timeLeft != null) ? ResponseEntity.status(HttpStatus.OK).body(timeLeft) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-//            } catch (Exception e) {
-//                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
-//            }
-//        }
-//
-//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-//    }
-
+    /**
+     * Sets the time left after the user input the answer
+     *
+     * @param username      the username of the player that requests his score
+     * @param gameType      the type of the game
+     * @param roomId        the id of the game that the player is in
+     * @param timeLeft      time left in milliseconds
+     * @return
+     */
     @GetMapping("/{timeLeft}/setTimeLeft")
     public ResponseEntity<Object> setTimeLeft(@PathVariable("username") String username, @PathVariable("gameType") String gameType,
                                               @PathVariable("roomId") String roomId, @PathVariable("timeLeft") Integer timeLeft) {
