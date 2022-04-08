@@ -246,12 +246,23 @@ public class SingleplayerGameService {
             if (userAnswer.equals(correctAnswer)) {
                 this.calculatePointsAdded(username, roomId, false);
                 roomCatalog.getSinglePlayerRoom(roomId).updatePlayerScore();
-            } else if(questionType.equals("OpenQuestion")) {
-                if(Integer.parseInt(userAnswer) > Integer.parseInt(correctAnswer) * 0.8 || Integer.parseInt(userAnswer) < Integer.parseInt(correctAnswer) * 1.2 ) {
-                    this.calculatePointsAdded(username, roomId, true);
-                    roomCatalog.getSinglePlayerRoom(roomId).updatePlayerScore();
+            } else if (questionType.equals("OpenQuestion")) {
+                int userAnswerInt;
+                        try {
+                            userAnswerInt = Integer.parseInt(userAnswer);
+                            if (userAnswerInt > Integer.parseInt(correctAnswer) * 0.8 || userAnswerInt < Integer.parseInt(correctAnswer) * 1.2 ) {
+                                this.calculatePointsAdded(username, roomId, true);
+                                roomCatalog.getSinglePlayerRoom(roomId).updatePlayerScore();
+                            }
+                            System.out.println(1);
+                        } catch (NumberFormatException e) {
+                            return false;
+                        } catch (NullPointerException e) {
+                            return false;
+                        } catch (Exception e) {
+                            System.out.println(e);
                 }
-            } else{
+            } else {
             }
             return true;
         } catch (Exception e) {

@@ -54,7 +54,7 @@ public class SingleplayerRoom extends Room {
      * @return the new added point value
      */
     public int calculateAddedPoints(boolean partialPoint) {
-        if(partialPoint) {
+        if (partialPoint) {
             this.addedPoints = (int) (addedPoints * (this.timeLeft) / 100) / 2;
         } else {
             this.addedPoints = (int) (addedPoints * (this.timeLeft) / 100);

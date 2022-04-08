@@ -220,7 +220,8 @@ public class GameRoomController {
      */
     @PostMapping("/{questionNumber}/{questionType}/postAnswer")
     public ResponseEntity<Object> postAnswer(@PathVariable("username") String username, @PathVariable("gameType") String gameType,
-                                               @PathVariable("roomId") String roomId, @PathVariable("questionNumber") String questionNumber, @PathVariable("questionType") String questionType, @RequestBody String userAnswer) {
+                                               @PathVariable("roomId") String roomId, @PathVariable("questionNumber") String questionNumber,
+                                             @PathVariable("questionType") String questionType, @RequestBody String userAnswer) {
         if (gameType.equals("SINGLEPLAYER")) {
             try {
                 int questionNo = Integer.parseInt(questionNumber);

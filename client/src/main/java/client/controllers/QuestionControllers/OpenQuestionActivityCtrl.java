@@ -147,27 +147,10 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
             return;
         }
         timeLeft = timeSecondsGlobal.get();
-//        updateTimeLeft();
-//        System.out.println(timeLeft);
+        System.out.println(timeLeft);
 
         userAnswer = answerTextfield.getText();
         answered = true;
-//        try {
-//            userAnswerInt = Integer.parseInt(answerTextfield.getText());
-////            updateTheScoreServer();
-//            System.out.println(1);
-//        } catch (NumberFormatException e) {
-//            answerTextfield.setText("-99999");
-//            //server.updateScore(answerTextfield.getText());
-//            userAnswerInt = Integer.parseInt(answerTextfield.getText());
-//        } catch (NullPointerException e) {
-//            if (answerTextfield.getText() == (null) || answerTextfield.getText().trim().isEmpty()) {
-//                answerTextfield.setText("-99999");
-//                userAnswerInt = Integer.parseInt(answerTextfield.getText());
-//            }
-//        } catch (Exception e) {
-//            System.out.println(e);
-//        }
         disableAnswers();
     }
 
