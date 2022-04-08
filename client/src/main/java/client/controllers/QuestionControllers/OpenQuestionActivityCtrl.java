@@ -145,6 +145,7 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
             return;
         }
         answered = true;
+        updateTimeLeft();
 
         try {
             userAnswerInt = Integer.parseInt(answerTextfield.getText());
@@ -185,10 +186,8 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         int correctAnswer = Integer.parseInt(getCorrectAnswer());
         // after the time ends the amount of won points is calculated and then shown to the player
         if (userAnswerInt == correctAnswer) {
-            addedPointsInt = 500;
-        } else if (userAnswerInt > correctAnswer * 0.95 && userAnswerInt < correctAnswer * 1.05) {
-            addedPointsInt = 250;
-        }
+            addedPointsInt = getAddedPointsInt();
+        } else { addedPointsInt = 0; }
         addedPoints.setText("+" + addedPointsInt);
 
 //        FadeTransition fadeout = new FadeTransition(Duration.seconds(1), addedPoints);

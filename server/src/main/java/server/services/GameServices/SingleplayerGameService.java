@@ -143,13 +143,12 @@ public class SingleplayerGameService {
      * Calculates the points earned in this round
      * @return the points earned in this round
      */
-    public Integer calculatePointsAdded(String username, String roomId) {
+    public Integer calculatePointsAdded(String username, String roomId, boolean partialPoint) {
         try {
             if (!username.equals(roomCatalog.getSinglePlayerRoom(roomId).getRoomCreator())) {
                 return null;
             }
-
-            return roomCatalog.getSinglePlayerRoom(roomId).calculateAddedPoints();
+            return roomCatalog.getSinglePlayerRoom(roomId).calculateAddedPoints(partialPoint);
         } catch (Exception e) {
             System.out.println("An exception occurred");
             return null;
@@ -238,18 +237,22 @@ public class SingleplayerGameService {
      * @param questionNumber the question number answered by the user
      * @param userAnswer     the answer user
      */
-    public Boolean updateSinglePlayerScore(String username, String roomId, int questionNumber, String userAnswer) {
+    public Boolean updateSinglePlayerScore(String username, String roomId, int questionNumber, String userAnswer, String questionType) {
         try {
             if (!username.equals(roomCatalog.getSinglePlayerRoom(roomId).getRoomCreator())) {
                 return false;
             }
-            if (userAnswer.equals(getSinglePlayerAnswer(username, roomId, questionNumber))) {
-                this.calculatePointsAdded(username, roomId);
+            String correctAnswer = getSinglePlayerAnswer(username, roomId, questionNumber);
+            if (userAnswer.equals(correctAnswer)) {
+                this.calculatePointsAdded(username, roomId, false);
                 roomCatalog.getSinglePlayerRoom(roomId).updatePlayerScore();
-            } else {
-                roomCatalog.getSinglePlayerRoom(roomId).setAddedPoint(1);
+            } else if(questionType.equals("OpenQuestion")) {
+                if(Integer.parseInt(userAnswer) > Integer.parseInt(correctAnswer) * 0.8 || Integer.parseInt(userAnswer) < Integer.parseInt(correctAnswer) * 1.2 ) {
+                    this.calculatePointsAdded(username, roomId, true);
+                    roomCatalog.getSinglePlayerRoom(roomId).updatePlayerScore();
+                }
+            } else{
             }
-
             return true;
         } catch (Exception e) {
             System.out.println("An exception occurred");

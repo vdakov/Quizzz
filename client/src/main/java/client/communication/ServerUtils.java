@@ -974,23 +974,23 @@ public class ServerUtils {
                 .request().get();
     }
 
-    public void calculateAddedPoints() {
-        try {
-            GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
-
-            Response response = ClientBuilder.newClient(new ClientConfig()) //
-                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" +
-                            gameConfiguration.getRoomId() + "/" + gameConfiguration.getCurrentQuestionNumber() + "/calculateAddedPoints")
-                    .request(APPLICATION_JSON)
-                    .accept(APPLICATION_JSON)
-                    .get();
-
-            System.out.println("Response status: " + response.getStatus());
-
-        } catch (Exception e) {
-            System.out.println("An exception occurred");
-        }
-    }
+//    public void calculateAddedPoints() {
+//        try {
+//            GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+//
+//            Response response = ClientBuilder.newClient(new ClientConfig()) //
+//                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" +
+//                            gameConfiguration.getRoomId() + "/" + gameConfiguration.getCurrentQuestionNumber() + "/calculateAddedPoints")
+//                    .request(APPLICATION_JSON)
+//                    .accept(APPLICATION_JSON)
+//                    .get();
+//
+//            System.out.println("Response status: " + response.getStatus());
+//
+//        } catch (Exception e) {
+//            System.out.println("An exception occurred");
+//        }
+//    }
 
 
 }
