@@ -143,15 +143,11 @@ public class SingleplayerGameService {
      * Calculates the points earned in this round
      * @return the points earned in this round
      */
-    public Integer calculatePointsAdded(String username, String roomId) {
+    public Integer calculatePointsAdded(String username, String roomId, boolean partialPoint) {
         try {
-            if (!username.equals(roomCatalog.getSinglePlayerRoom(roomId).getRoomCreator())) {
-                return null;
-            }
-
-            return roomCatalog.getSinglePlayerRoom(roomId).calculateAddedPoints();
+            return roomCatalog.getSinglePlayerRoom(roomId).calculateAddedPoints(partialPoint);
         } catch (Exception e) {
-            System.out.println("An exception occurred");
+            System.out.println("An exception occurred while calculating points");
             return null;
         }
     }
@@ -238,18 +234,35 @@ public class SingleplayerGameService {
      * @param questionNumber the question number answered by the user
      * @param userAnswer     the answer user
      */
-    public Boolean updateSinglePlayerScore(String username, String roomId, int questionNumber, String userAnswer) {
+    public Boolean updateSinglePlayerScore(String username, String roomId, int questionNumber, String userAnswer, String questionType) {
         try {
             if (!username.equals(roomCatalog.getSinglePlayerRoom(roomId).getRoomCreator())) {
                 return false;
             }
-            if (userAnswer.equals(getSinglePlayerAnswer(username, roomId, questionNumber))) {
-                this.calculatePointsAdded(username, roomId);
+            String correctAnswer = getSinglePlayerAnswer(username, roomId, questionNumber);
+            if (userAnswer.equals(correctAnswer)) {
+                this.calculatePointsAdded(username, roomId, false);
                 roomCatalog.getSinglePlayerRoom(roomId).updatePlayerScore();
+                return true;
+            } else if (questionType.equals("OpenQuestion")) {
+                int userAnswerInt;
+                        try {
+                            userAnswerInt = Integer.parseInt(userAnswer);
+                            if (userAnswerInt > Integer.parseInt(correctAnswer) * 0.8 || userAnswerInt < Integer.parseInt(correctAnswer) * 1.2 ) {
+                                this.calculatePointsAdded(username, roomId, true);
+                                roomCatalog.getSinglePlayerRoom(roomId).updatePlayerScore();
+                            }
+                            System.out.println(1);
+                        } catch (NumberFormatException e) {
+                            return false;
+                        } catch (NullPointerException e) {
+                            return false;
+                        } catch (Exception e) {
+                            System.out.println(e);
+                }
             } else {
-                roomCatalog.getSinglePlayerRoom(roomId).setAddedPoint(1);
+                roomCatalog.getSinglePlayerRoom(roomId).setAddedPoint(0);
             }
-
             return true;
         } catch (Exception e) {
             System.out.println("An exception occurred");
@@ -292,25 +305,5 @@ public class SingleplayerGameService {
         }
     }
 
-    /**
-     * Resets the points added as 10, to prevent the points getting doubled everytime after the double point joker is used
-     * @param username  the user that needs the score update
-     * @param roomId    the id of the room the user is in
-     * @return true is the reset is successfully done
-     */
-    public Boolean resetAddedPointAfterDoublePointJoker(String username, String roomId) {
-        try {
-            if (!username.equals(roomCatalog.getSinglePlayerRoom(roomId).getRoomCreator())) {
-                return false;
-            }
-
-            roomCatalog.getSinglePlayerRoom(roomId).resetAddedPointAfterDoublePointJoker();
-
-            return true;
-        } catch (Exception e) {
-            System.out.println("An exception occurred");
-            return null;
-        }
-    }
 }
 

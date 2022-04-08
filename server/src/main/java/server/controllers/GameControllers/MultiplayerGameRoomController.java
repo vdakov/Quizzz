@@ -123,6 +123,7 @@ public class MultiplayerGameRoomController {
     @MessageMapping("/emojis")  // /app/emojis
     @SendTo("/topic/emojis")
     public String addMessage(String chatEntry) {
+        System.out.println("Am primit un mesaj");
         return chatEntry;
     }
 }

@@ -42,7 +42,6 @@ public class QuizzzClient extends Application {
      */
     public static void main(String[] args) throws URISyntaxException, IOException {
         launch(QuizzzClient.class, args);
-
     }
 
     /**
@@ -66,7 +65,9 @@ public class QuizzzClient extends Application {
     };
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws IOException {
+
+
         //make a hashmap to easily look up any root (parent of scene) using its filename (without the .fxml extension)
         HashMap<String, Pair<Object, Parent>> rootsMap = new HashMap<>();
 
@@ -82,5 +83,6 @@ public class QuizzzClient extends Application {
 
         var sceneCtrl = INJECTOR.getInstance(SceneCtrl.class);
         sceneCtrl.initialize(primaryStage, rootsMap);
+
     }
 }
