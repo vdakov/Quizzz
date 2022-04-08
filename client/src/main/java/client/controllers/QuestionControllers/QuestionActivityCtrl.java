@@ -175,6 +175,8 @@ public class QuestionActivityCtrl {
         addedPoints.setText(" ");
         addedPointsInt = 0;
 
+//        server.resetDoubledAddedPoints();
+
         if (gameConfig.getCurrentQuestionNumber() <= 1) {
             resetJokers();
         }
@@ -215,6 +217,8 @@ public class QuestionActivityCtrl {
         hintJoker.setDisable(false);
         if (getHintJokerUsed() != null) {
             hintJoker.setDisable(getHintJokerUsed());
+        } if (getDoublePointJokerUsed() != null) {
+            doublePointJoker.setDisable(getDoublePointJokerUsed());
         }
     }
 
@@ -225,7 +229,6 @@ public class QuestionActivityCtrl {
         }
 
         timeLeft = timeSecondsGlobal.get();
-        updateTimeLeft();
         disableAnswers();
 
         Button current = (Button) event.getSource();
@@ -264,9 +267,8 @@ public class QuestionActivityCtrl {
     public void pointsUpdate() {
         // after the time ends the amount of won points is calculated and then shown to the player
         addedPointsInt = 0;
-        if(gameConfig.isDefined()) {
-            addedPoints.setText("+" + (Integer.parseInt(server.getScore()) - Integer.parseInt(points.getText())));
-        }
+//        addedPoints.setText("+" + (Integer.parseInt(server.getScore()) - Integer.parseInt(points.getText())));
+        addedPoints.setText("+" + server.getAddedPoints());
     }
     //Always 10 seconds, to make the game synchronous
     public void startTimerGlobal() {
@@ -303,6 +305,8 @@ public class QuestionActivityCtrl {
                         new KeyValue(timeSecondsClient, 0)));    //animation finishes when timeSeconds comes to 0
         timelineClient.setOnFinished(event -> {
             try {
+                updateTimeLeft();
+                System.out.println(timeLeft);
                 disableAnswers();
                 updateTheScoreServer();
                 answerUpdate();
@@ -629,6 +633,10 @@ public class QuestionActivityCtrl {
         }
 
 
+    }
+
+    public int getAddedPointsInt() {
+        return server.getAddedPoints();
     }
 
     public void updateTimeLeft() {

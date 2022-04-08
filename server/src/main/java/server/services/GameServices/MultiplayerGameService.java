@@ -165,7 +165,7 @@ public class MultiplayerGameService {
         try {
             if (roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() != Room.RoomStatus.ONGOING ||
                     roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) == null) {
-                //return null;
+                return null;
             }
 
             return roomCatalog.getMultiPlayerRoom(roomId).getQuestion(questionNumber);
@@ -222,8 +222,13 @@ public class MultiplayerGameService {
      * Calculated the points added on this round
      * @return the points earned in this round
      */
-    public int calculatePointsAdded(String username, String roomId) {
-        return roomCatalog.getMultiPlayerRoom(roomId).calculateAddedPoints(username);
+    public Integer calculatePointsAdded(String username, String roomId, boolean partialPoint) {
+        try {
+            return roomCatalog.getMultiPlayerRoom(roomId).calculateAddedPoints(username, partialPoint);
+        } catch (Exception e) {
+            System.out.println("An exception occurred while calculating points");
+            return null;
+        }
     }
 
 
@@ -349,7 +354,7 @@ public class MultiplayerGameService {
         try {
             if (roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() != Room.RoomStatus.ONGOING ||
                     roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) == null) {
-                //return null;
+                return null;
             }
             roomCatalog.getMultiPlayerRoom(roomId).useDoublePointJoker(username);
             return true;
@@ -390,20 +395,37 @@ public class MultiplayerGameService {
      * @param questionNumber the question number answered by the user
      * @param userAnswer     the answer user
      */
-    public Boolean updateMultiPlayerScore(String username, String roomId, int questionNumber, String userAnswer) {
+    public Boolean updateMultiPlayerScore(String username, String roomId, int questionNumber, String userAnswer, String questionType) {
         try {
             if (roomCatalog.getMultiPlayerRoom(roomId).getRoomStatus() != Room.RoomStatus.ONGOING ||
                     roomCatalog.getMultiPlayerRoom(roomId).getPlayerScore(username) == null) {
                 return false;
             }
-
-            if (userAnswer.equals(getMultiPlayerAnswer(username, roomId, questionNumber))) {
-                this.calculatePointsAdded(username, roomId);
+            String correctAnswer = getMultiPlayerAnswer(username, roomId, questionNumber);
+            if (userAnswer.equals(correctAnswer)) {
+                this.calculatePointsAdded(username, roomId, false);
                 roomCatalog.getMultiPlayerRoom(roomId).updatePlayerScore(username);
+                return true;
+            } else if (questionType.equals("OpenQuestion")) {
+                int userAnswerInt;
+                try {
+                    userAnswerInt = Integer.parseInt(userAnswer);
+                    if (userAnswerInt > Integer.parseInt(correctAnswer) * 0.8 || userAnswerInt < Integer.parseInt(correctAnswer) * 1.2 ) {
+                        this.calculatePointsAdded(username, roomId, true);
+                        roomCatalog.getSinglePlayerRoom(roomId).updatePlayerScore();
+                    }
+                    System.out.println(1);
+                    return true;
+                } catch (NumberFormatException e) {
+                    return false;
+                } catch (NullPointerException e) {
+                    return false;
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
             } else {
-                roomCatalog.getMultiPlayerRoom(roomId).setAddedPoints(username, 1);
+                roomCatalog.getMultiPlayerRoom(roomId).setAddedPoints(username, 0);
             }
-
             return true;
         } catch (Exception e) {
             System.out.println("An exception occurred");
@@ -451,24 +473,5 @@ public class MultiplayerGameService {
         GameController.getActiveRoomsListeners().forEach((k, l) -> {
             l.accept(new GameContainer(roomId, roomCatalog.getMultiPlayerRoom(roomId).getNumPlayers()));
         });
-    }
-
-    /**
-     * Resets the points added as 10, to prevent the points getting doubled everytime after the double point joker is used
-     * @param username  the user that needs the score update
-     * @param roomId    the id of the room the user is in
-     * @return true is the reset is successfully done
-     */
-    public Boolean resetAddedPointAfterDoublePointJoker(String username, String roomId) {
-        try {
-            if (!username.equals(roomCatalog.getMultiPlayerRoom(roomId).getRoomCreator())) {
-                return false;
-            }
-            roomCatalog.getMultiPlayerRoom(roomId).resetAddedPointAfterDoublePointJoker(username);
-            return true;
-        } catch (Exception e) {
-            System.out.println("An exception occurred");
-            return null;
-        }
     }
 }

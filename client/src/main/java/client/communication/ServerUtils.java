@@ -375,11 +375,12 @@ public class ServerUtils {
 
             Response response = ClientBuilder.newClient(new ClientConfig()) //
                     .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() +
-                            "/" + gameConfiguration.getRoomId() + "/" + gameConfiguration.getCurrentQuestionNumber() +
+                            "/" + gameConfiguration.getRoomId() + "/" + gameConfiguration.getCurrentQuestionNumber() + "/" + gameConfiguration.getQuestionType() +
                             "/postAnswer")
                     .request(APPLICATION_JSON)
                     .accept(APPLICATION_JSON)
                     .post(Entity.text(answer));
+
 
             System.out.println("Update Score : " + response.getStatus());
             switch (response.getStatus()) {
@@ -442,6 +443,8 @@ public class ServerUtils {
             System.out.println("An exception occurred");
         }
     }
+
+
 
     /**
      * Uses the time joker
@@ -950,6 +953,24 @@ public class ServerUtils {
                 .target(SERVER).path("api/activities/restoreActivityBank")
                 .request().get();
     }
+
+//    public void calculateAddedPoints() {
+//        try {
+//            GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+//
+//            Response response = ClientBuilder.newClient(new ClientConfig()) //
+//                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" +
+//                            gameConfiguration.getRoomId() + "/" + gameConfiguration.getCurrentQuestionNumber() + "/calculateAddedPoints")
+//                    .request(APPLICATION_JSON)
+//                    .accept(APPLICATION_JSON)
+//                    .get();
+//
+//            System.out.println("Response status: " + response.getStatus());
+//
+//        } catch (Exception e) {
+//            System.out.println("An exception occurred");
+//        }
+//    }
 
 
 }

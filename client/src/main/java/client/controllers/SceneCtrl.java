@@ -75,18 +75,22 @@ public class SceneCtrl {
 
         switch (questionType) {
             case "OpenQuestion": {
+                gameConfiguration.setQuestionType("OpenQuestion");
                 this.showOpenQuestionScene(QuestionParsers.openQuestionParser(scanner.next()));
                 break;
             }
             case "KnowledgeQuestion": {
+                gameConfiguration.setQuestionType("KnowledgeQuestion");
                 this.showKnowledgeQuestionScene(QuestionParsers.knowledgeQuestionParser(scanner.next()));
                 break;
             }
             case "ComparisonQuestion": {
+                gameConfiguration.setQuestionType("ComparisonQuestion");
                 this.showComparisonQuestionScene(QuestionParsers.comparisonQuestionParser(scanner.next()));
                 break;
             }
             case "AlternativeQuestion": {
+                gameConfiguration.setQuestionType("AlternativeQuestion");
                 this.showAlternativeQuestionScene(QuestionParsers.alternativeQuestionParser(scanner.next()));
                 break;
             }
