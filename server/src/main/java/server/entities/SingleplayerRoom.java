@@ -37,19 +37,18 @@ public class SingleplayerRoom extends Room {
         return this.playerScore;
     }
 
-    public void setTimeLeft(int timeLeft) {
-        this.timeLeft = timeLeft;
-    }
-
     public Integer getTimeLeft() {
         return this.timeLeft;
+    }
+
+    public void setTimeLeft(int timeLeft) {
+        this.timeLeft = timeLeft;
     }
 
     public int getAddedPoints() { return this.addedPoints; }
 
     public void setAddedPoint(int addedPoint) { this.addedPoints = addedPoint; }
 
-    
     /**
      * Calculates the added point of the specific question using time left
      * @return the new added point value
