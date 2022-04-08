@@ -177,7 +177,7 @@ public class QuestionActivityCtrl {
         addedPoints.setText(" ");
         addedPointsInt = 0;
 
-        server.resetDoubledAddedPoints();
+//        server.resetDoubledAddedPoints();
 
         if (gameConfig.getCurrentQuestionNumber() <= 1) {
             resetJokers();
@@ -304,6 +304,7 @@ public class QuestionActivityCtrl {
         timelineClient.setOnFinished(event -> {
             try {
                 updateTimeLeft();
+                System.out.println(timeLeft);
                 disableAnswers();
                 updateTheScoreServer();
                 answerUpdate();
