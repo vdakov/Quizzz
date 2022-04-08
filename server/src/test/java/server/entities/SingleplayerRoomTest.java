@@ -21,5 +21,5 @@ class SingleplayerRoomTest {
         assertEquals(1, s.getAddedPoints());
     }
 
-    
+
 }

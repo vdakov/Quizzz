@@ -127,7 +127,7 @@ public class MultiplayerRoom extends Room {
 
     public int getAddedPoints(String username) { return playerAddedPoints.get(username); }
 
-    public void setAddedPoints(String username, int addedPoint) { this.playerAddedPoints.put(username, addedPoint);}
+    public void setAddedPoints(String username, int addedPoint) { this.playerAddedPoints.put(username, addedPoint); }
     /**
      * Calculates the added point of the specific question using time left
      * @param username
