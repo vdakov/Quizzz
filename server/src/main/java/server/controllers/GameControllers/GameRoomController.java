@@ -218,14 +218,13 @@ public class GameRoomController {
      * @param userAnswer        the user answer to the question
      * @return whether the request was successful or not
      */
-    @PostMapping("/{questionNumber}/postAnswer")
+    @PostMapping("/{questionNumber}/{questionType}/postAnswer")
     public ResponseEntity<Object> postAnswer(@PathVariable("username") String username, @PathVariable("gameType") String gameType,
-                                               @PathVariable("roomId") String roomId, @PathVariable("questionNumber") String questionNumber, @RequestBody String userAnswer) {
+                                               @PathVariable("roomId") String roomId, @PathVariable("questionNumber") String questionNumber, @PathVariable("questionType") String questionType, @RequestBody String userAnswer) {
         if (gameType.equals("SINGLEPLAYER")) {
             try {
                 int questionNo = Integer.parseInt(questionNumber);
                 Question question = singlePlayerGameService.getSinglePlayerQuestion(username, roomId, questionNo);
-                String questionType = Util.getQuestionType(question);
                 return singlePlayerGameService.updateSinglePlayerScore(username, roomId, questionNo, userAnswer, questionType) ?
                         ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             } catch (NumberFormatException e) {

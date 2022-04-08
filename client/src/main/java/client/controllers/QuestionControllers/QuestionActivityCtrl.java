@@ -169,6 +169,8 @@ public class QuestionActivityCtrl {
 //        });
 
 
+        System.out.println(correctAnswer);
+
         answered = false;
 
         addedPoints.setText(" ");
@@ -226,7 +228,6 @@ public class QuestionActivityCtrl {
         }
 
         timeLeft = timeSecondsGlobal.get();
-        updateTimeLeft();
         disableAnswers();
 
         Button current = (Button) event.getSource();
@@ -307,6 +308,7 @@ public class QuestionActivityCtrl {
                         new KeyValue(timeSecondsClient, 0)));    //animation finishes when timeSeconds comes to 0
         timelineClient.setOnFinished(event -> {
             try {
+                updateTimeLeft();
                 disableAnswers();
                 updateTheScoreServer();
                 answerUpdate();

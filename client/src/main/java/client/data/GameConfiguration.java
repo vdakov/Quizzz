@@ -12,6 +12,7 @@ public class GameConfiguration {
     }
 
     private GameType gameType;
+    private String questionType;
     private String userName;
     private String roomId;
     private int currentQuestionNumber;
@@ -138,4 +139,8 @@ public class GameConfiguration {
     public long getTimeLeft() { return timeLeft; }
 
     public void setTimeLeft(long timeLeft) { this.timeLeft = timeLeft; }
+
+    public String getQuestionType() { return questionType; }
+
+    public void setQuestionType(String questionType) { this.questionType = questionType; }
 }

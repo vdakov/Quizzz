@@ -375,11 +375,12 @@ public class ServerUtils {
 
             Response response = ClientBuilder.newClient(new ClientConfig()) //
                     .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() +
-                            "/" + gameConfiguration.getRoomId() + "/" + gameConfiguration.getCurrentQuestionNumber() +
+                            "/" + gameConfiguration.getRoomId() + "/" + gameConfiguration.getCurrentQuestionNumber() + "/" + gameConfiguration.getQuestionType() +
                             "/postAnswer")
                     .request(APPLICATION_JSON)
                     .accept(APPLICATION_JSON)
                     .post(Entity.text(answer));
+
 
             System.out.println("Update Score : " + response.getStatus());
             switch (response.getStatus()) {

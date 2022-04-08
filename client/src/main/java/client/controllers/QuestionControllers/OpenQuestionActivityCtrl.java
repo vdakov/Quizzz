@@ -23,7 +23,7 @@ import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
 public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
-    private int userAnswerInt;
+    private String userAnswer;
     private int addedPointsInt;
     // current labels
     @FXML
@@ -137,6 +137,8 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         initialize();
         startTimerClient();
         startTimerGlobal();
+
+        System.out.println(correctAnswer);
     }
 
     public void answerQuestion(ActionEvent event) throws IOException {
@@ -144,32 +146,35 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         if (answered) {
             return;
         }
-        answered = true;
-        updateTimeLeft();
+        timeLeft = timeSecondsGlobal.get();
+//        updateTimeLeft();
+//        System.out.println(timeLeft);
 
-        try {
-            userAnswerInt = Integer.parseInt(answerTextfield.getText());
-            updateTheScoreServer();
-            System.out.println(1);
-        } catch (NumberFormatException e) {
-            answerTextfield.setText("-99999");
-            //server.updateScore(answerTextfield.getText());
-            userAnswerInt = Integer.parseInt(answerTextfield.getText());
-        } catch (NullPointerException e) {
-            if (answerTextfield.getText() == (null) || answerTextfield.getText().trim().isEmpty()) {
-                answerTextfield.setText("-99999");
-                userAnswerInt = Integer.parseInt(answerTextfield.getText());
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+        userAnswer = answerTextfield.getText();
+        answered = true;
+//        try {
+//            userAnswerInt = Integer.parseInt(answerTextfield.getText());
+////            updateTheScoreServer();
+//            System.out.println(1);
+//        } catch (NumberFormatException e) {
+//            answerTextfield.setText("-99999");
+//            //server.updateScore(answerTextfield.getText());
+//            userAnswerInt = Integer.parseInt(answerTextfield.getText());
+//        } catch (NullPointerException e) {
+//            if (answerTextfield.getText() == (null) || answerTextfield.getText().trim().isEmpty()) {
+//                answerTextfield.setText("-99999");
+//                userAnswerInt = Integer.parseInt(answerTextfield.getText());
+//            }
+//        } catch (Exception e) {
+//            System.out.println(e);
+//        }
         disableAnswers();
     }
 
     public void answerUpdate() {
         // after the time ends the right answer is requested and then shown
-        System.out.println(userAnswerInt);
-        if (userAnswerInt == Integer.parseInt(getCorrectAnswer())) {
+        System.out.println(userAnswer);
+        if (userAnswer.equals(getCorrectAnswer())) {
             userAnswerRectangle.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(0), BorderStroke.THICK)));
         } else {
             userAnswerRectangle.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(0), BorderStroke.THICK)));
@@ -183,23 +188,13 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
     }
 
     public void pointsUpdate() {
-        int correctAnswer = Integer.parseInt(getCorrectAnswer());
+//        int correctAnswer = Integer.parseInt(getCorrectAnswer());
         // after the time ends the amount of won points is calculated and then shown to the player
-        if (userAnswerInt == correctAnswer) {
+        if (userAnswer.equals(getCorrectAnswer())) {
             addedPointsInt = getAddedPointsInt();
         } else { addedPointsInt = 0; }
         addedPoints.setText("+" + addedPointsInt);
 
-//        FadeTransition fadeout = new FadeTransition(Duration.seconds(1), addedPoints);
-//        fadeout.setFromValue(1);
-//        fadeout.setToValue(0);
-//        fadeout.play();
-//
-//        //after some effect
-//        pointsInt += addedPointsInt;
-//        addedPointsInt = 0;
-//        addedPoints.setText(null);
-//        points.setText(String.valueOf(pointsInt));
     }
 
     public void useHintJoker() {
@@ -240,6 +235,6 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
     }
 
     public void updateTheScoreServer() {
-        server.updateScore(answerTextfield.getText());
+        server.updateScore(userAnswer);
     }
 }
