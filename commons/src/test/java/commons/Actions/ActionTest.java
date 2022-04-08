@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ActionTest {
 
-    private final Action action =new Action("id", "path", "title", 1000, "source");
+    private final Action action = new Action("id", "path", "title", 1000, "source");
 
     @Test
     void setId() {
