@@ -56,13 +56,22 @@ public class SceneCtrl {
         primaryStage.show();
     }
 
+
     public void showNextQuestion() throws IOException {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         gameConfiguration.setCurrentQuestionNumber(gameConfiguration.getCurrentQuestionNumber() + 1);
+
         String response = serverUtils.getQuestion();
+
         Scanner scanner = new Scanner(response).useDelimiter(": ");
         String questionType = scanner.next();
-        //primaryStage.setTitle("Question #" + gameConfiguration.getCurrentQuestionNumber() + ": " + questionType);
+
+        try {
+            primaryStage.setTitle("Question #" + gameConfiguration.getCurrentQuestionNumber() + " " + questionType);
+        } catch (Exception e) {
+            System.out.println("It worked");
+        }
+
 
         switch (questionType) {
             case "OpenQuestion": {
@@ -90,7 +99,6 @@ public class SceneCtrl {
         OpenQuestionActivityCtrl ctrl = (OpenQuestionActivityCtrl) pair.getKey();
 
         ctrl.displayQuestion(openQuestion);
-        primaryStage.setTitle("Question screen");
         scene.setRoot(pair.getValue());
 
         primaryStage.setOnCloseRequest(event -> {
@@ -105,7 +113,6 @@ public class SceneCtrl {
         KnowledgeQuestionActivityCtrl ctrl = (KnowledgeQuestionActivityCtrl) pair.getKey();
 
         ctrl.displayQuestion(knowledgeQuestion);
-        primaryStage.setTitle("Question screen");
         scene.setRoot(pair.getValue());
 
         primaryStage.setOnCloseRequest(event -> {
@@ -120,7 +127,6 @@ public class SceneCtrl {
         ComparisonQuestionActivityCtrl ctrl = (ComparisonQuestionActivityCtrl) pair.getKey();
 
         ctrl.displayQuestion(comparisonQuestion);
-        primaryStage.setTitle("Question screen");
         scene.setRoot(pair.getValue());
 
         primaryStage.setOnCloseRequest(event -> {
@@ -135,7 +141,6 @@ public class SceneCtrl {
         AlternativeQuestionActivityCtrl ctrl = (AlternativeQuestionActivityCtrl) pair.getKey();
 
         ctrl.displayQuestion(alternativeQuestion);
-        primaryStage.setTitle("Question screen");
         scene.setRoot(pair.getValue());
 
         primaryStage.setOnCloseRequest(event -> {
@@ -167,7 +172,8 @@ public class SceneCtrl {
         MainScreenActivityCtrl ctrl = (MainScreenActivityCtrl) pair.getKey();
         ctrl.initialise();
 
-        primaryStage.setTitle("Main Screen");
+        primaryStage.setTitle("Main screen");
+
         scene.setRoot(pair.getValue());
 
         primaryStage.setOnCloseRequest(event -> {

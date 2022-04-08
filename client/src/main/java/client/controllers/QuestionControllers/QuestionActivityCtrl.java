@@ -175,8 +175,6 @@ public class QuestionActivityCtrl {
         addedPoints.setText(" ");
         addedPointsInt = 0;
 
-        server.resetDoubledAddedPoints();
-
         if (gameConfig.getCurrentQuestionNumber() <= 1) {
             resetJokers();
         }
@@ -248,10 +246,11 @@ public class QuestionActivityCtrl {
         secondOptionText.setStyle("-fx-background-color: #ff000f;");
         thirdOptionText.setStyle("-fx-background-color: #ff000f;");
 
+        String answer = getCorrectAnswer();
 
-        if (getCorrectAnswer().equals(firstOptionText.getText())) {
+        if (answer.equals(firstOptionText.getText())) {
             firstOptionText.setStyle("-fx-background-color: #72ff00;");
-        } else if (getCorrectAnswer().equals(secondOptionText.getText())) {
+        } else if (answer.equals(secondOptionText.getText())) {
             secondOptionText.setStyle("-fx-background-color: #72ff00;");
         } else {
             thirdOptionText.setStyle("-fx-background-color: #72ff00;");
@@ -265,7 +264,9 @@ public class QuestionActivityCtrl {
     public void pointsUpdate() {
         // after the time ends the amount of won points is calculated and then shown to the player
         addedPointsInt = 0;
-        addedPoints.setText("+" + (Integer.parseInt(server.getScore()) - Integer.parseInt(points.getText())));
+        if(gameConfig.isDefined()) {
+            addedPoints.setText("+" + (Integer.parseInt(server.getScore()) - Integer.parseInt(points.getText())));
+        }
     }
     //Always 10 seconds, to make the game synchronous
     public void startTimerGlobal() {
@@ -628,10 +629,6 @@ public class QuestionActivityCtrl {
         }
 
 
-    }
-
-    public int getAddedPointsInt() {
-        return server.getAddedPoints();
     }
 
     public void updateTimeLeft() {

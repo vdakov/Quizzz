@@ -59,13 +59,6 @@ public class SingleplayerRoom extends Room {
     }
 
     /**
-     * Resets the points added as 10, to prevent the points getting doubled everytime after the double point joker is used
-     */
-    public void resetAddedPointAfterDoublePointJoker() {
-        addedPoints = 1;
-    }
-
-    /**
      * Returns true if Hint Joker was used this game
      */
     public Boolean getHintJokerUsed() { return hintJokerUsed; }
@@ -86,6 +79,7 @@ public class SingleplayerRoom extends Room {
     public void useDoublePointJoker() {
         this.addedPoints = addedPoints * 2;
         doublePointJokerUsed = true;
+        this.addedPoints = 1;
     }
 
 

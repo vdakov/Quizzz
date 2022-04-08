@@ -106,7 +106,6 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         server.registerForMessages("/topic/emojis", q -> {
             refresh(q.get(0), q.get(1), q.get(2));
         });
-        System.out.println(getCorrectAnswer());
     }
 
     /**
@@ -119,6 +118,7 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         if (openQuestion == null) {
             return;
         }
+
         sampleQuestion.setText(openQuestion.getQuestion().getKey());
         questionNumberLabel.setText("Question " + getQuestionNumber());
         points.setText(String.valueOf(getPointsInt()));
@@ -168,11 +168,12 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
     public void answerUpdate() {
         // after the time ends the right answer is requested and then shown
         System.out.println(userAnswerInt);
-        if (userAnswerInt == Integer.parseInt(getCorrectAnswer())) {
+        String correctAnswer = getCorrectAnswer();
+        if (userAnswerInt == Integer.parseInt(correctAnswer)) {
             userAnswerRectangle.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(0), BorderStroke.THICK)));
         } else {
             userAnswerRectangle.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(0), BorderStroke.THICK)));
-            correctAnswerLabel.setText(getCorrectAnswer());
+            correctAnswerLabel.setText(correctAnswer);
         }
 
         correctAnswerRectangle.setOpacity(1);
