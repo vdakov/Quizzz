@@ -131,11 +131,15 @@ public class MultiplayerRoom extends Room {
     /**
      * Calculates the added point of the specific question using time left
      * @param username
-     * @param timeLeft the amount of time left to user, fast answer gives more points
      * @return the new added point value
      */
-    public int calculateAddedPoints(String username) {
-        int newAddedPoints = (int) (getAddedPoints(username) * (this.getTimeLeft(username)) / 100);
+    public int calculateAddedPoints(String username, boolean partialPoint) {
+        int newAddedPoints = 0;
+        if (partialPoint) {
+            newAddedPoints = (int) (1 * ((this.getTimeLeft(username) / 100) / 2));
+        } else {
+            newAddedPoints = (int) (1 * (this.getTimeLeft(username) / 100));
+        }
         playerAddedPoints.put(username, newAddedPoints);
         return newAddedPoints;
     }
@@ -151,7 +155,6 @@ public class MultiplayerRoom extends Room {
      * Updates the score of the player
      *
      * @param username the username of the player that won points
-     * @param addedScore the score that the player has earned
      */
     public void updatePlayerScore(String username) {
         playerScores.put(username, getPlayerScore(username) + this.getAddedPoints(username));

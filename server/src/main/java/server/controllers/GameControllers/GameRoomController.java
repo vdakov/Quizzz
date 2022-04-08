@@ -239,7 +239,8 @@ public class GameRoomController {
         if (gameType.equals("MULTIPLAYER")) {
             try {
                 int questionNo = Integer.parseInt(questionNumber);
-                return multiplayerGameService.updateMultiPlayerScore(username, roomId, questionNo, userAnswer) ?
+                Question question = singlePlayerGameService.getSinglePlayerQuestion(username, roomId, questionNo);
+                return multiplayerGameService.updateMultiPlayerScore(username, roomId, questionNo, userAnswer, questionType) ?
                         ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             } catch (NumberFormatException e) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -322,39 +323,39 @@ public class GameRoomController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
-    /**
-     * Resets the points added, to prevent the points getting doubled everytime after the double point joker is used
-     * @param username  the username of the player that gives the answer
-     * @param gameType  the type of the game
-     * @param roomId    the id of the game that the player is in
-     * @return
-     */
-    @GetMapping("/resetDoubledAddedPoints")
-    public ResponseEntity<Object> resetDoubledAddedPoints(@PathVariable("username") String username, @PathVariable("gameType") String gameType,
-                                                          @PathVariable("roomId") String roomId) {
-        if (gameType.equals("SINGLEPLAYER")) {
-            try {
-                return singlePlayerGameService.resetAddedPointAfterDoublePointJoker(username, roomId) ?
-                        ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-            } catch (NumberFormatException e) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-            }
-            catch (Exception e) {
-                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
-            }
-        }
-
-        if (gameType.equals("MULTIPLAYER")) {
-            try {
-                return multiplayerGameService.resetAddedPointAfterDoublePointJoker(username, roomId) ?
-                        ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-            } catch (Exception e) {
-                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
-            }
-        }
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-    }
+//    /**
+//     * Resets the points added, to prevent the points getting doubled everytime after the double point joker is used
+//     * @param username  the username of the player that gives the answer
+//     * @param gameType  the type of the game
+//     * @param roomId    the id of the game that the player is in
+//     * @return
+//     */
+//    @GetMapping("/resetDoubledAddedPoints")
+//    public ResponseEntity<Object> resetDoubledAddedPoints(@PathVariable("username") String username, @PathVariable("gameType") String gameType,
+//                                                          @PathVariable("roomId") String roomId) {
+//        if (gameType.equals("SINGLEPLAYER")) {
+//            try {
+//                return singlePlayerGameService.resetAddedPointAfterDoublePointJoker(username, roomId) ?
+//                        ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+//            } catch (NumberFormatException e) {
+//                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+//            }
+//            catch (Exception e) {
+//                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
+//            }
+//        }
+//
+//        if (gameType.equals("MULTIPLAYER")) {
+//            try {
+//                return multiplayerGameService.resetAddedPointAfterDoublePointJoker(username, roomId) ?
+//                        ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+//            } catch (Exception e) {
+//                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
+//            }
+//        }
+//
+//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+//    }
 
     /**
      * Updates timeJokerUsed (sets to true) or gives a corresponding error message
@@ -410,37 +411,6 @@ public class GameRoomController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
-//    /**
-//     * Calculates the points earned in this round
-//     * @param username  the username of the player that requests his score
-//     * @param gameType  the type of the game
-//     * @param roomId    the id of the game that the player is in
-//     * @return whether the request was successful or not
-//     */
-//    @GetMapping("/{questionNumber}/calculateAddedPoints")
-//    public ResponseEntity<Object> calculateAddedPoints(@PathVariable("username") String username, @PathVariable("gameType") String gameType,
-//                                                       @PathVariable("roomId") String roomId, @PathVariable("questionNumber") String questionNumber) {
-//        if (gameType.equals("SINGLEPLAYER")) {
-//            try {
-//                int questionNo = Integer.parseInt(questionNumber);
-//                singlePlayerGameService.calculatePointsAdded(username, roomId, );
-//                return ResponseEntity.status(HttpStatus.OK).build();
-//            } catch (Exception e) {
-//                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
-//            }
-//        }
-//
-//        if (gameType.equals("MULTIPLAYER")) {
-//            try {
-//                int questionNo = Integer.parseInt(questionNumber);
-//                multiplayerGameService.calculatePointsAdded(username, roomId);
-//                return ResponseEntity.status(HttpStatus.OK).build();
-//            } catch (Exception e) {
-//                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
-//            }
-//        }
-//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-//    }
 
     /**
      * @param username       the username of the player that requests his score

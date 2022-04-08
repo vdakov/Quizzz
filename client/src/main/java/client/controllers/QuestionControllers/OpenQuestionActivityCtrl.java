@@ -109,7 +109,7 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         server.registerForMessages("/topic/emojis", q -> {
             refresh(q.get(0), q.get(1), q.get(2));
         });
-        System.out.println(getCorrectAnswer());
+//        System.out.println(getCorrectAnswer());
     }
 
     /**
@@ -140,8 +140,6 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         initialize();
         startTimerClient();
         startTimerGlobal();
-
-        System.out.println(correctAnswer);
     }
 
     public void answerQuestion(ActionEvent event) throws IOException {

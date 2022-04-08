@@ -145,12 +145,9 @@ public class SingleplayerGameService {
      */
     public Integer calculatePointsAdded(String username, String roomId, boolean partialPoint) {
         try {
-            if (!username.equals(roomCatalog.getSinglePlayerRoom(roomId).getRoomCreator())) {
-                return null;
-            }
             return roomCatalog.getSinglePlayerRoom(roomId).calculateAddedPoints(partialPoint);
         } catch (Exception e) {
-            System.out.println("An exception occurred");
+            System.out.println("An exception occurred while calculating points");
             return null;
         }
     }
@@ -246,6 +243,7 @@ public class SingleplayerGameService {
             if (userAnswer.equals(correctAnswer)) {
                 this.calculatePointsAdded(username, roomId, false);
                 roomCatalog.getSinglePlayerRoom(roomId).updatePlayerScore();
+                return true;
             } else if (questionType.equals("OpenQuestion")) {
                 int userAnswerInt;
                         try {
@@ -262,7 +260,6 @@ public class SingleplayerGameService {
                         } catch (Exception e) {
                             System.out.println(e);
                 }
-            } else {
             }
             return true;
         } catch (Exception e) {
