@@ -35,6 +35,7 @@ public class KnowledgeQuestionActivityCtrl extends QuestionActivityCtrl {
         if (knowledgeQuestion == null) {
             return;
         }
+
         ByteArrayInputStream bis = new ByteArrayInputStream(server.getQuestionImage(knowledgeQuestion.getQuestion().getRight()));
         BufferedImage bImage = ImageIO.read(bis);
 

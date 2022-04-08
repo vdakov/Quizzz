@@ -25,7 +25,7 @@ public class SingleplayerRoom extends Room {
         this.playerScore = 0;
         hintJokerUsed = false;
         doublePointJokerUsed = false;
-        this.addedPoints = 1;
+        this.addedPoints = 0;
         this.timeLeft = 0;
     }
 
@@ -53,16 +53,21 @@ public class SingleplayerRoom extends Room {
      * Calculates the added point of the specific question using time left
      * @return the new added point value
      */
-    public int calculateAddedPoints() {
-        this.addedPoints = (int) (addedPoints * (this.timeLeft) / 100);
+    public int calculateAddedPoints(boolean partialPoint) {
+        if( this.addedPoints == 2 ) {
+            if (partialPoint) {
+                this.addedPoints = (int) (2 * (this.timeLeft) / 100) / 2;
+            } else {
+                this.addedPoints = (int) (2 * (this.timeLeft) / 100);
+            }
+        } else {
+            if (partialPoint) {
+                this.addedPoints = (int) (1 * (this.timeLeft) / 100) / 2;
+            } else {
+                this.addedPoints = (int) (1 * (this.timeLeft) / 100);
+            }
+        }
         return addedPoints;
-    }
-
-    /**
-     * Resets the points added as 10, to prevent the points getting doubled everytime after the double point joker is used
-     */
-    public void resetAddedPointAfterDoublePointJoker() {
-        addedPoints = 1;
     }
 
     /**
@@ -84,11 +89,10 @@ public class SingleplayerRoom extends Room {
      * Records doublePoint joker used
      */
     public void useDoublePointJoker() {
-        this.addedPoints = addedPoints * 2;
+        this.addedPoints = 2;
         doublePointJokerUsed = true;
+        this.addedPoints = 1;
     }
-
-
 
 
     /**

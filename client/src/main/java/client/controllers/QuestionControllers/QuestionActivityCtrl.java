@@ -175,7 +175,7 @@ public class QuestionActivityCtrl {
         addedPoints.setText(" ");
         addedPointsInt = 0;
 
-        server.resetDoubledAddedPoints();
+//        server.resetDoubledAddedPoints();
 
         if (gameConfig.getCurrentQuestionNumber() <= 1) {
             resetJokers();
@@ -217,6 +217,8 @@ public class QuestionActivityCtrl {
         hintJoker.setDisable(false);
         if (getHintJokerUsed() != null) {
             hintJoker.setDisable(getHintJokerUsed());
+        } if (getDoublePointJokerUsed() != null) {
+            doublePointJoker.setDisable(getDoublePointJokerUsed());
         }
     }
 
@@ -227,7 +229,6 @@ public class QuestionActivityCtrl {
         }
 
         timeLeft = timeSecondsGlobal.get();
-        updateTimeLeft();
         disableAnswers();
 
         Button current = (Button) event.getSource();
@@ -248,10 +249,11 @@ public class QuestionActivityCtrl {
         secondOptionText.setStyle("-fx-background-color: #ff000f;");
         thirdOptionText.setStyle("-fx-background-color: #ff000f;");
 
+        String answer = getCorrectAnswer();
 
-        if (getCorrectAnswer().equals(firstOptionText.getText())) {
+        if (answer.equals(firstOptionText.getText())) {
             firstOptionText.setStyle("-fx-background-color: #72ff00;");
-        } else if (getCorrectAnswer().equals(secondOptionText.getText())) {
+        } else if (answer.equals(secondOptionText.getText())) {
             secondOptionText.setStyle("-fx-background-color: #72ff00;");
         } else {
             thirdOptionText.setStyle("-fx-background-color: #72ff00;");
@@ -265,7 +267,8 @@ public class QuestionActivityCtrl {
     public void pointsUpdate() {
         // after the time ends the amount of won points is calculated and then shown to the player
         addedPointsInt = 0;
-        addedPoints.setText("+" + (Integer.parseInt(server.getScore()) - Integer.parseInt(points.getText())));
+//        addedPoints.setText("+" + (Integer.parseInt(server.getScore()) - Integer.parseInt(points.getText())));
+        addedPoints.setText("+" + server.getAddedPoints());
     }
     //Always 10 seconds, to make the game synchronous
     public void startTimerGlobal() {
@@ -302,6 +305,8 @@ public class QuestionActivityCtrl {
                         new KeyValue(timeSecondsClient, 0)));    //animation finishes when timeSeconds comes to 0
         timelineClient.setOnFinished(event -> {
             try {
+                updateTimeLeft();
+                System.out.println(timeLeft);
                 disableAnswers();
                 updateTheScoreServer();
                 answerUpdate();

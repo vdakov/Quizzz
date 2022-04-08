@@ -220,7 +220,7 @@ public class ServerUtils {
                 if (gameInProgress) {
                     System.out.println("Game started 1234567890");
                     startedGame.accept(true);
-                    this.stopWaitForRoomThread();
+                    //this.stopWaitForRoomThread();
                 }
             }
         });
@@ -375,11 +375,12 @@ public class ServerUtils {
 
             Response response = ClientBuilder.newClient(new ClientConfig()) //
                     .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() +
-                            "/" + gameConfiguration.getRoomId() + "/" + gameConfiguration.getCurrentQuestionNumber() +
+                            "/" + gameConfiguration.getRoomId() + "/" + gameConfiguration.getCurrentQuestionNumber() + "/" + gameConfiguration.getQuestionType() +
                             "/postAnswer")
                     .request(APPLICATION_JSON)
                     .accept(APPLICATION_JSON)
                     .post(Entity.text(answer));
+
 
             System.out.println("Update Score : " + response.getStatus());
             switch (response.getStatus()) {
@@ -443,26 +444,6 @@ public class ServerUtils {
         }
     }
 
-    /**
-     * Resets the points added as 10, to prevent the points getting doubled everytime after the double point joker is used
-     */
-    public void resetDoubledAddedPoints() {
-        try {
-            GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
-
-            Response response = ClientBuilder.newClient(new ClientConfig()) //
-                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" +
-                            gameConfiguration.getRoomId() + "/resetDoubledAddedPoints")
-                    .request(APPLICATION_JSON)
-                    .accept(APPLICATION_JSON)
-                    .get();
-
-            System.out.println("33Response status: " + response.getStatus());
-
-        } catch (Exception e) {
-            System.out.println("An exception occurred");
-        }
-    }
 
 
     /**
@@ -673,7 +654,6 @@ public class ServerUtils {
     public String getAnswer() {
         try {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
-
             Response response = ClientBuilder.newClient(new ClientConfig())
                     .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" + gameConfiguration.getRoomId() + "/" +
                             gameConfiguration.getCurrentQuestionNumber() + "/getAnswer")
@@ -692,7 +672,7 @@ public class ServerUtils {
                     // something failed, show an apology message ?
                 }
                 case 400: {
-                    System.out.println("The request was invalid when trying to get the answer");
+                    System.out.println("The request was invalid when trying to get the answer DA");
                     return null;
                 }
             }
@@ -974,23 +954,23 @@ public class ServerUtils {
                 .request().get();
     }
 
-    public void calculateAddedPoints() {
-        try {
-            GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
-
-            Response response = ClientBuilder.newClient(new ClientConfig()) //
-                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" +
-                            gameConfiguration.getRoomId() + "/" + gameConfiguration.getCurrentQuestionNumber() + "/calculateAddedPoints")
-                    .request(APPLICATION_JSON)
-                    .accept(APPLICATION_JSON)
-                    .get();
-
-            System.out.println("Response status: " + response.getStatus());
-
-        } catch (Exception e) {
-            System.out.println("An exception occurred");
-        }
-    }
+//    public void calculateAddedPoints() {
+//        try {
+//            GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+//
+//            Response response = ClientBuilder.newClient(new ClientConfig()) //
+//                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" +
+//                            gameConfiguration.getRoomId() + "/" + gameConfiguration.getCurrentQuestionNumber() + "/calculateAddedPoints")
+//                    .request(APPLICATION_JSON)
+//                    .accept(APPLICATION_JSON)
+//                    .get();
+//
+//            System.out.println("Response status: " + response.getStatus());
+//
+//        } catch (Exception e) {
+//            System.out.println("An exception occurred");
+//        }
+//    }
 
 
 }
