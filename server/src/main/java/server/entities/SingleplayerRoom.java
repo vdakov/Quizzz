@@ -48,6 +48,7 @@ public class SingleplayerRoom extends Room {
 
     public int getAddedPoints() { return this.addedPoints; }
 
+    
     /**
      * Calculates the added point of the specific question using time left
      * @param timeLeft the amount of time left to user, fast answer gives more points
