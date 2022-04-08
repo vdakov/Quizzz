@@ -37,6 +37,8 @@ https://drive.google.com/drive/folders/1aqCGSVd5VkHiph4eaiZdTSQdbJUr78My?usp=sha
 resources folder with that name and the "activity-bank-pictures" folder needs to be put
 there as well!!!
 
+Both have to be in server resources
+
 WAIT FOR SERVER TO PROPERLY START FOR 20-30 SECONDS!!!
 
 ###Client
