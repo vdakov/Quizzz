@@ -66,7 +66,7 @@ public class WaitingRoomController {
         server.waitForMultiPlayerRoomStart(q -> {
             try {
                 System.out.println("I tried to start the game");
-                showQuestion();
+                this.sceneCtrl.showNextQuestion();
             } catch (Exception e) {
                 e.printStackTrace();
                 System.out.println("Exception occurred when trying to start the game by showing the next question");
@@ -89,14 +89,6 @@ public class WaitingRoomController {
                     server.deleteEntries(GameConfiguration.getConfiguration().getRoomId());
                 }
             });
-    }
-
-    public void showQuestion() {
-        try {
-            this.sceneCtrl.showNextQuestion();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     /**

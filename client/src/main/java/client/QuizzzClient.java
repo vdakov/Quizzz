@@ -82,5 +82,6 @@ public class QuizzzClient extends Application {
 
         var sceneCtrl = INJECTOR.getInstance(SceneCtrl.class);
         sceneCtrl.initialize(primaryStage, rootsMap);
+
     }
 }

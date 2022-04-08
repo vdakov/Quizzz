@@ -138,44 +138,11 @@ public class QuestionActivityCtrl {
         secondOptionText.setStyle("   -fx-background-color: #2e4c8d;");
         thirdOptionText.setStyle("   -fx-background-color: #2e4c8d;");
 
-
-//        firstOptionText.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override public void handle(ActionEvent e) {
-//                if(!answered){
-//                    firstOptionText.setStyle("   -fx-background-color: #203665;");
-//                }
-//
-//
-//            }
-//        });
-//
-//        secondOptionText.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override public void handle(ActionEvent e) {
-//                if(!answered){
-//                    secondOptionText.setStyle("   -fx-background-color: #203665;");
-//                }
-//
-//
-//            }
-//        });
-//
-//        thirdOptionText.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override public void handle(ActionEvent e) {
-//                if(!answered){
-//                    thirdOptionText.setStyle("   -fx-background-color: #203665;");
-//                }
-//
-//
-//            }
-//        });
-
-
         answered = false;
 
         addedPoints.setText(" ");
         addedPointsInt = 0;
 
-//        server.resetDoubledAddedPoints();
 
         if (gameConfig.getCurrentQuestionNumber() <= 1) {
             resetJokers();
@@ -210,9 +177,13 @@ public class QuestionActivityCtrl {
             timeJoker.setOpacity(0);
             gameConfig.setTimeJokerUsed(true);
         }
-        //  server.registerForMessages("/topic/emojis", q -> {
-        //    refresh(q.get(0), q.get(1), q.get(2));
-        //  });
+        if (gameConfig.getConnected() == false) {
+            server.registerForMessages("/topic/emojis", q -> {
+                refresh(q.get(0), q.get(1), q.get(2));
+            });
+            gameConfig.connect();
+        }
+
 
         hintJoker.setDisable(false);
         if (getHintJokerUsed() != null) {
@@ -487,6 +458,7 @@ public class QuestionActivityCtrl {
         payload.add("1");
         payload.add(gameConfig.getUserName());
         payload.add(gameConfig.getRoomId());
+        System.out.println("Am trimis primu emoji");
         server.send("/topic/emojis", payload);
     }
 
@@ -558,6 +530,9 @@ public class QuestionActivityCtrl {
     public void refresh(String type, String username, String roomId) {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         List<String> chatEntries = new ArrayList<>();
+
+        System.out.println("Am primit ceva" + type);
+
         if (type.equals("1") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName())) {           // happy emoji
             chatEntries.add(getTypeOfMessage("1", username));
         }

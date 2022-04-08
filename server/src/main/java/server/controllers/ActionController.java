@@ -182,5 +182,10 @@ public class ActionController {
         }
     }
 
+    @GetMapping("testConnection")
+    public int testConnection() {
+        System.out.println("Connection established");
+        return 1;
+    }
 
 }

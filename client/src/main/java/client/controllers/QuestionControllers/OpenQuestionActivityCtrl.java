@@ -11,7 +11,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
@@ -109,6 +108,7 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         server.registerForMessages("/topic/emojis", q -> {
             refresh(q.get(0), q.get(1), q.get(2));
         });
+        gameConfig.connect();
     }
 
     /**

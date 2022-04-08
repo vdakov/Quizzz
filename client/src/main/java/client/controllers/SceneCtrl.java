@@ -43,6 +43,7 @@ public class SceneCtrl {
     public void sceneCtrl(ServerUtils serverUtils) {
         this.serverUtils = serverUtils;
         this.gameConfiguration = GameConfiguration.getConfiguration();
+
     }
 
 

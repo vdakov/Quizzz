@@ -24,6 +24,8 @@ public class GameConfiguration {
 
     private int consecutiveUnansweredQuestions;
 
+    private boolean hasConnected;
+
     public GameConfiguration() {
         this.userName = null;
         this.roomId = null;
@@ -35,6 +37,15 @@ public class GameConfiguration {
         this.timeJokerUsed = false;
 
         this.consecutiveUnansweredQuestions = 0;
+        hasConnected  = false;
+    }
+
+    public boolean getConnected() {
+        return hasConnected;
+    }
+
+    public void connect() {
+        hasConnected = true;
     }
 
     public int getConsecutiveUnansweredQuestions() {
