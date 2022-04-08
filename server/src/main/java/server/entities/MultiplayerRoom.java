@@ -75,62 +75,8 @@ public class MultiplayerRoom extends Room {
     }
 
     /**
-     * Returns the score of a player
-     *
-     * @param username the username of the player
-     * @return the score of th
-     */
-    public Integer getPlayerScore(String username) {
-        System.out.println(playerScores.toString());
-
-        return playerScores.get(username);
-    }
-
-    public void setTimeLeft(String username, int timeLeft) {
-        this.timeLeft.put(username, timeLeft);
-    }
-
-    public Integer getTimeLeft(String username) {
-        return this.timeLeft.get(username);
-    }
-
-    // get the time for a spwcific player for specific question
-    public Integer getTimeClient(String username, int number) {
-        System.out.println("Getting time for " + username + " at question number: " + number);
-        System.out.println("The time is: " + playerTime.get(number - 1).get(username));
-        return playerTime.get(number - 1).get(username);
-    }
-
-    public Boolean getHintJokerUsed(String username) { return playerHintJokerUsed.get(username); }
-    public Boolean getDoublePointJokerUsed(String username) { return playerDoublePointJokerUsed.get(username); }
-    public Boolean getTimeJokerUsed(String username) { return playerTimeJokerUsed.get(username); }
-
-
-    public void useHintJoker(String username) { playerHintJokerUsed.put(username, true); }
-    public void useDoublePointJoker(String username) {
-        playerAddedPoints.put(username, 2);
-        playerDoublePointJokerUsed.put(username, true);
-    }
-    public void useTimeJoker(String username, int number) {
-        playerTimeJokerUsed.put(username, true);
-
-        if (number >= 20) { return; }
-
-        HashMap<String, Integer> question = playerTime.get(number);
-        for (String key : question.keySet()) {
-            if (!key.equals(username)) {
-                System.out.println("Username limited: " + username + " in question: " + (number + 1)) ;
-                question.replace(key, 5000);
-            }
-        }
-    }
-
-    public int getAddedPoints(String username) { return playerAddedPoints.get(username); }
-
-    public void setAddedPoints(String username, int addedPoint) { this.playerAddedPoints.put(username, addedPoint); }
-    /**
      * Calculates the added point of the specific question using time left
-     * @param username
+     * @param   username the username of the player who earned added points
      * @return the new added point value
      */
     public int calculateAddedPoints(String username, boolean partialPoint) {
@@ -161,7 +107,133 @@ public class MultiplayerRoom extends Room {
         playerScores.put(username, getPlayerScore(username) + this.getAddedPoints(username));
     }
 
+    /**
+     * get the time for a specific player for specific question
+     * @param username   the username of the player
+     * @param number
+     * @return
+     */
+    public Integer getTimeClient(String username, int number) {
+        System.out.println("Getting time for " + username + " at question number: " + number);
+        System.out.println("The time is: " + playerTime.get(number - 1).get(username));
+        return playerTime.get(number - 1).get(username);
+    }
+
+    /**
+     * Returns the score of a player
+     *
+     * @param username the username of the player
+     * @return the current score of the player
+     */
+    public Integer getPlayerScore(String username) {
+        System.out.println(playerScores.toString());
+
+        return playerScores.get(username);
+    }
+
+    /**
+     * Sets the score for the player to the given score
+     * @param username the username of the player
+     * @param playerScore the new score of the player
+     */
+    public void setPlayerScores(String username, Integer playerScore) {
+        playerScores.put(username, playerScore);
+    }
+
+    /**
+     * Get the time left after the user input the answer
+     * @param username the username of the player
+     * @return time left in milliseconds
+     */
+    public Integer getTimeLeft(String username) {
+        return this.timeLeft.get(username);
+    }
+
+    /**
+     * Sets the time left after the user input the answer
+     * @param username the username of the player
+     * @param timeLeft time left in milliseconds
+     */
+    public void setTimeLeft(String username, int timeLeft) {
+        this.timeLeft.put(username, timeLeft);
+    }
+
+    /**
+     * Get the amount of points that user earned in that question
+     * @param username the username of the player
+     * @return the point earned in that question
+     */
+    public int getAddedPoints(String username) { return playerAddedPoints.get(username); }
+
+    /**
+     * Set the amount of point that user earned in that question
+     * @param username the username of the player
+     * @param addedPoint the point earned in that question
+     */
+    public void setAddedPoints(String username, int addedPoint) { this.playerAddedPoints.put(username, addedPoint); }
+
+    /**
+     * Get the number of player in this multiplayer room
+     * @return the number of players
+     */
     public int getNumPlayers() {
         return playerScores.size();
     }
+
+    /**
+     * Checks whether the user used the hint joker before
+     * @param username the username of the player
+     * @return true if Hint Joker was used this game
+     */
+    public Boolean getHintJokerUsed(String username) { return playerHintJokerUsed.get(username); }
+
+    /**
+     * Checks whether the user used the double point joker before
+     * @param username the username of the player
+     * @return true if DoublePoint Joker was used this game
+     */
+    public Boolean getDoublePointJokerUsed(String username) { return playerDoublePointJokerUsed.get(username); }
+
+    /**
+     * Checks whether the user used the time joker before
+     * @param username the username of the player
+     * @return true if time Joker was used this game
+     */
+    public Boolean getTimeJokerUsed(String username) { return playerTimeJokerUsed.get(username); }
+
+    /**
+     * Uses the hint joker, so the boolean value hint joker is marked as true
+     * @param username the username of the player
+     */
+    public void useHintJoker(String username) { playerHintJokerUsed.put(username, true); }
+
+    /**
+     * Uses the double point joker, so the boolean value double point joker is marked as true,
+     * and the added point is set as 2, which will be used at calculateAddedPoint to determine whether double point joker is used in this question
+     * @param username the username of the player
+     */
+    public void useDoublePointJoker(String username) {
+        playerAddedPoints.put(username, 2);
+        playerDoublePointJokerUsed.put(username, true);
+    }
+
+    /**
+     * Uses the time joker, so the boolean value hint joker is marked as true
+     * @param username the username of the player
+     * @param number
+     */
+    public void useTimeJoker(String username, int number) {
+        playerTimeJokerUsed.put(username, true);
+
+        if (number >= 20) { return; }
+
+        HashMap<String, Integer> question = playerTime.get(number);
+        for (String key : question.keySet()) {
+            if (!key.equals(username)) {
+                System.out.println("Username limited: " + username + " in question: " + (number + 1)) ;
+                question.replace(key, 5000);
+            }
+        }
+    }
+
 }

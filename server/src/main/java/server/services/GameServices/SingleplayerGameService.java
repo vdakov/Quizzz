@@ -152,6 +152,12 @@ public class SingleplayerGameService {
         }
     }
 
+    /**
+     * Gets the points earned by the player for that specific game
+     * @param username  the username of the player
+     * @param roomId    the id of the game that the player is in
+     * @return the points earned in this question
+     */
     public Integer getAddedPoints(String username, String roomId) {
         try {
             return roomCatalog.getSinglePlayerRoom(roomId).getAddedPoints();
@@ -159,23 +165,14 @@ public class SingleplayerGameService {
             System.out.println("An exception occurred");
             return null;
         }
-
     }
 
-    public Integer getTimeLeft(String username, String roomId) {
-        try {
-            if (!username.equals(roomCatalog.getSinglePlayerRoom(roomId).getRoomCreator())) {
-                return null;
-            }
-
-            return roomCatalog.getSinglePlayerRoom(roomId).getTimeLeft();
-        } catch (Exception e) {
-            System.out.println("An exception occurred");
-            return null;
-        }
-
-    }
-
+    /**
+     * Sets the time left after the user input the answer
+     * @param username  the username of the player
+     * @param roomId    the id of the game that the player is in
+     * @param timeLeft  time left in milliseconds
+     */
     public void setTimeLeft(String username, String roomId, int timeLeft) {
         try {
             if (!username.equals(roomCatalog.getSinglePlayerRoom(roomId).getRoomCreator())) {
@@ -191,6 +188,7 @@ public class SingleplayerGameService {
 
     /**
      * Checks whether the hint joker is used or not
+     *
      * @param username  the user who used the hint joker
      * @param roomId    the id of the room the user is in
      * @return returns true when the hint joker is used
@@ -227,12 +225,14 @@ public class SingleplayerGameService {
     }
 
     /**
-     * Updated the score of the player or returns null / false if some error occurs
+     * Compares whether the user answer and correct answer is equal and updates the score of the player.
+     * If the question type is open question, there is a range of answer that is accepted to gain partial points even if the user answer is not equal to the correct answer.
      *
      * @param username       the user that needs the score update
      * @param roomId         the id of the room the user is in
      * @param questionNumber the question number answered by the user
      * @param userAnswer     the answer user
+     * @return null / false if some error occurs
      */
     public Boolean updateSinglePlayerScore(String username, String roomId, int questionNumber, String userAnswer, String questionType) {
         try {

@@ -614,8 +614,6 @@ public class QuestionActivityCtrl {
             default:
                 return null;
         }
-
-
     }
 
     public int getAddedPointsInt() {
