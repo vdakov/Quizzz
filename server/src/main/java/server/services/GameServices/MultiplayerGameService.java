@@ -423,6 +423,8 @@ public class MultiplayerGameService {
                 } catch (Exception e) {
                     System.out.println(e);
                 }
+            } else {
+                roomCatalog.getMultiPlayerRoom(roomId).setAddedPoints(username, 0);
             }
             return true;
         } catch (Exception e) {

@@ -266,7 +266,8 @@ public class QuestionActivityCtrl {
     public void pointsUpdate() {
         // after the time ends the amount of won points is calculated and then shown to the player
         addedPointsInt = 0;
-        addedPoints.setText("+" + (Integer.parseInt(server.getScore()) - Integer.parseInt(points.getText())));
+//        addedPoints.setText("+" + (Integer.parseInt(server.getScore()) - Integer.parseInt(points.getText())));
+        addedPoints.setText("+" + server.getAddedPoints());
     }
     //Always 10 seconds, to make the game synchronous
     public void startTimerGlobal() {

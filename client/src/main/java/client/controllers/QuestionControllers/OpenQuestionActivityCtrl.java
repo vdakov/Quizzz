@@ -109,7 +109,7 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         server.registerForMessages("/topic/emojis", q -> {
             refresh(q.get(0), q.get(1), q.get(2));
         });
-//        System.out.println(getCorrectAnswer());
+        System.out.println(getCorrectAnswer());
     }
 
     /**
@@ -176,6 +176,7 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         // after the time ends the amount of won points is calculated and then shown to the player
         if (userAnswer.equals(getCorrectAnswer())) {
             addedPointsInt = getAddedPointsInt();
+//            (Integer.parseInt(server.getScore()) - Integer.parseInt(points.getText()))
         } else {
             addedPointsInt = 0;
         }
@@ -203,7 +204,7 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         gameConfig.setHintJokerUsed(true);
     }
 
-    public void useDoublePointJoker(MouseEvent event) {
+    public void useDoublePointJoker() {
         if (getDoublePointJokerUsed()) {
             return;
         }
