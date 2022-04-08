@@ -304,6 +304,6 @@ public class SingleplayerGameService {
             System.out.println("An exception occurred");
         }
     }
-    
+
 }
 

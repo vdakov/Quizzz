@@ -54,10 +54,18 @@ public class SingleplayerRoom extends Room {
      * @return the new added point value
      */
     public int calculateAddedPoints(boolean partialPoint) {
-        if (partialPoint) {
-            this.addedPoints = (int) (1 * (this.timeLeft) / 100) / 2;
+        if( this.addedPoints == 2 ) {
+            if (partialPoint) {
+                this.addedPoints = (int) (2 * (this.timeLeft) / 100) / 2;
+            } else {
+                this.addedPoints = (int) (2 * (this.timeLeft) / 100);
+            }
         } else {
-            this.addedPoints = (int) (1 * (this.timeLeft) / 100);
+            if (partialPoint) {
+                this.addedPoints = (int) (1 * (this.timeLeft) / 100) / 2;
+            } else {
+                this.addedPoints = (int) (1 * (this.timeLeft) / 100);
+            }
         }
         return addedPoints;
     }
@@ -81,7 +89,7 @@ public class SingleplayerRoom extends Room {
      * Records doublePoint joker used
      */
     public void useDoublePointJoker() {
-        this.addedPoints = addedPoints * 2;
+        this.addedPoints = 2;
         doublePointJokerUsed = true;
     }
 
