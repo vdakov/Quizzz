@@ -5,6 +5,7 @@ import client.controllers.SceneCtrl;
 import com.google.inject.Inject;
 import commons.Questions.KnowledgeQuestion;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.Image;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -40,7 +41,11 @@ public class KnowledgeQuestionActivityCtrl extends QuestionActivityCtrl {
         BufferedImage bImage = ImageIO.read(bis);
 
 
-        this.image.setImage(SwingFXUtils.toFXImage(bImage, null));
+        try {
+            this.image.setImage(SwingFXUtils.toFXImage(bImage, null));
+        } catch (Exception e) {
+            this.image.setImage(new Image("pictures/placeholder.png"));
+        }
 
 
         sampleQuestion.setText(knowledgeQuestion.getQuestion().getKey());

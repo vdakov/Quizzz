@@ -5,6 +5,7 @@ import client.controllers.SceneCtrl;
 import com.google.inject.Inject;
 import commons.Questions.AlternativeQuestion;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.Image;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -39,7 +40,11 @@ public class AlternativeQuestionActivityCtrl extends QuestionActivityCtrl {
         ByteArrayInputStream bis = new ByteArrayInputStream(server.getQuestionImage(alternativeQuestion.getQuestion().getRight()));
         BufferedImage bImage = ImageIO.read(bis);
 
-        image.setImage(SwingFXUtils.toFXImage(bImage, null));
+        try {
+            this.image.setImage(SwingFXUtils.toFXImage(bImage, null));
+        } catch (Exception e) {
+            this.image.setImage(new Image("pictures/placeholder.png"));
+        }
 
 
         sampleQuestion.setText(alternativeQuestion.getQuestion().getKey());

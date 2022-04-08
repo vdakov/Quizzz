@@ -111,7 +111,7 @@ public class MainScreenActivityCtrl {
 
         if(response.getStatus()==200){
             server.setSERVER(this.serverField.getText());
-            sceneCtrl.showMainScreenScene();
+            //sceneCtrl.showMainScreenScene();
             return;
         }
         Alert alert = new Alert(Alert.AlertType.WARNING);

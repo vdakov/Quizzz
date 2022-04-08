@@ -48,7 +48,7 @@ import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 
 public class ServerUtils {
 
-    protected String SERVER = "http://localhost:8080/";
+    protected String SERVER = "http://localhost:8080/"; // game config
 
     public ServerUtils() throws ExecutionException, InterruptedException {
     }
