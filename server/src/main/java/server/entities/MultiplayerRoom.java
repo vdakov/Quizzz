@@ -86,6 +86,10 @@ public class MultiplayerRoom extends Room {
         return playerScores.get(username);
     }
 
+    public void setPlayerScores(String username, Integer playerScore) {
+        playerScores.put(username, playerScore);
+    }
+
     public void setTimeLeft(String username, int timeLeft) {
         this.timeLeft.put(username, timeLeft);
     }
