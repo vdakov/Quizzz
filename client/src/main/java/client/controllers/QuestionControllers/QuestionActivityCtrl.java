@@ -184,12 +184,14 @@ public class QuestionActivityCtrl {
             timeJoker.setOpacity(0);
             gameConfig.setTimeJokerUsed(true);
         }
-        if (gameConfig.getConnected() == false) {
+
+        if(gameConfig.getConnected() == false) {
             server.registerForMessages("/topic/emojis", q -> {
                 refresh(q.get(0), q.get(1), q.get(2));
             });
             gameConfig.connect();
         }
+
 
 
         hintJoker.setDisable(false);
@@ -582,10 +584,14 @@ public class QuestionActivityCtrl {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         List<String> chatEntries = new ArrayList<>();
 
-        System.out.println("Am primit ceva" + type);
+        System.out.println("Am primit ceva " + type + " Room id:" + gameConfiguration.getRoomId() + " " + "Request id: " + roomId);
 
-        if (type.equals("1") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName())) {           // happy emoji
+        if (type.equals("1") && roomId.equals(gameConfiguration.getRoomId())) {           // happy emoji
+            System.out.println("Am intrat aici");
             chatEntries.add(getTypeOfMessage("1", username));
+            for(String a : chatEntries) {
+                System.out.println(a);
+            }
         }
         if (type.equals("2") && roomId.equals(gameConfiguration.getRoomId()) && !username.equals(gameConfiguration.getUserName())) {           //sad emoji
             chatEntries.add(getTypeOfMessage("2", username));
@@ -609,9 +615,12 @@ public class QuestionActivityCtrl {
             chatEntries.add(getTypeOfMessage("Half Time", username));
         }
 
-        chatEntries.addAll(tableview.getItems());
-        tableview.setItems(FXCollections.observableList(chatEntries));
 
+        chatEntries.addAll(tableview.getItems());
+
+        chatEntries.forEach(q -> System.out.println(q));
+
+        tableview.setItems(FXCollections.observableList(chatEntries));
     }
 
     /**
