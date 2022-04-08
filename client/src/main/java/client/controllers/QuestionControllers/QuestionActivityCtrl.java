@@ -657,8 +657,6 @@ public class QuestionActivityCtrl {
             default:
                 return null;
         }
-
-
     }
 
     /**
