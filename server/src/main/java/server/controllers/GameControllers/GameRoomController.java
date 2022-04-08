@@ -421,7 +421,7 @@ public class GameRoomController {
         if (gameType.equals("SINGLEPLAYER")) {
             try {
                 int questionNo = Integer.parseInt(questionNumber);
-                singlePlayerGameService.calculatePointsAdded(username, roomId, singlePlayerGameService.getTimeLeft(username, roomId));
+                singlePlayerGameService.calculatePointsAdded(username, roomId);
                 return ResponseEntity.status(HttpStatus.OK).build();
             } catch (Exception e) {
                 return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
@@ -539,8 +539,9 @@ public class GameRoomController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
-    @GetMapping("/setTimeLeft")
-    public ResponseEntity<Object> setTimeLeft(@PathVariable("username") String username, @PathVariable("gameType") String gameType, @PathVariable("roomId") String roomId, @PathVariable("timeLeft") Integer timeLeft) {
+    @GetMapping("/{timeLeft}/setTimeLeft")
+    public ResponseEntity<Object> setTimeLeft(@PathVariable("username") String username, @PathVariable("gameType") String gameType,
+                                              @PathVariable("roomId") String roomId, @PathVariable("timeLeft") Integer timeLeft) {
         if (gameType.equals("SINGLEPLAYER")) {
             try {
                 singlePlayerGameService.setTimeLeft(username, roomId, timeLeft);

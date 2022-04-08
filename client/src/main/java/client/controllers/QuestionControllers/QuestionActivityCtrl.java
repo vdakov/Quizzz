@@ -265,7 +265,7 @@ public class QuestionActivityCtrl {
 
     public void pointsUpdate() {
         // after the time ends the amount of won points is calculated and then shown to the player
-        addedPointsInt = 50;
+        addedPointsInt = 0;
         if (userAnswer != null && userAnswer.equals(getCorrectAnswer())) {
             addedPointsInt = getAddedPointsInt();
         }
@@ -307,13 +307,10 @@ public class QuestionActivityCtrl {
                         new KeyValue(timeSecondsClient, 0)));    //animation finishes when timeSeconds comes to 0
         timelineClient.setOnFinished(event -> {
             try {
-                System.out.println("Points : " + getAddedPointsInt());
-                System.out.println("Score : " + server.getScore());
                 disableAnswers();
                 updateTheScoreServer();
                 answerUpdate();
                 pointsUpdate();
-                System.out.println("Points : " + getAddedPointsInt());
                 System.out.println("Points : " + server.getAddedPoints());
                 System.out.println("Score : " + server.getScore());
             } catch (IOException e) {

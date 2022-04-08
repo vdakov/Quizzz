@@ -132,7 +132,6 @@ public class SingleplayerGameService {
             if (!username.equals(roomCatalog.getSinglePlayerRoom(roomId).getRoomCreator())) {
                 return null;
             }
-
             return roomCatalog.getSinglePlayerRoom(roomId).getPlayerScore();
         } catch (Exception e) {
             System.out.println("An exception occurred");
@@ -144,13 +143,13 @@ public class SingleplayerGameService {
      * Calculates the points earned in this round
      * @return the points earned in this round
      */
-    public Integer calculatePointsAdded(String username, String roomId, int timeLeft) {
+    public Integer calculatePointsAdded(String username, String roomId) {
         try {
             if (!username.equals(roomCatalog.getSinglePlayerRoom(roomId).getRoomCreator())) {
                 return null;
             }
 
-            return roomCatalog.getSinglePlayerRoom(roomId).calculateAddedPoints(timeLeft);
+            return roomCatalog.getSinglePlayerRoom(roomId).calculateAddedPoints();
         } catch (Exception e) {
             System.out.println("An exception occurred");
             return null;
@@ -159,9 +158,6 @@ public class SingleplayerGameService {
 
     public Integer getAddedPoints(String username, String roomId) {
         try {
-            if (!username.equals(roomCatalog.getSinglePlayerRoom(roomId).getRoomCreator())) {
-                return null;
-            }
             return roomCatalog.getSinglePlayerRoom(roomId).getAddedPoints();
         } catch (Exception e) {
             System.out.println("An exception occurred");
@@ -248,7 +244,10 @@ public class SingleplayerGameService {
                 return false;
             }
             if (userAnswer.equals(getSinglePlayerAnswer(username, roomId, questionNumber))) {
-                roomCatalog.getSinglePlayerRoom(roomId).updatePlayerScore(this.calculatePointsAdded(username, roomId, this.getTimeLeft(username, roomId)));
+                this.calculatePointsAdded(username, roomId);
+                roomCatalog.getSinglePlayerRoom(roomId).updatePlayerScore();
+            } else {
+                roomCatalog.getSinglePlayerRoom(roomId).setAddedPoint(10);
             }
 
             return true;
