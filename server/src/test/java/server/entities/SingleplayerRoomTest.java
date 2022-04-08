@@ -10,7 +10,7 @@ class SingleplayerRoomTest {
 
     @Test
     void resetAddedPointTest() {
-        try{
+        try {
         SingleplayerRoom s = new SingleplayerRoom("1", "1", null);
 
         assertEquals(0, s.getAddedPoints());
