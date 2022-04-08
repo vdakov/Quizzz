@@ -55,10 +55,10 @@ public class SceneCtrl {
         this.scene = new Scene(new Group(), 1280, 720);
         this.primaryStage.setScene(this.scene);
 
-
         showMainScreenScene();
         primaryStage.show();
     }
+
 
 
     public void showNextQuestion() throws IOException {
