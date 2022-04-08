@@ -96,6 +96,9 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
             questionCol1.setPercentWidth(25.333);
             questionCol1.setPercentWidth(25.333);
             questionCol1.setPercentWidth(25.333);
+
+            timeJoker.setOpacity(0);
+            gameConfig.setTimeJokerUsed(true);
         }
 
         server.registerForMessages("/topic/emojis", q -> {
