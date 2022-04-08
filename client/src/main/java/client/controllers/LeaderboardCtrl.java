@@ -91,7 +91,7 @@ public class LeaderboardCtrl {
     public void refresh() {
         leaderboardTable.setItems(FXCollections.observableList(new ArrayList<>()));
 
-        if (gameConfig.getCurrentQuestionNumber() == 9)
+        if (gameConfig.getCurrentQuestionNumber() == 9 || gameConfig.isSinglePlayer())
             playAgainButton.setVisible(false);
         else playAgainButton.setVisible(true);
 
@@ -159,6 +159,7 @@ public class LeaderboardCtrl {
     /**
      * Method that ends the game and returns the player to the main screen of the app
      * Also, checks whether all player have left the room and if then it changes the room status as finished
+     *
      * @throws IOException
      */
     public void goToMainScreen() {

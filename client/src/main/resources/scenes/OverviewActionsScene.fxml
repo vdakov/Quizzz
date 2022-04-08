@@ -37,7 +37,7 @@
          <graphic>
             <ImageView fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@pictures/home.png" />
+                  <Image url="./pictures/home.png" />
                </image></ImageView>
          </graphic></Button>
       <Button fx:id="editButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#editActivity" prefHeight="50.0" prefWidth="363.0" text="EDIT ACTIVITY" textFill="WHITE" translateY="172.0" GridPane.halignment="CENTER" GridPane.rowIndex="1">
