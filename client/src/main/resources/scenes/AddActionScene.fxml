@@ -10,38 +10,57 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane id="gridPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" stylesheets="@addEditAction.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.AdminInterface.AddActionActivityCtrl">
-   <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="635.4000244140625" minWidth="10.0" prefWidth="450.8000122070313" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="861.0" minWidth="10.0" prefWidth="628.3999877929688" />
-   </columnConstraints>
-   <rowConstraints>
-      <RowConstraints maxHeight="720.0" minHeight="10.0" prefHeight="720.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="186.79999999999995" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="76.60001220703128" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
-   </rowConstraints>
-   <children>
-      <Button mnemonicParsing="false" onAction="#ok" prefHeight="50.0" prefWidth="187.0" text="SUBMIT" textFill="WHITE" translateX="-86.0" translateY="141.0" GridPane.halignment="CENTER" />
-      <Button mnemonicParsing="false" onAction="#cancel" prefHeight="50.0" prefWidth="163.0" text="CANCEL" textFill="WHITE" translateX="102.0" translateY="141.0" GridPane.halignment="CENTER" />
-      <TextField fx:id="imageNameField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="182.0" promptText="Image Source" translateX="-87.0" translateY="81.0" GridPane.halignment="CENTER" />
-      <TextField fx:id="consumption" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="354.0" promptText="Please type in the consumption" translateY="-68.0" GridPane.halignment="CENTER" />
-      <Label text="Title" textFill="WHITE" translateY="-189.0" GridPane.halignment="CENTER" />
-      <Label text="Consumption" textFill="WHITE" translateY="-106.0" GridPane.halignment="CENTER" />
-      <Label text="Image" textFill="WHITE" translateY="46.0" GridPane.halignment="CENTER" />
-      <Label text="Source" textFill="WHITE" translateY="-28.0" GridPane.halignment="CENTER" />
-      <TextField fx:id="source" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="354.0" promptText="Please type in the source" translateY="9.0" GridPane.halignment="CENTER" />
-      <Label id="title" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="43.0" prefWidth="705.0" text="ADD ACTION" textAlignment="CENTER" textFill="WHITE" translateY="-228.0" GridPane.halignment="CENTER">
-         <font>
-            <Font size="29.0" />
-         </font>
-      </Label>
-      <Button id="imageButton" mnemonicParsing="false" onAction="#chooseFile" prefHeight="50.0" prefWidth="174.0" text="Choose Image" textFill="WHITE" translateX="96.0" translateY="81.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-      <ImageView fx:id="image" fitHeight="502.0" fitWidth="518.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-      <Text id="imageTitle" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Image:" translateY="-294.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-         <font>
-            <Font name="System Bold" size="24.0" />
-         </font>
-      </Text>
-      <TextField id="titleField" fx:id="title" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="354.0" promptText="Please type in the title" translateY="-148.0" GridPane.halignment="CENTER" />
-   </children>
+<GridPane id="gridPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+          prefHeight="720.0" prefWidth="1080.0" stylesheets="@addEditAction.css" xmlns="http://javafx.com/javafx/17"
+          xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.AdminInterface.AddActionActivityCtrl">
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="635.4000244140625" minWidth="10.0"
+                           prefWidth="450.8000122070313"/>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="861.0" minWidth="10.0" prefWidth="628.3999877929688"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints maxHeight="720.0" minHeight="10.0" prefHeight="720.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="186.79999999999995" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="76.60001220703128" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES"/>
+    </rowConstraints>
+    <children>
+        <Button mnemonicParsing="false" onAction="#ok" prefHeight="50.0" prefWidth="187.0" text="SUBMIT"
+                textFill="WHITE" translateX="-86.0" translateY="141.0" GridPane.halignment="CENTER"/>
+        <Button mnemonicParsing="false" onAction="#cancel" prefHeight="50.0" prefWidth="163.0" text="CANCEL"
+                textFill="WHITE" translateX="102.0" translateY="141.0" GridPane.halignment="CENTER"/>
+        <TextField fx:id="imageNameField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+                   minWidth="-Infinity" prefHeight="50.0" prefWidth="182.0" promptText="Image Source" translateX="-87.0"
+                   translateY="81.0" GridPane.halignment="CENTER"/>
+        <TextField fx:id="consumption" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+                   minWidth="-Infinity" prefHeight="50.0" prefWidth="354.0" promptText="Please type in the consumption"
+                   translateY="-68.0" GridPane.halignment="CENTER"/>
+        <Label text="Title" textFill="WHITE" translateY="-189.0" GridPane.halignment="CENTER"/>
+        <Label text="Consumption" textFill="WHITE" translateY="-106.0" GridPane.halignment="CENTER"/>
+        <Label text="Image" textFill="WHITE" translateY="46.0" GridPane.halignment="CENTER"/>
+        <Label text="Source" textFill="WHITE" translateY="-28.0" GridPane.halignment="CENTER"/>
+        <TextField fx:id="source" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+                   prefHeight="50.0" prefWidth="354.0" promptText="Please type in the source" translateY="9.0"
+                   GridPane.halignment="CENTER"/>
+        <Label id="title" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="43.0"
+               prefWidth="705.0" text="ADD ACTION" textAlignment="CENTER" textFill="WHITE" translateY="-228.0"
+               GridPane.halignment="CENTER">
+            <font>
+                <Font size="29.0"/>
+            </font>
+        </Label>
+        <Button id="imageButton" mnemonicParsing="false" onAction="#chooseFile" prefHeight="50.0" prefWidth="174.0"
+                text="Choose Image" textFill="WHITE" translateX="96.0" translateY="81.0" GridPane.halignment="CENTER"
+                GridPane.valignment="CENTER"/>
+        <ImageView fx:id="image" fitHeight="502.0" fitWidth="518.0" pickOnBounds="true" preserveRatio="true"
+                   GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
+        <Text id="imageTitle" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Image:" translateY="-294.0"
+              GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <font>
+                <Font name="System Bold" size="24.0"/>
+            </font>
+        </Text>
+        <TextField id="titleField" fx:id="title" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+                   minWidth="-Infinity" prefHeight="50.0" prefWidth="354.0" promptText="Please type in the title"
+                   translateY="-148.0" GridPane.halignment="CENTER"/>
+    </children>
 </GridPane>

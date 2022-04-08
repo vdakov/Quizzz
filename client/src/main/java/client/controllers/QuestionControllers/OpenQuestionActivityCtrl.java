@@ -74,8 +74,7 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         }
 
 
-        if (!gameConfig.isSinglePlayer())
-        {
+        if (!gameConfig.isSinglePlayer()) {
             splitPane.setVisible(true);
             chatColumn.setPercentWidth(15);
             questionCol1.setPercentWidth(23.333);
@@ -102,6 +101,7 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         server.registerForMessages("/topic/emojis", q -> {
             refresh(q.get(0), q.get(1), q.get(2));
         });
+        System.out.println(getCorrectAnswer());
     }
 
     /**
@@ -142,7 +142,7 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         answered = true;
 
         try {
-            //userAnswerInt = Integer.parseInt(answerTextfield.getText());
+            userAnswerInt = Integer.parseInt(answerTextfield.getText());
             updateTheScoreServer();
             System.out.println(1);
         } catch (NumberFormatException e) {
@@ -167,7 +167,6 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
             userAnswerRectangle.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(0), BorderStroke.THICK)));
         } else {
             userAnswerRectangle.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(0), BorderStroke.THICK)));
-            correctAnswerRectangle.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(0), BorderStroke.THICK)));
             correctAnswerLabel.setText(getCorrectAnswer());
         }
 
@@ -221,12 +220,14 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
 
     /**
      * Method that stops the player from answering after client timer has ran out
+     *
      * @throws IOException
      */
     public void disableAnswers() throws IOException {
         answerTextfield.setDisable(true);
         answer.setDisable(true);
     }
+
     public void updateTheScoreServer() {
         server.updateScore(answerTextfield.getText());
     }
