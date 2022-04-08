@@ -2,14 +2,11 @@ package client.controllers.QuestionControllers;
 
 import client.communication.ServerUtils;
 import client.controllers.SceneCtrl;
-import javafx.scene.input.MouseEvent;
 import org.junit.jupiter.api.Test;
-
-import javax.inject.Inject;
 
 import java.util.concurrent.ExecutionException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class QuestionActivityCtrlTest {
 
