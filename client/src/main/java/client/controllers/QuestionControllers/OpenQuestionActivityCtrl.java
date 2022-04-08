@@ -64,6 +64,9 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         answerTextfield.setText("");
         answered = false;
 
+        addedPoints.setText(" ");
+        addedPointsInt = 0;
+
         if (gameConfig.getCurrentQuestionNumber() <= 1) {
             resetJokers();
         }
@@ -192,14 +195,18 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         // after the time ends the amount of won points is calculated and then shown to the player
         if (userAnswer.equals(getCorrectAnswer())) {
             addedPointsInt = getAddedPointsInt();
-        } else { addedPointsInt = 0; }
+        } else {
+            addedPointsInt = 0;
+        }
         addedPoints.setText("+" + addedPointsInt);
 
     }
 
     public void useHintJoker() {
         //Joker that eliminates the wrong answer
-        if (getHintJokerUsed()) { return; }
+        if (getHintJokerUsed()) {
+            return;
+        }
 
         Integer correctAnswer = Integer.parseInt(getCorrectAnswer());
 
@@ -216,7 +223,9 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
     }
 
     public void useDoublePointJoker(MouseEvent event) {
-        if (getDoublePointJokerUsed()) { return; }
+        if (getDoublePointJokerUsed()) {
+            return;
+        }
 
         server.useDoublePointJoker();
         gameConfig.setDoublePointJokerUsed(true);
