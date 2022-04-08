@@ -16,13 +16,17 @@ import client.logic.FXMLConfig;
 import client.logic.ModuleConfig;
 import com.google.inject.Injector;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.HashMap;
+import java.util.Objects;
 
 import static com.google.inject.Guice.createInjector;
 
@@ -42,7 +46,6 @@ public class QuizzzClient extends Application {
      */
     public static void main(String[] args) throws URISyntaxException, IOException {
         launch(QuizzzClient.class, args);
-
     }
 
     /**
@@ -66,7 +69,9 @@ public class QuizzzClient extends Application {
     };
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws IOException {
+
+
         //make a hashmap to easily look up any root (parent of scene) using its filename (without the .fxml extension)
         HashMap<String, Pair<Object, Parent>> rootsMap = new HashMap<>();
 

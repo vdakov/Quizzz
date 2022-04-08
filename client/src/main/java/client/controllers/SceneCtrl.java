@@ -18,6 +18,7 @@ import commons.Questions.AlternativeQuestion;
 import commons.Questions.ComparisonQuestion;
 import commons.Questions.KnowledgeQuestion;
 import commons.Questions.OpenQuestion;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -29,9 +30,12 @@ import javafx.util.Pair;
 import javax.inject.Inject;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class SceneCtrl {
+
+
     private Stage primaryStage;
     private Scene scene;
     private HashMap<String, Pair<Object, Parent>> sceneRoots;
@@ -46,11 +50,12 @@ public class SceneCtrl {
     }
 
 
-    public void initialize(Stage primaryStage, HashMap<String, Pair<Object, Parent>> sceneRoots) {
+    public void initialize(Stage primaryStage, HashMap<String, Pair<Object, Parent>> sceneRoots) throws IOException {
         this.primaryStage = primaryStage;
         this.sceneRoots = sceneRoots;
         this.scene = new Scene(new Group(), 1280, 720);
         this.primaryStage.setScene(this.scene);
+
 
         showMainScreenScene();
         primaryStage.show();
@@ -262,5 +267,21 @@ public class SceneCtrl {
             System.out.println("You successfully exit!");
             stage.close();
         }
+    }
+
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
+    public Scene getScene() {
+        return scene;
+    }
+
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+    }
+
+    public void setScene(Scene scene) {
+        this.scene = scene;
     }
 }

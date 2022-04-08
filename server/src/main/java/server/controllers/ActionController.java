@@ -52,6 +52,11 @@ public class ActionController {
         return activities.get((int) Math.floor(Math.random() * activities.size()));
     }
 
+    @GetMapping("testConnection")
+    public int testConnection(){
+      return 1;
+    }
+
     /**
      * allows the user to update all the fields of an activity except the ID, but only if the object with that ID already exists
      * @param a action containing updated fields

@@ -48,7 +48,7 @@ import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 
 public class ServerUtils {
 
-    private static final String SERVER = "http://localhost:8080/";
+    protected String SERVER = "http://localhost:8080/";
 
     public ServerUtils() throws ExecutionException, InterruptedException {
     }
@@ -86,6 +86,11 @@ public class ServerUtils {
         }
 
         return null;
+    }
+
+    public void setSERVER(String server){
+        this.SERVER=server;
+        System.out.println(this.SERVER);
     }
 
     /**
@@ -398,6 +403,7 @@ public class ServerUtils {
                 }
             }
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("An exception occurred when trying to update the score");
         }
     }
@@ -417,6 +423,7 @@ public class ServerUtils {
                     .get();
 
             System.out.println("Response status: " + response.getStatus());
+
 
         } catch (Exception e) {
             System.out.println("An exception occurred");
