@@ -268,18 +268,33 @@ public class SceneCtrl {
         }
     }
 
+    /**
+     * Gets the  primary stage
+     * @return
+     */
     public Stage getPrimaryStage() {
         return primaryStage;
     }
 
+    /**
+     * Gets the scene
+     * @return
+     */
     public Scene getScene() {
         return scene;
     }
 
+    /*
+    Sets the primary stage
+     */
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
 
+    /**
+     * Sets the scene
+     * @param scene
+     */
     public void setScene(Scene scene) {
         this.scene = scene;
     }

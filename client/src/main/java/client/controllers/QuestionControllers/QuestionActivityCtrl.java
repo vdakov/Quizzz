@@ -115,6 +115,13 @@ public class QuestionActivityCtrl {
             new SimpleIntegerProperty((int) startTimeClient);
     protected Timeline timelineClient;
 
+
+    /**
+     * Creates the scene with the needed dependencies
+     *
+     * @param server    initialised the communication with the server
+     * @param sceneCtrl the scene controller
+     */
     @Inject
     public QuestionActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) throws ExecutionException, InterruptedException {
         this.server = server;
@@ -194,6 +201,11 @@ public class QuestionActivityCtrl {
         }
     }
 
+    /**
+     * Answers the question
+     * @param event what triggers the input being processes
+     * @throws IOException
+     */
     public void answerQuestion(ActionEvent event) throws IOException {
         // answers the question
         if (answered) {
@@ -209,6 +221,9 @@ public class QuestionActivityCtrl {
         //blocks the possibility to answer anymore
     }
 
+    /**
+     * Updates the answer
+     */
     public void answerUpdate() {
         // after the time ends the right answer is requested and then shown
 
@@ -236,6 +251,9 @@ public class QuestionActivityCtrl {
     }
 
 
+    /**
+     * Updates the points
+     */
     public void pointsUpdate() {
         // after the time ends the amount of won points is calculated and then shown to the player
         addedPointsInt = 0;
@@ -260,6 +278,9 @@ public class QuestionActivityCtrl {
         timelineGlobal.playFromStart();                                 //start the animation
     }
 
+    /**
+     * Starts the timer
+     */
     public void startTimerClient() {
         if (!gameConfig.isSinglePlayer()) {
             startTimeClient = server.getTimeClient();
@@ -384,6 +405,9 @@ public class QuestionActivityCtrl {
         }
     }
 
+    /**
+     * Uses the double points joker
+     */
     public void useDoublePointJoker() {
         if (getDoublePointJokerUsed()) {
             return;
@@ -395,6 +419,9 @@ public class QuestionActivityCtrl {
         doublePointJoker.setDisable(true);
     }
 
+    /**
+     * Uses the time joker
+     */
     public void useTimeJoker() {
         //Joker that reduces time for all other players
         if (getTimeJokerUsed()) {
@@ -426,18 +453,34 @@ public class QuestionActivityCtrl {
         return Integer.parseInt(server.getScore());
     }
 
+    /**
+     * Getter for wheter the hint joker used
+     * @return boolean value
+     */
     public Boolean getHintJokerUsed() {
         return gameConfig.isHintJokerUsed();
     }
 
+    /**
+     * Getter for whether the double points joker was used
+     * @return boolean value
+     */
     public Boolean getDoublePointJokerUsed() {
         return gameConfig.isDoublePointJokerUsed();
     }
 
+
+    /**
+     * Getter for whether the double time joker was used
+     * @return boolean value
+     */
     public Boolean getTimeJokerUsed() {
         return gameConfig.isTimeJokerUsed();
     }
 
+    /**
+     * Resets the jokers to not being used
+     */
     public void resetJokers() {
         gameConfig.setHintJokerUsed(false);
         gameConfig.setDoublePointJokerUsed(false);
@@ -616,10 +659,17 @@ public class QuestionActivityCtrl {
         }
     }
 
+    /**
+     * Gets the added points
+     * @return the added points as an int
+     */
     public int getAddedPointsInt() {
         return server.getAddedPoints();
     }
 
+    /**
+     * Updates the time left
+     */
     public void updateTimeLeft() {
         gameConfig.setTimeLeft(timeLeft);
         server.setTimeLeft();

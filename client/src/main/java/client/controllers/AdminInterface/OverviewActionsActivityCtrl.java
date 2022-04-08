@@ -58,6 +58,11 @@ public class OverviewActionsActivityCtrl {
     @FXML
     private TextField editingID;
 
+    /**
+     * Constructor for the OverviewActionsActivityCtrl
+     * @param server the server
+     * @param mainCtrl the main controller
+     */
     @Inject
     public OverviewActionsActivityCtrl(ServerUtils server, SceneCtrl mainCtrl) {
         this.server = server;
@@ -103,6 +108,10 @@ public class OverviewActionsActivityCtrl {
         refresh();
     }
 
+    /**
+     * Deletes an activity
+     * @param event what activates the activity deletion
+     */
     public void deleteActivity(ActionEvent event) {
         String id = deletingID.getText();
         try {
@@ -119,6 +128,11 @@ public class OverviewActionsActivityCtrl {
         }
     }
 
+    /**
+     * Edits an activity
+     * @param event what activates the edit of the activity
+     * @throws IOException
+     */
     public void editActivity(ActionEvent event) throws IOException {
         String id = editingID.getText();
         try {
@@ -134,6 +148,9 @@ public class OverviewActionsActivityCtrl {
         refresh();
     }
 
+    /**
+     * Refreshes the page
+     */
     public void refresh() {
         var activities = server.getActivities();
         data = FXCollections.observableList(activities);
@@ -143,10 +160,18 @@ public class OverviewActionsActivityCtrl {
         table.sort();
     }
 
+    /**
+     * Goes back to the main screen
+     * @throws IOException
+     */
     public void goToMainScreen() throws IOException {
         sceneCtrl.showMainScreenScene();
     }
 
+    /**
+     * Restore the activity bank
+     * @param event the action that triggers the restoration of the activity bank
+     */
     public void restoreActivityBank(ActionEvent event) {
         server.restoreActivityBank();
         refresh();

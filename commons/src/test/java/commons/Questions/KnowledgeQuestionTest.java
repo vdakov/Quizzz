@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class KnowledgeQuestionTest {
     private final Question question = new KnowledgeQuestion(Pair.of("1", "2"), List.of("a", "b"));

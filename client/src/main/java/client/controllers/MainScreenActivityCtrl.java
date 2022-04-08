@@ -19,12 +19,21 @@ public class MainScreenActivityCtrl {
     @FXML
     private TextField serverField;
 
+    /**
+     * Creates the scene with the needed dependencies
+     *
+     * @param server    initialised the communication with the server
+     * @param sceneCtrl the scene controller
+     */
     @Inject
     public MainScreenActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
         this.sceneCtrl = sceneCtrl;
         this.server = server;
     }
 
+    /**
+     * Initializes the scene
+     */
     public void initialise() {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
 
@@ -35,6 +44,10 @@ public class MainScreenActivityCtrl {
         gameConfiguration.setGameTypeUndefined();
     }
 
+    /**
+     * Enters a singleplayer game
+     * @throws IOException
+     */
     public void enterSoloGame() throws IOException {
         if (!checkUsername()) {
             return;
@@ -59,6 +72,10 @@ public class MainScreenActivityCtrl {
         }
     }
 
+    /**
+     * Enters the server browser
+     * @throws IOException
+     */
     public void enterServerBrowser() throws IOException {
         if (!checkUsername()) {
             return;
@@ -74,6 +91,10 @@ public class MainScreenActivityCtrl {
         this.sceneCtrl.showServerBrowser();
     }
 
+    /**
+     * Checks for the username to not be blank
+     * @return a boolean vakue
+     */
     public boolean checkUsername() {
         if (userName.getText().isBlank()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -86,11 +107,17 @@ public class MainScreenActivityCtrl {
         return true;
     }
 
+    /**
+     * Shows the leaderboard
+     */
     public void showLeaderboard() {
         GameConfiguration.getConfiguration().setGameTypeSingleplayer(); //make sure you get to see the singleplayer version of the leaderboard
         sceneCtrl.showLeaderboard();
     }
 
+    /**
+     * Enters the admin interface
+     */
     public void enterAdminInterface() {
         sceneCtrl.showOverviewActionScene();
     }

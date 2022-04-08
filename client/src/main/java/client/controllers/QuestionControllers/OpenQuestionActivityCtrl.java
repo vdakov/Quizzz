@@ -141,6 +141,11 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         startTimerGlobal();
     }
 
+    /**
+     * Gets the answer that was given for the question
+     * @param event the action that triggers getting the input that was answered
+     * @throws IOException
+     */
     public void answerQuestion(ActionEvent event) throws IOException {
         // answers the question and blocks the possibility to answer anymore
         if (answered) {
@@ -154,8 +159,11 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         disableAnswers();
     }
 
+    /**
+     * Updates the answer
+     *  after the time ends the right answer is requested and then shown
+     */
     public void answerUpdate() {
-        // after the time ends the right answer is requested and then shown
         System.out.println(userAnswer);
         if (userAnswer.equals(getCorrectAnswer())) {
             userAnswerRectangle.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(0), BorderStroke.THICK)));
@@ -170,12 +178,12 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
 
     }
 
+    /**
+     * Updates the points
+     */
     public void pointsUpdate() {
-//        int correctAnswer = Integer.parseInt(getCorrectAnswer());
-        // after the time ends the amount of won points is calculated and then shown to the player
         if (userAnswer.equals(getCorrectAnswer())) {
             addedPointsInt = getAddedPointsInt();
-//            (Integer.parseInt(server.getScore()) - Integer.parseInt(points.getText()))
         } else {
             addedPointsInt = 0;
         }
@@ -183,6 +191,9 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
 
     }
 
+    /**
+     * The hint Joker
+     */
     public void useHintJoker() {
         //Joker that eliminates the wrong answer
         if (getHintJokerUsed()) {
@@ -203,6 +214,9 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         gameConfig.setHintJokerUsed(true);
     }
 
+    /**
+     * The double points joker
+     */
     public void useDoublePointJoker() {
         if (getDoublePointJokerUsed()) {
             return;
@@ -224,6 +238,9 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         answer.setDisable(true);
     }
 
+    /**
+     * Updates the score
+     */
     public void updateTheScoreServer() {
         server.updateScore(userAnswer);
     }

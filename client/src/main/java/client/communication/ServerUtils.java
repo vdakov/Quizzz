@@ -88,6 +88,10 @@ public class ServerUtils {
         return null;
     }
 
+    /**
+     * Sets the server
+     * @param server the server in String format
+     */
     public void setSERVER(String server) {
         this.SERVER = server;
         System.out.println(this.SERVER);
@@ -132,6 +136,10 @@ public class ServerUtils {
         return null;
     }
 
+    /**
+     * Indicates whether a multiplayer room was joined succesfully
+     * @return a boolean value, true if the room was joined, false otherwise
+     */
     public Boolean joinMultiPlayerRoom() {
         try {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
@@ -200,6 +208,10 @@ public class ServerUtils {
 
     private static ExecutorService EXEC_WAIT_FOR_START = Executors.newSingleThreadExecutor();
 
+    /**
+     * Waits for the a  Multiplayer game to be started
+     * @param startedGame a boolean value that indicates whether a game was started
+     */
     public void waitForMultiPlayerRoomStart(Consumer<Boolean> startedGame) {
         if (EXEC_WAIT_FOR_START.isShutdown()) {
             EXEC_WAIT_FOR_START = Executors.newSingleThreadExecutor();
@@ -237,6 +249,10 @@ public class ServerUtils {
 
     private static ExecutorService EXEC_GET_PLAYER_NUMBER = Executors.newSingleThreadExecutor();
 
+    /**
+     * Updates the player number
+     * @param playerNumber the current player number
+     */
     public void updatePlayerNumber(Consumer<Integer> playerNumber) {
         if (EXEC_GET_PLAYER_NUMBER.isShutdown()) {
             EXEC_GET_PLAYER_NUMBER = Executors.newSingleThreadExecutor();
@@ -262,12 +278,19 @@ public class ServerUtils {
         });
     }
 
+    /**
+     * Stops updating the player number
+     */
     public void stopUpdatePlayerNumber() {
         EXEC_GET_PLAYER_NUMBER.shutdownNow();
     }
 
     private static ExecutorService EXEC_UPDATE_AVAILABLE_ROOMS = Executors.newSingleThreadExecutor();
 
+    /**
+     * Updates the available rooms
+     * @param roomUpdate a value of type Game Container
+     */
     public void updateAvailableRooms(Consumer<GameContainer> roomUpdate) {
         if (EXEC_UPDATE_AVAILABLE_ROOMS.isShutdown()) {
             EXEC_UPDATE_AVAILABLE_ROOMS = Executors.newSingleThreadExecutor();
@@ -293,12 +316,19 @@ public class ServerUtils {
         });
     }
 
+    /**
+     * Stops updating the availble rooms
+     */
     public void stopUpdateAvailableRooms() {
         EXEC_UPDATE_AVAILABLE_ROOMS.shutdownNow();
     }
 
     private static ExecutorService EXEC = Executors.newSingleThreadExecutor();
 
+    /**
+     * Waits for the leaderboard to be filled
+     * @param l List containing leaderboard entries
+     */
     public void waitForFilledLeaderboard(Consumer<List<LeaderboardEntry>> l) {
         if (EXEC.isShutdown()) EXEC = Executors.newSingleThreadExecutor();
         EXEC.submit(() -> {
@@ -320,6 +350,9 @@ public class ServerUtils {
         });
     }
 
+    /**
+     * Cjecks if the leaderboard is full
+     */
     public void checkLeaderboardFilled() {
         try {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
@@ -339,6 +372,10 @@ public class ServerUtils {
     }
 
 
+    /**
+     * Gets the question from the server
+     * @return the question as a String
+     */
     public String getQuestion() {
         try {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
@@ -486,6 +523,11 @@ public class ServerUtils {
                 });
     }
 
+    /**
+     * Gets the leaderboard for a particular room by searching for its id
+     * @param roomId the roomId of the room we want to retrieve the leaderboard
+     * @return a list with leaderboard entries
+     */
     public List<LeaderboardEntry> getLeaderboard(String roomId) {
         return ClientBuilder.newClient(new ClientConfig()) //
                 .target(SERVER).path("api/leaderboard/" + roomId) //
@@ -495,6 +537,13 @@ public class ServerUtils {
                 });
     }
 
+    /**
+     * Adds or Updates a Leaderboard entry
+     * @param name the name of the player
+     * @param roomId the roomId for which we want to update the leaderboard
+     * @param points the number of points they acquired
+     * @return a leaderboard entry
+     */
     public LeaderboardEntry addOrUpdateLeaderboardEntry(String name, String roomId, int points) {
         return ClientBuilder.newClient(new ClientConfig()) //
                 .target(SERVER).path("api/leaderboard/") //
@@ -590,12 +639,21 @@ public class ServerUtils {
     }
 
 
+    /**
+     * deltes an activity
+     * @param id the id of the activity
+     */
     public void deleteActivity(String id) {
         ClientBuilder.newClient(new ClientConfig()) //
                 .target(SERVER).path("api/activities/delete/" + id) //
                 .request().delete(); //;
     }
 
+    /**
+     * Edits an activity
+     * @param id the id of the activity
+     * @param a the action
+     */
     public void editActivity(String id, Action a) {
         System.out.println(id);
         ClientBuilder.newClient(new ClientConfig()) //
@@ -605,6 +663,11 @@ public class ServerUtils {
                 .put(Entity.entity(a, APPLICATION_JSON), Action.class); //;
     }
 
+    /**
+     *Gets an activity by searching fo its id
+     * @param id the id of the activity we want to retrieve
+     * @return an action
+     */
     public Action getActivityById(String id) {
         try {
             Response response = ClientBuilder.newClient(new ClientConfig()) //
@@ -657,6 +720,10 @@ public class ServerUtils {
         }
     }
 
+    /**
+     * Gets an answer from the server
+     * @return the answer as a String
+     */
     public String getAnswer() {
         try {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
@@ -816,6 +883,10 @@ public class ServerUtils {
         return true;
     }
 
+    /**
+     * Sets the time left
+     * @return a integer value of the time left
+     */
     public Integer setTimeLeft() {
         try {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
@@ -933,6 +1004,9 @@ public class ServerUtils {
         return FXCollections.observableArrayList(games);
     }
 
+    /**
+     * Removes a player
+     */
     public void removePlayer() {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
         System.out.println("api/" + gameConfiguration.getUserName() + "/MULTIPLAYER/" + gameConfiguration.getRoomId() + "/removePlayer");
@@ -941,6 +1015,10 @@ public class ServerUtils {
                 .request().get();
     }
 
+    /**
+     * Gets the number of players
+     * @return the number of players as a int
+     */
     public int getNumPlayers() {
         GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
 
@@ -954,29 +1032,14 @@ public class ServerUtils {
                 });
     }
 
+    /**
+     * Restores the activity bank
+     */
     public void restoreActivityBank() {
         ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("api/activities/restoreActivityBank")
                 .request().get();
     }
-
-//    public void calculateAddedPoints() {
-//        try {
-//            GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
-//
-//            Response response = ClientBuilder.newClient(new ClientConfig()) //
-//                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" +
-//                            gameConfiguration.getRoomId() + "/" + gameConfiguration.getCurrentQuestionNumber() + "/calculateAddedPoints")
-//                    .request(APPLICATION_JSON)
-//                    .accept(APPLICATION_JSON)
-//                    .get();
-//
-//            System.out.println("Response status: " + response.getStatus());
-//
-//        } catch (Exception e) {
-//            System.out.println("An exception occurred");
-//        }
-//    }
 
 
 }

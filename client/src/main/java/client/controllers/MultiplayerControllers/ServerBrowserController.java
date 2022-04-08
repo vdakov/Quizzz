@@ -121,11 +121,7 @@ public class ServerBrowserController {
                         this.gameIdField.setText(Id);
 
                     }
-
-
                 }
-
-
             });
 
             return row;
@@ -158,6 +154,10 @@ public class ServerBrowserController {
         this.sceneCtrl.showMainScreenScene();
     }
 
+    /**
+     * Joins a random waiting room
+     * @param event the event that triggers joining the waiting room
+     */
     public void joinRandomWaitingRoom(ActionEvent event) {
         if (!checkUsername(usernameField.getText())) {
             return;
@@ -255,6 +255,11 @@ public class ServerBrowserController {
         }
     }
 
+    /**
+     * Checks for the username to not be blank
+     * @param username the username of the player
+     * @return a boolean value, false if the username is blank, true otherwise
+     */
     public boolean checkUsername(String username) {
         if (username.isBlank()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
