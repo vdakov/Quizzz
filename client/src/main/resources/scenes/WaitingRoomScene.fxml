@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane id="gridPane" prefHeight="720.0" prefWidth="1280.0" stylesheets="@waitingRoom.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.MultiplayerControllers.WaitingRoomController">
+<GridPane id="gridPane" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../waitingRoom.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.MultiplayerControllers.WaitingRoomController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     </columnConstraints>
@@ -69,7 +69,7 @@
             <graphic>
                 <ImageView fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="/pictures/home.png" />
+                        <Image url="@../pictures/home.png" />
                     </image>
                 </ImageView>
             </graphic>

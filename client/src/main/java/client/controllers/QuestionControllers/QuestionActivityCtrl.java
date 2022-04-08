@@ -7,23 +7,24 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.*;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.util.Duration;
 
-
 import javax.inject.Inject;
-import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class QuestionActivityCtrl {
@@ -258,19 +259,13 @@ public class QuestionActivityCtrl {
 
         progressBarTime.setOpacity(0);
         timeLabel.textProperty().bind(timeSecondsGlobal.divide(1000).asString());
-
-
     }
 
 
     public void pointsUpdate() {
         // after the time ends the amount of won points is calculated and then shown to the player
         addedPointsInt = 0;
-        if (userAnswer != null && userAnswer.equals(getCorrectAnswer())) {
-            addedPointsInt = getAddedPointsInt();
-        }
-        addedPoints.setText("+" + String.valueOf(addedPointsInt));
-
+        addedPoints.setText("+" + (Integer.parseInt(server.getScore()) - Integer.parseInt(points.getText())));
     }
     //Always 10 seconds, to make the game synchronous
     public void startTimerGlobal() {
