@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane id="gridPane" prefHeight="720.0" prefWidth="1080.0" stylesheets="@../adminPanel.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.AdminInterface.OverviewActionsActivityCtrl">
+<GridPane id="gridPane" prefHeight="720.0" prefWidth="1080.0" stylesheets="@adminPanel.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.AdminInterface.OverviewActionsActivityCtrl">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="635.2000122070312" minWidth="10.0" prefWidth="473.59998779296876" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="900.0" minWidth="10.0" prefWidth="807.2000122070312" />
@@ -37,7 +37,7 @@
          <graphic>
             <ImageView fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../pictures/home.png" />
+                  <Image url="@pictures/home.png" />
                </image></ImageView>
          </graphic></Button>
       <Button fx:id="editButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#editActivity" prefHeight="50.0" prefWidth="363.0" text="EDIT ACTIVITY" textFill="WHITE" translateY="172.0" GridPane.halignment="CENTER" GridPane.rowIndex="1">

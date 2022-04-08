@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane id="gridPane" alignment="CENTER" prefHeight="683.0" prefWidth="1214.0" stylesheets="@../leaderBoard.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.LeaderboardCtrl">
+<GridPane id="gridPane" alignment="CENTER" prefHeight="683.0" prefWidth="1214.0" stylesheets="@./leaderBoard.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.LeaderboardCtrl">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="15.0" prefWidth="100.0" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="70.0" prefWidth="100.0" />
@@ -68,7 +68,7 @@
             <Insets bottom="60.0" left="400.0" />
          </GridPane.margin>
       </Text>
-      <TableView fx:id="leaderboardTable" prefHeight="156.0" prefWidth="876.0" style="-fx-background-color: #d3c9fb;" stylesheets="@../leaderBoard.css" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+      <TableView fx:id="leaderboardTable" prefHeight="156.0" prefWidth="876.0" style="-fx-background-color: #d3c9fb;" stylesheets="@./leaderBoard.css" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
          <columns>
             <TableColumn fx:id="placeCol" prefWidth="75.0" text="Place" />
             <TableColumn fx:id="nameCol" prefWidth="170.0" text="Name" />
@@ -85,7 +85,7 @@
          <graphic>
             <ImageView fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../pictures/home.png" />
+                  <Image url="@./pictures/home.png" />
                </image>
             </ImageView>
          </graphic>
