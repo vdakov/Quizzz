@@ -11,17 +11,17 @@ class ActionCatalogTest {
 
     @Test
     void getNormalActions() {
-        assertEquals("[]", actionCatalog.getNormalActions());
+        assertEquals("[]", actionCatalog.getNormalActions().toString());
     }
 
     @Test
     void getSmartActions() {
-        assertEquals("[]", actionCatalog.getSmartActions());
+        assertEquals("[]", actionCatalog.getSmartActions().toString());
     }
 
     @Test
     void getUsedSmartActions() {
-        assertEquals("[]", actionCatalog.getSmartActions());
+        assertEquals("[]", actionCatalog.getSmartActions().toString());
     }
 
 }
