@@ -22,8 +22,8 @@ import javax.inject.Inject;
 import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.Collections;
 import java.util.concurrent.ExecutionException;
 
 public class QuestionActivityCtrl {
@@ -36,6 +36,7 @@ public class QuestionActivityCtrl {
     protected int addedPointsInt;
     protected String userAnswer;
     protected boolean answered;
+    protected int timeLeft;
     @FXML
     protected Label timeLabel;
     @FXML
@@ -75,6 +76,12 @@ public class QuestionActivityCtrl {
     @FXML
     protected String correctAnswer;
     @FXML
+    protected Button hintJoker;
+    @FXML
+    protected Button doublePointJoker;
+    @FXML
+    protected Button timeJoker;
+    @FXML
     protected Label emoji1;
     @FXML
     protected Label emoji2;
@@ -90,12 +97,6 @@ public class QuestionActivityCtrl {
     protected TableColumn<String, String> playersActivity;
     @FXML
     protected SplitPane splitPane;
-    @FXML
-    protected Button hintJoker;
-    @FXML
-    protected Button pointsJoker;
-    @FXML
-    protected Button timeJoker;
     @FXML
     protected ColumnConstraints chatColumn;
     @FXML
@@ -173,17 +174,19 @@ public class QuestionActivityCtrl {
         addedPoints.setText(" ");
         addedPointsInt = 0;
 
+        server.resetDoubledAddedPoints();
+
         if (gameConfig.getCurrentQuestionNumber() <= 1) {
             resetJokers();
         }
-
+        
         if (!gameConfig.isSinglePlayer()) {
             splitPane.setVisible(true); //show the chat
             chatColumn.setPercentWidth(15);
             questionCol1.setPercentWidth(23.333);
             questionCol1.setPercentWidth(23.333);
             questionCol1.setPercentWidth(23.333);
-
+            
             playersActivity.setCellValueFactory(q -> new SimpleStringProperty(q.getValue()));
             server.registerForMessages("/topic/emojis", q -> {
                 refresh(q.get(0), q.get(1), q.get(2));
@@ -221,6 +224,9 @@ public class QuestionActivityCtrl {
         if (answered) {
             return;
         }
+
+        timeLeft = timeSecondsGlobal.get();
+        updateTimeLeft();
         disableAnswers();
 
         Button current = (Button) event.getSource();
@@ -259,23 +265,12 @@ public class QuestionActivityCtrl {
 
     public void pointsUpdate() {
         // after the time ends the amount of won points is calculated and then shown to the player
-
         addedPointsInt = 0;
         if (userAnswer != null && userAnswer.equals(getCorrectAnswer())) {
-            addedPointsInt = 500;
+            addedPointsInt = getAddedPointsInt();
         }
         addedPoints.setText("+" + String.valueOf(addedPointsInt));
 
-//        FadeTransition fadeout = new FadeTransition(Duration.seconds(1), addedPoints);
-//        fadeout.setFromValue(1);
-//        fadeout.setToValue(0);
-//        fadeout.play();
-//
-//        //after some effect
-//        pointsInt += addedPointsInt;
-//        addedPointsInt = 0;
-//        addedPoints.setText(null);
-//        points.setText(String.valueOf(pointsInt));
     }
     //Always 10 seconds, to make the game synchronous
     public void startTimerGlobal() {
@@ -316,7 +311,8 @@ public class QuestionActivityCtrl {
                 updateTheScoreServer();
                 answerUpdate();
                 pointsUpdate();
-
+                System.out.println("Points : " + server.getAddedPoints());
+                System.out.println("Score : " + server.getScore());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -373,18 +369,20 @@ public class QuestionActivityCtrl {
     /**
      * Method that ends the game and returns the player to the main screen of the app
      * @throws IOException
-     * */
+     */
     public void goToMainScreen() throws IOException {
         timelineGlobal.stop();
         timelineClient.stop();
         sceneCtrl.showMainScreenScene();
     }
 
+    /**
+     * Getter for the correct answer
+     * @return the correct answer from the server
+     */
     public void useHintJoker() {
         //Joker that eliminates the wrong answer
-        if (getHintJokerUsed()) {
-            return;
-        }
+        if (getHintJokerUsed()) { return; }
 
         //Make a list of possible answers
         List<Button> answerLabels = new ArrayList();
@@ -407,6 +405,15 @@ public class QuestionActivityCtrl {
                 return;
             }
         }
+    }
+
+    public void useDoublePointJoker() {
+        if (getDoublePointJokerUsed()) { return; }
+        System.out.println(getDoublePointJokerUsed());
+
+        server.useDoublePointJoker();
+        gameConfig.setDoublePointJokerUsed(true);
+        doublePointJoker.setDisable(true);
     }
 
     public void useTimeJoker() {
@@ -442,7 +449,7 @@ public class QuestionActivityCtrl {
         return gameConfig.isHintJokerUsed();
     }
 
-    public boolean getDoublePointJokerUsed() {
+    public Boolean getDoublePointJokerUsed() {
         return gameConfig.isDoublePointJokerUsed();
     }
 
@@ -515,7 +522,8 @@ public class QuestionActivityCtrl {
         server.send("/topic/emojis", payload);
     }
 
-    public void hintJokerEvent(MouseEvent event) {
+    public void hintJokerEvent(MouseEvent event)
+    {
         List<String> payload = new ArrayList<>();
         payload.add("Hint");
         payload.add(gameConfig.getUserName());
@@ -523,7 +531,8 @@ public class QuestionActivityCtrl {
         server.send("/topic/emojis", payload);
     }
 
-    public void pointsJokerEvent(MouseEvent event) {
+    public void pointsJokerEvent(MouseEvent event)
+    {
         List<String> payload = new ArrayList<>();
         payload.add("x2 Points");
         payload.add(gameConfig.getUserName());
@@ -531,7 +540,8 @@ public class QuestionActivityCtrl {
         server.send("/topic/emojis", payload);
     }
 
-    public void timeJokerEvent(MouseEvent event) {
+    public void timeJokerEvent(MouseEvent event)
+    {
         List<String> payload = new ArrayList<>();
         payload.add("Half Time");
         payload.add(gameConfig.getUserName());
@@ -623,5 +633,14 @@ public class QuestionActivityCtrl {
         }
 
 
+    }
+
+    public int getAddedPointsInt() {
+        return server.getAddedPoints();
+    }
+
+    public void updateTimeLeft() {
+        gameConfig.setTimeLeft(timeLeft);
+        server.setTimeLeft();
     }
 }

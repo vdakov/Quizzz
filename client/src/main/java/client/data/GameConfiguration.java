@@ -19,6 +19,7 @@ public class GameConfiguration {
     private boolean hintJokerUsed;
     private boolean doublePointJokerUsed;
     private boolean timeJokerUsed;
+    private long timeLeft;
 
     private int consecutiveUnansweredQuestions;
 
@@ -133,4 +134,8 @@ public class GameConfiguration {
     public void setTimeJokerUsed(boolean timeJokerUsed) {
         this.timeJokerUsed = timeJokerUsed;
     }
+
+    public long getTimeLeft() { return timeLeft; }
+
+    public void setTimeLeft(long timeLeft) { this.timeLeft = timeLeft; }
 }

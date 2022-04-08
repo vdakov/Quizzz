@@ -111,7 +111,7 @@ public class ServerUtils {
                 }
                 case 417: {
                     System.out.println("Expectation failed when trying to start the room");
-                    return false;
+                    return  false;
                     // something failed, show an apology message ?
                 }
                 case 400: {
@@ -365,17 +365,23 @@ public class ServerUtils {
         return null;
     }
 
+    /**
+     * Updates the player score stored in server by adding points earned in that question
+     * @param answer    the user's answer that should be compared with the correct answer
+     */
     public void updateScore(String answer) {
         try {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
 
             Response response = ClientBuilder.newClient(new ClientConfig()) //
-                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" + gameConfiguration.getRoomId() + "/" +
-                            gameConfiguration.getCurrentQuestionNumber() + "/postAnswer")
+                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() +
+                            "/" + gameConfiguration.getRoomId() + "/" + gameConfiguration.getCurrentQuestionNumber() +
+                            "/postAnswer")
                     .request(APPLICATION_JSON)
                     .accept(APPLICATION_JSON)
                     .post(Entity.text(answer));
 
+            System.out.println("Update Score : " + response.getStatus());
             switch (response.getStatus()) {
                 case 200: {
                     break;
@@ -395,6 +401,9 @@ public class ServerUtils {
         }
     }
 
+    /**
+     * Uses the hint joker
+     */
     public void useHintJoker() {
         try {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
@@ -413,6 +422,9 @@ public class ServerUtils {
         }
     }
 
+    /**
+     * Uses the double point joker
+     */
     public void useDoublePointJoker() {
         try {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
@@ -431,6 +443,31 @@ public class ServerUtils {
         }
     }
 
+    /**
+     * Resets the points added as 10, to prevent the points getting doubled everytime after the double point joker is used
+     */
+    public void resetDoubledAddedPoints() {
+        try {
+            GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+
+            Response response = ClientBuilder.newClient(new ClientConfig()) //
+                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" +
+                            gameConfiguration.getRoomId() + "/resetDoubledAddedPoints")
+                    .request(APPLICATION_JSON)
+                    .accept(APPLICATION_JSON)
+                    .get();
+
+            System.out.println("33Response status: " + response.getStatus());
+
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+        }
+    }
+
+
+    /**
+     * Uses the time joker
+     */
     public void useTimeJoker() {
         try {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
@@ -490,11 +527,12 @@ public class ServerUtils {
                 .delete();
     }
 
+    // Where we connect to the websocket
+
     private StompSession session = connect("ws://localhost:8080/websocket");
 
     /**
      * Methods that creates the connection
-     *
      * @param url where we get connected
      * @return
      * @throws ExecutionException
@@ -665,6 +703,10 @@ public class ServerUtils {
         return null;
     }
 
+    /**
+     * Gets the current score of the player
+     * @return current score of the player
+     */
     public String getScore() {
         try {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
@@ -711,6 +753,133 @@ public class ServerUtils {
             System.out.println("An exception occurred");
         }
         return 10;
+    }
+
+    /**
+     * Gets the point player earned for that specific question
+     * @return integer value of points earned
+     */
+    public Integer getAddedPoints() {
+        try {
+            GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+
+            Response response = ClientBuilder.newClient(new ClientConfig())
+                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" + gameConfiguration.getRoomId() + "/getAddedPoints")
+                    .request(APPLICATION_JSON)
+                    .accept(APPLICATION_JSON).get(Response.class);
+
+            switch (response.getStatus()) {
+                case 200: {
+                    return response.readEntity(Integer.class);
+                }
+                case 417: {
+                    System.out.println("Expectation failed");
+                    return  null;
+                    // something failed, show an apology message ?
+                }
+                case 400: {
+                    System.out.println("The request was invalid");
+                    return 0;
+                    //return null;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+        }
+
+        return null;
+    }
+
+    /**
+     * Checks whether the hint joker is used or not
+     * @return true when the hint joker is used
+     */
+    public Boolean getHintJokerUsed() {
+        try {
+            GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+
+            Response response = ClientBuilder.newClient(new ClientConfig())
+                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" + gameConfiguration.getRoomId() + "/getHintJokerUsed")
+                    .request(APPLICATION_JSON)
+                    .accept(APPLICATION_JSON).get(Response.class);
+            return response.readEntity(Boolean.class);
+
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+        }
+        return true;
+    }
+
+    /**
+     * Checks whether the double point joker is used or not
+     * @return true when the double point joker is used
+     */
+    public Boolean getDoublePointJokerUsed() {
+        try {
+            GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+
+            Response response = ClientBuilder.newClient(new ClientConfig())
+                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" + gameConfiguration.getRoomId() + "/getDoublePointJokerUsed")
+                    .request(APPLICATION_JSON)
+                    .accept(APPLICATION_JSON).get(Response.class);
+            return response.readEntity(Boolean.class);
+
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+        }
+        return true;
+    }
+
+    public Integer setTimeLeft() {
+        try {
+            GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+
+            Response response = ClientBuilder.newClient(new ClientConfig())
+                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() +
+                                        "/" + gameConfiguration.getRoomId() + "/" + gameConfiguration.getTimeLeft() + "/setTimeLeft")
+                    .request(APPLICATION_JSON)
+                    .accept(APPLICATION_JSON).get(Response.class);
+
+            switch (response.getStatus()) {
+                case 200: {
+                    return response.readEntity(Integer.class);
+                }
+                case 417: {
+                    System.out.println("Expectation failed");
+                    return  null;
+                    // something failed, show an apology message ?
+                }
+                case 400: {
+                    System.out.println("The request was invalid");
+                    return 0;
+                    //return null;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+        }
+
+        return null;
+    }
+
+    /**
+     Checks whether the time joker is used or not
+     * @return true when the time joker is used
+     */
+    public Boolean getTimeJokerUsed() {
+        try {
+            GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+
+            Response response = ClientBuilder.newClient(new ClientConfig())
+                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" + gameConfiguration.getRoomId() + "/getTimeJokerUsed")
+                    .request(APPLICATION_JSON)
+                    .accept(APPLICATION_JSON).get(Response.class);
+            return response.readEntity(Boolean.class);
+
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+        }
+        return true;
     }
 
     /**
@@ -804,4 +973,24 @@ public class ServerUtils {
                 .target(SERVER).path("api/activities/restoreActivityBank")
                 .request().get();
     }
+
+    public void calculateAddedPoints() {
+        try {
+            GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
+
+            Response response = ClientBuilder.newClient(new ClientConfig()) //
+                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" +
+                            gameConfiguration.getRoomId() + "/" + gameConfiguration.getCurrentQuestionNumber() + "/calculateAddedPoints")
+                    .request(APPLICATION_JSON)
+                    .accept(APPLICATION_JSON)
+                    .get();
+
+            System.out.println("Response status: " + response.getStatus());
+
+        } catch (Exception e) {
+            System.out.println("An exception occurred");
+        }
+    }
+
+
 }

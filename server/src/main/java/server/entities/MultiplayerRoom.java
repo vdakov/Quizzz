@@ -14,7 +14,9 @@ public class MultiplayerRoom extends Room {
     private final HashMap<String, Boolean> playerDoublePointJokerUsed;
     private final HashMap<String, Boolean> playerTimeJokerUsed;
     private final List<HashMap<String, Integer>> playerTime;
-
+    private final HashMap<String, Integer> playerAddedPoints;
+    private final HashMap<String, Integer> timeLeft;
+    
     /**
      * Constructor for a multiplayer room
      *
@@ -34,6 +36,8 @@ public class MultiplayerRoom extends Room {
             HashMap<String, Integer> hashMap = new HashMap<>();
             playerTime.add(hashMap);
         }
+        this.playerAddedPoints = new HashMap<>();
+        this.timeLeft = new HashMap<>();
     }
 
     /**
@@ -49,7 +53,8 @@ public class MultiplayerRoom extends Room {
         for (int i = 0; i < 20; i++) {
             playerTime.get(i).put(username, 10000);
         }
-
+        playerAddedPoints.put(username, 1);
+        timeLeft.put(username, 0);
     }
 
     /**
@@ -65,6 +70,8 @@ public class MultiplayerRoom extends Room {
         for (int i = 0; i < 20; i++) {
             playerTime.get(i).remove(username);
         }
+        playerAddedPoints.remove(username);
+        timeLeft.remove(username);
     }
 
     /**
@@ -79,6 +86,14 @@ public class MultiplayerRoom extends Room {
         return playerScores.get(username);
     }
 
+    public void setTimeLeft(String username, int timeLeft) {
+        this.timeLeft.put(username, timeLeft);
+    }
+
+    public Integer getTimeLeft(String username) {
+        return this.timeLeft.get(username);
+    }
+
     // get the time for a spwcific player for specific question
     public Integer getTimeClient(String username, int number) {
         System.out.println("Getting time for " + username + " at question number: " + number);
@@ -86,9 +101,16 @@ public class MultiplayerRoom extends Room {
         return playerTime.get(number - 1).get(username);
     }
 
-    public void useHintJoker(String username) { playerHintJokerUsed.put(username, true); }
-    public void useDoublePointJoker(String username) { playerDoublePointJokerUsed.put(username, true); }
+    public Boolean getHintJokerUsed(String username) { return playerHintJokerUsed.get(username); }
+    public Boolean getDoublePointJokerUsed(String username) { return playerDoublePointJokerUsed.get(username); }
+    public Boolean getTimeJokerUsed(String username) { return playerTimeJokerUsed.get(username); }
 
+
+    public void useHintJoker(String username) { playerHintJokerUsed.put(username, true); }
+    public void useDoublePointJoker(String username) {
+        playerAddedPoints.put(username, getAddedPoints(username) * 2);
+        playerDoublePointJokerUsed.put(username, true);
+    }
     public void useTimeJoker(String username, int number) {
         playerTimeJokerUsed.put(username, true);
 
@@ -103,14 +125,36 @@ public class MultiplayerRoom extends Room {
         }
     }
 
+    public int getAddedPoints(String username) { return playerAddedPoints.get(username); }
+
+    public void setAddedPoints(String username, int addedPoint) { this.playerAddedPoints.put(username, addedPoint); }
+    /**
+     * Calculates the added point of the specific question using time left
+     * @param username
+     * @param timeLeft the amount of time left to user, fast answer gives more points
+     * @return the new added point value
+     */
+    public int calculateAddedPoints(String username) {
+        int newAddedPoints = (int) (getAddedPoints(username) * (this.getTimeLeft(username)) / 100);
+        playerAddedPoints.put(username, newAddedPoints);
+        return newAddedPoints;
+    }
+
+    /**
+     * Resets the points added as 10, to prevent the points getting doubled everytime after the double point joker is used
+     */
+    public void resetAddedPointAfterDoublePointJoker(String username) {
+        playerAddedPoints.put(username, 1);
+    }
+
     /**
      * Updates the score of the player
      *
      * @param username the username of the player that won points
      * @param addedScore the score that the player has earned
      */
-    public void updatePlayerScore(String username, int addedScore) {
-        playerScores.put(username, getPlayerScore(username) + addedScore);
+    public void updatePlayerScore(String username) {
+        playerScores.put(username, getPlayerScore(username) + this.getAddedPoints(username));
     }
 
     public int getNumPlayers() {

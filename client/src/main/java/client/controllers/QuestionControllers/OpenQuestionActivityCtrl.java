@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
@@ -72,8 +73,9 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         if (getHintJokerUsed() != null) {
             hintJoker.setDisable(getHintJokerUsed());
         }
-
-
+        if (getDoublePointJokerUsed() != null) {
+            doublePointJoker.setDisable(getDoublePointJokerUsed());
+        }
         if (!gameConfig.isSinglePlayer()) {
             splitPane.setVisible(true);
             chatColumn.setPercentWidth(15);
@@ -203,9 +205,7 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
 
     public void useHintJoker() {
         //Joker that eliminates the wrong answer
-        if (getHintJokerUsed()) {
-            return;
-        }
+        if (getHintJokerUsed()) { return; }
 
         Integer correctAnswer = Integer.parseInt(getCorrectAnswer());
 
@@ -219,6 +219,15 @@ public class OpenQuestionActivityCtrl extends QuestionActivityCtrl {
         server.useHintJoker();
         hintJoker.setDisable(true);
         gameConfig.setHintJokerUsed(true);
+    }
+
+    public void useDoublePointJoker(MouseEvent event) {
+        if (getDoublePointJokerUsed()) { return; }
+
+        server.useDoublePointJoker();
+        gameConfig.setDoublePointJokerUsed(true);
+        doublePointJoker.setDisable(true);
+
     }
 
     /**

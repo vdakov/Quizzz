@@ -15,7 +15,7 @@
 
 .button{
     -fx-font-family: 'Paytone One', sans-serif;
-    -fx-text-font:12px;
+    /*-fx-text-font:12px;*/
     -fx-white-space: normal;
     -fx-word-wrap: break-word;
     -fx-text-transform: uppercase;

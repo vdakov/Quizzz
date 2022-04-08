@@ -10,6 +10,8 @@ public class SingleplayerRoom extends Room {
     private int playerScore;
     private boolean hintJokerUsed;
     private boolean doublePointJokerUsed;
+    private int addedPoints;
+    private int timeLeft;
 
     /**
      * Constructor for a singleplayer room
@@ -23,15 +25,44 @@ public class SingleplayerRoom extends Room {
         this.playerScore = 0;
         hintJokerUsed = false;
         doublePointJokerUsed = false;
+        this.addedPoints = 1;
+        this.timeLeft = 0;
     }
 
     /**
      * Returns the current score of the player
-     *
      * @return the score of the player in the room
      */
     public int getPlayerScore() {
         return this.playerScore;
+    }
+
+    public Integer getTimeLeft() {
+        return this.timeLeft;
+    }
+
+    public void setTimeLeft(int timeLeft) {
+        this.timeLeft = timeLeft;
+    }
+
+    public int getAddedPoints() { return this.addedPoints; }
+
+    public void setAddedPoint(int addedPoint) { this.addedPoints = addedPoint; }
+
+    /**
+     * Calculates the added point of the specific question using time left
+     * @return the new added point value
+     */
+    public int calculateAddedPoints() {
+        this.addedPoints = (int) (addedPoints * (this.timeLeft) / 100);
+        return addedPoints;
+    }
+
+    /**
+     * Resets the points added as 10, to prevent the points getting doubled everytime after the double point joker is used
+     */
+    public void resetAddedPointAfterDoublePointJoker() {
+        addedPoints = 1;
     }
 
     /**
@@ -52,7 +83,13 @@ public class SingleplayerRoom extends Room {
     /**
      * Records doublePoint joker used
      */
-    public void useDoublePointJoker() { doublePointJokerUsed = true; }
+    public void useDoublePointJoker() {
+        this.addedPoints = addedPoints * 2;
+        doublePointJokerUsed = true;
+    }
+
+
+
 
     /**
      * Sets the score for the player to the given score
@@ -66,9 +103,8 @@ public class SingleplayerRoom extends Room {
     /**
      * Adds to the score of the current player the given score
      *
-     * @param additionalPoints the number of points the player will add
      */
-    public void updatePlayerScore(int additionalPoints) {
-        this.playerScore += additionalPoints;
+    public void updatePlayerScore() {
+        this.playerScore += this.addedPoints;
     }
 }
