@@ -16,6 +16,8 @@ public class MainScreenActivityCtrl {
 
     @FXML
     private TextField userName;
+    @FXML
+    private TextField serverField;
 
     @Inject
     public MainScreenActivityCtrl(ServerUtils server, SceneCtrl sceneCtrl) {
@@ -92,6 +94,7 @@ public class MainScreenActivityCtrl {
     public void enterAdminInterface() {
         sceneCtrl.showOverviewActionScene();
     }
+
 
 
 }

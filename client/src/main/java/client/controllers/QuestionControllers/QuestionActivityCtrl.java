@@ -147,14 +147,14 @@ public class QuestionActivityCtrl {
         if (gameConfig.getCurrentQuestionNumber() <= 1) {
             resetJokers();
         }
-        
+
         if (!gameConfig.isSinglePlayer()) {
             splitPane.setVisible(true); //show the chat
             chatColumn.setPercentWidth(15);
             questionCol1.setPercentWidth(23.333);
             questionCol1.setPercentWidth(23.333);
             questionCol1.setPercentWidth(23.333);
-            
+
             playersActivity.setCellValueFactory(q -> new SimpleStringProperty(q.getValue()));
             server.registerForMessages("/topic/emojis", q -> {
                 refresh(q.get(0), q.get(1), q.get(2));
@@ -188,7 +188,8 @@ public class QuestionActivityCtrl {
         hintJoker.setDisable(false);
         if (getHintJokerUsed() != null) {
             hintJoker.setDisable(getHintJokerUsed());
-        } if (getDoublePointJokerUsed() != null) {
+        }
+        if (getDoublePointJokerUsed() != null) {
             doublePointJoker.setDisable(getDoublePointJokerUsed());
         }
     }
@@ -241,6 +242,7 @@ public class QuestionActivityCtrl {
 //        addedPoints.setText("+" + (Integer.parseInt(server.getScore()) - Integer.parseInt(points.getText())));
         addedPoints.setText("+" + server.getAddedPoints());
     }
+
     //Always 10 seconds, to make the game synchronous
     public void startTimerGlobal() {
         timeSecondsGlobal.set((int) startTime);
@@ -262,8 +264,7 @@ public class QuestionActivityCtrl {
         if (!gameConfig.isSinglePlayer()) {
             startTimeClient = server.getTimeClient();
             timeSecondsClient.set((int) startTimeClient);
-        }
-         else {
+        } else {
             timeSecondsClient.set((int) startTimeClient);
         }
         progressBarTime.setOpacity(1);
@@ -293,6 +294,7 @@ public class QuestionActivityCtrl {
 
     /**
      * Method that stops the player from answering after client timer has ran out
+     *
      * @throws IOException
      */
     public void disableAnswers() throws IOException {
@@ -339,6 +341,7 @@ public class QuestionActivityCtrl {
 
     /**
      * Method that ends the game and returns the player to the main screen of the app
+     *
      * @throws IOException
      */
     public void goToMainScreen() throws IOException {
@@ -349,11 +352,14 @@ public class QuestionActivityCtrl {
 
     /**
      * Getter for the correct answer
+     *
      * @return the correct answer from the server
      */
     public void useHintJoker() {
         //Joker that eliminates the wrong answer
-        if (getHintJokerUsed()) { return; }
+        if (getHintJokerUsed()) {
+            return;
+        }
 
         //Make a list of possible answers
         List<Button> answerLabels = new ArrayList();
@@ -379,7 +385,9 @@ public class QuestionActivityCtrl {
     }
 
     public void useDoublePointJoker() {
-        if (getDoublePointJokerUsed()) { return; }
+        if (getDoublePointJokerUsed()) {
+            return;
+        }
         System.out.println(getDoublePointJokerUsed());
 
         server.useDoublePointJoker();
@@ -389,7 +397,9 @@ public class QuestionActivityCtrl {
 
     public void useTimeJoker() {
         //Joker that reduces time for all other players
-        if (getTimeJokerUsed()) { return; }
+        if (getTimeJokerUsed()) {
+            return;
+        }
         System.out.println("Time joker just used" + getTimeJokerUsed());
         timeJoker.setDisable(true);
         timeJoker.setOpacity(0.5);
@@ -443,6 +453,7 @@ public class QuestionActivityCtrl {
     public int getQuestionNumber() {
         return gameConfig.getCurrentQuestionNumber();
     }
+
     public void updateTheScoreServer() {
         server.updateScore(userAnswer);
     }
@@ -494,8 +505,7 @@ public class QuestionActivityCtrl {
         server.send("/topic/emojis", payload);
     }
 
-    public void hintJokerEvent(MouseEvent event)
-    {
+    public void hintJokerEvent(MouseEvent event) {
         List<String> payload = new ArrayList<>();
         payload.add("Hint");
         payload.add(gameConfig.getUserName());
@@ -503,8 +513,7 @@ public class QuestionActivityCtrl {
         server.send("/topic/emojis", payload);
     }
 
-    public void pointsJokerEvent(MouseEvent event)
-    {
+    public void pointsJokerEvent(MouseEvent event) {
         List<String> payload = new ArrayList<>();
         payload.add("x2 Points");
         payload.add(gameConfig.getUserName());
@@ -512,8 +521,7 @@ public class QuestionActivityCtrl {
         server.send("/topic/emojis", payload);
     }
 
-    public void timeJokerEvent(MouseEvent event)
-    {
+    public void timeJokerEvent(MouseEvent event) {
         List<String> payload = new ArrayList<>();
         payload.add("Half Time");
         payload.add(gameConfig.getUserName());

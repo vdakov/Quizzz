@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
@@ -66,8 +67,7 @@ public class EditActionActivityCtrl {
 
         this.id = editingAction.getId();
         this.folder = editingAction.getImagePath().substring(0, 2);
-        System.out.println(id);
-        System.out.println(this.id);
+
         title.setText(editingAction.getTitle());
         source.setText(editingAction.getSource());
         this.imageNameField.setText(editingAction.getImagePath().substring(3));
@@ -75,7 +75,11 @@ public class EditActionActivityCtrl {
 
         this.base64Image = Base64.encodeBase64String(arr);
         System.out.println(base64Image);
-        this.newImage.setImage(SwingFXUtils.toFXImage(bImage, null));
+        try {
+            this.newImage.setImage(SwingFXUtils.toFXImage(bImage, null));
+        } catch (Exception e) {
+            this.newImage.setImage(new Image("pictures/placeholder.png"));
+        }
     }
 
     public void cancel() {

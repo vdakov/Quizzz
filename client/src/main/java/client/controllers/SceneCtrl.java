@@ -32,6 +32,8 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class SceneCtrl {
+
+
     private Stage primaryStage;
     private Scene scene;
     private HashMap<String, Pair<Object, Parent>> sceneRoots;
@@ -47,11 +49,12 @@ public class SceneCtrl {
     }
 
 
-    public void initialize(Stage primaryStage, HashMap<String, Pair<Object, Parent>> sceneRoots) {
+    public void initialize(Stage primaryStage, HashMap<String, Pair<Object, Parent>> sceneRoots) throws IOException {
         this.primaryStage = primaryStage;
         this.sceneRoots = sceneRoots;
         this.scene = new Scene(new Group(), 1280, 720);
         this.primaryStage.setScene(this.scene);
+
 
         showMainScreenScene();
         primaryStage.show();
@@ -263,5 +266,21 @@ public class SceneCtrl {
             System.out.println("You successfully exit!");
             stage.close();
         }
+    }
+
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
+    public Scene getScene() {
+        return scene;
+    }
+
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+    }
+
+    public void setScene(Scene scene) {
+        this.scene = scene;
     }
 }
