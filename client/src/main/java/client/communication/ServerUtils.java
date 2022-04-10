@@ -90,6 +90,7 @@ public class ServerUtils {
 
     /**
      * Sets the server
+     *
      * @param server the server in String format
      */
     public void setSERVER(String server) {
@@ -120,7 +121,7 @@ public class ServerUtils {
                 }
                 case 417: {
                     System.out.println("Expectation failed when trying to start the room");
-                    return  false;
+                    return false;
                     // something failed, show an apology message ?
                 }
                 case 400: {
@@ -138,6 +139,7 @@ public class ServerUtils {
 
     /**
      * Indicates whether a multiplayer room was joined succesfully
+     *
      * @return a boolean value, true if the room was joined, false otherwise
      */
     public Boolean joinMultiPlayerRoom() {
@@ -210,6 +212,7 @@ public class ServerUtils {
 
     /**
      * Waits for the a  Multiplayer game to be started
+     *
      * @param startedGame a boolean value that indicates whether a game was started
      */
     public void waitForMultiPlayerRoomStart(Consumer<Boolean> startedGame) {
@@ -251,6 +254,7 @@ public class ServerUtils {
 
     /**
      * Updates the player number
+     *
      * @param playerNumber the current player number
      */
     public void updatePlayerNumber(Consumer<Integer> playerNumber) {
@@ -289,6 +293,7 @@ public class ServerUtils {
 
     /**
      * Updates the available rooms
+     *
      * @param roomUpdate a value of type Game Container
      */
     public void updateAvailableRooms(Consumer<GameContainer> roomUpdate) {
@@ -327,6 +332,7 @@ public class ServerUtils {
 
     /**
      * Waits for the leaderboard to be filled
+     *
      * @param l List containing leaderboard entries
      */
     public void waitForFilledLeaderboard(Consumer<List<LeaderboardEntry>> l) {
@@ -374,6 +380,7 @@ public class ServerUtils {
 
     /**
      * Gets the question from the server
+     *
      * @return the question as a String
      */
     public String getQuestion() {
@@ -409,7 +416,8 @@ public class ServerUtils {
 
     /**
      * Updates the player score stored in server by adding points earned in that question
-     * @param answer    the user's answer that should be compared with the correct answer
+     *
+     * @param answer the user's answer that should be compared with the correct answer
      */
     public void updateScore(String answer) {
         if (answer == null) {
@@ -497,7 +505,6 @@ public class ServerUtils {
     }
 
 
-
     /**
      * Uses the time joker
      */
@@ -506,7 +513,7 @@ public class ServerUtils {
             GameConfiguration gameConfiguration = GameConfiguration.getConfiguration();
 
             Response response = ClientBuilder.newClient(new ClientConfig()) //
-                    .target(SERVER).path("api/" +  gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" +
+                    .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() + "/" +
                             gameConfiguration.getRoomId() + "/" + gameConfiguration.getCurrentQuestionNumber() + "/useTimeJoker")
                     .request(APPLICATION_JSON)
                     .accept(APPLICATION_JSON)
@@ -533,6 +540,7 @@ public class ServerUtils {
 
     /**
      * Gets the leaderboard for a particular room by searching for its id
+     *
      * @param roomId the roomId of the room we want to retrieve the leaderboard
      * @return a list with leaderboard entries
      */
@@ -547,7 +555,8 @@ public class ServerUtils {
 
     /**
      * Adds or Updates a Leaderboard entry
-     * @param name the name of the player
+     *
+     * @param name   the name of the player
      * @param roomId the roomId for which we want to update the leaderboard
      * @param points the number of points they acquired
      * @return a leaderboard entry
@@ -578,6 +587,7 @@ public class ServerUtils {
 
     /**
      * Methods that creates the connection
+     *
      * @param url where we get connected
      * @return
      * @throws ExecutionException
@@ -599,17 +609,21 @@ public class ServerUtils {
      * @param consumer    that is informed whenever a new message is received
      */
     public void registerForMessages(String destination, Consumer<List<String>> consumer) {
-        session.subscribe(destination, new StompFrameHandler() {
-            @Override
-            public Type getPayloadType(StompHeaders headers) {
-                return List.class;                                    // the type of message we expect to receive
-            }
+        if (!session.isConnected()) {
 
-            @Override
-            public void handleFrame(StompHeaders headers, Object payload) {
-                consumer.accept((List<String>) payload);
-            }
-        });
+            session.subscribe(destination, new StompFrameHandler() {
+                @Override
+                public Type getPayloadType(StompHeaders headers) {
+                    return List.class;                                    // the type of message we expect to receive
+                }
+
+                @Override
+                public void handleFrame(StompHeaders headers, Object payload) {
+                    consumer.accept((List<String>) payload);
+                }
+            });
+        }
+
     }
 
     /**
@@ -648,6 +662,7 @@ public class ServerUtils {
 
     /**
      * deltes an activity
+     *
      * @param id the id of the activity
      */
     public void deleteActivity(String id) {
@@ -658,8 +673,9 @@ public class ServerUtils {
 
     /**
      * Edits an activity
+     *
      * @param id the id of the activity
-     * @param a the action
+     * @param a  the action
      */
     public void editActivity(String id, Action a) {
         System.out.println(id);
@@ -671,7 +687,8 @@ public class ServerUtils {
     }
 
     /**
-     *Gets an activity by searching fo its id
+     * Gets an activity by searching fo its id
+     *
      * @param id the id of the activity we want to retrieve
      * @return an action
      */
@@ -729,6 +746,7 @@ public class ServerUtils {
 
     /**
      * Gets an answer from the server
+     *
      * @return the answer as a String
      */
     public String getAnswer() {
@@ -765,6 +783,7 @@ public class ServerUtils {
 
     /**
      * Gets the current score of the player
+     *
      * @return current score of the player
      */
     public String getScore() {
@@ -817,6 +836,7 @@ public class ServerUtils {
 
     /**
      * Gets the point player earned for that specific question
+     *
      * @return integer value of points earned
      */
     public Integer getAddedPoints() {
@@ -834,7 +854,7 @@ public class ServerUtils {
                 }
                 case 417: {
                     System.out.println("Expectation failed");
-                    return  null;
+                    return null;
                     // something failed, show an apology message ?
                 }
                 case 400: {
@@ -852,6 +872,7 @@ public class ServerUtils {
 
     /**
      * Checks whether the hint joker is used or not
+     *
      * @return true when the hint joker is used
      */
     public Boolean getHintJokerUsed() {
@@ -872,6 +893,7 @@ public class ServerUtils {
 
     /**
      * Checks whether the double point joker is used or not
+     *
      * @return true when the double point joker is used
      */
     public Boolean getDoublePointJokerUsed() {
@@ -892,6 +914,7 @@ public class ServerUtils {
 
     /**
      * Sets the time left
+     *
      * @return a integer value of the time left
      */
     public Integer setTimeLeft() {
@@ -900,7 +923,7 @@ public class ServerUtils {
 
             Response response = ClientBuilder.newClient(new ClientConfig())
                     .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() +
-                                        "/" + gameConfiguration.getRoomId() + "/" + gameConfiguration.getTimeLeft() + "/setTimeLeft")
+                            "/" + gameConfiguration.getRoomId() + "/" + gameConfiguration.getTimeLeft() + "/setTimeLeft")
                     .request(APPLICATION_JSON)
                     .accept(APPLICATION_JSON).get(Response.class);
 
@@ -910,7 +933,7 @@ public class ServerUtils {
                 }
                 case 417: {
                     System.out.println("Expectation failed");
-                    return  null;
+                    return null;
                     // something failed, show an apology message ?
                 }
                 case 400: {
@@ -927,7 +950,8 @@ public class ServerUtils {
     }
 
     /**
-     Checks whether the time joker is used or not
+     * Checks whether the time joker is used or not
+     *
      * @return true when the time joker is used
      */
     public Boolean getTimeJokerUsed() {
@@ -1024,6 +1048,7 @@ public class ServerUtils {
 
     /**
      * Gets the number of players
+     *
      * @return the number of players as a int
      */
     public int getNumPlayers() {
