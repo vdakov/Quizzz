@@ -599,17 +599,21 @@ public class ServerUtils {
      * @param consumer    that is informed whenever a new message is received
      */
     public void registerForMessages(String destination, Consumer<List<String>> consumer) {
-        session.subscribe(destination, new StompFrameHandler() {
-            @Override
-            public Type getPayloadType(StompHeaders headers) {
-                return List.class;                                    // the type of message we expect to receive
-            }
+        try {
+            session.subscribe(destination, new StompFrameHandler() {
+                @Override
+                public Type getPayloadType(StompHeaders headers) {
+                    return List.class;                                    // the type of message we expect to receive
+                }
 
-            @Override
-            public void handleFrame(StompHeaders headers, Object payload) {
-                consumer.accept((List<String>) payload);
-            }
-        });
+                @Override
+                public void handleFrame(StompHeaders headers, Object payload) {
+                    consumer.accept((List<String>) payload);
+                }
+            });
+        } catch (Exception e) {
+
+        }
     }
 
     /**
@@ -900,7 +904,7 @@ public class ServerUtils {
 
             Response response = ClientBuilder.newClient(new ClientConfig())
                     .target(SERVER).path("api/" + gameConfiguration.getUserName() + "/" + gameConfiguration.getGameTypeString() +
-                                        "/" + gameConfiguration.getRoomId() + "/" + gameConfiguration.getTimeLeft() + "/setTimeLeft")
+                            "/" + gameConfiguration.getRoomId() + "/" + gameConfiguration.getTimeLeft() + "/setTimeLeft")
                     .request(APPLICATION_JSON)
                     .accept(APPLICATION_JSON).get(Response.class);
 
