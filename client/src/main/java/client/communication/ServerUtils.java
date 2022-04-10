@@ -611,7 +611,7 @@ public class ServerUtils {
                     consumer.accept((List<String>) payload);
                 }
             });
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
     }
